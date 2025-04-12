@@ -1,0 +1,4 @@
+$(document).ready(function() {
+    // Código a ser executado assim que o DOM estiver carregado
+});
+

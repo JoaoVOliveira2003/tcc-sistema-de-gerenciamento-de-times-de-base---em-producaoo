@@ -1,0 +1,5 @@
+[12-Apr-2025 20:58:47 Europe/Berlin] INSERT INTO estado (cod_nacao, desc_estado, sigla_estado) VALUES (1, '7', '7')
+[12-Apr-2025 20:59:19 Europe/Berlin] INSERT INTO estado (cod_nacao, desc_estado, sigla_estado) VALUES (2, 'caa', 'Caatinga')
+[12-Apr-2025 21:00:30 Europe/Berlin] INSERT INTO estado (cod_nacao, desc_estado, sigla_estado) VALUES (2, 'sha', 'LadyGaga')
+[12-Apr-2025 21:01:56 Europe/Berlin] INSERT INTO estado (cod_nacao, desc_estado, sigla_estado) VALUES (1, 'ola', 'oçlaaaaaaaaaaa')
+[12-Apr-2025 21:02:48 Europe/Berlin] INSERT INTO estado (cod_nacao, sigla_estado, desc_estado) VALUES (1, 'ola', 'oçlaaaaaaaaaaa')
