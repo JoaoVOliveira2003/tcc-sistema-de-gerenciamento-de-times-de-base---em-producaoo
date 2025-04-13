@@ -4,13 +4,13 @@ require('../../include/conecta.php');
 $retorno = '';
 
 $nacao        = getPost('nacao');
-$desc_nacao   = getPost('desc_nacao');
+$desc_estado   = getPost('desc_estado');
 $sigla_estado = getPost('sigla_estado');
 
 $bd = conecta();
 
-$query = "INSERT INTO estado (cod_nacao, sigla_estado, desc_estado) VALUES (" . $nacao . ", '" . $desc_nacao . "', '" . $sigla_estado . "')";
-error_log($query); // log para debug
+$query = "INSERT INTO estado (cod_nacao,desc_estado, sigla_estado) VALUES (" . $nacao . ", '" . $desc_estado . "', '" . $sigla_estado . "')";
+
 
 if ($bd->SqlExecuteQuery($query)) {
     $retorno = 'ok';

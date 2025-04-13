@@ -1,3 +1,0 @@
-[12-Apr-2025 21:05:27 America/Sao_Paulo] INSERT INTO estado (cod_nacao, sigla_estado, desc_estado) VALUES (, '', '')
-[12-Apr-2025 21:33:58 America/Sao_Paulo] INSERT INTO estado (cod_nacao, sigla_estado, desc_estado) VALUES (, '', '')
-[12-Apr-2025 21:48:18 America/Sao_Paulo] INSERT INTO estado (cod_nacao, sigla_estado, desc_estado) VALUES (1, 'RJ', 'rio de janeiro')

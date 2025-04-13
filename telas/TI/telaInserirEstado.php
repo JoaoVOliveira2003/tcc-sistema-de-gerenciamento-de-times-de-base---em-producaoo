@@ -12,29 +12,36 @@
 
 <body>
 
-<div class="container mt-5">
-  <h1 class="text-success">Dados dos estado:</h1>
-  
 
-  <div id="selectNacao"></div>
+<div class="container">
+  <div class=" mt-4">
+    <h2 class="mb-4">Gerenciamento de <b>estados</b></h2>
 
-  <div class="row">
-    <div class="col-6">
-      <label for="sigla_estado" class="form-label">Nome do estado:</label>
-      <input type="text" class="form-control" id="sigla_estado" placeholder="Digite algo...">
+    <h4 class="text-success mb-3">Inserir novo estado</h4>
+    <div id="selectNacao" class="mb-3"></div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="desc_estado" class="form-label">Nome do estado:</label>
+        <input type="text" class="form-control" id="desc_estado" placeholder="Digite algo...">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="sigla_estado" class="form-label">Sigla do estado:</label>
+        <input type="text" class="form-control" id="sigla_estado" maxlength="3" placeholder="Digite algo...">
+      </div>
     </div>
-    <div class="col-6">
-      <label for="desc_nacao" class="form-label">Sigla do estado:</label>
-      <input type="text" class="form-control" id="desc_nacao" maxlength="3" placeholder="Digite algo...">
+
+    <div class="">
+      <button type="button" class="btn btn-primary" onclick="gravarEstado()">Gravar</button>
     </div>
-  </div>
+    <h4 class="text-success mt-3">Vizualizar e atualizar dados</h4>
 
-  <div class="mt-3">
-    <button type="button" class="btn btn-sm btn-primary" onclick="gravarEstado()">Gravar</button>
-  </div>
+    <div id="tabelaDeleteUpdate" class="mt-4"></div>
+    <div id="modalContainer"></div>
 
-  <div id="tabelaDeleteUpdate"></div>
+  </div>
 </div>
+
 
 
 </body>

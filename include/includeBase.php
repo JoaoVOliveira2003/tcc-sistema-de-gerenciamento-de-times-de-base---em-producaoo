@@ -7,6 +7,8 @@ echo('
   <link rel="stylesheet" href="/tcc/include/bootstrap/css/bootstrap.min.css" />
   <script src="/tcc/include/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/tcc/include/jquery/jquery.js"></script>
+  <script src="/tcc/include/jquery/jquery-confirm.min.js"></script>
+    <link rel="stylesheet" href="/tcc/include/jquery/jquery-confirm.min.css" />
   <script src="/tcc/include/funcoes.php"></script>
 ');
 

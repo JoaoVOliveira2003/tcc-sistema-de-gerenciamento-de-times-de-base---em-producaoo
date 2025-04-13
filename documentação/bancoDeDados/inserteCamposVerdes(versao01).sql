@@ -5,75 +5,87 @@ INSERT INTO nacao (sigla_nacao, desc_nacao) VALUES
 ('pt', 'Portugal');
 
 -- Inserção de estados
+-- Brasil (cod_nacao = 1)
 INSERT INTO estado (cod_nacao, desc_estado, sigla_estado) VALUES
--- Argentina
-(1, 'Buenos Aires', 'ba'),
-(1, 'Córdoba', 'cb'),
-(1, 'Santa Fe', 'sf'),
+(1, 'Paraná', 'pr'),         -- cod_estado = 1
+(1, 'São Paulo', 'sp'),      -- cod_estado = 2
+(1, 'Bahia', 'ba');          -- cod_estado = 3
 
--- Brasil
-(2, 'Paraná', 'pr'),
-(2, 'São Paulo', 'sp'),
-(2, 'Bahia', 'ba'),
+-- Argentina (cod_nacao = 2)
+INSERT INTO estado (cod_nacao, desc_estado, sigla_estado) VALUES
+(2, 'Buenos Aires', 'ba'),   -- cod_estado = 4
+(2, 'Córdoba', 'cb'),        -- cod_estado = 5
+(2, 'Santa Fe', 'sf');       -- cod_estado = 6
 
--- Portugal
-(3, 'Lisboa', 'ls'),
-(3, 'Porto', 'pt'),
-(3, 'Coimbra', 'cb');
+-- Portugal (cod_nacao = 3)
+INSERT INTO estado (cod_nacao, desc_estado, sigla_estado) VALUES
+(3, 'Lisboa', 'ls'),         -- cod_estado = 7
+(3, 'Porto', 'pt'),          -- cod_estado = 8
+(3, 'Coimbra', 'cb');        -- cod_estado = 9
+
 
 -- Inserção de municípios
 INSERT INTO municipio (cod_estado, desc_municipio, sigla_municipio) VALUES
--- Buenos Aires (cod_estado = 1)
-(1, 'La Plata', 'lp'),
-(1, 'Mar del Plata', 'mp'),
-(1, 'Bahía Blanca', 'bb'),
-(1, 'Quilmes', 'ql'),
-(1, 'Tigre', 'tg'),
+(1, 'Curitiba', 'ct'),
+(1, 'Londrina', 'ld'),
+(1, 'Maringá', 'mg'),
+(1, 'Cascavel', 'cv'),
+(1, 'Guarapuava', 'gp');
 
--- Córdoba (cod_estado = 2)
-(2, 'Córdoba Capital', 'cc'),
-(2, 'Río Cuarto', 'rc'),
-(2, 'Villa María', 'vm'),
+-- São Paulo (cod_estado = 2)
+INSERT INTO municipio (cod_estado, desc_municipio, sigla_municipio) VALUES
+(2, 'São Paulo', 'sp'),
+(2, 'Campinas', 'cp'),
+(2, 'Santos', 'st'),
+(2, 'São Bernardo do Campo', 'sb'),
+(2, 'Guarulhos', 'gl');
 
--- Santa Fe (cod_estado = 3)
-(3, 'Rosário', 'rs'),
-(3, 'Santa Fe', 'sf'),
-(3, 'Rafaela', 'rf'),
+-- Bahia (cod_estado = 3)
+INSERT INTO municipio (cod_estado, desc_municipio, sigla_municipio) VALUES
+(3, 'Salvador', 'sv'),
+(3, 'Feira de Santana', 'fs'),
+(3, 'Vitória da Conquista', 'vc'),
+(3, 'Itabuna', 'ib'),
+(3, 'Ilhéus', 'il');
 
--- Paraná (cod_estado = 4)
-(4, 'Curitiba', 'ct'),
-(4, 'Londrina', 'ld'),
-(4, 'Maringá', 'mg'),
-(4, 'Cascavel', 'cv'),
-(4, 'Guarapuava', 'gp'),
+-- Municípios da Argentina
+-- Buenos Aires (cod_estado = 4)
+INSERT INTO municipio (cod_estado, desc_municipio, sigla_municipio) VALUES
+(4, 'La Plata', 'lp'),
+(4, 'Mar del Plata', 'mp'),
+(4, 'Bahía Blanca', 'bb'),
+(4, 'Quilmes', 'ql'),
+(4, 'Tigre', 'tg');
 
--- São Paulo (cod_estado = 5)
-(5, 'São Paulo', 'sp'),
-(5, 'Campinas', 'cp'),
-(5, 'Santos', 'st'),
-(5, 'São Bernardo do Campo', 'sb'),
-(5, 'Guarulhos', 'gl'),
+-- Córdoba (cod_estado = 5)
+INSERT INTO municipio (cod_estado, desc_municipio, sigla_municipio) VALUES
+(5, 'Córdoba Capital', 'cc'),
+(5, 'Río Cuarto', 'rc'),
+(5, 'Villa María', 'vm');
 
--- Bahia (cod_estado = 6)
-(6, 'Salvador', 'sv'),
-(6, 'Feira de Santana', 'fs'),
-(6, 'Vitória da Conquista', 'vc'),
-(6, 'Itabuna', 'ib'),
-(6, 'Ilhéus', 'il'),
+-- Santa Fe (cod_estado = 6)
+INSERT INTO municipio (cod_estado, desc_municipio, sigla_municipio) VALUES
+(6, 'Rosário', 'rs'),
+(6, 'Santa Fe', 'sf'),
+(6, 'Rafaela', 'rf');
 
+-- Municípios de Portugal
 -- Lisboa (cod_estado = 7)
+INSERT INTO municipio (cod_estado, desc_municipio, sigla_municipio) VALUES
 (7, 'Lisboa', 'ls'),
 (7, 'Sintra', 'sn'),
 (7, 'Loures', 'lr'),
 (7, 'Amadora', 'ad'),
-(7, 'Odivelas', 'od'),
+(7, 'Odivelas', 'od');
 
 -- Porto (cod_estado = 8)
+INSERT INTO municipio (cod_estado, desc_municipio, sigla_municipio) VALUES
 (8, 'Porto', 'pt'),
 (8, 'Gondomar', 'gd'),
-(8, 'Matosinhos', 'mt'),
+(8, 'Matosinhos', 'mt');
 
 -- Coimbra (cod_estado = 9)
+INSERT INTO municipio (cod_estado, desc_municipio, sigla_municipio) VALUES
 (9, 'Coimbra', 'cb'),
 (9, 'Figueira da Foz', 'ff'),
 (9, 'Condeixa-a-Nova', 'cn');
