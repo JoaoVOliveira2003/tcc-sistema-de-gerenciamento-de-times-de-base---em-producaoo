@@ -1,15 +1,7 @@
 $(document).ready(function() {
      selectNacoesIsolado();
+     tabelaDeleteUpdate()
 });
-
-function teste() {
-    var select = document.getElementById('nacao');
-    var cod_nacao = select.value; // valor do <option>
-    var desc_nacao = select.options[select.selectedIndex].text; // texto do <option>
-
-    console.log("Código:", cod_nacao);
-    console.log("Descrição:", desc_nacao);
-}
 
 
 function gravarEstado() {
@@ -33,4 +25,8 @@ function gravarEstado() {
             console.error("Erro ao gravar nação:", error);
         }
     });
+}
+
+function atualizarEstado(){
+    
 }

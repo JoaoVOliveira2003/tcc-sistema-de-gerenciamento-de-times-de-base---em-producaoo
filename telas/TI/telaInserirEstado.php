@@ -13,7 +13,7 @@
 <body>
 
 <div class="container mt-5">
-  <h1 class="text-success">Insira novo estado:</h1>
+  <h1 class="text-success">Dados dos estado:</h1>
   
 
   <div id="selectNacao"></div>
@@ -30,9 +30,12 @@
   </div>
 
   <div class="mt-3">
-    <button type="button" class="btn btn-primary" onclick="gravarEstado()">Teste</button>
+    <button type="button" class="btn btn-sm btn-primary" onclick="gravarEstado()">Gravar</button>
   </div>
+
+  <div id="tabelaDeleteUpdate"></div>
 </div>
+
 
 </body>
 

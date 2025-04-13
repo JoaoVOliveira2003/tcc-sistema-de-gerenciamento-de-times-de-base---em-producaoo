@@ -1,7 +1,7 @@
 -- Inserção de nações
 INSERT INTO nacao (sigla_nacao, desc_nacao) VALUES
-('ar', 'Argentina'),
 ('br', 'Brasil'),
+('ar', 'Argentina'),
 ('pt', 'Portugal');
 
 -- Inserção de estados

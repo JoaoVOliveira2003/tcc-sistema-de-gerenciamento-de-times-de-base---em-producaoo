@@ -6,6 +6,7 @@ function teste(){
 }
 
 function selectNacoes() {
+    
     var pagina = "/tcc/componentes/selectBasico.php";
 
     var query = "SELECT cod_nacao, desc_nacao FROM nacao";
@@ -39,7 +40,6 @@ function selectNacoes() {
             primeiroOption: primeiroOption
         },
         success: function (data) {
-        
             $("#selectNacao").html(data);
         }
     });
@@ -156,6 +156,19 @@ function selectNacoesIsolado() {
         success: function (data) {
         
             $("#selectNacao").html(data);
+        }
+    });
+}
+
+function tabelaDeleteUpdate() {
+    var pagina = "/tcc/componentes/tabelaDeleteUpdate.php";
+
+    $.ajax({
+        type: "POST",
+        url: pagina,
+        data: { },
+        success: function (data) {
+            $("#tabelaDeleteUpdate").html(data);
         }
     });
 }
