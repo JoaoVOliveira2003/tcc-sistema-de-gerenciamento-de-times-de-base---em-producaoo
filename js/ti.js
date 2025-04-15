@@ -1,8 +1,3 @@
-$(document).ready(function() {
-     selectNacoesIsolado();
-     tabelaDeleteUpdateEstados();
-});
-
 function selectNacoesIsolado() {
     var pagina = "/tcc/componentes/selectBasico.php";
 
@@ -38,12 +33,9 @@ function selectNacoesIsolado() {
     });
 }
 
-
-
-
-
 function gravarEstado() {
-    var pagina = "gravarEstado.php";
+    var pagina = "/tcc/componentes/TI/gravarEstado.php";
+
 
     var nacao = document.getElementById('nacao').value;
     var desc_estado = document.getElementById('desc_estado').value;
@@ -81,6 +73,41 @@ function gravarEstado() {
     });
 }
 
+function gravarNacao() {
+    var pagina = "/tcc/componentes/TI/gravarNacao.php";
+
+
+    var desc_nacao = document.getElementById('desc_nacao').value;
+    var sigla_nacao = document.getElementById('sigla_nacao').value;
+
+    let camposObrigatorios = {
+        desc_nacao: desc_nacao,
+        sigla_nacao: sigla_nacao
+    };
+    let mensagemCamposObrigatorios = {
+        desc_nacao: 'Nome da nacão',
+        sigla_nacao: 'Sigla da nacão'
+    };
+
+    if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) {
+        return; 
+    }
+
+
+    $.ajax({
+        type: "POST",
+        url: pagina,
+        data: {desc_nacao:desc_nacao,sigla_nacao:sigla_nacao},
+        success: function (data) {
+        if(data=='ok'){
+            alert('Dados gravados.', 'Atenção', '50%',function () {location.reload();});
+        }
+        },
+        error: function (xhr, status, error) {
+            console.error("Erro ao gravar nação:", error);
+        }
+    });
+}
 
 function tabelaDeleteUpdateEstados() {
     var pagina = "/tcc/componentes/tabelaDeleteUpdate.php";
@@ -156,8 +183,8 @@ function tabelaDeleteUpdateNacao() {
     };
 
     let botoesTd = {
-        valor1: '<button type="button" class="btn btn-secondary btn-sm" onclick="($cod_nacao)">Atualizar</button>',
-        valor2: '<button type="button" class="btn btn-secondary btn-sm" onclick="($cod_nacao)">Deletar</button>'
+        valor1: '<button type="button" class="btn btn-secondary btn-sm" onclick="modalAtualizarNacao($cod_nacao)">Atualizar</button>',
+        valor2: '<button type="button" class="btn btn-secondary btn-sm" onclick="modalDeletarNacao($cod_nacao)">Deletar</button>'
     };
     
 
@@ -172,26 +199,25 @@ function tabelaDeleteUpdateNacao() {
             botoesTd: JSON.stringify(botoesTd)
         },
         success: function (data) {
-            // $("#tabelaDeleteUpdate").html(data);
+            $("#tabelaDeleteUpdate").html(data);
         }
     });
 }
 
-
-function modalDeletarEstado(cod_estado) {
+function modalDeletarEstado(cod) {
     var pagina = "/tcc/componentes/modalBasico.php";  
 
     var idModal = "modalDeletarEstado";  
     var textoBotao = "Excluir";
     var tituloModal = "Confirmar Exclusão";  
     var funcaoModal = "deletarEstado";  
-    var textoModal = "Você tem certeza que deseja excluir o estado com código = " + cod_estado + "?";
+    var textoModal = "Você tem certeza que deseja excluir o estado com código = " + cod + "?";
     var textoBotao = "Deletar";
 
     $.ajax({
         type: "POST",
         url: pagina,
-        data: {funcaoModal: funcaoModal,textoBotao:textoBotao, cod_estado: cod_estado, idModal: idModal, tituloModal: tituloModal, textoModal: textoModal},
+        data: {funcaoModal: funcaoModal,textoBotao:textoBotao, cod: cod, idModal: idModal, tituloModal: tituloModal, textoModal: textoModal},
         success: function (data) {
             $('#modalContainer').html(data);
 
@@ -216,23 +242,22 @@ function modalDeletarEstado(cod_estado) {
     }); 
 }
 
-function modalAtualizarEstado(cod_estado) {
+function modalDeletarNacao(cod) {
+    var pagina = "/tcc/componentes/modalBasico.php";  
 
-    var pagina = "/tcc/componentes/modalDeAtaulizaçãoDados.php";  
-    selectNacoesAtualizarEstado();
-    
-    var idModal = "modalAtualizacaoEstado";  
-    var tituloModal = "Confirmar Atualizacao";  
-    var funcaoModal = "atualizarEstado";  
-    var textoBotao = "Atualizar";
-
-
+    var idModal     = "modalDeletarEstado";  
+    var textoBotao  = "Excluir";
+    var tituloModal = "Confirmar Exclusão";  
+    var funcaoModal = "deletarNacao";  
+    var textoModal  = "Você tem certeza que deseja excluir a nacão com código = " + cod + "?";
+    var textoBotao  = "Deletar";
 
     $.ajax({
         type: "POST",
         url: pagina,
-        data: {funcaoModal: funcaoModal,textoBotao : textoBotao, cod_estado: cod_estado, idModal: idModal, tituloModal: tituloModal},
+        data: {funcaoModal: funcaoModal,textoBotao:textoBotao, cod: cod, idModal: idModal, tituloModal: tituloModal, textoModal: textoModal},
         success: function (data) {
+
             $('#modalContainer').html(data);
 
             var modalElement = $('#' + idModal);
@@ -256,9 +281,8 @@ function modalAtualizarEstado(cod_estado) {
     }); 
 }
 
-
 function deletarEstado(cod_estado){
-    var pagina = "deletarEstado.php";
+    var pagina = "/tcc/componentes/ti/deletarEstado.php";
 
     $.ajax({
         type: "POST",
@@ -279,15 +303,49 @@ function deletarEstado(cod_estado){
 
 }
 
-//aqui
+function deletarNacao(cod){
+    var pagina = "/tcc/componentes/ti/deletarNacao.php";
+
+    $.ajax({
+        type: "POST",
+        url: pagina,
+        data: {cod:cod},
+        success: function (data) {
+        if(data=='ok'){
+            alert('Dados deletados.', 'Atenção', '50%',function () {location.reload();});
+        }
+        else if(data=="nok"){
+            alert('Remoção incompleta,caso nacão tenha algum estado,negada a remoção.', 'Atenção', '50%',function () {location.reload();});
+        }
+        },
+        error: function (xhr, status, error) {
+            console.error("Erro ao gravar nação:", error);
+        }
+    }); 
+
+}
+
 function atualizarEstado(cod_estado){
-    var pagina = "atualizarEstado.php";
+    var pagina = "/tcc/componentes/TI/atualizarEstado.php";
 
     var nacao = document.getElementById('atualilizacaoNacao').value;
     var desc_estado = document.getElementById('atualizacaoDesc_estado').value;
     var sigla_estado = document.getElementById('atualizacaoSigla_estado').value;
 
-    
+    let camposObrigatorios = {
+        nacao: nacao,
+        desc_estado: desc_estado,
+        sigla_estado:sigla_estado
+    };
+    let mensagemCamposObrigatorios = {
+        desc_nacao: 'Nacão',
+        desc_estado: 'desc_estado',
+        sigla_estado:'sigla_estado'
+    };
+    if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) {
+        return; 
+    }
+   
     $.ajax({
         type: "POST",
         url: pagina,
@@ -306,45 +364,46 @@ function atualizarEstado(cod_estado){
     }); 
 }
 
+function atualizarNacao(cod_nacao){
+    var pagina = "/tcc/componentes/TI/atualizarNacao.php";
 
-function selectNacoesAtualizarEstado(select) {
-    var pagina = "/tcc/componentes/selectBasico.php";
+    var desc_nacao = document.getElementById('atualizacaoDesc_nacao').value;
+    var sigla_nacao = document.getElementById('atualizacaoSigla_nacao').value;
 
-    var query = "SELECT cod_nacao, desc_nacao FROM nacao";
-    var codSelect = "cod_nacao";
-    var descSelect = "desc_nacao";
-    var label = "Pertencente a:";
-    var classLabel = "form-label";
-    var forLabel = "atualilizacaoNacao";
-    var classSelect = "form-control";
-    var idSelect = "atualilizacaoNacao";
-    var name = "atualilizacaoNacao";
-    var primeiroOption = "Escolha uma opção";
+    let camposObrigatorios = {
+        desc_nacao: desc_nacao,
+        sigla_nacao: sigla_nacao
+    };
+    let mensagemCamposObrigatorios = {
+        desc_nacao: 'Nome da nacão',
+        sigla_nacao: 'Sigla da nacão'
+    };
+    if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) {
+        return; 
+    }
 
     $.ajax({
         type: "POST",
         url: pagina,
-        data: {
-            select:select,            
-            query: query,
-            codSelect: codSelect,
-            descSelect: descSelect,
-            label: label,
-            classLabel: classLabel,
-            forLabel: forLabel,
-            classSelect: classSelect,
-            idSelect: idSelect,
-            name: name,
-            primeiroOption: primeiroOption
-        },
+        data: {cod_nacao:cod_nacao,desc_nacao:desc_nacao,sigla_nacao:sigla_nacao},
         success: function (data) {
-            console.log(data);
-            $("#selectNacoesAtualizarEstado").html(data);       
+        if(data=='ok'){
+            alert('Dados atualizados.', 'Atenção', '50%',function () {location.reload();});
         }
-    });
+        else if(data=="nok"){
+            alert('atualização incompleta', 'Atenção', '50%',function () {location.reload();});
+        }
+        },
+        error: function (xhr, status, error) {
+            console.error("Erro ao gravar nação:", error);
+        }
+    }); 
 }
+
 async function modalAtualizarEstado(cod_estado) {
-    var pagina = "/tcc/componentes/modalDeAtaulizaçãoDados.php";  
+    var pagina = "/tcc/componentes/TI/modalAtualizarEstado.php";  
+
+    
     var query = 'select cod_nacao from estado where cod_estado = ' + cod_estado; 
     var valorProcurado = 'cod_nacao';
     var select = await acharPai(query, valorProcurado); 
@@ -386,4 +445,80 @@ async function modalAtualizarEstado(cod_estado) {
             console.error("Erro ao carregar os dados do estado:", error);
         }
     }); 
+}
+
+async function modalAtualizarNacao(cod) {
+    var pagina = "/tcc/componentes/TI/modalAtualizarNacao.php";  
+    
+    var idModal = "modalAtualizacaoNacao";  
+    var tituloModal = "Confirmar Atualizacao";  
+    var funcaoModal = "atualizarNacao";  
+    var textoBotao = "Atualizar";
+
+    $.ajax({
+        type: "POST",
+        url: pagina,
+        data: {
+            funcaoModal: funcaoModal,
+            textoBotao: textoBotao,
+            cod: cod,
+            idModal: idModal,
+            tituloModal: tituloModal
+        },
+        success: function (data) {
+            
+            $('#modalContainer').html(data);
+
+            var modalElement = $('#' + idModal);
+            modalElement.modal('show'); 
+            modalElement.attr('aria-hidden', 'false');
+
+            $('#cancelarModal').on('click', function () {
+                modalElement.modal('hide');
+            });
+
+            $('#funcaoDoModal').on('click', function () {
+                modalElement.modal('hide');
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error("Erro ao carregar os dados do estado:", error);
+        }
+    }); 
+}
+
+function selectNacoesAtualizarEstado(select) {
+    var pagina = "/tcc/componentes/selectBasico.php";
+
+    var query = "SELECT cod_nacao, desc_nacao FROM nacao";
+    var codSelect = "cod_nacao";
+    var descSelect = "desc_nacao";
+    var label = "Pertencente a:";
+    var classLabel = "form-label";
+    var forLabel = "atualilizacaoNacao";
+    var classSelect = "form-control";
+    var idSelect = "atualilizacaoNacao";
+    var name = "atualilizacaoNacao";
+    var primeiroOption = "Escolha uma opção";
+
+    $.ajax({
+        type: "POST",
+        url: pagina,
+        data: {
+            select:select,            
+            query: query,
+            codSelect: codSelect,
+            descSelect: descSelect,
+            label: label,
+            classLabel: classLabel,
+            forLabel: forLabel,
+            classSelect: classSelect,
+            idSelect: idSelect,
+            name: name,
+            primeiroOption: primeiroOption
+        },
+        success: function (data) {
+            $("#selectNacoesAtualizarEstado").html(data);       
+        }
+    });
 }

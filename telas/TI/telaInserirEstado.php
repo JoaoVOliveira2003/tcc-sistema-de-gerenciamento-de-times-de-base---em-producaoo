@@ -8,6 +8,12 @@
   <script src="../../js/funcoes.js"></script>
   <script src="../../js/ti.js"></script>
 
+  <script>
+    $(document).ready(function() {
+     selectNacoesIsolado();
+     tabelaDeleteUpdateEstados();
+   });
+  </script>
 </head>
 
 <body>

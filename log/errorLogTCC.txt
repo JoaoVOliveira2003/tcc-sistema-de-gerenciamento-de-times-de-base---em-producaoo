@@ -1,0 +1,37 @@
+[14-Apr-2025 21:02:31 America/Sao_Paulo] CU
+[14-Apr-2025 21:02:31 America/Sao_Paulo] UPDATE estado 
+          SET desc_nacao = '', 
+              sigla_nacao = '' 
+          WHERE cod_nacao = '2';
+[14-Apr-2025 21:03:17 America/Sao_Paulo] CU
+[14-Apr-2025 21:03:17 America/Sao_Paulo] UPDATE estado 
+          SET desc_nacao = 'Argentina', 
+              sigla_nacao = 'ar3' 
+          WHERE cod_nacao = '2';
+[14-Apr-2025 21:05:19 America/Sao_Paulo] CU
+[14-Apr-2025 21:05:19 America/Sao_Paulo] UPDATE nacao 
+          SET desc_nacao = 'Argentina', 
+              sigla_nacao = 'ar' 
+          WHERE cod_nacao = '2';
+[14-Apr-2025 21:05:24 America/Sao_Paulo] CU
+[14-Apr-2025 21:05:24 America/Sao_Paulo] UPDATE nacao 
+          SET desc_nacao = 'Argentin', 
+              sigla_nacao = 'ar' 
+          WHERE cod_nacao = '2';
+[14-Apr-2025 21:10:22 America/Sao_Paulo] CU
+[14-Apr-2025 21:10:22 America/Sao_Paulo] UPDATE nacao 
+          SET desc_nacao = '', 
+              sigla_nacao = '' 
+          WHERE cod_nacao = '3';
+[14-Apr-2025 21:11:46 America/Sao_Paulo] select cod_nacao from estado where cod_estado = 8
+[14-Apr-2025 21:11:52 America/Sao_Paulo] select cod_nacao from estado where cod_estado = 8
+[14-Apr-2025 21:12:07 America/Sao_Paulo] select cod_nacao from estado where cod_estado = 8
+[14-Apr-2025 21:12:12 America/Sao_Paulo] select cod_nacao from estado where cod_estado = 8
+[14-Apr-2025 21:13:08 America/Sao_Paulo] CU
+[14-Apr-2025 21:13:08 America/Sao_Paulo] UPDATE nacao 
+          SET desc_nacao = 'Portugal', 
+              sigla_nacao = 'pt' 
+          WHERE cod_nacao = '3';
+[14-Apr-2025 21:14:27 America/Sao_Paulo] select cod_nacao from estado where cod_estado = 11
+[14-Apr-2025 21:14:32 America/Sao_Paulo] select cod_nacao from estado where cod_estado = 11
+[14-Apr-2025 21:14:40 America/Sao_Paulo] select cod_nacao from estado where cod_estado = 11

@@ -1,7 +1,7 @@
 <?php
 require('../include/conecta.php');
 
-$cod_estado = getPost('cod_estado');
+$cod = getPost('cod');
 $idModal = getPost('idModal');
 $tituloModal = getPost('tituloModal');
 $funcaoModal = getPost('funcaoModal');
@@ -20,7 +20,7 @@ $retorno = '
                     <p>' . $textoModal . '</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" id="funcaoDoModal" onclick="' . $funcaoModal . '(\'' . $cod_estado . '\')">'. $textoBotao .'</button>
+                    <button type="button" class="btn btn-danger" id="funcaoDoModal" onclick="' . $funcaoModal . '(\'' . $cod . '\')">'. $textoBotao .'</button>
                     <button type="button" class="btn btn-secondary" id="cancelarModal" data-dismiss="modal">Cancelar</button>
                 </div>
             </div>

@@ -136,7 +136,6 @@ function alert(mensagem, titulo, width, funcao) {
         width = "60%";
     }
 
-    // Ajuste para dispositivos móveis
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         width = 'auto';
     }
@@ -156,7 +155,6 @@ function alert(mensagem, titulo, width, funcao) {
         backgroundDismiss: false,
         closeIcon: false,
         onOpenBefore: function () {
-            // Guarda a função em variável global temporária para uso no botão "X"
             window.__alertCallback = funcao;
         },
         buttons: {
@@ -182,7 +180,7 @@ function verificarCampos(campos, mensagens) {
       if (campos[campo] === null ||campos[campo] === undefined ||campos[campo].toString().trim() === ""      ) 
       {
         let nomeCampo = mensagens[campo] || campo; 
-        mensagensErro += nomeCampo + " precisa ser preenchido.<br>";
+        mensagensErro += "<b>" + nomeCampo + "</b>"+ " precisa ser preenchido.<br>";
       }
     }
   
@@ -194,8 +192,6 @@ function verificarCampos(campos, mensagens) {
     return true;  
 }
   
-
-
 function acharPai(query, valorProcurado) {
     return new Promise(function (resolve, reject) {
         $.ajax({
