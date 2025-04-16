@@ -1,4 +1,5 @@
 <?php
+//OLÁ
 require('../include/conecta.php');
 $bd = conecta();
 $retorno = '';
