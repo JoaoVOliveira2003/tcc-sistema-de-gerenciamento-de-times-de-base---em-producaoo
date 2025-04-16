@@ -270,7 +270,7 @@ CREATE TABLE `tcc`.`midia_TreinoJogo` (
 -- grauPrivacidade
 CREATE TABLE grau_privacidade(
   cod_grau_privacidade INT PRIMARY KEY, 
-  descricao VARCHAR(100) NOT NULL
+  desc_grau_privacidade VARCHAR(100) NOT NULL
 
 );
 

@@ -140,7 +140,7 @@ INSERT INTO posicao (cod_posicao, cod_esporte, desc_posicao, sigla_posicao) VALU
 (21, 3, 'Líbero', 'LIB');
 
 -- Inserção de grau de privacidade
-INSERT INTO grau_privacidade (cod_grau_privacidade, descricao) VALUES
+INSERT INTO grau_privacidade (cod_grau_privacidade, desc_grau_privacidade) VALUES
 (1, 'privada'),
 (2, 'staff'),
 (3, 'staff|jogador');
