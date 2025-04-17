@@ -1,5 +1,5 @@
 <?php
-require('../../include/conecta.php');
+require('../../../include/conecta.php');
 $bd = conecta();
 $retorno = '';
 
@@ -15,6 +15,8 @@ $textoBotao   = getPost('textoBotao');
 
 
 $query ="select sigla_nacao,desc_nacao from nacao where cod_nacao= ". $cod;
+
+error_log($query);
 
 if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
     return;

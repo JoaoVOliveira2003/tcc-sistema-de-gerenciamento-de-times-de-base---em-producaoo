@@ -1,5 +1,5 @@
 <?php
-require('../../include/conecta.php');
+require('../../../include/conecta.php');
 $bd = conecta();
 $retorno = '';
 

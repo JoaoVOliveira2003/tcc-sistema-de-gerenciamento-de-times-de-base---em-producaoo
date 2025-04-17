@@ -1,126 +1,163 @@
 function teste(){
-    console.log('oie');
+    var teste1 = document.getElementById('nacao').value;
+    var teste2 = document.getElementById('estado').value;
+
+    console.log(teste1 + teste2);
 }
 
-// function selectNacoes() {
-    
-//     var pagina = "/tcc/componentes/selectBasico.php";
 
-//     var query = "SELECT cod_nacao, desc_nacao FROM nacao";
-//     var codSelect = "cod_nacao";
-//     var descSelect = "desc_nacao";
-//     var onclick = "";
-//     var onchange = "onchange='selectEstados(this.value)'";
-//     var label = "Nação:";
-//     var classLabel = "form-label";
-//     var forLabel = "nacao";
-//     var classSelect = "form-control form-control-sm";
-//     var idSelect = "nacao";
-//     var name = "nacao";
-//     var primeiroOption = "Escolha uma opção";
+function selectNacoesIsolado() {
+    var pagina = "/tcc/componentes/selectBasico.php";
 
-//     $.ajax({
-//         type: "POST",
-//         url: pagina,
-//         data: {
-//             query: query,
-//             codSelect: codSelect,
-//             descSelect: descSelect,
-//             onclick: onclick,
-//             onchange: onchange,
-//             label: label,
-//             classLabel: classLabel,
-//             forLabel: forLabel,
-//             classSelect: classSelect,
-//             idSelect: idSelect,
-//             name: name,
-//             primeiroOption: primeiroOption
-//         },
-//         success: function (data) {
-//             $("#selectNacao").html(data);
-//         }
-//     });
-// }
+    var query = "SELECT cod_nacao, desc_nacao FROM nacao";
+    var codSelect = "cod_nacao";
+    var descSelect = "desc_nacao";
+    var label = "Pertencente a:";
+    var classLabel = "form-label";
+    var forLabel = "nacao";
+    var classSelect = "form-control";
+    var idSelect = "nacao";
+    var name = "nacao";
+    var primeiroOption = "Escolha uma opção";
 
-// function selectEstados(cod_nacao) {
-//     $("#selectMunicipio").html('<option value="">Escolha um municipio</option>');
+    $.ajax({
+        type: "POST",
+        url: pagina,
+        data: {
+            query: query,
+            codSelect: codSelect,
+            descSelect: descSelect,
+            label: label,
+            classLabel: classLabel,
+            forLabel: forLabel,
+            classSelect: classSelect,
+            idSelect: idSelect,
+            name: name,
+            primeiroOption: primeiroOption
+        },
+        success: function (data) {
+            $("#selectNacao").html(data);       
+        }
+    });
+}
 
-//     var pagina = "componentes/selectBasico.php";
+function selectNacoes() {  
+    var pagina = "/tcc/componentes/selectBasico.php";
+                
+    var query = "SELECT cod_nacao, desc_nacao FROM nacao";
+    var codSelect = "cod_nacao";
+    var descSelect = "desc_nacao";
+    var onclick = "";
+    var onchange = "onchange='selectEstados(this.value)'";
+    var label = "Nação:";
+    var classLabel = "form-label";
+    var forLabel = "nacao";
+    var classSelect = "form-control mb-2";
+    var idSelect = "nacao";
+    var name = "nacao";
+    var primeiroOption = "Escolha uma opção";
 
-//     var query = "select cod_estado,desc_estado from estado where cod_nacao = " + cod_nacao;
+    $.ajax({
+        type: "POST",
+        url: pagina,
+        data: {
+            query: query,
+            codSelect: codSelect,
+            descSelect: descSelect,
+            onclick: onclick,
+            onchange: onchange,
+            label: label,
+            classLabel: classLabel,
+            forLabel: forLabel,
+            classSelect: classSelect,
+            idSelect: idSelect,
+            name: name,
+            primeiroOption: primeiroOption
+        },
+        success: function (data) {
+            $("#selectNacao").html(data);
+        }
+    });
+}
 
-//     var codSelect = "cod_estado";
-//     var descSelect = "desc_estado";
-//     var onchange = "onchange='selectMunicipio(this.value)'";
-//     var label = "Estado:";
-//     var classLabel = "mt-1 form-label";
-//     var classSelect = "form-control form-control-sm";
-//     var forLabel = "estado";
-//     var idSelect = "estado";
-//     var name = "estado";
-//     var primeiroOption = "Escolha um estado";
+function selectEstados(cod_nacao) {
+    $("#selectMunicipio").html('<option value="">Escolha um municipio</option>');
 
-//     $.ajax({
-//         type: "POST",
-//         url: pagina,
-//         data: {
-//             query: query,
-//             codSelect: codSelect,
-//             descSelect: descSelect,
-//             onclick: onclick,
-//             onchange: onchange,
-//             label: label,
-//             classLabel: classLabel,
-//             forLabel: forLabel,
-//             classSelect: classSelect,
-//             idSelect: idSelect,
-//             name: name,
-//             primeiroOption: primeiroOption
-//         },
-//         success: function (data) {
-//             $("#selectEstado").html(data);
-//         }
-//     });
-// }
+    var pagina = "/tcc/componentes/selectBasico.php";
 
-// function selectMunicipio(cod_estado) {
-//     var pagina = "componentes/selectBasico.php";
-//     var query = "select cod_municipio,desc_municipio from municipio where cod_estado = " + cod_estado;
+    var query = "select cod_estado,desc_estado from estado where cod_nacao = " + cod_nacao;
 
-//     var codSelect = "cod_municipio";
-//     var descSelect = "desc_municipio";
-//     var onchange = "onchange='teste(this.value)'";
-//     var label = "Municipio:";
-//     var classLabel = "mt-1 form-label";
-//     var classSelect = "form-control form-control-sm";
-//     var forLabel = "municipio";
-//     var idSelect = "municipio";
-//     var name = "municipio";
-//     var primeiroOption = "Escolha um municipio";
+    var codSelect = "cod_estado";
+    var descSelect = "desc_estado";
+    var onchange = "onchange='selectMunicipio(this.value)'";
+    var label = "Estado:";
+    var classLabel = "mt-1 form-label";
+    var classSelect = "form-control mb-2";
+    var forLabel = "estado";
+    var idSelect = "estado";
+    var name = "estado";
+    var primeiroOption = "Escolha um estado";
 
-//     $.ajax({
-//         type: "POST",
-//         url: pagina,
-//         data: {
-//             query: query,
-//             codSelect: codSelect,
-//             descSelect: descSelect,
-//             onclick: onclick,
-//             onchange: onchange,
-//             label: label,
-//             classLabel: classLabel,
-//             forLabel: forLabel,
-//             classSelect: classSelect,
-//             idSelect: idSelect,
-//             name: name,
-//             primeiroOption: primeiroOption
-//         },
-//         success: function (data) {
-//             $("#selectMunicipio").html(data);
-//         }
-//     });
-// }
+    $.ajax({
+        type: "POST",
+        url: pagina,
+        data: {
+            query: query,
+            codSelect: codSelect,
+            descSelect: descSelect,
+            onclick: onclick,
+            onchange: onchange,
+            label: label,
+            classLabel: classLabel,
+            forLabel: forLabel,
+            classSelect: classSelect,
+            idSelect: idSelect,
+            name: name,
+            primeiroOption: primeiroOption
+        },
+        success: function (data) {
+            $("#selectEstado").html(data);
+        }
+    });
+}
 
+function selectMunicipio(cod_estado) {
+    var pagina = "/tcc/componentes/selectBasico.php";
+    var query = "select cod_municipio,desc_municipio from municipio where cod_estado = " + cod_estado;
+
+    var codSelect = "cod_municipio";
+    var descSelect = "desc_municipio";
+    var onchange = "onchange='teste(this.value)'";
+    var label = "Municipio:";
+    var classLabel = "mt-1 form-label";
+    var classSelect = "form-control form-control-sm";
+    var forLabel = "municipio";
+    var idSelect = "municipio";
+    var name = "municipio";
+    var primeiroOption = "Escolha um municipio";
+
+    $.ajax({
+        type: "POST",
+        url: pagina,
+        data: {
+            query: query,
+            codSelect: codSelect,
+            descSelect: descSelect,
+            onclick: onclick,
+            onchange: onchange,
+            label: label,
+            classLabel: classLabel,
+            forLabel: forLabel,
+            classSelect: classSelect,
+            idSelect: idSelect,
+            name: name,
+            primeiroOption: primeiroOption
+        },
+        success: function (data) {
+            $("#selectMunicipio").html(data);
+        }
+    });
+}
 
 function alert(mensagem, titulo, width, funcao) {
     if (typeof (titulo) == "function") {
@@ -171,7 +208,6 @@ function alert(mensagem, titulo, width, funcao) {
         }
     });
 }
-
 
 function verificarCampos(campos, mensagens) {
     let mensagensErro = '';

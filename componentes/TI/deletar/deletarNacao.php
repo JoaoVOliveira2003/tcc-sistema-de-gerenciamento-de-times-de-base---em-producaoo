@@ -1,14 +1,15 @@
 <?php
-require('../../include/conecta.php');
+require('../../../include/conecta.php');
+
+// error_log('entrou aqui');
 
 $retorno = '';
 
-$cod_estado= getPost('cod_estado');
+$cod_nacao= getPost('cod');
 
 $bd = conecta();
 
-$query = "delete from estado where cod_estado= " . $cod_estado . "";
-error_log($query);
+$query = "delete from nacao where cod_nacao= " . $cod_nacao . "";
 
 
 if ($bd->SqlExecuteQuery($query)) {
