@@ -1,0 +1,9 @@
+[18-Apr-2025 16:57:46 America/Sao_Paulo] UPDATE subinstituicao
+          SET cod_instituicao = '7',
+              cod_municipio = '1',
+              ativo = 's',
+              desc_subinstituicao = 'Campus Central - Bloco Ab'
+          WHERE cod_subinstituicao = '1';
+[18-Apr-2025 16:59:26 America/Sao_Paulo] INSERT INTO instituicao(desc_instituicao, cod_tipo_instituicao,ativo) VALUES ('Instituto federal', '1','s')
+[18-Apr-2025 16:59:30 America/Sao_Paulo] select cod_tipo_instituicao from instituicao where cod_instituicao = 1
+[18-Apr-2025 16:59:47 America/Sao_Paulo] INSERT INTO instituicao(desc_instituicao, cod_tipo_instituicao,ativo) VALUES ('Instituto federal', '1','s')

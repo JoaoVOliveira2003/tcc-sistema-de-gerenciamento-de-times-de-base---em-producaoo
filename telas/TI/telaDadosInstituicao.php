@@ -10,7 +10,7 @@
   <script>
     $(document).ready(function() {
       tabelaDeleteUpdateInstituicao();
-      selectTiposInstituto();
+       selectTiposInstituicoes();
    });
   </script>
 </head>

@@ -842,7 +842,6 @@ function atualizarInstituicao(cod) {
             atualizacaoTipoInstituicao: atualizacaoTipoInstituicao,
         },
         success: function (data) {
-            console.log(data);
 
             if (data == "ok") {
                 alert("Dados atualizados.", "Atenção", "50%", function () {
@@ -999,9 +998,7 @@ async function modalAtualizarInstituicao(cod) {
     var funcaoModal = "atualizarInstituicao";
     var textoBotao = "Atualizar";
 
-    var query =
-        "select cod_tipo_instituicao from instituicao where cod_instituicao = " +
-        cod;
+    var query ="select cod_tipo_instituicao from instituicao where cod_instituicao = " + cod;
     var valorProcurado = "cod_tipo_instituicao";
     var select = await acharPai(query, valorProcurado);
 

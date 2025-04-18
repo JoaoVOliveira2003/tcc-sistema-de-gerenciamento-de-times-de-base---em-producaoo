@@ -1,12 +1,43 @@
 function teste(){
-    var teste1 = document.getElementById('nacao').value;
-    var teste2 = document.getElementById('estado').value;
-
-    console.log(teste1 + teste2);
+    console.log('oie');
 }
 
+function selectInstituicoes(){
+    var pagina = "/tcc/componentes/selectBasico.php";
 
-function selectTiposInstituto(){
+    var query = "SELECT cod_instituicao,desc_instituicao FROM instituicao;";
+    var codSelect = "cod_instituicao";
+    var descSelect = "desc_instituicao";
+    var label = "Pertence instituição:";
+    var classLabel = "form-label";
+    var forLabel = "institucao";
+    var classSelect = "form-control mb-2";
+    var idSelect = "institucao";
+    var name = "institucao";
+    var primeiroOption = "Escolha uma opção";
+
+    $.ajax({
+        type: "POST",
+        url: pagina,
+        data: {
+            query: query,
+            codSelect: codSelect,
+            descSelect: descSelect,
+            label: label,
+            classLabel: classLabel,
+            forLabel: forLabel,
+            classSelect: classSelect,
+            idSelect: idSelect,
+            name: name,
+            primeiroOption: primeiroOption
+        },
+        success: function (data) {
+            $("#selectInstituicao").html(data);       
+        }
+    });    
+}
+
+function  selectTiposInstituicoes(){
     var pagina = "/tcc/componentes/selectBasico.php";
 
     var query = "SELECT cod_tipo_instituicao, desc_tipo_instituicao FROM tipo_instituicao";
@@ -116,7 +147,6 @@ function selectNacoes() {
 }
 
 function selectEstados(cod_nacao) {
-    $("#selectMunicipio").html('<option value="">Escolha um municipio</option>');
 
     var pagina = "/tcc/componentes/selectBasico.php";
 
@@ -261,6 +291,35 @@ function verificarCampos(campos, mensagens) {
     }
   
     return true;  
+}
+
+function verificarCampoId(campos, mensagens) {
+    let mensagensErro = '';
+
+    for (let idCampo in campos) {
+        let elemento = document.getElementById(idCampo);
+
+        // Agora exibe mensagem se o campo NÃO EXISTE
+        if (!elemento) {
+            let nomeCampo = mensagens[idCampo] || idCampo;
+            mensagensErro += "<b>" + nomeCampo + "</b> precisa ser preenchido.<br>";
+            continue;
+        }
+
+        let valor = elemento.value;
+
+        if (valor === null || valor === undefined || valor.toString().trim() === "") {
+            let nomeCampo = mensagens[idCampo] || idCampo;
+            mensagensErro += "<b>" + nomeCampo + "</b> precisa ser preenchido.<br>";
+        }
+    }
+
+    if (mensagensErro.length > 0) {
+        alert(mensagensErro);
+        return false;
+    }
+
+    return true;
 }
   
 function acharPai(query, valorProcurado) {

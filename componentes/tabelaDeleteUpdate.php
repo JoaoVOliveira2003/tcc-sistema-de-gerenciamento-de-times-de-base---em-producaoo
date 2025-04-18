@@ -65,9 +65,9 @@ if ($bd->SqlNumRows() > 0) {
                 $valorVar = $bd->SqlQueryShow($var);
 
                 // Aplica a mesma conversão aqui, caso os botões usem esse valor
-                if ($valorVar === 's') {
+                if ($valorVar === 's' || $valorVar === 'S') {
                     $valorVar = 'Sim';
-                } elseif ($valorVar === 'n') {
+                } elseif ($valorVar === 'n' || $valorVar === 'N') {
                     $valorVar = 'Não';
                 }
 

@@ -7,7 +7,7 @@
   <script src="js/index.js">
     $(document).ready(function() {
      
-selectTiposInstituto();
+ selectTiposInstituicoes();
    });
   </script> 
   <script src="js/funcoes.js"></script> 
