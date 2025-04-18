@@ -37,6 +37,42 @@ function selectInstituicoes(){
     });    
 }
 
+function selectSubInstituicoes(){
+    var pagina = "/tcc/componentes/selectBasico.php";
+
+    var query = "SELECT Cod_SubInstituicao,desc_subInstituicao FROM subInstituicao;";
+    var codSelect = "cod_subinstituicao";
+    var descSelect = "desc_subInstituicao";
+    var label = "Pertence Sub-instituição:";
+    var classLabel = "form-label";
+    var forLabel = "subinstitucao";
+    var classSelect = "form-control mb-2";
+    var idSelect = "subinstitucao";
+    var name = "subinstitucao";
+    var primeiroOption = "Escolha uma opção";
+
+    $.ajax({
+        type: "POST",
+        url: pagina,
+        data: {
+            query: query,
+            codSelect: codSelect,
+            descSelect: descSelect,
+            label: label,
+            classLabel: classLabel,
+            forLabel: forLabel,
+            classSelect: classSelect,
+            idSelect: idSelect,
+            name: name,
+            primeiroOption: primeiroOption
+        },
+        success: function (data) {
+            $("#selectSubInstituicao").html(data);       
+        }
+    });    
+}
+
+
 function  selectTiposInstituicoes(){
     var pagina = "/tcc/componentes/selectBasico.php";
 
