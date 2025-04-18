@@ -6,6 +6,41 @@ function teste(){
 }
 
 
+function selectTiposInstituto(){
+    var pagina = "/tcc/componentes/selectBasico.php";
+
+    var query = "SELECT cod_tipo_instituicao, desc_tipo_instituicao FROM tipo_instituicao";
+    var codSelect = "cod_tipo_instituicao";
+    var descSelect = "desc_tipo_instituicao";
+    var label = "Tipo de instituição a:";
+    var classLabel = "form-label";
+    var forLabel = "tipoInstituicao";
+    var classSelect = "form-control mb-2";
+    var idSelect = "tipoInstituicao";
+    var name = "tipoInstituicao";
+    var primeiroOption = "Escolha uma opção";
+
+    $.ajax({
+        type: "POST",
+        url: pagina,
+        data: {
+            query: query,
+            codSelect: codSelect,
+            descSelect: descSelect,
+            label: label,
+            classLabel: classLabel,
+            forLabel: forLabel,
+            classSelect: classSelect,
+            idSelect: idSelect,
+            name: name,
+            primeiroOption: primeiroOption
+        },
+        success: function (data) {
+            $("#selectInstituicao").html(data);       
+        }
+    });    
+}
+
 function selectNacoesIsolado() {
     var pagina = "/tcc/componentes/selectBasico.php";
 

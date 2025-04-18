@@ -178,7 +178,42 @@ INSERT INTO tipo_role(desc_tipo_role,abrev_tipo_role,ativo) values
 ('Admistrador de sistemas','TI','s'),
 ('Admistrador de Instituição','ADMI','s'),
 ('Admistrador de Sub-Instituição','ADMS','s'),
+('Admistrador de Sub-Instituição e Staff','ADMS|STAFF','s'),
 ('Treinadores','STAFF','s'),
 ('jogadores','','s');
 
+INSERT INTO instituicao (desc_instituicao, ativo, cod_tipo_instituicao) VALUES 
+('Universidade do Sol', 's', 3),
+('Centro Técnico Alfa', 's', 1),
+('Instituto Delta', 's', 7),
+('Faculdade Horizonte', 's', 2),
+('Escola Técnica Nova Geração', 's', 5),
+('Academia Científica Orion', 's', 9),
+('Colégio Saber Futuro', 's', 4),
+('Instituto de Pesquisas Quark', 's', 11),
+('Universidade Internacional PontoCom', 's', 6),
+('Centro de Inovação Vortex', 's', 8);
 
+INSERT INTO subInstituicao (Cod_Instituicao, ativo, desc_subInstituicao, Cod_Municipio) VALUES
+(1, 'S', 'Campus Central - Bloco A', 2),
+(2, 'S', 'Unidade Zona Norte', 5),
+(3, 'S', 'Extensão Tecnológica Sul', 1),
+(4, 'S', 'Polo Educacional Mar Azul', 3),
+(5, 'S', 'Núcleo de Pesquisa Aurora', 7),
+(6, 'S', 'Centro de Formação Técnica', 4),
+(7, 'S', 'Campus Avançado Oeste', 6),
+(8, 'S', 'Unidade Experimental Leste', 8),
+(9, 'S', 'Subunidade Acadêmica Alfa', 9),
+(9, 'S', 'Ponto de Apoio Regional', 10);
+
+INSERT INTO turma (desc_turma, ativo, cod_subInstituicao) VALUES
+('Turma A - Manhã', 'S', 1),
+('Turma B - Tarde', 'S', 2),
+('Turma C - Noite', 'S', 3),
+('Turma D - Integral', 'S', 4),
+('Turma E - Manhã', 'S', 5),
+('Turma F - Tarde', 'S', 6),
+('Turma G - Noite', 'S', 7),
+('Turma H - Integral', 'S', 8),
+('Turma I - Manhã', 'S', 9),
+('Turma J - Tarde', 'S', 10);

@@ -133,7 +133,7 @@ CREATE TABLE `tipo_instituicao` (
 
 -- Instituição
 CREATE TABLE `instituicao` (
-  `cod_instituicao` INT NOT NULL, 
+  `cod_instituicao` INT NOT NULL AUTO_INCREMENT, 
   `desc_instituicao` VARCHAR(100), 
   `ativo` CHAR(1), 
   `cod_tipo_instituicao` INT, 
@@ -186,13 +186,16 @@ CREATE TABLE `tcc`.`administrador_subInstituto` (
 
 -- turma
 
-CREATE TABLE turma(
+CREATE TABLE turma (
   cod_turma INT PRIMARY KEY AUTO_INCREMENT, 
   desc_turma VARCHAR(50), 
   ativo CHAR(1), 
   cod_subInstituicao INT NOT NULL, 
-  CONSTRAINT fk_turma_subInstituicao FOREIGN KEY (cod_subInstituicao) REFERENCES subInstituicao(cod_instituicao)
+  CONSTRAINT fk_turma_subInstituicao 
+    FOREIGN KEY (cod_subInstituicao) REFERENCES subInstituicao(Cod_SubInstituicao)
+    ON DELETE NO ACTION ON UPDATE CASCADE
 );
+
 
 -- staff_turma
 

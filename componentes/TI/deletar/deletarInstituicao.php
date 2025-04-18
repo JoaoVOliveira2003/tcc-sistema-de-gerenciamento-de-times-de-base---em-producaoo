@@ -3,11 +3,11 @@ require('../../../include/conecta.php');
 
 $retorno = '';
 
-$cod_estado= getPost('cod_estado');
+$cod= getPost('cod');
 
 $bd = conecta();
 
-$query = "delete from estado where cod_estado= " . $cod_estado . "";
+$query = "delete from instituicao where cod_instituicao= " . $cod . "";
 
 if ($bd->SqlExecuteQuery($query)) {
     $retorno = 'ok';

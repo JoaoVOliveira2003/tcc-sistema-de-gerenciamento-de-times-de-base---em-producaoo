@@ -21,23 +21,23 @@ if (empty($query)) {
     return false;
 }
 
-if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
-    return;
-}
+// Tenta executar a query, independentemente do número de resultados
+$executou = $bd->SqlExecuteQuery($query);
 
 $retorno .= '<label class="' . $classLabel . '" for="' . $forLabel . '">' . $label . '</label>';
 $retorno .= '<select class="' . $classSelect . '" id="' . $idSelect . '" name="' . $name . '" ' . $onclick . ' ' . $onchange . '>';
 $retorno .= '<option value="">' . $primeiroOption . '</option>';
 
-do {
-    $valor  = $bd->SqlQueryShow($descSelect);
-    $codigo = $bd->SqlQueryShow($codSelect);
+if ($executou && $bd->SqlNumRows() > 0) {
+    do {
+        $valor  = $bd->SqlQueryShow($descSelect);
+        $codigo = $bd->SqlQueryShow($codSelect);
 
-    // Aqui comparamos o valor selecionado
-    $selected = ($select !== '' && $select == $codigo) ? ' selected' : '';
+        $selected = ($select !== '' && $select == $codigo) ? ' selected' : '';
 
-    $retorno .= '<option value="' . $codigo . '"' . $selected . '>' . $valor . '</option>';
-} while ($bd->SqlFetchNext());
+        $retorno .= '<option value="' . $codigo . '"' . $selected . '>' . $valor . '</option>';
+    } while ($bd->SqlFetchNext());
+}
 
 $retorno .= '</select>';
 

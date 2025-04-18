@@ -15,8 +15,6 @@ $query = "UPDATE nacao
               sigla_nacao = '$sigla_nacao' 
           WHERE cod_nacao = '$cod_nacao';"; 
 
-error_log($query);
-
 if ($bd->SqlExecuteQuery($query)) {
     $retorno = 'ok';
 } else {
