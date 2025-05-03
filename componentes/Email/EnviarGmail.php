@@ -7,12 +7,12 @@ require __DIR__ . '/../../include/PHPMailer/src/Exception.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-function corpoEmail($nome, $tipoRole, $cod_pessoa) {
+function corpoEmail($gmailDestino,$nome,$tipoRole,$cod_pessoa) {
     $link='';
 
     if ($tipoRole == 1) {
         $tipoRole = 'Administrador de sistemas (TI)';
-        $link = 'http://localhost/tcc/telas/TI/confirmarDadosTI.php?cod_pessoa=' . $cod_pessoa;
+        $link = 'http://localhost/tcc/telas/TI/confirmarDadosTI.php?cod_pessoa=' . urlencode($cod_pessoa) . '&email=' . urlencode($gmailDestino);
     } else if ($tipoRole == 2) {
         $tipoRole = 'Administrador de Instituição (ADMI)';
     } else if ($tipoRole == 3) {
@@ -112,7 +112,7 @@ function enviarGmail($gmailDestino,$nome,$tipoRole,$cod_pessoa) {
         $mail->setFrom('sistemaGerenciadorDeBases@gmail.com', 'Sistema Gerenciador de Bases');
         $mail->addAddress($gmailDestino, 'Joao');
         
-        $textoEmail = corpoEmail($nome,$tipoRole,$cod_pessoa);
+        $textoEmail = corpoEmail($gmailDestino,$nome,$tipoRole,$cod_pessoa);
 
         $mail->isHTML(true);
         $mail->Subject = 'Email para ativação de conta no Sistema Gerenciador de Bases';

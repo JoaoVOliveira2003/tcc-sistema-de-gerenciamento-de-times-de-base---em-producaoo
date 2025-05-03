@@ -175,9 +175,12 @@ function selectNacoes(cadastro) {
       primeiroOption: primeiroOption,
     },
     success: function (data) {
+      console.log(data);
       $("#selectNacao").html(data);
     },
   });
+
+
 }
 
 function selectEstados(cod_nacao, cadastro) {
