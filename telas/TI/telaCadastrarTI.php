@@ -31,11 +31,11 @@
             <div class="row">
                 <div class="col-md-6 mb-2">
                     <label for="nome" class="form-label">Nome do administrador:</label>
-                    <input type="text" value="João" class="form-control" id="nome" placeholder="Digite o nome...">
+                    <input type="text" class="form-control" id="nome" placeholder="Digite o nome...">
                 </div>
                 <div class="col-md-6 mb-2">
                     <label for="email_usuario" class="form-label">Email do administrador:</label>
-                    <input type="text" class="form-control" value="ojoao953@gmail.com" id="email_usuario"
+                    <input type="text" class="form-control" id="email_usuario"
                         placeholder="Digite o email...">
                 </div>
             </div>
@@ -43,7 +43,7 @@
             <div class="row">
                 <div class="col-md-3 mb-4">
                     <label for="cpf" class="form-label">CPF:</label>
-                    <input maxlength="14" oninput="aplicarMascaraCPF(this)" value="13432640900" type="text"
+                    <input maxlength="14" oninput="aplicarMascaraCPF(this)"  type="text"
                         class="form-control" id="cpf" placeholder="Digite o CPF...">
                 </div>
             </div>

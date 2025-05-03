@@ -165,6 +165,8 @@ function gravarNacao() {
 
 function gravarTI() {
   var pagina = "/tcc/componentes/TI/gravar/gravarTI.php";
+  var tipoRole = 1;
+
 
   // Verificação de campos obrigatórios
   let campos = {
@@ -209,7 +211,7 @@ function gravarTI() {
   $.ajax({
     type: "POST",
     url: pagina,
-    data: { municipio: municipio, nome: nome, email: email, cpf: cpf },
+    data: { municipio: municipio, nome: nome, email: email, cpf: cpf},
     success: function (data) {
       escodendoModalCarregamento();
 
@@ -220,6 +222,54 @@ function gravarTI() {
           "50%",
           function () {
             location.reload();
+          }
+        );
+      }
+    },
+    error: function (xhr, status, error) {
+      hideLoadingModal(); // Esconde o modal de carregamento
+      console.error("Erro ao gravar dados:", error);
+      alert(
+        "Ocorreu um erro ao gravar os dados. Verifique a conexão e tente novamente.",
+        "Erro"
+      );
+    },
+  });
+}
+
+function confirmarCadastroTI(cod){
+  var pagina = "/tcc/componentes/TI/gravar/confirmarCadastroTI.php";
+
+  var senha = document.getElementById("senha_usuario").value;
+  var email = document.getElementById("email_usuario").value;
+ 
+  let camposObrigatorios = {
+    senha:senha
+  };
+
+  let mensagemCamposObrigatorios = {
+    senha: "Senha ",
+  };
+
+  if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) {
+    return;
+  }
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {email:email,cod:cod,senha:senha},
+    success: function (data) 
+    {
+      console.log(data);
+
+       if (data == "ok") {
+        alert(
+          "Dados atualizado, agora você podera realizar cadastro ! <br> ao clicar no botão 'fechar' ele ira ser enviado a tela do login.",
+          "Atenção",
+          "50%",
+          function () {
+            window.location.href = "/tcc/telas/LOGIN/index.php";
           }
         );
       }
@@ -616,7 +666,83 @@ function modalDeletarMunicipio(cod) {
   });
 }
 
+function recusarCadastroTI(cod) {
+  var pagina = "/tcc/componentes/modalBasico.php";
+
+  var idModal = "modalRecusarCadastroTI";
+  var textoBotao = "Excluir";
+  var tituloModal = "Confirmar Exclusão";
+  var funcaoModal = "deletarCadastroTI";
+  var textoModal =
+    "Você tem certeza que deseja negar o cadastro ?";
+  var textoBotao = "Recusar";
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {
+      funcaoModal: funcaoModal,
+      textoBotao: textoBotao,
+      cod: cod,
+      idModal: idModal,
+      tituloModal: tituloModal,
+      textoModal: textoModal,
+    },
+    success: function (data) {
+      $("#modalContainer").html(data);
+
+      var modalElement = $("#" + idModal);
+      modalElement.modal("show");
+
+      modalElement.attr("aria-hidden", "false");
+
+      $("#cancelarModal").on("click", function () {
+        modalElement.modal("hide");
+      });
+
+      $("#funcaoDoModal").on("click", function () {
+        modalElement.modal("hide");
+      });
+    },
+    error: function (xhr, status, error) {
+      console.error("Erro ao carregar os dados do estado:", error);
+    },
+  });
+}
+
 //função de deletar
+
+function deletarCadastroTI(cod) {
+  var pagina = "/tcc/componentes/ti/deletar/deletarCadastroTI.php";
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {cod:cod},
+    success: function (data) {
+      console.log(data);
+      if (data == "ok") {
+        alert("Dados deletados!", 'Atenção', '80%', function () {
+          window.location.href = "https://www.google.com";
+        });
+
+      } else if (data == "nok") {
+        alert(
+          "Remoção incompleta,caso problema continuar,chame o suporte.",
+          "Atenção",
+          "50%",
+          function () {
+            location.reload();
+          }
+        );
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error("Erro ao gravar nação:", error);
+    },
+  });
+}
+
 function deletarEstado(cod_estado) {
   var pagina = "/tcc/componentes/ti/deletar/deletarEstado.php";
 
@@ -1224,14 +1350,12 @@ function selecionarTipoInstituicaoSelecionado(select) {
 function verificarCadastroTI(codPessoa,emailPessoa) {
   var pagina = "/tcc/componentes/Email/verificarCadastroTI.php";
 
-  console.log(codPessoa);
   $.ajax({
     type: "POST",
     url: pagina,
     data: { codPessoa: codPessoa, emailPessoa: emailPessoa }, 
     dataType: "json",
     success: function (data) {
-      console.log(data);
 
       if (data.status === "nok1") {
         alert("Erro ao executar a consulta!", 'Atenção', '80%', function () {
