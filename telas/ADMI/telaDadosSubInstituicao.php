@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <?php include('../../include/includeBase.php'); ?>
   <script src="../../js/funcoes.js"></script>
-  <script src="../../js/admi.js"></script>
+  <script src="../../js/adms.js"></script>
   <script>
     $(document).ready(function () {
       selectNacoes();
@@ -30,8 +30,8 @@
       <div id="selectMunicipio" class="mb-3"></div>
 
       <div class="row">
-        <div class="col-md-6 mb-3">
-          <div id="selectInstituicao" class="mb-3"></div>
+      <div class="col-md-6 mb-3">
+          <div id="selectSubInstituicao" class="mb-3"></div>
         </div>
         <div class="col-md-6 mb-3">
           <label for="desc_subInstituicao" class="form-label">Nome da Sub-instituição:</label>

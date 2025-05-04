@@ -533,7 +533,7 @@ function recusarCadastroADMI(cod) {
 }
 
 function deletarCadastroADMI(cod) {
-  var pagina = "/tcc/componentes/ti/deletar/deletarCadastroADMI.php";
+  var pagina = "/tcc/componentes/admi/deletar/deletarCadastroADMI.php";
 
   $.ajax({
     type: "POST",

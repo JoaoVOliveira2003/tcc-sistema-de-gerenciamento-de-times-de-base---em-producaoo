@@ -27,9 +27,9 @@ $cod_pessoa = isset($_GET['cod_pessoa']) ? $_GET['cod_pessoa'] : '';
 <body>
     <div class="container">
         <div class="mt-2">
-            <h2 class="mb-3">Confirmação de cadastro de <b>Administrador de Sistema (ADMI)</b></h2>
+            <h2 class="mb-3">Confirmação de cadastro de <b>Administrador de Sistema (ADMS)</b></h2>
             <h5 class="mb-2">
-                Olá! <br> Você foi cadastrado como administrador de sistema (ADMI) no sistema de gestão de bases.
+                Olá! <br> Você foi cadastrado como administrador de sistema (ADMS) no sistema de gestão de bases.
                 Abaixo estão os seus dados cadastrados. Para confirmar a sua inscrição, preencha o campo senha e clique
                 no botão "Confirmar".<br>
                 Caso queira negar o cadastro, clique em "Recusar".
