@@ -110,7 +110,7 @@ CREATE TABLE `role_cadastro` (
 CREATE TABLE `staff` (
   `cod_staff` INT NOT NULL AUTO_INCREMENT,  
   PRIMARY KEY (`cod_staff`), 
-  CONSTRAINT `fk_staff_role_cadastro` FOREIGN KEY (`cod_staff`) REFERENCES `role_cadastro` (`cod_role_cadastro`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_staff_role_cadastro` FOREIGN KEY (`cod_staff`) REFERENCES `role_cadastro` (`cod_usuario`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
 -- Administrador
@@ -118,7 +118,7 @@ CREATE TABLE `administrador` (
   `cod_administrador` INT NOT NULL AUTO_INCREMENT, 
   `tipo_role` INT NOT NULL, 
   PRIMARY KEY (`cod_administrador`), 
-  CONSTRAINT `fk_admin_role` FOREIGN KEY (`cod_administrador`) REFERENCES `role_cadastro` (`cod_role_cadastro`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_admin_role` FOREIGN KEY (`cod_administrador`) REFERENCES `role_cadastro` (`cod_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 -- Tipo de Instituição
@@ -315,7 +315,7 @@ CREATE TABLE `tcc`.`jogador` (
   `esporte` INT, 
   `ficha_medica_cod_jogador` INT, 
   PRIMARY KEY (`cod_jogador`), 
-  FOREIGN KEY (`cod_jogador`) REFERENCES `role_cadastro`(`cod_role_cadastro`), 
+  FOREIGN KEY (`cod_jogador`) REFERENCES `role_cadastro`(`cod_usuario`), 
   FOREIGN KEY (`posicao`) REFERENCES `posicao`(`cod_posicao`), 
   FOREIGN KEY (`esporte`) REFERENCES `esporte`(`cod_esporte`), 
   FOREIGN KEY (`ficha_medica_cod_jogador`) REFERENCES `ficha_medica`(`cod_jogador`)

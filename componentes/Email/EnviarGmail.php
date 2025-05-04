@@ -15,6 +15,7 @@ function corpoEmail($gmailDestino,$nome,$tipoRole,$cod_pessoa) {
         $link = 'http://localhost/tcc/telas/TI/confirmarDadosTI.php?cod_pessoa=' . urlencode($cod_pessoa) . '&email=' . urlencode($gmailDestino);
     } else if ($tipoRole == 2) {
         $tipoRole = 'Administrador de Instituição (ADMI)';
+        $link = 'http://localhost/tcc/telas/ADMI/confirmarDadosADMI.php?cod_pessoa=' . urlencode($cod_pessoa) . '&email=' . urlencode($gmailDestino);
     } else if ($tipoRole == 3) {
         $tipoRole = 'Administrador de Sub-Instituição (ADMS)';
     } else if ($tipoRole == 4) {
