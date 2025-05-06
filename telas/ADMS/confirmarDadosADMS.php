@@ -70,8 +70,8 @@ $cod_pessoa = isset($_GET['cod_pessoa']) ? $_GET['cod_pessoa'] : '';
                 </div>
             </div>
 
-            <button type="button" class="btn btn-primary mt-1" id="btnConfirmar" onclick="confirmarCadastroADMI(this.getAttribute('data-cod'))">Confirmar</button>
-            <button type="button" class="btn btn-danger mt-1"  id="btnRecusar"   onclick="recusarCadastroADMI(this.getAttribute('data-cod'))">Recusar</button>
+            <button type="button" class="btn btn-primary mt-1" id="btnConfirmar" onclick="confirmarCadastroADMS(this.getAttribute('data-cod'))">Confirmar</button>
+            <button type="button" class="btn btn-danger mt-1"  id="btnRecusar"   onclick="recusarCadastroADMS(this.getAttribute('data-cod'))">Recusar</button>
 
             <div id="modalContainer"></div>
         </div>
