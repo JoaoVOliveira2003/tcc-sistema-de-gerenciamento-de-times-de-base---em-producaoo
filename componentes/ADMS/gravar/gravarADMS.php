@@ -28,7 +28,7 @@ if ($bd->SqlExecuteQuery($query)) {
 
         if ($bd->SqlExecuteQuery($query)) {
 
-            $query = "INSERT INTO administrador_subInstituto (cod_administrador,cod_subInstituicao) VALUES ($cod_pessoa, $subinstitucao)";
+            $query = "INSERT INTO administrador_subInstituicao (cod_administrador,cod_subInstituicao) VALUES ($cod_pessoa, $subinstitucao)";
             if ($bd->SqlExecuteQuery($query)) {
                 enviarGmail($email, $nome, $cod_role, $cod_pessoa);
                 $retorno = 'ok';

@@ -9,14 +9,14 @@ $cod_pessoa = isset($_GET['cod_pessoa']) ? $_GET['cod_pessoa'] : '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <?php include('../../include/includeBase.php'); ?>
     <script src="../../js/funcoes.js"></script>
-    <script src="../../js/admi.js"></script>
+    <script src="../../js/adms.js"></script>
     <script>
         $(document).ready(function () {
             const urlParams = new URLSearchParams(window.location.search);
             const codPessoa = urlParams.get('cod_pessoa');
             const emailDestino = urlParams.get('email');
 
-            verificarCadastroADMI(codPessoa, emailDestino);
+            verificarCadastroADMS(codPessoa, emailDestino);
 
             $('#btnRecusar').attr('data-cod', codPessoa);
             $('#btnConfirmar').attr('data-cod', codPessoa);

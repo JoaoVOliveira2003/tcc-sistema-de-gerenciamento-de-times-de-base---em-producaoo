@@ -37,7 +37,7 @@
             <div class="row">
                 <div class="col-md-6 mb-2">
                     <label for="nome" class="form-label">Nome do administrador:</label>
-                    <input type="text" class="form-control" value="admi" id="nome" placeholder="Digite o nome...">
+                    <input type="text" class="form-control" value="adms" id="nome" placeholder="Digite o nome...">
                 </div>
                 <div class="col-md-6 mb-2">
                     <label for="email_usuario" class="form-label">Email do administrador:</label>

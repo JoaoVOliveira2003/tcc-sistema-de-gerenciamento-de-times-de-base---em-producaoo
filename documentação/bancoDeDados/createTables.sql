@@ -160,8 +160,8 @@ CREATE TABLE `tcc`.`subInstituicao` (
   CONSTRAINT fk_subInstituicao_municipio FOREIGN KEY (Cod_Municipio) REFERENCES tcc.municipio (cod_municipio) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
--- subInstituto_staff
-CREATE TABLE `tcc`.`subInstituto_staff` (
+-- subInstituticao_staff
+CREATE TABLE `tcc`.`subInstituticao_staff` (
   `cod_staff` INT NOT NULL, 
   `cod_subInstituto` INT NOT NULL, 
   PRIMARY KEY (`cod_staff`, `cod_subInstituto`), 
@@ -169,8 +169,8 @@ CREATE TABLE `tcc`.`subInstituto_staff` (
   CONSTRAINT `fk_subInstituto` FOREIGN KEY (`cod_subInstituto`) REFERENCES `tcc`.`subInstituicao` (`cod_instituicao`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
--- administrador_subInstituto
-CREATE TABLE `tcc`.`administrador_subInstituto` (
+-- administrador_subInstituicao
+CREATE TABLE `tcc`.`administrador_subInstituicao` (
   `cod_administrador` INT NOT NULL, 
   `cod_subInstituicao` INT NOT NULL, 
   PRIMARY KEY (

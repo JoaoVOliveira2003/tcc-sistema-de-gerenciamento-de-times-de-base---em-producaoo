@@ -389,7 +389,8 @@ function gravarADMS() {
 }
 
 function verificarCadastroADMS(codPessoa, emailPessoa) {
-  console.log("codPessoa");
+
+  console.log("Chamou " );
   var pagina = "/tcc/componentes/Email/verificarCadastroADMS.php";
 
   $.ajax({
@@ -398,6 +399,7 @@ function verificarCadastroADMS(codPessoa, emailPessoa) {
     data: { codPessoa: codPessoa, emailPessoa: emailPessoa },
     dataType: "json",
     success: function (data) {
+      console.log("Dados recebidos:", data);
       if (data.status === "nok1") {
         alert("Erro ao executar a consulta!", "Atenção", "80%", function () {
           window.location.href = "https://www.google.com";
@@ -411,6 +413,8 @@ function verificarCadastroADMS(codPessoa, emailPessoa) {
           window.location.href = "https://www.google.com";
         });
       } else if (data.status === "ok") {
+
+        console.log("Dados recebidos:", data);
         $("#nome").val(data.nome).prop("disabled", true);
         function formatarCPF(cpf) {
           return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
