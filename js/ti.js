@@ -261,7 +261,6 @@ function confirmarCadastroTI(cod){
     data: {email:email,cod:cod,senha:senha},
     success: function (data) 
     {
-      console.log(data);
 
        if (data == "ok") {
         alert(
@@ -720,7 +719,6 @@ function deletarCadastroTI(cod) {
     url: pagina,
     data: {cod:cod},
     success: function (data) {
-      console.log(data);
       if (data == "ok") {
         alert("Dados deletados!", 'Atenção', '80%', function () {
           window.location.href = "https://www.google.com";

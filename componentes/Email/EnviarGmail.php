@@ -21,10 +21,10 @@ function corpoEmail($gmailDestino,$nome,$tipoRole,$cod_pessoa) {
         $link = 'http://localhost/tcc/telas/ADMS/confirmarDadosADMS.php?cod_pessoa=' . urlencode($cod_pessoa) . '&email=' . urlencode($gmailDestino);
     } else if ($tipoRole == 4) {
         $tipoRole = 'Administrador de Sub-Instituição e Staff (ADMS|STAFF)';
-        $link = 'http://localhost/tcc/telas/ADMS/confirmarDadosADMS|STAFF.php?cod_pessoa=' . urlencode($cod_pessoa) . '&email=' . urlencode($gmailDestino);
+        $link = 'http://localhost/tcc/telas/ADMS|STAFF/confirmarDadosADMS|STAFF.php?cod_pessoa=' . urlencode($cod_pessoa) . '&email=' . urlencode($gmailDestino);
     } else if ($tipoRole == 5) {
         $tipoRole = 'STAFF';
-        $link = 'http://localhost/tcc/telas/ADMS/confirmarDadosSTAFF.php?cod_pessoa=' . urlencode($cod_pessoa) . '&email=' . urlencode($gmailDestino);
+        $link = 'http://localhost/tcc/telas/STAFF/confirmarDadosSTAFF.php?cod_pessoa=' . urlencode($cod_pessoa) . '&email=' . urlencode($gmailDestino);
     } else if ($tipoRole == 6) {
         $tipoRole = 'Jogador';
         $link = 'http://localhost/tcc/telas/JOGADOR/confirmarDadosJOGADOR.php?cod_pessoa=' . urlencode($cod_pessoa) . '&email=' . urlencode($gmailDestino);

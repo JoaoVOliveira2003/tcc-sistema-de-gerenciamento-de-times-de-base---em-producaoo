@@ -440,7 +440,6 @@ function gravarADMI() {
 }
 
 function verificarCadastroADMI(codPessoa, emailPessoa) {
-  console.log("codPessoa");
   var pagina = "/tcc/componentes/Email/verificarCadastroADMI.php";
 
   $.ajax({

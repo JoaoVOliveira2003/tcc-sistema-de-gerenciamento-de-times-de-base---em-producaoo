@@ -20,14 +20,13 @@ if ($bd->SqlExecuteQuery($query)) {
 
         $query = "SELECT ativo FROM cadastro_identificacao WHERE cod_usuario = " . $cod_pessoa;
 
-
         if ($bd->SqlExecuteQuery($query)) {
             $ativo = $bd->SqlQueryShow('ativo');
 
             if ($ativo == 'n') {
 
-
-                $query = "SELECT 
+                $query = "
+                SELECT 
                     ci.cod_usuario,
                     ci.nome,
                     ci.cpf,
@@ -35,13 +34,13 @@ if ($bd->SqlExecuteQuery($query)) {
                     mun.desc_municipio,
                     est.desc_estado,
                     nac.desc_nacao,
-                    subins.desc_subInstituicao
+                    sub.desc_subInstituicao
                 FROM cadastro_identificacao ci
                 INNER JOIN municipio mun ON mun.cod_municipio = ci.cod_municipio
                 INNER JOIN estado est ON mun.cod_estado = est.cod_estado
                 INNER JOIN nacao nac ON nac.cod_nacao = est.cod_nacao
-                inner join administrador_subInstituicao admsubins on ci.cod_usuario = admsubins.cod_administrador
-                inner join subInstituicao subins on subins.Cod_SubInstituicao = admsubins.cod_administrador
+				inner join subInstituticao_staff sustra on sustra.cod_staff = ci.cod_usuario
+                inner join subInstituicao sub on sustra.cod_SubInstituicao = sub.Cod_SubInstituicao
                 WHERE ci.cod_usuario =  {$cod_pessoa} ";
 
 

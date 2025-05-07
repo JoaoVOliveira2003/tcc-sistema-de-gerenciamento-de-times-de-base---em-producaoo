@@ -6,7 +6,6 @@ function gravarTurma() {
   var turma = document.getElementById("desc_turma").value;
   var sub_instituto = document.getElementById("subsubinstitucao").value;
 
-  console.log("subsubinstitucao: " + sub_instituto);
 
   let camposObrigatorios = {
     sub_instituto: sub_instituto,
@@ -30,7 +29,6 @@ function gravarTurma() {
       turma: turma,
     },
     success: function (data) {
-      console.log("Resposta do servidor:", data);
       if (data == "ok") {
         alert("Dados gravados.", "Atenção", "50%", function () {
           location.reload();
@@ -390,7 +388,6 @@ function gravarADMS() {
 
 function verificarCadastroADMS(codPessoa, emailPessoa) {
 
-  console.log("Chamou " );
   var pagina = "/tcc/componentes/Email/verificarCadastroADMS.php";
 
   $.ajax({
@@ -399,7 +396,6 @@ function verificarCadastroADMS(codPessoa, emailPessoa) {
     data: { codPessoa: codPessoa, emailPessoa: emailPessoa },
     dataType: "json",
     success: function (data) {
-      console.log("Dados recebidos:", data);
       if (data.status === "nok1") {
         alert("Erro ao executar a consulta!", "Atenção", "80%", function () {
           window.location.href = "https://www.google.com";
@@ -414,7 +410,6 @@ function verificarCadastroADMS(codPessoa, emailPessoa) {
         });
       } else if (data.status === "ok") {
 
-        console.log("Dados recebidos:", data);
         $("#nome").val(data.nome).prop("disabled", true);
         function formatarCPF(cpf) {
           return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");

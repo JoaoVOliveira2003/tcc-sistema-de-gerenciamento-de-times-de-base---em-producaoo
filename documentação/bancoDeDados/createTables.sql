@@ -163,10 +163,10 @@ CREATE TABLE `tcc`.`subInstituicao` (
 -- subInstituticao_staff
 CREATE TABLE `tcc`.`subInstituticao_staff` (
   `cod_staff` INT NOT NULL, 
-  `cod_subInstituto` INT NOT NULL, 
-  PRIMARY KEY (`cod_staff`, `cod_subInstituto`), 
+  `cod_SubInstituicao` INT NOT NULL, 
+  PRIMARY KEY (`cod_staff`, `cod_SubInstituicao`), 
   CONSTRAINT `fk_staff` FOREIGN KEY (`cod_staff`) REFERENCES `tcc`.`staff` (`cod_staff`) ON DELETE CASCADE ON UPDATE CASCADE, 
-  CONSTRAINT `fk_subInstituto` FOREIGN KEY (`cod_subInstituto`) REFERENCES `tcc`.`subInstituicao` (`cod_instituicao`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_subInstituto` FOREIGN KEY (`cod_SubInstituicao`) REFERENCES `tcc`.`subInstituicao` (`cod_instituicao`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 -- administrador_subInstituicao
