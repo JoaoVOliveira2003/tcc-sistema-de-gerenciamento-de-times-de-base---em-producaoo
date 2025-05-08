@@ -237,53 +237,6 @@ function gravarTI() {
   });
 }
 
-function confirmarCadastroTI(cod){
-  var pagina = "/tcc/componentes/TI/gravar/confirmarCadastroTI.php";
-
-  var senha = document.getElementById("senha_usuario").value;
-  var email = document.getElementById("email_usuario").value;
- 
-  let camposObrigatorios = {
-    senha:senha
-  };
-
-  let mensagemCamposObrigatorios = {
-    senha: "Senha ",
-  };
-
-  if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) {
-    return;
-  }
-
-  $.ajax({
-    type: "POST",
-    url: pagina,
-    data: {email:email,cod:cod,senha:senha},
-    success: function (data) 
-    {
-
-       if (data == "ok") {
-        alert(
-          "Dados atualizado, agora você podera realizar cadastro ! <br> ao clicar no botão 'fechar' ele ira ser enviado a tela do login.",
-          "Atenção",
-          "50%",
-          function () {
-            window.location.href = "/tcc/telas/LOGIN/index.php";
-          }
-        );
-      }
-    },
-    error: function (xhr, status, error) {
-      hideLoadingModal(); // Esconde o modal de carregamento
-      console.error("Erro ao gravar dados:", error);
-      alert(
-        "Ocorreu um erro ao gravar os dados. Verifique a conexão e tente novamente.",
-        "Erro"
-      );
-    },
-  });
-}
-
 //tabelas de atualizar e deletar
 function tabelaDeleteUpdateMunicipio() {
   var pagina = "/tcc/componentes/tabelaDeleteUpdate.php";

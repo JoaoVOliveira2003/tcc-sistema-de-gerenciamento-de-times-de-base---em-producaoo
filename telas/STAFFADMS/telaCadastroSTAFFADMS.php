@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <?php include('../../include/includeBase.php'); ?>
     <script src="../../js/funcoes.js"></script>
-    <script src="../../js/adms.js"></script>
+    <script src="../../js/staffadms.js"></script>
     <script>
         $(document).ready(function () {
             selectNacoes(cadastro = 's');
@@ -18,7 +18,7 @@
 <body>
     <div class="container">
         <div class="mt-5">
-            <h2 class="mb-3">Cadastro de <b>Administrador de Sub-insitituição (ADMS)</b></h2>
+            <h2 class="mb-3">Cadastro de <b>STAFF e Sub-insitituição (ADMS)</b></h2>
             <h5 class="mb-4">
                 Olá! Lembre-se de que, para que o cadastro seja totalmente validado, a pessoa cadastrada receberá um
                 e-mail de confirmação. <br> Nesse e-mail, ela deverá aceitar ou recusar o cadastro, além de inserir a
@@ -36,11 +36,11 @@
 
             <div class="row">
                 <div class="col-md-6 mb-2">
-                    <label for="nome" class="form-label">Nome do administrador:</label>
+                    <label for="nome" class="form-label">Nome do integrante da equipe:</label>
                     <input type="text" class="form-control" value="adms" id="nome" placeholder="Digite o nome...">
                 </div>
                 <div class="col-md-6 mb-2">
-                    <label for="email_usuario" class="form-label">Email do administrador:</label>
+                    <label for="email_usuario" class="form-label">E-mail do supervisor:</label>
                     <input type="text" class="form-control" id="email_usuario" value="ojoao953@gmail.com"
                         placeholder="Digite o email...">
                 </div>
@@ -54,7 +54,7 @@
                 </div>
             </div>
 
-            <button type="button" class="btn btn-primary mb-5" onclick="gravarADMS()">Gravar</button>
+            <button type="button" class="btn btn-primary mb-5" onclick="gravarStaff()">Gravar</button>
 
             <!-- Modal de Carregamento -->
             <div class="modal fade" id="modalCarregando" tabindex="-1" aria-labelledby="modalCarregandoLabel"

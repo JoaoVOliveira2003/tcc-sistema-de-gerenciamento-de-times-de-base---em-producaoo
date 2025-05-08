@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------------------------------------
-function gravarStaff() {
-  var pagina = "/tcc/componentes/STAFF/gravar/gravarStaff.php";
+function gravarStaffadms() {
+  var pagina = "/tcc/componentes/STAFFADMS/gravar/gravarStaffAdms.php";
 
   let campos = {
     municipio: true,
@@ -79,9 +79,8 @@ function gravarStaff() {
   });
 }
 
-function verificarCadastroStaff(codPessoa, emailPessoa) {
-
-  var pagina = "/tcc/componentes/Email/verificarCadastroStaff.php";
+function verificarCadastroStaffAdms(codPessoa, emailPessoa) {
+  var pagina = "/tcc/componentes/Email/verificarCadastroStaffAdms.php";
 
   $.ajax({
     type: "POST",
@@ -102,7 +101,6 @@ function verificarCadastroStaff(codPessoa, emailPessoa) {
           window.location.href = "https://www.google.com";
         });
       } else if (data.status === "ok") {
-
         $("#nome").val(data.nome).prop("disabled", true);
         function formatarCPF(cpf) {
           return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
@@ -130,13 +128,13 @@ function verificarCadastroStaff(codPessoa, emailPessoa) {
   });
 }
 
-function recusarCadastroStaff(cod) {
+function recusarCadastroStaffAdms(cod) {
   var pagina = "/tcc/componentes/modalBasico.php";
 
-  var idModal = "modalRecusarCadastroStaff";
+  var idModal = "modalRecusarCadastroStaffAdms";
   var textoBotao = "Excluir";
   var tituloModal = "Confirmar Exclusão";
-  var funcaoModal = "deletarCadastroStaff";
+  var funcaoModal = "deletarCadastroStaffAdms";
   var textoModal = "Você tem certeza que deseja negar o cadastro ?";
   var textoBotao = "Recusar";
 
@@ -173,8 +171,8 @@ function recusarCadastroStaff(cod) {
   });
 }
 
-function deletarCadastroStaff(cod) {
-  var pagina = "/tcc/componentes/STAFF/deletar/deletarCadastroStaff.php";
+function deletarCadastroStaffAdms(cod) {
+  var pagina = "/tcc/componentes/STAFF/deletar/deletarCadastroStaffAdms.php";
 
   $.ajax({
     type: "POST",
@@ -201,3 +199,4 @@ function deletarCadastroStaff(cod) {
     },
   });
 }
+// ----------------------------------------------------------------------------------------------------

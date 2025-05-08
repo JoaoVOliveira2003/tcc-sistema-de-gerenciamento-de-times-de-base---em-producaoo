@@ -9,16 +9,17 @@ $cod_pessoa = isset($_GET['cod_pessoa']) ? $_GET['cod_pessoa'] : '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <?php include('../../include/includeBase.php'); ?>
     <script src="../../js/funcoes.js"></script>
-    <script src="../../js/ti.js"></script>
+    <script src="../../js/staffadms.js"></script>
     <script>
         $(document).ready(function () {
+         
+
             const urlParams = new URLSearchParams(window.location.search);
             const codPessoa = urlParams.get('cod_pessoa');
             const emailDestino = urlParams.get('email');
 
-            verificarCadastroTI(codPessoa, emailDestino);
+            verificarCadastroStaff(codPessoa, emailDestino);
 
-            // Atribui o codPessoa ao botão de recusa usando atributo data
             $('#btnRecusar').attr('data-cod', codPessoa);
             $('#btnConfirmar').attr('data-cod', codPessoa);
         });
@@ -28,9 +29,9 @@ $cod_pessoa = isset($_GET['cod_pessoa']) ? $_GET['cod_pessoa'] : '';
 <body>
     <div class="container">
         <div class="mt-2">
-            <h2 class="mb-3">Confirmação de cadastro de <b>Administrador de Sistema (TI)</b></h2>
+            <h2 class="mb-3">Confirmação de cadastro de <b>STAFF</b></h2>
             <h5 class="mb-2">
-                Olá! <br> Você foi cadastrado como administrador de sistema (TI) no sistema de gestão de bases.
+                Olá! <br> Você foi cadastrado como STAFF no sistema de gestão de bases.
                 Abaixo estão os seus dados cadastrados. Para confirmar a sua inscrição, preencha o campo senha e clique
                 no botão "Confirmar".<br>
                 Caso queira negar o cadastro, clique em "Recusar".
@@ -44,6 +45,9 @@ $cod_pessoa = isset($_GET['cod_pessoa']) ? $_GET['cod_pessoa'] : '';
 
             <label class="form-label" for="municipio">Município de nascimento:</label>
             <input type="text" class="form-control mb-2" id="municipio" value="">
+
+            <label class="form-label" for="instituicao">Pertence instituição:</label>
+            <input type="text" class="form-control mb-2" id="instituicao" value="">
 
             <div class="row">
                 <div class="col-md-6 mb-2">
@@ -69,7 +73,7 @@ $cod_pessoa = isset($_GET['cod_pessoa']) ? $_GET['cod_pessoa'] : '';
             </div>
 
             <button type="button" class="btn btn-primary mt-1" id="btnConfirmar" onclick="confirmarCadastro(this.getAttribute('data-cod'))">Confirmar</button>
-            <button type="button" class="btn btn-danger mt-1"  id="btnRecusar"   onclick="recusarCadastroTI(this.getAttribute('data-cod'))">Recusar</button>
+            <button type="button" class="btn btn-danger mt-1"  id="btnRecusar"   onclick="recusarCadastroStaff(this.getAttribute('data-cod'))">Recusar</button>
 
             <div id="modalContainer"></div>
         </div>
