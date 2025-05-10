@@ -6,11 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <?php include('../../include/includeBase.php'); ?>
     <script src="../../js/funcoes.js"></script>
-    <script src="../../js/staffadms.js"></script>
+    <script src="../../js/jogador.js"></script>
     <script>
+
         $(document).ready(function () {
             selectNacoes(cadastro = 's');
             selectSubInstituicoes();
+        });
+
+        document.getElementById('adicionar-responsavel').addEventListener('click', function () {
+            const container = document.getElementById('responsaveis-container');
+            const novo = container.firstElementChild.cloneNode(true);
+            novo.querySelectorAll('input').forEach(input => input.value = '');
+            container.appendChild(novo);
+        });
+
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('btn-remover')) {
+                const total = document.querySelectorAll('.responsavel').length;
+                if (total > 1) {
+                    e.target.closest('.responsavel').remove();
+                } else {
+                    alert("Pelo menos um responsável deve ser mantido.");
+                }
+            }
         });
     </script>
 </head>
@@ -18,10 +37,10 @@
 <body>
     <div class="container">
         <div class="mt-5">
-            <h2 class="mb-3">Cadastro de <b>STAFF e Sub-insitituição (ADMS)</b></h2>
+            <h2 class="mb-3">Cadastro de <b>JOGADOR</b></h2>
             <h5 class="mb-4">
                 Olá! Lembre-se de que, para que o cadastro seja totalmente validado, a pessoa cadastrada receberá um
-                e-mail de confirmação. <br> Nesse e-mail, ela deverá aceitar ou recusar o cadastro, além de inserir a
+                e-mail de confirmação. Nesse e-mail, ela deverá aceitar ou recusar o cadastro, além de inserir a
                 senha que deseja. Por isso, certifique-se de que o endereço de e-mail informado está correto.
             </h5>
 
@@ -33,14 +52,13 @@
                 <div id="selectSubInstituicao" class="mb-3"></div>
             </div>
 
-
             <div class="row">
                 <div class="col-md-6 mb-2">
-                    <label for="nome" class="form-label">Nome do integrante da equipe:</label>
+                    <label for="nome" class="form-label">Nome do administrador:</label>
                     <input type="text" class="form-control" value="adms" id="nome" placeholder="Digite o nome...">
                 </div>
                 <div class="col-md-6 mb-2">
-                    <label for="email_usuario" class="form-label">E-mail do supervisor:</label>
+                    <label for="email_usuario" class="form-label">Email do administrador:</label>
                     <input type="text" class="form-control" id="email_usuario" value="ojoao953@gmail.com"
                         placeholder="Digite o email...">
                 </div>
@@ -54,9 +72,30 @@
                 </div>
             </div>
 
-            <button type="button" class="btn btn-primary mb-5" onclick="gravarStaffadms()">Gravar</button>
+            <div class="responsavel mb-3  rounded ">
+                <div class="row g-2">
+                    <div class="col-md-5">
+                        <input type="text" name="responsavel_nome[]" class="form-control"
+                            placeholder="Nome do Responsável" required>
+                    </div>
+                    <div class="col-md-5">
+                        <input type="text" name="responsavel_telefone[]" class="form-control"
+                            placeholder="Telefone do Responsável" required>
+                    </div>
+                    <div class="col-md-2 d-grid">
+                        <button type="button" class="btn btn-danger btn-remover">Remover</button>
+                    </div>
+                </div>
+            </div>
 
-            <!-- Modal de Carregamento -->
+            <div class="mb-3">
+                <button type="button" class="btn btn-primary" id="adicionar-responsavel">
+                    Adicionar outro responsável
+                </button>
+            </div>
+
+            <button type="button" class="btn btn-primary mb-5" onclick="gravarJogador()">Gravar</button>
+
             <div class="modal fade" id="modalCarregando" tabindex="-1" aria-labelledby="modalCarregandoLabel"
                 aria-hidden="true">
                 <div class="modal-dialog d-flex justify-content-center align-items-center">
@@ -68,7 +107,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </body>

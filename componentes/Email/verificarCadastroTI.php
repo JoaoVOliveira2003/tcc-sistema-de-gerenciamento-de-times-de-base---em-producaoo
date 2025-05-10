@@ -5,12 +5,15 @@ $bd = conecta();
 $cod_pessoa = getPost('codPessoa');
 $emailPessoa = getPost('emailPessoa');
 
+
+
 $retorno = [
     'status' => '',
 ];
 
 $query = "SELECT count(*) FROM cadastro_identificacao WHERE cod_usuario = " . $cod_pessoa;
 
+ 
 if ($bd->SqlExecuteQuery($query)) {
 
     $existePessoa = $bd->SqlQueryShow('count(*)');
@@ -18,17 +21,19 @@ if ($bd->SqlExecuteQuery($query)) {
     if ($existePessoa > 0) {
 
         $query = "SELECT ativo FROM cadastro_identificacao WHERE cod_usuario = " . $cod_pessoa;
+         
 
         if ($bd->SqlExecuteQuery($query)) {
             $ativo = $bd->SqlQueryShow('ativo');
 
             if ($ativo == 'n') {
-                $query = "SELECT ci.nome, ci.cpf, ci.ativo, mun.desc_municipio, est.desc_estado, nac.desc_nacao 
-                          FROM cadastro_identificacao ci
-                          INNER JOIN municipio mun ON mun.cod_municipio = ci.cod_municipio
-                          INNER JOIN estado est ON mun.cod_estado = est.cod_estado
-                          INNER JOIN nacao nac ON nac.cod_nacao = est.cod_estado
-                          WHERE ci.cod_usuario = " . $cod_pessoa;
+                $query = "SELECT ci.nome, ci.cpf, ci.ativo, mun.desc_municipio, est.desc_estado, nac.desc_nacao
+                            FROM cadastro_identificacao ci
+                            INNER JOIN municipio mun ON mun.cod_municipio = ci.cod_municipio
+                            INNER JOIN estado est ON mun.cod_estado = est.cod_estado
+                            INNER JOIN nacao nac ON nac.cod_nacao = est.cod_nacao
+                            WHERE ci.cod_usuario =" . $cod_pessoa;
+                 
 
                 if ($bd->SqlExecuteQuery($query)) {
                     $retorno = [
@@ -38,7 +43,7 @@ if ($bd->SqlExecuteQuery($query)) {
                         'municipio' => $bd->SqlQueryShow('desc_municipio'),
                         'estado' => $bd->SqlQueryShow('desc_estado'),
                         'nacao' => $bd->SqlQueryShow('desc_nacao'),
-                        'emailPessoa'=> $emailPessoa
+                        'emailPessoa' => $emailPessoa
                     ];
                 } else {
                     $retorno['status'] = 'nok1'; // Erro na consulta de dados
@@ -58,4 +63,4 @@ if ($bd->SqlExecuteQuery($query)) {
 
 $bd->SqlDisconnect();
 
-echo(json_encode($retorno));
+echo (json_encode($retorno));

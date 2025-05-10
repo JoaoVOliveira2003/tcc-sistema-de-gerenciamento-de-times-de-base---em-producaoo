@@ -36,14 +36,6 @@ CREATE TABLE `municipio` (
   CONSTRAINT `fk_municipio_estado` FOREIGN KEY (`cod_estado`) REFERENCES `estado` (`cod_estado`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
--- Mídia da Nação
-CREATE TABLE `midia_nacao` (
-  `cod_midia` INT NOT NULL AUTO_INCREMENT, 
-  `cod_nacao` INT NOT NULL, 
-  `local_midia` VARCHAR(100), 
-  PRIMARY KEY (`cod_midia`), 
-  CONSTRAINT `fk_nacao_midia_nacao` FOREIGN KEY (`cod_nacao`) REFERENCES `nacao` (`cod_nacao`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB;
 
 -- Identificação do Usuário
 CREATE TABLE `cadastro_identificacao` (

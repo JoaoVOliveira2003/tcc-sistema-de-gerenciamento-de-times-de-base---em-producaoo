@@ -27,7 +27,7 @@ if ($bd->SqlExecuteQuery($query)) {
                         FROM cadastro_identificacao ci
                         INNER JOIN municipio mun ON mun.cod_municipio = ci.cod_municipio
                         INNER JOIN estado est ON mun.cod_estado = est.cod_estado
-                        INNER JOIN nacao nac ON nac.cod_nacao = est.cod_estado
+                        INNER JOIN nacao nac ON nac.cod_nacao = est.cod_nacao
                         inner join administrador_instituicao admins on ci.cod_usuario = admins.cod_administrador
                         inner join instituicao ins on ins.cod_instituicao = admins.cod_instituicao
                         WHERE ci.cod_usuario = " . $cod_pessoa;

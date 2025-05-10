@@ -17,7 +17,7 @@ INSERT INTO administrador_instituicao (cod_administrador,cod_instituicao) VALUES
 INSERT INTO administrador_subInstituto (cod_administrador,cod_subInstituicao) VALUES (1,1);
 
 -- 07
-INSERT INTO staff (cod_staff,ativo) VALUES (1,'s');
+INSERT INTO staff (cod_staff) VALUES (5);
 
 --  08
 INSERT INTO subInstituto_staff (cod_staff,cod_subInstituto) VALUES (1,1);

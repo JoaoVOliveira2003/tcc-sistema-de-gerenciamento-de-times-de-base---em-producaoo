@@ -160,3 +160,9 @@ INSERT INTO turma (desc_turma, ativo, cod_subInstituicao) VALUES
 ('Turma H - Integral', 's', 8),
 ('Turma I - Manhã', 's', 9),
 ('Turma J - Tarde', 's', 10);
+
+INSERT INTO cadastro_identificacao (nome, cpf,cod_municipio,ativo) VALUES ('sistema','1',1,'s');
+
+INSERT INTO role_cadastro (cod_usuario,cod_tipoRole) VALUES (1,5);
+
+INSERT INTO staff(cod_staff) VALUES (1);

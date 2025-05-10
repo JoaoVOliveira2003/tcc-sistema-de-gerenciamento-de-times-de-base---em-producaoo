@@ -10,6 +10,8 @@ $cod_pessoa = isset($_GET['cod_pessoa']) ? $_GET['cod_pessoa'] : '';
     <?php include('../../include/includeBase.php'); ?>
     <script src="../../js/funcoes.js"></script>
     <script src="../../js/staffadms.js"></script>
+    <script src="../../js/staff.js"></script>
+
     <script>
         $(document).ready(function () {
          

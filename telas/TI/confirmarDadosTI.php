@@ -18,7 +18,6 @@ $cod_pessoa = isset($_GET['cod_pessoa']) ? $_GET['cod_pessoa'] : '';
 
             verificarCadastroTI(codPessoa, emailDestino);
 
-            // Atribui o codPessoa ao botão de recusa usando atributo data
             $('#btnRecusar').attr('data-cod', codPessoa);
             $('#btnConfirmar').attr('data-cod', codPessoa);
         });
