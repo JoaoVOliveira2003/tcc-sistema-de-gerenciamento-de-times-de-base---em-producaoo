@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8" />
@@ -7,29 +7,34 @@
     <?php include('../../include/includeBase.php'); ?>
     <script src="../../js/funcoes.js"></script>
     <script src="../../js/jogador.js"></script>
+
     <script>
-
         $(document).ready(function () {
-            selectNacoes(cadastro = 's');
+            selectNacoes('s');
             selectSubInstituicoes();
-        });
 
-        document.getElementById('adicionar-responsavel').addEventListener('click', function () {
-            const container = document.getElementById('responsaveis-container');
-            const novo = container.firstElementChild.cloneNode(true);
-            novo.querySelectorAll('input').forEach(input => input.value = '');
-            container.appendChild(novo);
-        });
+            $('#adicionar-responsavel').on('click', function () {
+                const container = $('#responsaveis-container');
+                const novo = container.children('.responsavel').first().clone();
+                novo.find('input').val('');
+                novo.find('select').val('');
+                container.append(novo);
+            });
 
-        document.addEventListener('click', function (e) {
-            if (e.target.classList.contains('btn-remover')) {
-                const total = document.querySelectorAll('.responsavel').length;
+            $(document).on('click', '.btn-remover', function () {
+                const total = $('.responsavel').length;
                 if (total > 1) {
-                    e.target.closest('.responsavel').remove();
+                    $(this).closest('.responsavel').remove();
                 } else {
                     alert("Pelo menos um responsável deve ser mantido.");
                 }
-            }
+            });
+
+            $(document).on('input', 'input[name="responsavel_telefone[]"]', function () {
+                $(this).mask('(00) 00000-0000');
+            });
+
+            $('input[name="responsavel_telefone[]"]').mask('(00) 00000-0000');
         });
     </script>
 </head>
@@ -72,27 +77,52 @@
                 </div>
             </div>
 
-            <div class="responsavel mb-3  rounded ">
-                <div class="row g-2">
-                    <div class="col-md-5">
-                        <input type="text" name="responsavel_nome[]" class="form-control"
-                            placeholder="Nome do Responsável" required>
+            <hr class="my-2">
+
+            <div id="responsaveis-container">
+                <label class="form-label">Dados dos responsáveis:</label>
+                <div class="responsavel card mb-3 shadow-sm border rounded p-3 bg-light">
+                    <div class="mb-3 border-bottom pb-2">
+                        <strong>Responsável</strong>
                     </div>
-                    <div class="col-md-5">
-                        <input type="text" name="responsavel_telefone[]" class="form-control"
-                            placeholder="Telefone do Responsável" required>
+                    <div class="row g-2 mb-2">
+                        <div class="col-md-6">
+                            <input type="text" name="responsavel_nome[]" class="form-control"
+                                placeholder="Nome do Responsável" required>
+                        </div>
+                        <div class="col-md-6">
+                            <select name="responsavel_filiacao[]" class="form-select" required>
+                                <option value="" disabled selected>Tipo de filiação</option>
+                                <option value="Pai">Pai</option>
+                                <option value="Mãe">Mãe</option>
+                                <option value="Responsável legal">Responsável legal</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-md-2 d-grid">
-                        <button type="button" class="btn btn-danger btn-remover">Remover</button>
+                    <div class="row g-2">
+                        <div class="col-md-6">
+                            <input type="email" name="responsavel_email[]" class="form-control"
+                                placeholder="Email do Responsável" required>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" name="responsavel_telefone[]" class="form-control"
+                                placeholder="Telefone do Responsável" required>
+                        </div>
+                        <div class="col-md-1 d-grid">
+                            <button type="button" class="btn btn-sm btn-danger btn-remover">Remover</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="mb-3">
-                <button type="button" class="btn btn-primary" id="adicionar-responsavel">
+            <div class="mb-2">
+                <button type="button" class="btn btn-outline-primary" id="adicionar-responsavel">
                     Adicionar outro responsável
                 </button>
             </div>
+
+            <hr>
 
             <button type="button" class="btn btn-primary mb-5" onclick="gravarJogador()">Gravar</button>
 
@@ -107,6 +137,7 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </body>
