@@ -14,9 +14,7 @@ function gravarStaff() {
     return;
   }
 
-  var municipio = document.getElementById("municipio")
-    ? document.getElementById("municipio").value
-    : "";
+  var municipio = document.getElementById("municipio") ? document.getElementById("municipio").value: "";
   var nome = document.getElementById("nome").value;
   var email = document.getElementById("email_usuario").value;
   var cpf = document.getElementById("cpf").value;

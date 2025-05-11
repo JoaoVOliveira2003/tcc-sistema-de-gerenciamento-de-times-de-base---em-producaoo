@@ -6,7 +6,6 @@ function gravarTurma() {
   var turma = document.getElementById("desc_turma").value;
   var sub_instituto = document.getElementById("subsubinstitucao").value;
 
-
   let camposObrigatorios = {
     sub_instituto: sub_instituto,
     turma: turma,

@@ -15,7 +15,7 @@
             selectTipoLesao();
             selectEsporte();
 
-            // Adicionar responsável
+
             $('#adicionar-responsavel').on('click', function () {
                 const container = $('#responsaveis-container');
                 const novo = container.children('.responsavel').first().clone();
@@ -105,8 +105,8 @@
 
             <div class="row">
                 <div class="col-md-4 mb-3">
-                    <label for="dataNascimento" class="form-label">Data de Nascimento:</label>
-                    <input type="date" class="form-control" id="dataNascimento" name="data_nascimento">
+                    <label for="data_nascimento" class="form-label">Data de Nascimento:</label>
+                    <input type="date" class="form-control" id="data_nascimento" name="data_nascimento">
                 </div>
 
                 <div class="col-md-2 mb-3">
@@ -116,8 +116,8 @@
                 </div>
 
                 <div class="col-md-6 mb-3">
-                    <label for="jogador" class="form-label">Foto do jogador:</label>
-                    <input class="form-control" type="file" id="jogador" accept="image/*">
+                    <label for="imagemJogador" class="form-label">Foto do jogador:</label>
+                    <input class="form-control" type="file" id="imagemJogador" accept="image/*">
                 </div>
             </div>
 
@@ -130,6 +130,8 @@
 
 
             <!-- Responsáveis -->
+            <button type="button" class="btn btn-primary mb-5" onclick="gravarJogador()">Gravar</button>
+
             <hr class="my-2">
             <label class="form-label">Dados dos responsáveis:</label>
             <div id="responsaveis-container">
