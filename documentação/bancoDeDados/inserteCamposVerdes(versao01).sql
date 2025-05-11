@@ -88,34 +88,6 @@ INSERT INTO grau_privacidade (cod_grau_privacidade, desc_grau_privacidade) VALUE
 (2, 'staff'),
 (3, 'staff|jogador');
 
--- Inserção de tipos de lesão
-INSERT INTO tipo_lesao (categoria, tipo_lesao, desc_lesao) VALUES
-('Lesões Musculares', 'Distensão Muscular', 'Estiramento excessivo dos músculos.'),
-('Lesões Musculares', 'Cãibras', 'Contração involuntária e dolorosa dos músculos.'),
-('Lesões Musculares', 'Ruptura Muscular', 'Quebra das fibras musculares devido a esforço excessivo.'),
-('Lesões nos Tendões', 'Tendinite', 'Inflamação dos tendões, geralmente causada por uso repetitivo.'),
-('Lesões nos Tendões', 'Tendinose', 'Degeneração dos tendões, podendo ser crônica.'),
-('Lesões nos Tendões', 'Ruptura do Tendão', 'Quebra ou rompimento do tendão, com ou sem perda de função.'),
-('Lesões nas Articulações', 'Entorse', 'Lesão nos ligamentos devido a torção excessiva.'),
-('Lesões nas Articulações', 'Luxação', 'Deslocamento de um osso da sua posição na articulação.'),
-('Lesões nas Articulações', 'Fratura Articular', 'Quebra de ossos dentro ou ao redor da articulação.'),
-('Lesões nos Ligamentos', 'Lesão no Ligamento Cruzado Anterior (LCA)', 'Lesão no ligamento do joelho, comum em esportes com mudanças rápidas de direção.'),
-('Lesões nos Ligamentos', 'Lesão no Ligamento Colateral', 'Afeta os ligamentos laterais do joelho ou cotovelo.'),
-('Lesões nos Ligamentos', 'Lesões nos Ligamentos do Tornozelo', 'Lesão nos ligamentos do tornozelo, geralmente por entorses.'),
-('Lesões nos Ossos', 'Fraturas', 'Quebra de um osso, podendo ser simples ou múltiplas.'),
-('Lesões nos Ossos', 'Fratura por Estresse', 'Lesão óssea causada por sobrecarga repetitiva, comum em corredores.'),
-('Lesões nos Meniscos', 'Lesão Meniscal', 'Rasgos ou danos nos meniscos do joelho, que ajudam a absorver impacto.'),
-('Lesões Neurológicas', 'Concussão', 'Lesão cerebral causada por impacto forte na cabeça.'),
-('Lesões Neurológicas', 'Contusão Cerebral', 'Lesão grave com danos ao tecido cerebral, geralmente por impacto forte.'),
-('Lesões no Pescoço ou Coluna', 'Danos à medula espinhal ou nervos periféricos', 'Lesões no Pescoço ou Coluna.'),
-('Lesões de Pele', 'Cortes e Lacerações', 'Ferimentos superficiais ou profundos causados por colisões.'),
-('Lesões de Pele', 'Queimaduras', 'Lesões causadas por atrito ou calor.'),
-('Lesões de Pele', 'Arranhões e Abrasões', 'Ferimentos leves causados por quedas ou contato com superfícies duras.'),
-('Lesões no Pé e Tornozelo', 'Fratura no Pé', 'Quebra dos ossos do pé, geralmente por impacto direto.'),
-('Lesões no Pé e Tornozelo', 'Entorse no Tornozelo', 'Lesão nos ligamentos do tornozelo, comumente causada por mudanças rápidas de direção.'),
-('Lesões no Pé e Tornozelo', 'Fasceíte Plantar', 'Inflamação da fáscia plantar, comum em corredores.'),
-('Lesões no Quadril e Lombar', 'Distensão do Quadril', 'Lesão nos músculos ou ligamentos do quadril.'),
-('Lesões no Quadril e Lombar', 'Hérnia de Disco', 'Deslocamento do disco intervertebral, causando dor e limitação de movimento.');
 
 INSERT INTO tipo_role(desc_tipo_role,abrev_tipo_role,ativo) values
 ('Admistrador de sistemas','TI','s'),
@@ -166,3 +138,16 @@ INSERT INTO cadastro_identificacao (nome, cpf,cod_municipio,ativo) VALUES ('sist
 INSERT INTO role_cadastro (cod_usuario,cod_tipoRole) VALUES (1,5);
 
 INSERT INTO staff(cod_staff) VALUES (1);
+
+INSERT INTO tipo_lesao (desc_tipoLesao) VALUES 
+('Lesões de Pele'),
+('Lesões Musculares'),
+('Lesões nas Articulações'),
+('Lesões Neurológicas'),
+('Lesões no Pé e Tornozelo'),
+('Lesões no Pescoço ou Coluna'),
+('Lesões no Quadril ou Lombar'),
+('Lesões nos Ligamentos'),
+('Lesões nos Meniscos'),
+('Lesões nos Ossos'),
+('Lesões nos Tendões');

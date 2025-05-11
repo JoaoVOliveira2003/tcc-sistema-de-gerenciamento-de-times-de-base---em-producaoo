@@ -184,8 +184,7 @@ function selectNacoes(cadastro) {
 
 function selectEstados(cod_nacao, cadastro) {
   var pagina = "/tcc/componentes/selectBasico.php";
-  var query =
-    "SELECT cod_estado, desc_estado FROM estado WHERE cod_nacao = " + cod_nacao;
+  var query  = "SELECT cod_estado, desc_estado FROM estado WHERE cod_nacao = " + cod_nacao;
   var codSelect = "cod_estado";
   var descSelect = "desc_estado";
   var onclick = "";
@@ -505,7 +504,6 @@ function teste(){
   console.log("teste");
 }
 
-
 function confirmarCadastro(cod){
   var pagina = "/tcc/componentes/confirmarCadastro.php";
 
@@ -550,6 +548,170 @@ function confirmarCadastro(cod){
         "Ocorreu um erro ao gravar os dados. Verifique a conexão e tente novamente.",
         "Erro"
       );
+    },
+  });
+}
+
+// ----------------------------------------------------------------------
+
+function selectEsporte() {
+  var pagina = "/tcc/componentes/selectBasico.php";
+  var query = "select cod_esporte,desc_esporte from esporte";
+  var codSelect = "cod_esporte";
+  var descSelect = "desc_esporte";
+  var onclick = "";
+  var label = "Esporte:"; 
+
+  var onchange = "selectPosicao(this.value)";
+
+  var classLabel = "form-label";
+  var forLabel = "esporte";
+  var classSelect = "form-control mb-2";
+  var idSelect = "esporte";
+  var name = "esporte";
+  var primeiroOption = "Escolha uma opção";
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {
+      query: query,
+      codSelect: codSelect,
+      descSelect: descSelect,
+      onclick: onclick,
+      onchange: 'onchange="' + onchange + '"',
+      label: label,
+      classLabel: classLabel,
+      forLabel: forLabel,
+      classSelect: classSelect,
+      idSelect: idSelect,
+      name: name,
+      primeiroOption: primeiroOption,
+    },
+    success: function (data) {
+      $("#selectEsporte").html(data);
+    },
+  });
+
+
+}
+
+function selectPosicao(cod_esporte) {
+  var pagina = "/tcc/componentes/selectBasico.php";
+  var query  = "SELECT cod_posicao,desc_posicao FROM posicao where cod_esporte = " + cod_esporte;
+  var codSelect = "cod_posicao";
+  var descSelect = "desc_posicao";
+  var onclick = "";
+
+  var label = "Posição favorita:"; 
+
+  var classLabel = "mt-1 form-label";
+  var classSelect = "form-control mb-2";
+  var forLabel = "posicao";
+  var idSelect = "posicao";
+  var name = "posicao";
+  var primeiroOption = "posição favorita";
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {
+      query: query,
+      codSelect: codSelect,
+      descSelect: descSelect,
+      onclick: onclick,
+      onchange: 'onchange="' + onchange + '"',
+      label: label,
+      classLabel: classLabel,
+      forLabel: forLabel,
+      classSelect: classSelect,
+      idSelect: idSelect,
+      name: name,
+      primeiroOption: primeiroOption,
+    },
+    success: function (data) {
+      $("#selectPosicao").html(data);
+    },
+  });
+}
+
+// ----------------------------------------------------------------------
+
+function selectSubInstituicoesTurma() {
+  var pagina = "/tcc/componentes/selectBasico.php";
+
+  var query ="SELECT Cod_SubInstituicao,desc_subInstituicao FROM subInstituicao;";
+  var codSelect = "Cod_SubInstituicao";
+  var descSelect = "desc_subInstituicao";
+  var label = "Pertence Sub-instituição:";
+  var classLabel = "form-label";
+  var forLabel = "subinstitucao";
+  var classSelect = "form-control mb-2";
+  var idSelect = "subinstitucao";
+  var name = "subinstitucao";
+  var primeiroOption = "Escolha uma opção";
+
+  var onchange = "selectTurma(this.value)";
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {
+      query: query,
+      codSelect: codSelect,
+      descSelect: descSelect,
+      label: label,
+      onchange: 'onchange="' + onchange + '"',
+      classLabel: classLabel,
+      forLabel: forLabel,
+      classSelect: classSelect,
+      idSelect: idSelect,
+      name: name,
+      primeiroOption: primeiroOption,
+    },
+    success: function (data) {
+
+      $("#selectSubInstituicoesTurma").html(data);
+    },
+  });
+}
+
+function selectTurma(cod) {
+  var pagina = "/tcc/componentes/selectBasico.php";
+  var query  = "select cod_turma,desc_turma from turma where ativo='s' and cod_subInstituicao=  " + cod;
+  console.log(query);  
+
+  var codSelect = "cod_turma";
+  var descSelect = "desc_turma";
+  var onclick = "";
+
+  var label = "Pertence a turma:"; 
+
+  var classLabel = "mt-1 form-label";
+  var classSelect = "form-control mb-2";
+  var forLabel = "posicao";
+  var idSelect = "posicao";
+  var name = "posicao";
+  var primeiroOption = "posição favorita";
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {
+      query: query,
+      codSelect: codSelect,
+      descSelect: descSelect,
+      onclick: onclick,
+      label: label,
+      classLabel: classLabel,
+      forLabel: forLabel,
+      classSelect: classSelect,
+      idSelect: idSelect,
+      name: name,
+      primeiroOption: primeiroOption,
+    },
+    success: function (data) {
+      $("#selectTurma").html(data);
     },
   });
 }

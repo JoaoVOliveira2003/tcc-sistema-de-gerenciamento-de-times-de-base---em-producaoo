@@ -282,9 +282,7 @@ CREATE TABLE `notaTreino_jogador` (
 -- tipo_lesao
 CREATE TABLE `tcc`.`tipo_lesao` (
   `cod_tipoLesao` INT NOT NULL AUTO_INCREMENT, 
-  `categoria` VARCHAR(100) NULL, 
-  `tipo_lesao` VARCHAR(100) NULL, 
-  `desc_lesao` VARCHAR(100) NULL, 
+  `desc_tipoLesao` VARCHAR(100) NULL,
   PRIMARY KEY (`cod_tipoLesao`)
 ) ENGINE = InnoDB;
 
