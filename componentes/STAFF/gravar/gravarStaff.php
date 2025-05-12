@@ -1,7 +1,6 @@
 <?php
 require('../../../include/conecta.php');
 require('../../Email/EnviarGmail.php');
-
 $retorno = '';
 
 $subinstitucao = getPost('subinstitucao');

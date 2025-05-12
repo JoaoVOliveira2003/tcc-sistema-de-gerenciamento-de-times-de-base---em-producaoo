@@ -8,43 +8,39 @@ $bd = conecta();
 
 $retorno = '';
 
-if (!empty($_FILES['imagemJogador']['tmp_name'])) {
-    $tmp = $_FILES['imagemJogador']['tmp_name'];
 
-    $nomeOriginal = pathinfo($_FILES['imagemJogador']['name'], PATHINFO_FILENAME);
-    $extensao = pathinfo($_FILES['imagemJogador']['name'], PATHINFO_EXTENSION);
-    $nome = uniqid() . '_' . $nomeOriginal . '.' . $extensao;
+$tmp = $_FILES['imagemJogador']['tmp_name'];
 
-    $destino = $pasta . $nome;
+$nomeOriginal = pathinfo($_FILES['imagemJogador']['name'], PATHINFO_FILENAME);
+$extensao = pathinfo($_FILES['imagemJogador']['name'], PATHINFO_EXTENSION);
+$nome = uniqid() . '_' . $nomeOriginal . '.' . $extensao;
 
-    if (!is_dir($pasta)) {
-        mkdir($pasta, 0777, true);
-    }
+$destino = $pasta . $nome;
 
-    if (move_uploaded_file($tmp, $destino)) {
+if (!is_dir($pasta)) {
+    mkdir($pasta, 0777, true);
+}
 
-        $query = "SELECT count(*) FROM midia_jogador WHERE cod_jogador = $cod";
-        if ($bd->SqlExecuteQuery($query)) {
-            $valorProcurado = $bd->SqlQueryShow('count(*)');
+if (move_uploaded_file($tmp, $destino)) {
+    $query = "SELECT count(*) FROM midia_jogador WHERE cod_jogador = $cod";
+    if ($bd->SqlExecuteQuery($query)) {
+        $valorProcurado = $bd->SqlQueryShow('count(*)');
 
-            if ($valorProcurado > 0) {
-                $query = "UPDATE midia_jogador SET local_midia = '$nome' WHERE cod_jogador = $cod";
-                if ($bd->SqlExecuteQuery($query)) {
-                    $retorno = 'ok';
-                } else {
-                    $retorno = 'nok';
-                }
+        if ($valorProcurado > 0) {
+            $query = "UPDATE midia_jogador SET local_midia = '$nome' WHERE cod_jogador = $cod";
+            if ($bd->SqlExecuteQuery($query)) {
+                $retorno = 'ok';
             } else {
-                $query = "INSERT INTO midia_jogador(cod_jogador, local_midia) VALUES ($cod, '$nome')";
-                if ($bd->SqlExecuteQuery($query)) {
-                    $retorno = 'ok';
-                } else {
-                    $retorno = 'nok';
-                }
+                $retorno = 'nok';
+            }
+        } else {
+            $query = "INSERT INTO midia_jogador(cod_jogador, local_midia) VALUES ($cod, '$nome')";
+            if ($bd->SqlExecuteQuery($query)) {
+                $retorno = 'ok';
+            } else {
+                $retorno = 'nok';
             }
         }
-    } else {
-        $retorno = 'nok';
     }
 } else {
     $retorno = 'nok';
