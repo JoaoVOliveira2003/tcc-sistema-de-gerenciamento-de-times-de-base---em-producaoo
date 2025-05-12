@@ -26,7 +26,7 @@ INSERT INTO subInstituto_staff (cod_staff,cod_subInstituto) VALUES (1,1);
 INSERT INTO staff_turma (cod_staff,cod_turma) VALUES (1,1);
 
 -- 10
-INSERT INTO jogador (cod_jogador,ativo,data_nascimento,posicao,esporte,ficha_medica_cod_jogador) VALUES (1,'s','2025-12-31',1,1,1);
+INSERT INTO jogador (cod_jogador,data_nascimento,posicao,esporte) VALUES (2,'2025-12-31',1,1);
 
 --  11
 INSERT INTO midia_jogador (cod_jogador,local_midia) VALUES (1,'midia/zjor.png');
