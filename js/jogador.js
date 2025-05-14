@@ -192,6 +192,7 @@ function gravarJogador() {
     formData.append("lesoes", JSON.stringify(lesoes));
     formData.append("responsaveis", JSON.stringify(responsaveis));
     
+  modalCarregamento();
 
 $.ajax({
     url: "/tcc/componentes/jogador/gravar/gravarJogador.php",
@@ -200,7 +201,17 @@ $.ajax({
     contentType: false,
     processData: false,
     success: function (data) {
-      alert(data);
+      escodendoModalCarregamento();
+      if (data == "ok") {
+        alert(
+          "Dados de jogadores foram gravados. Para que o usuário possa se inscrever, ele deve confirmar seus dados pelo e-mail enviado.",
+          "Atenção",
+          "50%",
+          function () {
+            location.reload();
+          }
+        );
+      }
     },
     error: function () {
       alert("Erro ao gravar dados do jogador");

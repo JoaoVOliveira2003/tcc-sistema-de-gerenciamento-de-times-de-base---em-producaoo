@@ -1,5 +1,6 @@
 <?php
 require('../../../include/conecta.php');
+require('../../Email/EnviarGmail.php');
 $retorno = 'ok';
 
 $bd = conecta();
@@ -12,27 +13,28 @@ $cpf = getPost('cpf');
 $posicao = getPost('posicao');
 $data_nascimento = getPost('data_nascimento');
 
-// Recupera a imagem do jogador
-$tmp = $_FILES['imagemJogador']['tmp_name'];
-$nomeOriginal = pathinfo($_FILES['imagemJogador']['name'], PATHINFO_FILENAME);
-$extensao = pathinfo($_FILES['imagemJogador']['name'], PATHINFO_EXTENSION);
-$nomeImagem = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 4) . '_' . $nomeOriginal . '.' . $extensao;
-
-$pasta = '../../../img/jogador/';
-$destino = $pasta . $nomeImagem;
-
 $esporte = getPost('esporte');
 $altura = getPost('altura');
 $peso = getPost('peso');
 $tipo_sanguineo = getPost('tipo_sanguineo');
 $restricoes_medicas = getPost('restricoes_medicas');
 $alergias = getPost('alergias');
-$lesoes = getPost('lesoes');
-$responsaveis = getPost('responsaveis');
+$responsaveis = json_decode(getPost('responsaveis'), true);
+$lesoes = json_decode(getPost('lesoes'), true);
 $cod_turma = getPost('turma');
 
-$responsaveis = json_decode(getPost('responsaveis'), true);  // Decodificando JSON para array
-$lesoes = json_decode(getPost('lesoes'), true);  // Decodificando JSON para array
+// Verifica se a imagem foi enviada
+if (!isset($_FILES['imagemJogador'])) {
+    exit('nok-sem-imagem');
+}
+
+// Processa a imagem
+$tmp = $_FILES['imagemJogador']['tmp_name'];
+$nomeOriginal = pathinfo($_FILES['imagemJogador']['name'], PATHINFO_FILENAME);
+$extensao = pathinfo($_FILES['imagemJogador']['name'], PATHINFO_EXTENSION);
+$nomeImagem = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 4) . '_' . $nomeOriginal . '.' . $extensao;
+$pasta = '../../../img/jogador/';
+$destino = $pasta . $nomeImagem;
 
 // 1. cadastro_identificacao
 $query1 = "INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('$nome', '$cpf', '$municipio', 'n')";
@@ -51,19 +53,18 @@ if ($bd->SqlExecuteQuery($query1)) {
             $query4 = "INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES ($cod_turma, $cod_pessoa)";
             if ($bd->SqlExecuteQuery($query4)) {
 
-                // 5. midia_jogador
-                $query5 = "INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES ($cod_pessoa, '$nomeImagem')";
-
+                // 5. Upload da imagem e midia_jogador
                 if (move_uploaded_file($tmp, $destino)) {
-
+                    $query5 = "INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES ($cod_pessoa, '$nomeImagem')";
                     if ($bd->SqlExecuteQuery($query5)) {
+
                         // 6. fichaMedica
                         $query6 = "INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) 
-                                       VALUES ($cod_pessoa, $altura, $peso, '$tipo_sanguineo', '$restricoes_medicas', '$alergias', NOW())";
+                                   VALUES ($cod_pessoa, $altura, $peso, '$tipo_sanguineo', '$restricoes_medicas', '$alergias', NOW())";
                         if ($bd->SqlExecuteQuery($query6)) {
 
                             // 7. contato_responsavel e jogador_contatoResponsavel
-                            foreach ($responsaveis as $i => $resp) {
+                            foreach ($responsaveis as $resp) {
                                 $nomeR = $resp['nome'];
                                 $filiacao = $resp['filiacao'];
                                 $emailR = $resp['email'];
@@ -87,7 +88,7 @@ if ($bd->SqlExecuteQuery($query1)) {
 
                             // 8. historicoLesoes e fichaMedica_historicoLesoes
                             if ($retorno === 'ok') {
-                                foreach ($lesoes as $i => $lesao) {
+                                foreach ($lesoes as $lesao) {
                                     $tipo = $lesao['tipoLesao'];
                                     $data = $lesao['dataLesao'];
                                     $tempo = $lesao['tempoFora'];
@@ -109,13 +110,15 @@ if ($bd->SqlExecuteQuery($query1)) {
                                     }
                                 }
                             }
+
                         } else {
                             $retorno = 'nok-erro query 6'; // fichaMedica
                         }
-                    } 
-                    else {
+
+                    } else {
                         $retorno = 'nok-erro query 5'; // midia_jogador
                     }
+
                 } else {
                     $retorno = 'nok-erro upload imagem';
                 }
@@ -134,7 +137,13 @@ if ($bd->SqlExecuteQuery($query1)) {
 
 } else {
     $retorno = 'nok-erro query 1'; // cadastro_identificacao
-}             
+}
 
+// Se tudo ocorreu bem, envia o e-mail
+if ($retorno === 'ok') {
+    enviarGmail($email, $nome, $cod_role, $cod_pessoa);
+}
+
+// Resposta final
 exit($retorno);
 ?>
