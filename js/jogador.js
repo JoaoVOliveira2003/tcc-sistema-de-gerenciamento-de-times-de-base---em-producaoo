@@ -33,6 +33,7 @@ function selectTipoLesao() {
   });
 }
 
+
 function gravarJogador() {
   var input = document.getElementById("imagemJogador");
   var formData = new FormData();
@@ -134,7 +135,6 @@ function gravarJogador() {
   const restricoes_medicas = document.getElementById("restricoes_medicas").value;
   const alergias = document.getElementById("alergias").value;
   const turma = document.getElementById("turma").value;
-
 
   const camposObrigatorios = {
     municipio,
