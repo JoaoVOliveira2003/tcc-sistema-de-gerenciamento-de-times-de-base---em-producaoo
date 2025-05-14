@@ -33,29 +33,11 @@ function selectTipoLesao() {
   });
 }
 
-function gravarImagemJogador() {
-  var pagina = "/tcc/componentes/jogador/gravar/gravarImagemJogador.php";
-
+function gravarJogador() {
   var input = document.getElementById("imagemJogador");
   var formData = new FormData();
   formData.append("imagemJogador", input.files[0]);
 
-  $.ajax({
-    url: pagina,
-    type: "POST",
-    data: formData,
-    contentType: false,
-    processData: false,
-    success: function (resposta) {
-      alert(resposta);
-    },
-    error: function () {
-      alert("Erro ao gravar a imagem");
-    },
-  });
-}
-
-function gravarJogador() {
   const pagina = "/tcc/componentes/jogador/gravar/gravarJogador.php";
 
   // Validação de município
@@ -153,6 +135,7 @@ function gravarJogador() {
   const alergias = document.getElementById("alergias").value;
   const turma = document.getElementById("turma").value;
 
+
   const camposObrigatorios = {
     municipio,
     nome,
@@ -191,33 +174,36 @@ function gravarJogador() {
 
   if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) return;
 
-  $.ajax({
-    url: pagina,
+    formData.append("municipio", municipio);
+    formData.append("nome", nome);
+    formData.append("email", email);
+    formData.append("cpf", cpf);
+    formData.append("posicao", posicao);
+    formData.append("data_nascimento", data_nascimento);
+    formData.append("esporte", esporte);
+    formData.append("altura", altura);
+    formData.append("peso", peso);
+    formData.append("tipo_sanguineo", tipo_sanguineo);
+    formData.append("restricoes_medicas", restricoes_medicas);
+    formData.append("alergias", alergias);
+    formData.append("turma", turma);
+
+    // Convertendo objetos para JSON e enviando como string
+    formData.append("lesoes", JSON.stringify(lesoes));
+    formData.append("responsaveis", JSON.stringify(responsaveis));
+    
+
+$.ajax({
+    url: "/tcc/componentes/jogador/gravar/gravarJogador.php",
     type: "POST",
-    data: {
-      municipio,
-      nome,
-      email,
-      cpf,
-      posicao,
-      data_nascimento,
-      imagemJogador,
-      esporte,
-      posicao,
-      altura,
-      peso,
-      turma,
-      tipo_sanguineo,
-      restricoes_medicas,
-      alergias,
-      lesoes,
-      responsaveis
-    },
+    data: formData,
+    contentType: false,
+    processData: false,
     success: function (data) {
       alert(data);
     },
     error: function () {
-      alert("Erro ao gravar a imagem");
+      alert("Erro ao gravar dados do jogador");
     },
   });
 }

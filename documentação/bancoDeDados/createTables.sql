@@ -302,14 +302,13 @@ CREATE TABLE `tcc`.`jogador` (
   `cod_jogador` INT NOT NULL, 
   `data_nascimento` DATE, 
   `posicao` INT, 
-  `esporte` INT, 
-  `ficha_medica_cod_jogador` INT, 
+  `esporte` INT,
   PRIMARY KEY (`cod_jogador`), 
   FOREIGN KEY (`cod_jogador`) REFERENCES `role_cadastro`(`cod_usuario`), 
   FOREIGN KEY (`posicao`) REFERENCES `posicao`(`cod_posicao`), 
-  FOREIGN KEY (`esporte`) REFERENCES `esporte`(`cod_esporte`), 
-  FOREIGN KEY (`ficha_medica_cod_jogador`) REFERENCES `ficha_medica`(`cod_jogador`)
+  FOREIGN KEY (`esporte`) REFERENCES `esporte`(`cod_esporte`)
 );
+
 
 
 -- turma_jogador
