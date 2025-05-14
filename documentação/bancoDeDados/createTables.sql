@@ -303,6 +303,7 @@ CREATE TABLE `tcc`.`jogador` (
   `data_nascimento` DATE, 
   `posicao` INT, 
   `esporte` INT, 
+  `ficha_medica_cod_jogador` INT, 
   PRIMARY KEY (`cod_jogador`), 
   FOREIGN KEY (`cod_jogador`) REFERENCES `role_cadastro`(`cod_usuario`), 
   FOREIGN KEY (`posicao`) REFERENCES `posicao`(`cod_posicao`), 
