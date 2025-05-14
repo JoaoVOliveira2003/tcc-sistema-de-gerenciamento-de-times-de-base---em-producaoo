@@ -33,23 +33,48 @@ function selectTipoLesao() {
   });
 }
 
-function gravarJogador() {
-  var pagina = "/tcc/componentes/jogador/gravar/gravarJogador.php";
+function gravarImagemJogador() {
+  var pagina = "/tcc/componentes/jogador/gravar/gravarImagemJogador.php";
 
-  let campos = { municipio: true };
-  let mensagens = { municipio: "Município pertencente" };
+  var input = document.getElementById("imagemJogador");
+  var formData = new FormData();
+  formData.append("imagemJogador", input.files[0]);
+
+  $.ajax({
+    url: pagina,
+    type: "POST",
+    data: formData,
+    contentType: false,
+    processData: false,
+    success: function (resposta) {
+      alert(resposta);
+    },
+    error: function () {
+      alert("Erro ao gravar a imagem");
+    },
+  });
+}
+
+function gravarJogador() {
+  const pagina = "/tcc/componentes/jogador/gravar/gravarJogador.php";
+
+  // Validação de município
+  const campos = { municipio: true };
+  const mensagens = { municipio: "Município pertencente" };
   if (!verificarCampoId(campos, mensagens)) return;
 
-  let campos2 = { posicao: true };
-  let mensagens2 = { posicao: "Qual é sua posição" };
+  // Validação de posição
+  const campos2 = { posicao: true };
+  const mensagens2 = { posicao: "Qual é sua posição" };
   if (!verificarCampoId(campos2, mensagens2)) return;
 
+  // Validação dos responsáveis
   const responsaveis = [];
   let responsavelIncompleto = false;
 
   document
     .querySelectorAll("#responsaveis-container .responsavel")
-    .forEach(function (card) {
+    .forEach((card) => {
       const nome = card
         .querySelector('input[name="responsavel_nome[]"]')
         .value.trim();
@@ -73,36 +98,62 @@ function gravarJogador() {
       }
     });
 
+  const lesoes = [];
+  let lesaoIncompleta = false;
+
+  document.querySelectorAll("#lesoes-container .lesao").forEach((card) => {
+    const tipoLesao = card
+      .querySelector('select[name="cod_tipoLesao[]"]')
+      .value.trim();
+    const dataLesao = card
+      .querySelector('input[name="data_lesao[]"]')
+      .value.trim();
+    const tempoFora = card
+      .querySelector('input[name="tempoFora_lesao[]"]')
+      .value.trim();
+    const descLesao = card
+      .querySelector('textarea[name="desc_lesao[]"]')
+      .value.trim();
+
+    const todosPreenchidos = tipoLesao && dataLesao && tempoFora && descLesao;
+
+    if (todosPreenchidos) {
+      lesoes.push({ tipoLesao, dataLesao, tempoFora, descLesao });
+    }
+  });
+
+  if (lesaoIncompleta) {
+    alert("Todos os campos da lesão devem ser preenchidos.");
+    return;
+  }
+
   if (responsavelIncompleto) {
     alert("Todos os campos do responsável devem ser preenchidos.");
     return;
   }
 
   if (responsaveis.length === 0) {
-    alert(
-      "É necessário informar pelo menos um responsável com todos os campos preenchidos."
-    );
+    alert("É necessário informar pelo menos um responsável com todos os campos preenchidos.");
     return;
   }
 
   // Captura dos demais campos
-  var data_nascimento = document.getElementById("dataNascimento").value;
-  var municipio = document.getElementById("municipio")?.value || "";
-  var nome = document.getElementById("nome").value;
-  var email = document.getElementById("email_usuario").value;
-  var cpf = document.getElementById("cpf").value;
-  var posicao = document.getElementById("posicao").value;
-  var imagemJogador = document.getElementById("imagemJogador").value;
-  var selectEsporte = document.getElementById("selectEsporte").value;
-  var selectPosicao = document.getElementById("selectPosicao").value;
-  var altura = document.getElementById("altura").value;
-  var peso = document.getElementById("peso").value;
-  var tipo_sanguineo = document.getElementById("tipo_sanguineo").value;
-  var restricoes_medicas = document.getElementById("restricoes_medicas").value;
-  var alergias = document.getElementById("alergias").value;
+  const data_nascimento = document.getElementById("data_nascimento").value;
+  const municipio = document.getElementById("municipio")?.value || "";
+  const nome = document.getElementById("nome").value;
+  const email = document.getElementById("email_usuario").value;
+  const cpf = document.getElementById("cpf").value;
+  const posicao = document.getElementById("posicao").value;
+  const imagemJogador = document.getElementById("imagemJogador").value;
+  const esporte = document.getElementById("esporte").value;
+  const altura = document.getElementById("altura").value;
+  const peso = document.getElementById("peso").value;
+  const tipo_sanguineo = document.getElementById("tipo_sanguineo").value;
+  const restricoes_medicas = document.getElementById("restricoes_medicas").value;
+  const alergias = document.getElementById("alergias").value;
+  const turma = document.getElementById("turma").value;
 
-  // Validação de campos obrigatórios
-  let camposObrigatorios = {
+  const camposObrigatorios = {
     municipio,
     nome,
     email,
@@ -110,8 +161,9 @@ function gravarJogador() {
     posicao,
     data_nascimento,
     imagemJogador,
-    selectEsporte,
-    selectPosicao,
+    esporte,
+    posicao,
+    turma,
     altura,
     peso,
     tipo_sanguineo,
@@ -119,7 +171,7 @@ function gravarJogador() {
     alergias,
   };
 
-  let mensagemCamposObrigatorios = {
+  const mensagemCamposObrigatorios = {
     municipio: "Município de origem do usuário",
     nome: "Nome do usuário",
     email: "Email do usuário",
@@ -127,13 +179,14 @@ function gravarJogador() {
     posicao: "Posição",
     data_nascimento: "Data de nascimento",
     imagemJogador: "Imagem do jogador",
-    selectEsporte: "Esporte",
-    selectPosicao: "Posição",
+    esporte: "Esporte",
+    posicao: "Posição",
     altura: "Altura",
     peso: "Peso",
     tipo_sanguineo: "Tipo sanguíneo",
     restricoes_medicas: "Restrições médicas",
     alergias: "Alergias",
+    turma: "Turma pertecente",
   };
 
   if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) return;
@@ -142,47 +195,26 @@ function gravarJogador() {
     url: pagina,
     type: "POST",
     data: {
-      municipio: municipio,
-      nome: nome,
-      email: email,
-      cpf: cpf,
-      posicao: posicao,
-      data_nascimento: data_nascimento,
-      imagemJogador: imagemJogador,
-      selectEsporte: selectEsporte,
-      selectPosicao: selectPosicao,
-      altura: altura,
-      peso: peso,
-      tipo_sanguineo: tipo_sanguineo,
-      restricoes_medicas: restricoes_medicas,
-      alergias: alergias,
+      municipio,
+      nome,
+      email,
+      cpf,
+      posicao,
+      data_nascimento,
+      imagemJogador,
+      esporte,
+      posicao,
+      altura,
+      peso,
+      turma,
+      tipo_sanguineo,
+      restricoes_medicas,
+      alergias,
+      lesoes,
+      responsaveis
     },
-    contentType: false,
-    processData: false,
     success: function (data) {
       alert(data);
-    },
-    error: function () {
-      alert("Erro ao gravar a imagem");
-    },
-  });
-}
-
-function gravarImagemJogador() {
-  var pagina = "/tcc/componentes/jogador/gravar/gravarImagemJogador.php";
-
-  var input = document.getElementById("imagemJogador");
-  var formData = new FormData();
-  formData.append("imagemJogador", input.files[0]);
-
-  $.ajax({
-    url: pagina,
-    type: "POST",
-    data: formData,
-    contentType: false,
-    processData: false,
-    success: function (resposta) {
-      alert(resposta);
     },
     error: function () {
       alert("Erro ao gravar a imagem");

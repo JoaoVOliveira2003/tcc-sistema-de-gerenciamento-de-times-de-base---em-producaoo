@@ -689,10 +689,10 @@ function selectTurma(cod) {
 
   var classLabel = "mt-1 form-label";
   var classSelect = "form-control mb-2";
-  var forLabel = "posicao";
-  var idSelect = "posicao";
-  var name = "posicao";
-  var primeiroOption = "posição favorita";
+  var forLabel = "turma";
+  var idSelect = "turma";
+  var name = "turma";
+  var primeiroOption = "Qual turma ?";
 
   $.ajax({
     type: "POST",
