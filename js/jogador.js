@@ -218,3 +218,55 @@ $.ajax({
     },
   });
 }
+
+function verificarCadastroJogador(codPessoa, emailPessoa) {
+  var pagina = "/tcc/componentes/Email/verificarCadastroJogador.php";
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: { codPessoa: codPessoa, emailPessoa: emailPessoa },
+    dataType: "json",
+    success: function (data) {
+      console.log(data);
+
+      if (data.status === "nok1") {
+        alert("Erro ao executar a consulta!", "Atenção", "80%", function () {
+          // window.location.href = "https://www.google.com";
+        });
+      } else if (data.status === "nok2") {
+        alert("Pessoa não existe no sistema!", "Atenção", "80%", function () {
+          // window.location.href = "https://www.google.com";
+        });
+      } else if (data.status === "nok3") {
+        alert("Cadastro já confirmado!", "Atenção", "80%", function () {
+          // window.location.href = "https://www.google.com";
+        });
+      } else if (data.status === "ok") {
+
+        $("#nome").val(data.nome).prop("disabled", true);
+        function formatarCPF(cpf) {
+          return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+        }
+
+        $("#cpf").val(formatarCPF(data.cpf)).prop("disabled", true);
+
+        $("#nacao").val(data.nacao).prop("disabled", true);
+        $("#estado").val(data.estado).prop("disabled", true);
+        $("#municipio").val(data.municipio).prop("disabled", true);
+        $("#instituicao").val(data.instituicao).prop("disabled", true);
+
+        $("#nacao").prop("disabled", true);
+        $("#estado").prop("disabled", true);
+        $("#municipio").prop("disabled", true);
+        $("#instituicao").prop("disabled", true);
+
+        $("input#email_usuario").val(data.emailPessoa).prop("disabled", true);
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error("Erro na requisição:", error);
+      alert("Erro na comunicação com o servidor.");
+    },
+  });
+}
