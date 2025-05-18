@@ -97,12 +97,13 @@
       <center>
         <div class="col-md-4 mb-3 text-center">
           <label class="form-label d-block" for="localImagem">Foto Cadastrada:</label>
-          <img alt="Foto do jogador" id="localImagem" name="localImagem" class="img-fluid rounded shadow" style="max-height: 200px; object-fit: cover;">
+          <img alt="Foto do jogador" id="localImagem" name="localImagem" class="img-fluid rounded shadow"
+            style="max-height: 200px; object-fit: cover;">
         </div>
       </center>
 
       <hr class="my-2">
-      
+
       <label class="form-label">Dados dos responsáveis:</label>
       <div id="dadosResponsaveis"></div>
 
@@ -141,10 +142,20 @@
       <label class="form-label">Lesão:</label>
       <div id="dadosLesoes"></div>
 
+      <hr class="my-2">
+
+      <div class="row">
 
 
+        <div class="col-md-6 ">
+          <label for="senha_usuario" class="form-label">Senha de login:</label>
+          <input type="text" class="form-control" id="senha_usuario" value="">
+        </div>
+      </div>
 
-      <button type="button" class="btn btn-primary mt-1" id="btnConfirmar"
+      <hr>
+
+      <button type="button" class="btn btn-primary " id="btnConfirmar"
         onclick="confirmarCadastro(this.getAttribute('data-cod'))">Confirmar</button>
       <button type="button" class="btn btn-danger mt-1" id="btnRecusar"
         onclick="recusarCadastroADMS(this.getAttribute('data-cod'))">Recusar</button>
