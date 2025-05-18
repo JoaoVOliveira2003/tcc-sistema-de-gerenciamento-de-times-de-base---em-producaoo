@@ -228,7 +228,7 @@ function verificarCadastroJogador(codPessoa, emailPessoa) {
     data: { codPessoa: codPessoa, emailPessoa: emailPessoa },
     dataType: "json",
     success: function (data) {
-      console.log(data);
+  
 
       if (data.status === "nok1") {
         alert("Erro ao executar a consulta!", "Atenção", "80%", function () {
@@ -249,17 +249,28 @@ function verificarCadastroJogador(codPessoa, emailPessoa) {
           return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
         }
 
+        $("#alergias").val(data.alergias).prop("disabled", true);
+        $("#altura").val(data.altura).prop("disabled", true);
         $("#cpf").val(formatarCPF(data.cpf)).prop("disabled", true);
-
-        $("#nacao").val(data.nacao).prop("disabled", true);
+        $("#data_nascimento").val(data.data_nascimento).prop("disabled", true);
+        $("#esporte").val(data.cod_esporte).prop("disabled", true);
         $("#estado").val(data.estado).prop("disabled", true);
+        $("#imagemJogador").val(data.imagemJogador).prop("disabled", true);
         $("#municipio").val(data.municipio).prop("disabled", true);
-        $("#instituicao").val(data.instituicao).prop("disabled", true);
+        $("#nacao").val(data.nacao).prop("disabled", true);
+        $("#peso").val(data.peso).prop("disabled", true);
+        $("#posicao").val(data.posicao).prop("disabled", true);
+        $("#restricoes_medicas").val(data.restricoes_medicas).prop("disabled", true);
+        $("#subinstituicao").val(data.instituicao).prop("disabled", true);
+        $("#tipo_sanguineo").val(data.tipo_sanguineo).prop("disabled", true);
+        $("#turma").val(data.turma).prop("disabled", true);
+        $("#nome_jogador").val('nome').prop("disabled", true);        
+        $("#email_jogador").val(data.emailPessoa).prop("disabled", true);      
+               
+        $("#localImagem").attr("src", data.localImagem);
 
-        $("#nacao").prop("disabled", true);
-        $("#estado").prop("disabled", true);
-        $("#municipio").prop("disabled", true);
-        $("#instituicao").prop("disabled", true);
+        $("#dadosResponsaveis").html(data.dadosResponsaveis);
+        $("#dadosLesoes").html(data.dadosLesoes);
 
         $("input#email_usuario").val(data.emailPessoa).prop("disabled", true);
       }

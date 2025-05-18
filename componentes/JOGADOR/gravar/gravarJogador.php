@@ -72,8 +72,9 @@ if ($bd->SqlExecuteQuery($query1)) {
 
                                 $queryResp = "INSERT INTO contato_responsavel (nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) 
                                               VALUES ('$nomeR', '$filiacao', '$emailR', '$telefone')";
-                                if ($bd->SqlExecuteQuery($queryResp)) {
+                                            if ($bd->SqlExecuteQuery($queryResp)) {
                                     $cod_contatoResp = $bd->getLastInsertId();
+
                                     $queryVinculo = "INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) 
                                                      VALUES ($cod_pessoa, $cod_contatoResp)";
                                     if (!$bd->SqlExecuteQuery($queryVinculo)) {
