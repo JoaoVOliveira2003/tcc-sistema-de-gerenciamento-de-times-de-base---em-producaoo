@@ -505,6 +505,7 @@ function teste(){
 }
 
 function confirmarCadastro(cod){
+
   var pagina = "/tcc/componentes/confirmarCadastro.php";
 
   var senha = document.getElementById("senha_usuario").value;

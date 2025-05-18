@@ -281,3 +281,76 @@ function verificarCadastroJogador(codPessoa, emailPessoa) {
     },
   });
 }
+
+function recusarCadastroJOGADOR(cod) {
+  var pagina = "/tcc/componentes/modalBasico.php";
+
+  var idModal = "modalRecusarCadastroJOGADOR";
+  var textoBotao = "Excluir";
+  var tituloModal = "Confirmar Exclusão";
+  var funcaoModal = "deletarCadastroJOGADOR";
+  var textoModal = "Você tem certeza que deseja negar o cadastro ?";
+  var textoBotao = "Recusar";
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {
+      funcaoModal: funcaoModal,
+      textoBotao: textoBotao,
+      cod: cod,
+      idModal: idModal,
+      tituloModal: tituloModal,
+      textoModal: textoModal,
+    },
+    success: function (data) {
+      $("#modalContainer").html(data);
+
+      var modalElement = $("#" + idModal);
+      modalElement.modal("show");
+
+      modalElement.attr("aria-hidden", "false");
+
+      $("#cancelarModal").on("click", function () {
+        modalElement.modal("hide");
+      });
+
+      $("#funcaoDoModal").on("click", function () {
+        modalElement.modal("hide");
+      });
+    },
+    error: function (xhr, status, error) {
+      console.error("Erro ao carregar os dados do estado:", error);
+    },
+  });
+}
+
+function deletarCadastroJOGADOR(cod) {
+  var pagina = "/tcc/componentes/JOGADOR/deletar/deletarCadastroJOGADOR.php";
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: { cod: cod },
+    success: function (data) {
+      console.log(data);
+      if (data == "ok") {
+        alert("Dados deletados!", "Atenção", "80%", function () {
+          window.location.href = "https://www.google.com";
+        });
+      } else if (data == "nok") {
+        alert(
+          "Remoção incompleta,caso problema continuar,chame o suporte.",
+          "Atenção",
+          "50%",
+          function () {
+            location.reload();
+          }
+        );
+      }
+    },
+    error: function (xhr, status, error) {
+      console.error("Erro ao gravar nação:", error);
+    },
+  });
+}

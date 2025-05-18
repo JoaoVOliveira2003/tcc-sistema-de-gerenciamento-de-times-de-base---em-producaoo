@@ -39,8 +39,8 @@
             value="adms">
         </div>
         <div class="col-md-6 mb-3">
-          <label for="email_jogador" class="form-label">Email do jogador:</label>
-          <input type="email" class="form-control" id="email_jogador" name="email_jogador"
+          <label for="email_usuario" class="form-label">Email do jogador:</label>
+          <input type="email" class="form-control" id="email_usuario" name="email_usuario"
             placeholder="Digite o email..." value="ojoao953@gmail.com">
         </div>
       </div>
@@ -155,10 +155,12 @@
 
       <hr>
 
-      <button type="button" class="btn btn-primary " id="btnConfirmar"
-        onclick="confirmarCadastro(this.getAttribute('data-cod'))">Confirmar</button>
-      <button type="button" class="btn btn-danger mt-1" id="btnRecusar"
-        onclick="recusarCadastroADMS(this.getAttribute('data-cod'))">Recusar</button>
+      <button type="button" class="btn btn-primary mb-2 " id="btnConfirmar" onclick="confirmarCadastro(this.getAttribute('data-cod'))">Confirmar</button>
+      <button type="button" class="btn btn-danger  mb-2 mt-1" id="btnRecusar" onclick="recusarCadastroJOGADOR(this.getAttribute('data-cod'))">Recusar</button>
+  
+                <div id="modalContainer"></div>
+
+  
     </div>
   </div>
 </body>
