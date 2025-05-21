@@ -7,38 +7,29 @@
   <?php include('../../include/includeBase.php'); ?>
   <script src="../../js/funcoes.js"></script>
   <script src="../../js/login.js"></script>
-  <title>Tela de Login</title>
+
+  <title>Redefinir Senha</title>
 </head>
 
 <body>
   <div class="container mt-5">
     <div class="row align-items-center justify-content-center">
-
       <div class="col-md-4 text-center mb-4 mb-md-0">
         <img src="../../img/icone/icone.png" alt="Ícone" class="img-fluid" style="max-width: 300px;">
       </div>
 
-      <div class="col-md-6 ml-4">
+      <div class="col-md-6">
         <h3 class="mb-4 fst-italic text-center text-md-start">
-          Login<br> Sistema Gerenciador de times de base esportiva
+          Esqueceu sua senha?
         </h3>
-
+        <h5 class="mb-3">Por favor, informe o e-mail associado à sua conta para redefinir sua senha.</h5>
+        
         <div class="mb-3">
-          <label for="email" class="form-label">E-mail de usuário</label>
-          <input type="email" class="form-control" id="email" name="email" >
+          <label for="email" class="form-label">E-mail do usuário</label>
+          <input type="email" class="form-control" id="email" name="email"  autocomplete="email">
         </div>
 
-        <div class="mb-3">
-          <label for="senha" class="form-label">Senha</label>
-          <input type="password" class="form-control" id="senha" name="senha" >
-        </div>
-
-        <button onclick="fazerLogin()" class="btn btn-primary">Entrar</button>
-        <a href="esqueciSenha.php" class="btn btn-primary text-white text-decoration-none">
-          Esqueci senha
-        </a>
-
-
+        <button onclick="atualizarSenha()" class="btn btn-primary">Atualizar senha.</button>
       </div>
     </div>
   </div>
