@@ -16,3 +16,6 @@ classLabel, forLabel, classSelect, idSelect, name: Propriedades que definem a ap
 
 primeiroOption: O texto que será exibido como a primeira opção no <select>.
 
+---------------------------------------------------------------------------------------
+
+https://chatgpt.com/c/682d0795-f6d8-8003-9397-56a5d721001b
