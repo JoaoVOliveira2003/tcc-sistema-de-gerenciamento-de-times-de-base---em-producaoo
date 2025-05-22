@@ -213,7 +213,20 @@ function gravarTI() {
     url: pagina,
     data: { municipio: municipio, nome: nome, email: email, cpf: cpf},
     success: function (data) {
-      escodendoModalCarregamento();
+ 
+      if(data =='emailJaCadastrado'){
+            escodendoModalCarregamento();
+
+        alert(
+          "Email já cadastrado.",
+          "Atenção",
+          "50%",
+            function () {
+                escodendoModalCarregamento();
+
+          }
+        );
+      }
 
       if (data == "ok") {
         alert(

@@ -3,8 +3,6 @@ require('../../../include/conecta.php');
 require('../../Email/EnviarGmail.php');
 
 
-
-
 $retorno = '';
 
 $municipio = getPost('municipio');
@@ -16,9 +14,21 @@ $cod_role = 1;
 
 $bd = conecta();
 
+
+$query = "SELECT COUNT(*) FROM login_usuario WHERE email_usuario = '$email'";
+
+if ($bd->SqlExecuteQuery($query)) {
+    $count = $bd->SqlQueryShow("COUNT(*)");
+    if ($count > 0) {
+        $retorno = 'emailJaCadastrado';
+        $bd->SqlDisconnect();
+        exit($retorno);
+    }
+}
+
+
 $query = "INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
           VALUES ('$nome', '$cpf', '$municipio', 'n')";
-
 
 if ($bd->SqlExecuteQuery($query)) {
     $cod_pessoa = $bd->getLastInsertId();

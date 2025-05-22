@@ -680,7 +680,6 @@ function selectSubInstituicoesTurma() {
 function selectTurma(cod) {
   var pagina = "/tcc/componentes/selectBasico.php";
   var query  = "select cod_turma,desc_turma from turma where ativo='s' and cod_subInstituicao=  " + cod;
-  console.log(query);  
 
   var codSelect = "cod_turma";
   var descSelect = "desc_turma";
