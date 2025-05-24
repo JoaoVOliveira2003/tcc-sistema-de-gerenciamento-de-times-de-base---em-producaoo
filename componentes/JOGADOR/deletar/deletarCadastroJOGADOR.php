@@ -5,6 +5,12 @@ $cod = getPost('cod');
 $bd = conecta();
 $retorno = 'ok';
 
+$query = "delete from login_usuario where cod_usuario= " . $cod . "";
+if (!$bd->SqlExecuteQuery($query)) {
+    $retorno = 'nok';
+    exit($retorno);
+}
+
 $query6 = "DELETE FROM turma_jogador WHERE cod_jogador = $cod";
 if (!$bd->SqlExecuteQuery($query6)) {
     $retorno = 'nok';

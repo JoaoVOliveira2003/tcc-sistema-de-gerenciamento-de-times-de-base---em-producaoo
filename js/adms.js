@@ -410,6 +410,9 @@ function verificarCadastroADMS(codPessoa, emailPessoa) {
     data: { codPessoa: codPessoa, emailPessoa: emailPessoa },
     dataType: "json",
     success: function (data) {
+
+      console.log(data);
+      
       if (data.status === "nok1") {
         alert("Erro ao executar a consulta!", "Atenção", "80%", function () {
           window.location.href = "https://www.google.com";

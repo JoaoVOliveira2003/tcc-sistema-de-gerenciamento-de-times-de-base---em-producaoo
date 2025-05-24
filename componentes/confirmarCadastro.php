@@ -9,7 +9,7 @@ $senha = getPost('senha');
 
 $bd = conecta();
 
-$query = "insert into login_usuario(cod_usuario,email_usuario,senha) values($cod,'$email','$senha')";
+$query = "UPDATE login_usuario SET senha = '$senha' WHERE cod_usuario = $cod";
 
 if ($bd->SqlExecuteQuery($query)) {
 

@@ -20,7 +20,7 @@
         <div class="mt-5">
             <h2 class="mb-3">Cadastro de <b>Administrador de Insitituição (ADMI)</b></h2>
             <h5 class="mb-4">
-                Olá! Lembre-se de que, para que o cadastro seja totalmente validado, a pessoa cadastrada receberá um
+                Olá! Lembre-se de que, para que o cadastro seja totalmente validado, a pesCOsoa cadastrada receberá um
                 e-mail de confirmação. <br> Nesse e-mail, ela deverá aceitar ou recusar o cadastro, além de inserir a
                 senha que deseja. Por isso, certifique-se de que o endereço de e-mail informado está correto.
             </h5>

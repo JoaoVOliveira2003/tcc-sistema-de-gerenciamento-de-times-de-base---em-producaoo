@@ -5,6 +5,12 @@ $retorno = '';
 $cod = getPost('cod');
 $bd = conecta();
 
+$query = "delete from login_usuario where cod_usuario= " . $cod . "";
+if (!$bd->SqlExecuteQuery($query)) {
+    $retorno = 'nok';
+    exit($retorno);
+}
+
 // Primeiro apaga da tabela mais dependente
 $query = "DELETE FROM subInstituticao_staff WHERE cod_staff = $cod";
 

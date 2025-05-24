@@ -41,10 +41,10 @@ if ($bd->SqlExecuteQuery($query)) {
                 INNER JOIN estado est ON mun.cod_estado = est.cod_estado
                 INNER JOIN nacao nac ON nac.cod_nacao = est.cod_nacao
                 inner join administrador_subInstituicao admsubins on ci.cod_usuario = admsubins.cod_administrador
-                inner join subInstituicao subins on subins.Cod_SubInstituicao = admsubins.cod_administrador
+                INNER JOIN subInstituicao subins ON subins.Cod_SubInstituicao = admsubins.cod_subInstituicao
                 WHERE ci.cod_usuario =  {$cod_pessoa} ";
 
-
+                error_log($query);
 
                 if ($bd->SqlExecuteQuery($query)) {
                     $retorno = [

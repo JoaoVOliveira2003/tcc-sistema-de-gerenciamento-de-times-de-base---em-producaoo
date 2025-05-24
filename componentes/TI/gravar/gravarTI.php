@@ -33,12 +33,13 @@ $query = "INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
 if ($bd->SqlExecuteQuery($query)) {
     $cod_pessoa = $bd->getLastInsertId();
 
-    $query = " insert into role_cadastro(cod_usuario,cod_tipoRole) 
-               values ($cod_pessoa, $cod_role)";
+    $query = " insert into role_cadastro(cod_usuario,cod_tipoRole) values ($cod_pessoa, $cod_role)";
 
     if ($bd->SqlExecuteQuery($query)) {
 
-        $query = "INSERT INTO login_usuario (email_usuario,cod_usuario) VALUES ('$email', $cod_pessoa,)";
+        $query = "INSERT INTO login_usuario (email_usuario,cod_usuario) VALUES ('$email', $cod_pessoa)";
+        error_log($query);
+        
         if ($bd->SqlExecuteQuery($query)) {
             enviarGmail($email, $nome, $cod_role, $cod_pessoa);
             $retorno = 'ok';
