@@ -55,6 +55,21 @@ function gravarStaff() {
     success: function (data) {
       escodendoModalCarregamento();
 
+      if(data =='emailJaCadastrado'){
+            escodendoModalCarregamento();
+
+        alert(
+          "Email já cadastrado.",
+          "Atenção",
+          "50%",
+            function () {
+                escodendoModalCarregamento();
+
+          }
+        );
+      }
+
+
       if (data == "ok") {
         alert(
           "Dados de STAFF gravados. Para que o usuário possa se inscrever, ele deve confirmar seus dados pelo e-mail enviado.",
