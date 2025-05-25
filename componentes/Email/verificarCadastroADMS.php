@@ -44,8 +44,6 @@ if ($bd->SqlExecuteQuery($query)) {
                 INNER JOIN subInstituicao subins ON subins.Cod_SubInstituicao = admsubins.cod_subInstituicao
                 WHERE ci.cod_usuario =  {$cod_pessoa} ";
 
-                error_log($query);
-
                 if ($bd->SqlExecuteQuery($query)) {
                     $retorno = [
                         'status' => 'ok',

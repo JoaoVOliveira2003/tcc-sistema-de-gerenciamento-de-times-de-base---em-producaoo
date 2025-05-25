@@ -26,7 +26,7 @@
         
         <div class="mb-3">
           <label for="email" class="form-label">E-mail do usuário</label>
-          <input type="email" class="form-control" id="email" name="email"  autocomplete="email">
+          <input type="email" class="form-control" id="email" name="email" value="ojoao953@gmail.com" autocomplete="email">
         </div>
 
         <button onclick="atualizarSenha()" class="btn btn-primary">Atualizar senha.</button>

@@ -23,25 +23,40 @@
           Login<br> Sistema Gerenciador de times de base esportiva
         </h3>
 
-        <div class="mb-3">
-          <label for="email" class="form-label">E-mail de usuário</label>
-          <input type="email" class="form-control" id="email" name="email" >
-        </div>
+        <!-- FORMULÁRIO -->
+        <form id="formLogin" onsubmit="fazerLogin(); return false;">
+          <div class="mb-3">
+            <label for="email" class="form-label">E-mail de usuário</label>
+            <input type="email" value="ojoao953@gmail.com" class="form-control" id="email" name="email" >
+          </div>
 
-        <div class="mb-3">
-          <label for="senha" class="form-label">Senha</label>
-          <input type="password" class="form-control" id="senha" name="senha" >
-        </div>
+          <div class="mb-3">
+            <label for="senha" class="form-label">Senha</label>
+            <div class="input-group">
+              <input type="password" class="form-control" value="123" id="senha" name="senha" >
+              <button class="btn btn-outline-secondary" type="button" onclick="toggleSenha()">
+                <img src="../../img\icone\olho.png" width="15" height="15" alt="">
+              </button>
+            </div>
+          </div>
 
-        <button onclick="fazerLogin()" class="btn btn-primary">Entrar</button>
-        <a href="esqueciSenha.php" class="btn btn-primary text-white text-decoration-none">
-          Esqueci senha
-        </a>
-
+          <div class="d-grid gap-2 d-md-block">
+            <button type="submit" class="btn btn-primary">Entrar</button>
+            <a href="esqueciSenha.php" class="btn btn-primary text-white text-decoration-none">Esqueci senha</a>
+          </div>
+        </form>
 
       </div>
     </div>
   </div>
+
+  <script>
+    function toggleSenha() {
+      const campoSenha = document.getElementById("senha");
+      campoSenha.type = campoSenha.type === "password" ? "text" : "password";
+    }
+
+  </script>
 </body>
 
 </html>
