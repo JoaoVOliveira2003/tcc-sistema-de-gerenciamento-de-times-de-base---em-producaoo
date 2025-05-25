@@ -1,6 +1,8 @@
 <?php
 require('../../include/conecta.php');
 
+session_start();
+
 $retorno = '';
 $senhaBanco = '';
 $email = getPost('email');
@@ -9,15 +11,18 @@ $senha = getPost('senha');
 $bd = conecta();
 
 $query = "
-    SELECT ci.ativo, lu.senha
+    SELECT ci.ativo, lu.senha , lu.cod_usuario, ci.nome
     FROM login_usuario lu
     JOIN cadastro_identificacao ci ON ci.cod_usuario = lu.cod_usuario
     WHERE lu.email_usuario = '$email'
 ";
 
+
 if ($bd->SqlExecuteQuery($query)) {
+    $nome = $bd->SqlQueryShow("nome");
     $ativo = $bd->SqlQueryShow("ativo");
     $senhaBanco = $bd->SqlQueryShow("senha");
+    $cod_usuario = $bd->SqlQueryShow("cod_usuario");
 
     if ($ativo == 'n') {
         $retorno = 'nok3';
@@ -29,6 +34,11 @@ if ($bd->SqlExecuteQuery($query)) {
 } else {
     $retorno = 'nok1';
 }
+
+$_SESSION['nome'] = $nome;
+$_SESSION['email_usuario'] = $email;
+$_SESSION['cod_usuario'] = $cod_usuario;
+
 
 $bd->SqlDisconnect();
 echo $retorno;

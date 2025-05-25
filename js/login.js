@@ -20,7 +20,6 @@ function fazerLogin (){
     type: "POST",
     data: {email: email,senha:senha,},
     success: function (data) {
-      console.log(data);
 
       if (data == "ok") {
            window.location.href = "telaPosLogin.php";
@@ -82,41 +81,30 @@ function mudarSenha(){
     var senha = document.getElementById("senha_usuario").value;
     var codPessoa = document.getElementById("codPessoa").value;
 
-console.log(senha);
-console.log(codPessoa);
+    const camposObrigatorios ={senha,}
 
-
-    const camposObrigatorios = {senha,}
-
-    const mensagemCamposObrigatorios =
-    {
-    senha: "Senha nova",
-    }
+    const mensagemCamposObrigatorios={senha: "Senha nova",}
 
     if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) return;
 
-  //   modalCarregamento();
-  //   $.ajax({
-  //   url: "/tcc/componentes/LOGIN/mudarSenha.php",
-  //   type: "POST",
-  //   data: {senha: senha,},
-  //   success: function (data) {
-  //     escodendoModalCarregamento();
+    $.ajax({
+    url: "/tcc/componentes/LOGIN/mudarSenha.php",
+    type: "POST",
+    data: {senha: senha,codPessoa:codPessoa},
+    success: function (data) {
 
-  //     if (data == "ok") {
-  //       alert("Senha alterada com sucesso", "Atenção", "50%", function () {
-  //         window.location.href = "index.php";
-  //       });
-  //     }
-  //     else if (data == 'nok1'){
-  //       alert("Usuário não encontrado");
-  //     }
-  //     else if (data == 'nok2'){
-  //       alert("Usuário não está ativo");
-  //     }
-  //   },
-  //   error: function () {
-  //     alert("Erro atualizando senha");
-  //   },
-  // });
+
+      if (data == "ok") {
+        alert("Senha alterada com sucesso", "Atenção", "50%", function () {
+          window.location.href = "index.php";
+        });
+      }
+      else if (data == 'nok'){
+        alert("Erro ao alterar senha");
+      }
+    },
+    error: function () {
+      alert("Erro atualizando senha");
+    },
+  });
 }

@@ -1,15 +1,15 @@
 <?php
 require('../../include/conecta.php');
-require('../Email/EnviarGmail.php');
 
 $retorno = '';
-$email = getPost('email');
+$senha = getPost('senha');
+$codPessoa = getPost('codPessoa');
 
 $bd = conecta();
 
-$query = " ";
+$query = "UPDATE login_usuario SET senha = '$senha'  WHERE cod_usuario=$codPessoa ";
 if ($bd->SqlExecuteQuery($query)) {
-
+    $retorno = 'ok';
 } else {
     $retorno = 'nok';
 }
