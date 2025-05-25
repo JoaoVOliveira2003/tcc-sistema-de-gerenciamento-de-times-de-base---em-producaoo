@@ -16,33 +16,25 @@ $cod_pessoa = isset($_GET['cod_pessoa']) ? $_GET['cod_pessoa'] : '';
             const codPessoa = urlParams.get('cod_pessoa');
             const emailDestino = urlParams.get('email');
 
-            $('#btnRecusar').attr('data-cod', codPessoa);
-            $('#btnConfirmar').attr('data-cod', codPessoa);
+            document.getElementById('email_usuario').value = emailDestino;
+            document.getElementById('codPessoa').value = codPessoa;
+
+
         });
     </script>
 </head>
 
 <body>
+<input type="hidden" id="codPessoa">
+
     <div class="container">
         <div class="mt-2">
-            <h2 class="mb-3">Atualização de dados</b></h2>
+            <h2 class="mb-3">Atualização de senha</b></h2>
 
-            <div class="row">
-                <div class="col-md-6 mb-2">
-                    <label for="nome" class="form-label">Nome do administrador:</label>
-                    <input type="text" class="form-control" id="nome" placeholder="Digite o nome..." value="">
-                </div>
-
-                <div class="col-md-6 mb-4">
-                    <label for="cpf" class="form-label">CPF:</label>
-                    <input type="text" maxlength="14" class="form-control" id="cpf" placeholder="Digite o CPF..." value="">
-                </div>
-            </div>
-
-            <div class="row">
+                <div class="row">
                 <div class="col-md-6 mb-2">
                     <label for="email_usuario" class="form-label">Email do administrador:</label>
-                    <input type="text" class="form-control" id="email_usuario" value="">
+                    <input type="text" class="form-control" id="email_usuario" disabled>
                 </div>
                 <div class="col-md-6 mb-2">
                     <label for="senha_usuario" class="form-label">Senha do administrador:</label>
@@ -50,7 +42,7 @@ $cod_pessoa = isset($_GET['cod_pessoa']) ? $_GET['cod_pessoa'] : '';
                 </div>
             </div>
 
-            <button type="button" class="btn btn-primary mt-1" id="btnConfirmar" onclick="confirmarCadastro(this.getAttribute('data-cod'))">Confirmar</button>
+            <button type="button" class="btn btn-primary mt-1" id="btnConfirmar" onclick="mudarSenha(this.getAttribute('data-cod'))">Confirmar</button>
 
             <div id="modalContainer"></div>
         </div>

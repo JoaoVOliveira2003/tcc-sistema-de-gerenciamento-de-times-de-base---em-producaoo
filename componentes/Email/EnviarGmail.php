@@ -128,6 +128,7 @@ function enviarGmail($gmailDestino,$nome,$tipoRole,$cod_pessoa) {
 }
 
 function enviarGmailEsqueciSenha($gmailDestino,$cod_pessoa) {
+  
     $mail = new PHPMailer(true);
 
     try {
@@ -151,15 +152,19 @@ function enviarGmailEsqueciSenha($gmailDestino,$cod_pessoa) {
         $mail->Subject = 'Atualização de senha no Sistema Gerenciador de Bases';
         $mail->Body    = $textoEmail;
         $mail->AltBody = 'Problema na criação do email.';
-    
-        $mail->send();
+        
+        if ($mail->send()){
+            return true;
+        } else {
+            return false;
+        }
     } catch (Exception $e) {
     }
 }
 
-function corpoEmailEsqueciSenha($gmailDestino,$cod_pessoa){
-    $link = 'http://localhost/tcc/telas/TI/atualizarSenha.php?cod_pessoa=' . urlencode($cod_pessoa) . '&email=' . urlencode($gmailDestino);
-   
+function corpoEmailEsqueciSenha($gmailDestino, $cod_pessoa) {
+    $link = 'http://localhost/tcc/telas/login/telaAtualizarSenha.php?cod_pessoa=' . urlencode($cod_pessoa) . '&email=' . urlencode($gmailDestino);
+
     $corpo = '
     <html lang="pt-br">
     <head>
@@ -215,11 +220,13 @@ function corpoEmailEsqueciSenha($gmailDestino,$cod_pessoa){
     </head>
     <body>
         <div class="email-container">
-            <h2>Olá usuario</h2>
-            <p>Alguem pediu para atualizar senha no Sistema Gerenciador de Bases com o seu email cadastrado.</p>
-            <p>Para modificar a senha, clique no botão abaixo:</p>
-            <a class="btn" href="'.$link.'">Atualizar</a>
-            <div class="footer">Se você não solicitou esse cadastro, ignore este e-mail.</div>
+            <h2>Redefinição de Senha</h2>
+            <p>Olá</p>
+            <p>Recebemos uma solicitação para redefinir a senha da sua conta no <strong>Sistema Gerenciador de Bases</strong> associada a este e-mail.</p>
+            <p>Se você fez essa solicitação, clique no botão abaixo para criar uma nova senha:</p>
+            <a class="btn" href="'.$link.'">Redefinir Senha</a>
+            <p>Se você não solicitou a redefinição, nenhuma ação é necessária. Apenas ignore este e-mail.</p>
+            <div class="footer">Este é um e-mail automático. Por favor, não responda.</div>
         </div>
     </body>
     </html>';
@@ -227,4 +234,6 @@ function corpoEmailEsqueciSenha($gmailDestino,$cod_pessoa){
     return $corpo;
 }
 
+
+//  enviarGmailEsqueciSenha('ojoao953@gmail.com','2')
 ?>

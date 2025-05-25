@@ -30,6 +30,18 @@
         </div>
 
         <button onclick="atualizarSenha()" class="btn btn-primary">Atualizar senha.</button>
+
+                    <div class="modal fade" id="modalCarregando" tabindex="-1" aria-labelledby="modalCarregandoLabel"
+                aria-hidden="true">
+                <div class="modal-dialog d-flex justify-content-center align-items-center">
+                    <div class="modal-content">
+                        <div class="modal-body text-center">
+                            <h5>Carregando...</h5>
+                            <div id="carregandoText">*..</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
       </div>
     </div>
   </div>
