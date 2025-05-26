@@ -3,7 +3,7 @@ session_start();
 
 function verificarLogin() {
     if (!isset($_SESSION['email_usuario']) || !isset($_SESSION['cod_usuario'])) {
-        header("Location: index.php");
+        header("Location: http://localhost/tcc/telas/login/index.php");
         exit;
     }
     return [

@@ -1,3 +1,7 @@
+<?php
+include '../../include/verificaSessao.php';
+$usuario = verificarLogin();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,6 +11,8 @@
   <?php include('../../include/includeBase.php'); ?>
   <script src="../../js/funcoes.js"></script>
   <script src="../../js/adms.js"></script>
+  <script src="../../js/admi.js"></script>
+
   <script>
     $(document).ready(function () {
       selectNacoes();
@@ -30,7 +36,7 @@
 
       <div class="row">
       <div class="col-md-6 mb-3">
-          <div id="selectSubInstituicao" class="mb-3"></div>
+          <div id="selectInstituicao" class="mb-3"></div>
         </div>
         <div class="col-md-6 mb-3">
           <label for="desc_subInstituicao" class="form-label">Nome da Sub-instituição:</label>

@@ -11,14 +11,16 @@ $senha = getPost('senha');
 $bd = conecta();
 
 $query = "
-    SELECT ci.ativo, lu.senha , lu.cod_usuario, ci.nome
+    SELECT ci.ativo, lu.senha , lu.cod_usuario, ci.nome , rol.cod_tipoRole
     FROM login_usuario lu
     JOIN cadastro_identificacao ci ON ci.cod_usuario = lu.cod_usuario
+    left join role_cadastro rol on ci.cod_usuario = rol.cod_usuario
     WHERE lu.email_usuario = '$email'
 ";
 
 
 if ($bd->SqlExecuteQuery($query)) {
+    $cod_tipoRole = $bd->SqlQueryShow("cod_tipoRole");
     $nome = $bd->SqlQueryShow("nome");
     $ativo = $bd->SqlQueryShow("ativo");
     $senhaBanco = $bd->SqlQueryShow("senha");

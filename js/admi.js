@@ -54,6 +54,8 @@ function gravarSubInstituicao() {
   });
 }
 
+
+
 function tabelaDeleteUpdateSubInstituicao() {
   var pagina = "/tcc/componentes/tabelaDeleteUpdate.php";
 

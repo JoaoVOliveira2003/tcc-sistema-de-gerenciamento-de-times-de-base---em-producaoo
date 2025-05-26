@@ -151,3 +151,7 @@ INSERT INTO tipo_lesao (desc_tipoLesao) VALUES
 ('Lesões nos Meniscos'),
 ('Lesões nos Ossos'),
 ('Lesões nos Tendões');
+
+insert into cadastro_identificacao(nome,cpf,ativo,cod_municipio) values ('João',123,'s',2)
+
+insert into login_usuario(cod_usuario,email_usuario,senha) values (2,'ojoao953@gmail.com','Angola');

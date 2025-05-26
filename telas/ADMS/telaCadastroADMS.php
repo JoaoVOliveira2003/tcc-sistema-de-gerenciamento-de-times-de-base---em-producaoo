@@ -1,3 +1,8 @@
+<?php
+include '../../include/verificaSessao.php';
+$usuario = verificarLogin();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
