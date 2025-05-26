@@ -14,10 +14,9 @@
   </script>
 
 </head>
+<?php include('../../componentes/header.php'); ?>
 
 <body>
-
-
 <div class="container">
   <div class=" mt-4">
     <h2 class="mb-4">Gerenciamento de <b>nações </b></h2>

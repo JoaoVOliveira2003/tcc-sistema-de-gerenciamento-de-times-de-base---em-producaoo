@@ -15,10 +15,9 @@
     });
   </script>
 </head>
+<?php include('../../componentes/header.php'); ?>
 
 <body>
-
-
   <div class="container">
     <div class=" mt-4">
       <h2 class="mb-4">Gerenciamento de <b>Sub-instituiçoes</b></h2>

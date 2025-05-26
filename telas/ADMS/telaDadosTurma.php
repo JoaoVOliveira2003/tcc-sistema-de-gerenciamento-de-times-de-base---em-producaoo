@@ -14,6 +14,7 @@
     });
   </script>
 </head>
+<?php include('../../componentes/header.php'); ?>
 
 <body>
 

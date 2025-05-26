@@ -16,6 +16,7 @@
 </head>
 
 <body>
+<?php include('../../componentes/header.php'); ?>
 
 
 <div class="container">

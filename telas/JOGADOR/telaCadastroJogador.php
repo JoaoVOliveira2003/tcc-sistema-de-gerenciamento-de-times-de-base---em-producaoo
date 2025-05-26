@@ -65,11 +65,11 @@
         });
     </script>
 </head>
-
+<?php include('../../componentes/header.php'); ?>
 <body>
     <div class="container">
 
-        <div class="mt-5">
+        <div class="mt-1">
             <h2 class="mb-3">Cadastro de <b>JOGADOR</b></h2>
             <h5 class="mb-4">
                 Olá! Lembre-se de que, para que o cadastro seja totalmente validado, a pessoa cadastrada receberá um

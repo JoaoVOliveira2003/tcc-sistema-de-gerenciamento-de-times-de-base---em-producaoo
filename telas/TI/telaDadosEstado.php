@@ -14,6 +14,8 @@
     });
   </script>
 </head>
+<?php include('../../componentes/header.php'); ?>
+
 <body>
   <div class="container">
     <div class=" mt-4">
