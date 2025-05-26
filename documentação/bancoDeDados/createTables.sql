@@ -57,36 +57,95 @@ CREATE TABLE `login_usuario` (
   CONSTRAINT `fk_login_usuario_identificacao` FOREIGN KEY (`cod_usuario`) REFERENCES `cadastro_identificacao` (`cod_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
+
+-- Item de Menu
+-- CREATE TABLE `item_menu` (
+--   `cod_item_menu` INT NOT NULL AUTO_INCREMENT, 
+--   `href` VARCHAR(200), 
+--   `html_id` VARCHAR(200), 
+--   `role_html` VARCHAR(200), 
+--   `label` VARCHAR(200), 
+--   `cod_tipo_role` INT NOT NULL, 
+--   PRIMARY KEY (`cod_item_menu`), 
+--   CONSTRAINT `fk_item_menu_tipo_role` FOREIGN KEY (`cod_tipo_role`) REFERENCES `tipo_role` (`cod_tipo_role`) ON DELETE NO ACTION ON UPDATE NO ACTION
+-- ) ENGINE = InnoDB;
+
+
 -- Tipo de Role
 CREATE TABLE `tipo_role` (
   `cod_tipo_role` INT NOT NULL AUTO_INCREMENT, 
   `desc_tipo_role` VARCHAR(100), 
   `abrev_tipo_role` CHAR(10), 
-  `ativo` CHAR(1), 
+  `ativo` CHAR(1) DEFAULT 'S', 
   PRIMARY KEY (`cod_tipo_role`)
 ) ENGINE = InnoDB;
 
--- Item de Menu
-CREATE TABLE `item_menu` (
-  `cod_item_menu` INT NOT NULL AUTO_INCREMENT, 
-  `href` VARCHAR(200), 
-  `html_id` VARCHAR(200), 
-  `role_html` VARCHAR(200), 
-  `label` VARCHAR(200), 
-  `cod_tipo_role` INT NOT NULL, 
-  PRIMARY KEY (`cod_item_menu`), 
-  CONSTRAINT `fk_item_menu_tipo_role` FOREIGN KEY (`cod_tipo_role`) REFERENCES `tipo_role` (`cod_tipo_role`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE = InnoDB;
 
--- Subitem de Menu
-CREATE TABLE `subitem_menu` (
-  `cod_subitem_menu` INT NOT NULL AUTO_INCREMENT, 
-  `cod_item_menu` INT NOT NULL, 
-  `href` VARCHAR(200), 
-  `label` VARCHAR(200), 
-  PRIMARY KEY (`cod_subitem_menu`), 
-  CONSTRAINT `fk_subitem_item_menu` FOREIGN KEY (`cod_item_menu`) REFERENCES `item_menu` (`cod_item_menu`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB;
+-- Tabela principal de menus
+CREATE TABLE item_menu (
+  cod_item_menu INT NOT NULL AUTO_INCREMENT,
+  role_html VARCHAR(200),
+  PRIMARY KEY (cod_item_menu)
+);
+
+
+
+
+
+
+
+
+
+-- Tabela de submenus (relacionada à item_menu)
+CREATE TABLE subitem_menu (
+  cod_subitem_menu INT NOT NULL AUTO_INCREMENT,
+  cod_item_menu INT NOT NULL,
+  href VARCHAR(200),
+  label VARCHAR(200),
+  PRIMARY KEY (cod_subitem_menu),
+  CONSTRAINT fk_subitem_item_menu
+    FOREIGN KEY (cod_item_menu)
+    REFERENCES item_menu (cod_item_menu)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+-- Relação entre item_menu e tipos de usuários (roles)
+CREATE TABLE itemMenu_tipoRole (
+  cod_item_menu INT NOT NULL,
+  cod_tipo_role INT NOT NULL,
+  PRIMARY KEY (cod_item_menu, cod_tipo_role),
+  CONSTRAINT fk_item_menu_tipo
+    FOREIGN KEY (cod_item_menu) REFERENCES item_menu (cod_item_menu) ON DELETE CASCADE,
+  CONSTRAINT fk_tipo_menu_item
+    FOREIGN KEY (cod_tipo_role) REFERENCES tipo_role (cod_tipo_role) ON DELETE CASCADE
+);
+
+-- Relação entre menus, submenus e tipos de usuários
+CREATE TABLE itemMenu_subitemMenu (
+  cod_item_menu INT NOT NULL,
+  cod_subitem_menu INT NOT NULL,
+  cod_tipo_role INT NOT NULL,
+  PRIMARY KEY (cod_item_menu, cod_subitem_menu),
+  CONSTRAINT fk_item_menu_subitem_menu
+    FOREIGN KEY (cod_item_menu) REFERENCES item_menu (cod_item_menu) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT fk_subitem_menu_item_menu
+    FOREIGN KEY (cod_subitem_menu) REFERENCES subitem_menu (cod_subitem_menu) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -- Atribuição de Role ao Usuário
 CREATE TABLE `role_cadastro` (

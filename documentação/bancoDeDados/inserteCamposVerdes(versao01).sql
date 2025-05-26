@@ -133,12 +133,6 @@ INSERT INTO turma (desc_turma, ativo, cod_subInstituicao) VALUES
 ('Turma I - Manhã', 's', 9),
 ('Turma J - Tarde', 's', 10);
 
-INSERT INTO cadastro_identificacao (nome, cpf,cod_municipio,ativo) VALUES ('sistema','1',1,'s');
-
-INSERT INTO role_cadastro (cod_usuario,cod_tipoRole) VALUES (1,5);
-
-INSERT INTO staff(cod_staff) VALUES (1);
-
 INSERT INTO tipo_lesao (desc_tipoLesao) VALUES 
 ('Lesões de Pele'),
 ('Lesões Musculares'),
@@ -152,6 +146,114 @@ INSERT INTO tipo_lesao (desc_tipoLesao) VALUES
 ('Lesões nos Ossos'),
 ('Lesões nos Tendões');
 
-insert into cadastro_identificacao(nome,cpf,ativo,cod_municipio) values ('João',123,'s',2)
+INSERT INTO cadastro_identificacao (nome, cpf,cod_municipio,ativo) VALUES ('sistema','1',1,'s');
+INSERT INTO role_cadastro (cod_usuario,cod_tipoRole) VALUES (1,5);
+INSERT INTO staff(cod_staff) VALUES (1);
 
-insert into login_usuario(cod_usuario,email_usuario,senha) values (2,'ojoao953@gmail.com','Angola');
+
+-- CAADASTRO DE TI
+insert into cadastro_identificacao(nome,cpf,ativo,cod_municipio) values ('Cadastro TI',123,'s',2);
+insert into role_cadastro(cod_usuario,cod_tipoRole) values(2,1);
+insert into login_usuario(cod_usuario,email_usuario,senha) values (2,'ti@gmail.com','ti');
+
+-- CADASTRO DE JOGADOR
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('joselito', '13432640900', 1, 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (2, 6);
+INSERT INTO jogador(cod_jogador, data_nascimento, posicao, esporte) VALUES (2, '2025-12-31', 1, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (1, 2);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (2, 'midia/zjor.png');
+INSERT INTO contato_responsavel (nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) VALUES ('maria vlau', 'mae', 'jora@gmail.com', '41940804942');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (2, 1);
+INSERT INTO historicoLesoes (cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) VALUES (3, 'quebrou pé', '2003-02-13', '40 dias');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) VALUES (2, 182, 765, 'O+', 'Nenhuma', 'Poeira, Pólen', '2025-04-22');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (2, 1);
+insert into login_usuario(cod_usuario,email_usuario,senha) values (3,'jogador@gmail.com','jogador');
+
+-- cadastro ADMI
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('admi', 123, 1, 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (4, 4);
+INSERT INTO administrador (cod_administrador, tipo_role) VALUES (4,2);
+INSERT INTO administrador_instituicao (cod_administrador, cod_instituicao) VALUES (4, 1);
+insert into login_usuario(cod_usuario,email_usuario,senha) values (4,'admi@gmail.com','admi');
+
+-- cadastro ADMS
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('adms', 123, 1, 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (5, 4);
+INSERT INTO administrador (cod_administrador, tipo_role) VALUES (5,3);
+INSERT INTO administrador_subInstituicao (cod_administrador, cod_subInstituicao) VALUES (4, 1);
+insert into login_usuario(cod_usuario,email_usuario,senha) values (5,'adms@gmail.com','adms');
+
+-- cadastro staff
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('staff', 123, 1, 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (6, 5);
+INSERT INTO staff (cod_staff) VALUES (6);
+INSERT INTO subInstituticao_staff (cod_staff, cod_subInstituicao) VALUES (6, 1);
+insert into login_usuario(cod_usuario,email_usuario,senha) values (6,'staff@gmail.com','staff');
+
+
+-- cadastro staffAdms
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('staffAdms', 123, 1, 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (7,5);
+INSERT INTO staff (cod_staff) VALUES (7);
+INSERT INTO administrador (cod_administrador, tipo_role) VALUES (7,4);
+INSERT INTO administrador_subInstituicao (cod_administrador, cod_subInstituicao) VALUES (7, 1);
+INSERT INTO subInstituticao_staff (cod_staff, cod_subInstituicao) VALUES (7, 1);
+insert into login_usuario(cod_usuario,email_usuario,senha) values (7,'staffAdms@gmail.com','staffAdms');
+
+
+-- headers (agora só para o ADMS)
+
+INSERT INTO item_menu (role_html) VALUES 
+  ('Gerenciamento de Usuários'), -- cod_item_menu = 1
+  ('Relatórios');                -- cod_item_menu = 2
+
+-- Submenus para "Gerenciamento de Usuários" (cod_item_menu = 1)
+INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
+(1, '/tcc/telas/TI/telaCadastroTI.php', 'Cadastro TI'),
+(1, '/tcc/telas/ADMI/telaCadastroADMI.php', 'Cadastro ADMI'),
+(1, '/tcc/telas/ADMS/telaCadastroADMS.php', 'Cadastro ADMS'),
+(1, '/tcc/telas/STAFFADMS/telaCadastroStaffADMS.php', 'Cadastro Staff ADMS'),
+(1, '/tcc/telas/STAFF/telaCadastroStaff.php', 'Cadastro Staff'),
+(1, '/tcc/telas/JOGADOR/telaCadastroJogador.php', 'Cadastro Jogador');
+
+-- Submenus para "Relatórios" (cod_item_menu = 2)
+INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
+(2, '/tcc/telas/TI/telaDadosInstituicao.php', 'Instituição'),
+(2, '/tcc/telas/ADMI/telaDadosSubInstituicao.php', 'Sub-Instituição'),
+(2, '/tcc/telas/ADMS/telaDadosTurma.php', 'Turma'),
+(2, '/tcc/telas/TI/telaDadosNacao.php', 'Nação'),
+(2, '/tcc/telas/TI/telaDadosEstado.php', 'Estado'),
+(2, '/tcc/telas/TI/telaDadosMunicipio.php', 'Município');
+
+
+INSERT INTO itemMenu_tipoRole (cod_item_menu, cod_tipo_role) VALUES
+(1, 3), -- Gerenciamento de Usuários → ADMS
+(2, 3); -- Relatórios → ADMS
+
+
+-- ========================================
+-- Submenus do menu 1: "Gerenciamento de Usuários"
+-- Este menu tem o código 1 (cod_item_menu = 1)
+-- Os submenus possuem códigos de 1 a 6
+-- Eles são atribuídos ao tipo de usuário com código 3 (exemplo: ADMS)
+-- ========================================
+
+INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+(1, 3, 3),  -- "Cadastro ADMS" disponível para ADMS
+(1, 4, 3),  -- "Cadastro Staff ADMS" disponível para ADMS
+(1, 5, 3),  -- "Cadastro Staff" disponível para ADMS
+(1, 6, 3);  -- "Cadastro Jogador" disponível para ADMS
+
+-- ========================================
+-- Submenus do menu 2: "Relatórios"
+-- Este menu tem o código 2 (cod_item_menu = 2)
+-- Os submenus possuem códigos de 7 a 12
+-- Eles também são atribuídos ao tipo de usuário com código 3 (ADMS)
+-- ========================================
+
+INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+(2, 8, 3),   -- "Sub-Instituição" disponível para ADMS
+(2, 9, 3);   -- "Turma" disponível para ADMS
+
+
+

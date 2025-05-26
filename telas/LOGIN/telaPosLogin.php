@@ -3,7 +3,6 @@ include '../../include/verificaSessao.php';
 $usuario = verificarLogin();
 ?>
 
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -16,7 +15,7 @@ $usuario = verificarLogin();
   <script>
     $(document).ready(function () {
       const usuario = <?php echo json_encode($usuario); ?>;
-      
+
 
       document.getElementById('nome').textContent = usuario.nome;
 
@@ -37,46 +36,43 @@ $usuario = verificarLogin();
 
       <div class="col-md-6 ml-4">
         <h3 class="mb-4 fst-italic text-center text-md-start">
-          <!-- Olá <span id="nome"></span>, seja bem vindo ao sistema! -->
-Olá João, seja bem vindo ao sistema!
+          Olá <span id="nome"></span>, seja bem vindo ao sistema!
         </h3>
 
 
-<table class="table table-bordered">
-  <caption style="caption-side: top; text-align: left; font-weight: bold; font-size: 1.2em;">PRÓXIMOS TRÊS EVENTOS</caption>
-  <thead class="thead-light">
-    <tr>
-      <th>Data</th>
-      <th>Local</th>
-      <th>Título</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>25/05/2025</td>
-      <td>Monza</td>
-      <td>Treino sub-20</td>
-    </tr>
-    <tr>
-      <td>10/06/2025</td>
-      <td>Maracanã</td>
-      <td>Peneira</td>
-    </tr>
-    <tr>
-      <td>15/07/2025</td>
-      <td>Guaraituba</td>
-      <td>Aula de salsa</td>
-    </tr>
-<td colspan="3">
-  <div style=" margin-left: 64%;">
-    <button class="btn btn-sm btn-secondary">Ver eventos por completo</button>
-  </div>
-</td>
-  </tbody>
-</table>
-
-
-
+        <table class="table table-bordered">
+          <caption style="caption-side: top; text-align: left; font-weight: bold; font-size: 1.2em;">PRÓXIMOS TRÊS
+            EVENTOS</caption>
+          <thead class="thead-light">
+            <tr>
+              <th>Data</th>
+              <th>Local</th>
+              <th>Título</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>25/05/2025</td>
+              <td>Monza</td>
+              <td>Treino sub-20</td>
+            </tr>
+            <tr>
+              <td>10/06/2025</td>
+              <td>Maracanã</td>
+              <td>Peneira</td>
+            </tr>
+            <tr>
+              <td>15/07/2025</td>
+              <td>Guaraituba</td>
+              <td>Aula de salsa</td>
+            </tr>
+            <td colspan="3">
+              <div style=" margin-left: 64%;">
+                <button class="btn btn-sm btn-secondary">Ver eventos por completo</button>
+              </div>
+            </td>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
