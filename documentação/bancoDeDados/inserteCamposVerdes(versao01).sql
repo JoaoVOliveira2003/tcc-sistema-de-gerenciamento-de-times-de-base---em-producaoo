@@ -230,26 +230,11 @@ INSERT INTO itemMenu_tipoRole (cod_item_menu, cod_tipo_role) VALUES
 (1, 3), -- Gerenciamento de Usuários → ADMS
 (2, 3); -- Relatórios → ADMS
 
-
--- ========================================
--- Submenus do menu 1: "Gerenciamento de Usuários"
--- Este menu tem o código 1 (cod_item_menu = 1)
--- Os submenus possuem códigos de 1 a 6
--- Eles são atribuídos ao tipo de usuário com código 3 (exemplo: ADMS)
--- ========================================
-
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
 (1, 3, 3),  -- "Cadastro ADMS" disponível para ADMS
 (1, 4, 3),  -- "Cadastro Staff ADMS" disponível para ADMS
 (1, 5, 3),  -- "Cadastro Staff" disponível para ADMS
 (1, 6, 3);  -- "Cadastro Jogador" disponível para ADMS
-
--- ========================================
--- Submenus do menu 2: "Relatórios"
--- Este menu tem o código 2 (cod_item_menu = 2)
--- Os submenus possuem códigos de 7 a 12
--- Eles também são atribuídos ao tipo de usuário com código 3 (ADMS)
--- ========================================
 
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
 (2, 8, 3),   -- "Sub-Instituição" disponível para ADMS
