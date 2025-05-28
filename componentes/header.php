@@ -3,9 +3,28 @@ require('../../include/conecta.php');
 $bd = conecta();
 $retorno = '';
 
-$cod_tipo_role = 3;
+$cod_tipo_role = 2;
 
-$query = "SELECT 
+if ($cod_tipo_role == 0) {
+  $query = "SELECT 
+  sim.cod_subitem_menu,
+  MAX(sim.label) AS submenu_label,
+  MAX(sim.href) AS submenu_href,
+  MAX(im.cod_item_menu) AS cod_item_menu,
+  MAX(im.role_html) AS menu_principal,
+  MAX(tr.cod_tipo_role) AS cod_tipo_role,
+  MAX(tr.desc_tipo_role) AS desc_tipo_role
+FROM item_menu im
+INNER JOIN itemMenu_subitemMenu imsm 
+  ON im.cod_item_menu = imsm.cod_item_menu
+INNER JOIN subitem_menu sim 
+  ON sim.cod_subitem_menu = imsm.cod_subitem_menu
+INNER JOIN tipo_role tr 
+  ON tr.cod_tipo_role = imsm.cod_tipo_role
+GROUP BY sim.cod_subitem_menu;
+";
+} else {
+  $query = "SELECT 
   im.cod_item_menu,             
   im.role_html AS menu_principal,
   sim.cod_subitem_menu,         
@@ -20,10 +39,11 @@ INNER JOIN subitem_menu sim
   ON sim.cod_subitem_menu = imsm.cod_subitem_menu
 INNER JOIN tipo_role tr 
   ON tr.cod_tipo_role = imsm.cod_tipo_role
-WHERE tr.cod_tipo_role = $cod_tipo_role  
-ORDER BY im.cod_item_menu, sim.cod_subitem_menu;
+ WHERE tr.cod_tipo_role = $cod_tipo_role  
+ORDER BY im.cod_item_menu, sim.cod_subitem_menu
 ";
 
+}
 $executou = $bd->SqlExecuteQuery($query);
 
 // Início do container e header com estilo Bootstrap
@@ -36,30 +56,30 @@ $retorno .= '<ul class="nav nav-pills">';
 $retorno .= '<li class="nav-item"><a href="/tcc/telas/login/telaPosLogin.php" class="nav-link active" aria-current="page">Home</a></li>';
 
 if ($executou && $bd->SqlNumRows() > 0) {
-    $ultimoMenu = null;
+  $ultimoMenu = null;
 
-    do {
-        $menu_principal = $bd->SqlQueryShow('menu_principal');
-        $submenu_label  = $bd->SqlQueryShow('submenu_label');
-        $submenu_href   = $bd->SqlQueryShow('submenu_href');
+  do {
+    $menu_principal = $bd->SqlQueryShow('menu_principal');
+    $submenu_label = $bd->SqlQueryShow('submenu_label');
+    $submenu_href = $bd->SqlQueryShow('submenu_href');
 
-        if ($menu_principal != $ultimoMenu) {
-            if ($ultimoMenu !== null) {
-                $retorno .= '</ul></li>';
-            }
+    if ($menu_principal != $ultimoMenu) {
+      if ($ultimoMenu !== null) {
+        $retorno .= '</ul></li>';
+      }
 
-            $retorno .= '<li class="nav-item dropdown">';
-            $retorno .= '<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">' . $menu_principal . '</a>';
-            $retorno .= '<ul class="dropdown-menu">';
+      $retorno .= '<li class="nav-item dropdown">';
+      $retorno .= '<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">' . $menu_principal . '</a>';
+      $retorno .= '<ul class="dropdown-menu">';
 
-            $ultimoMenu = $menu_principal;
-        }
+      $ultimoMenu = $menu_principal;
+    }
 
-        $retorno .= '<li><a class="dropdown-item" href="' . $submenu_href . '">' . $submenu_label . '</a></li>';
+    $retorno .= '<li><a class="dropdown-item" href="' . $submenu_href . '">' . $submenu_label . '</a></li>';
 
-    } while ($bd->SqlFetchNext());
+  } while ($bd->SqlFetchNext());
 
-    $retorno .= '</ul></li>';
+  $retorno .= '</ul></li>';
 }
 $retorno .= '</ul>';
 $retorno .= '</header>';

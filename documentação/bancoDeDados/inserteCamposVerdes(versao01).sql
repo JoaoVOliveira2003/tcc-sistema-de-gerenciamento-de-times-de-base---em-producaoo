@@ -226,6 +226,8 @@ INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
 (2, '/tcc/telas/TI/telaDadosMunicipio.php', 'Município');
 
 
+
+-- Header de ADMS/3
 INSERT INTO itemMenu_tipoRole (cod_item_menu, cod_tipo_role) VALUES
 (1, 3), -- Gerenciamento de Usuários → ADMS
 (2, 3); -- Relatórios → ADMS
@@ -235,7 +237,6 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (1, 4, 3),  -- "Cadastro Staff ADMS" disponível para ADMS
 (1, 5, 3),  -- "Cadastro Staff" disponível para ADMS
 (1, 6, 3);  -- "Cadastro Jogador" disponível para ADMS
-
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
 (2, 8, 3),   -- "Sub-Instituição" disponível para ADMS
 (2, 9, 3);   -- "Turma" disponível para ADMS
