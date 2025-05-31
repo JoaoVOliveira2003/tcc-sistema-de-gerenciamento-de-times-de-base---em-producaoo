@@ -1,6 +1,6 @@
-<!-- <?php
+<?php
 $cod_pessoa = isset($_GET['cod_pessoa']) ? $_GET['cod_pessoa'] : '';
-?> -->
+?> 
 <!DOCTYPE html>
 <html lang="en">
 

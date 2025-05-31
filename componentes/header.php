@@ -3,7 +3,17 @@ require('../../include/conecta.php');
 $bd = conecta();
 $retorno = '';
 
-$cod_tipo_role = 2;
+/*
+mostra tudo - 0
+TI - 1
+ADMI - 2
+ADMS - 3
+ADMS|STAFF - 4
+STAFF - 5
+jogadores - 6
+*/
+
+$cod_tipo_role = 1;
 
 if ($cod_tipo_role == 0) {
   $query = "SELECT 

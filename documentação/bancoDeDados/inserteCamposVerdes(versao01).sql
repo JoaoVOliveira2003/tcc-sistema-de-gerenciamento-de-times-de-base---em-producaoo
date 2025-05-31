@@ -1,3 +1,10 @@
+SET 
+  SQL_MODE = @OLD_SQL_MODE;
+SET 
+  FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
+SET 
+  UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
+
 -- Inserção de nações-- Inserção de nação (somente Brasil)
 INSERT INTO nacao (sigla_nacao, desc_nacao) VALUES
 ('br', 'Brasil');
@@ -227,19 +234,59 @@ INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
 
 
 
--- Header de ADMS/3
+-- Relacionar todos os tipos de role com os menus principais
 INSERT INTO itemMenu_tipoRole (cod_item_menu, cod_tipo_role) VALUES
-(1, 3), -- Gerenciamento de Usuários → ADMS
-(2, 3); -- Relatórios → ADMS
+(1, 1), (2, 1), -- TI
+(1, 2), (2, 2), -- ADMI
+(1, 3), (2, 3), -- ADMS
+(1, 4), (2, 4), -- ADMS|STAFF
+(1, 5), (2, 5), -- STAFF
+(1, 6), (2, 6); -- JOGADOR
 
+
+-- TI
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
-(1, 3, 3),  -- "Cadastro ADMS" disponível para ADMS
-(1, 4, 3),  -- "Cadastro Staff ADMS" disponível para ADMS
-(1, 5, 3),  -- "Cadastro Staff" disponível para ADMS
-(1, 6, 3);  -- "Cadastro Jogador" disponível para ADMS
+(1, 1, 1),  -- Cadastro TI
+(1, 2, 1),  -- Cadastro ADMI
+(1, 3, 1),  -- Cadastro ADMS
+(1, 4, 1),  -- Cadastro Staff ADMS
+(1, 5, 1),  -- Cadastro Staff
+(1, 6, 1),  -- Cadastro Jogador
+(2, 7, 1),  -- /tcc/telas/TI/telaDadosInstituicao.php
+(2, 8, 1),  -- /tcc/telas/ADMI/telaDadosSubInstituicao.php
+(2, 9, 1),   -- /tcc/telas/ADMS/telaDadosTurma.php
+(2, 10, 1),  -- /tcc/telas/TI/telaDadosNacao.php
+(2, 11, 1),  -- /tcc/telas/TI/telaDadosEstado.php
+(2, 12, 1);  -- /tcc/telas/TI/telaDadosMunicipio.php
+
+-- ADMI
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
-(2, 8, 3),   -- "Sub-Instituição" disponível para ADMS
-(2, 9, 3);   -- "Turma" disponível para ADMS
+(1, 2, 2),  -- Cadastro ADMI
+(1, 3, 2),  -- Cadastro ADMS
+(1, 4, 2),  -- Cadastro Staff ADMS
+(1, 5, 2),  -- Cadastro Staff
+(1, 6, 2),  -- Cadastro Jogador
+(2, 8, 2),  -- /tcc/telas/ADMI/telaDadosSubInstituicao.php
+(2, 9, 2);   -- /tcc/telas/ADMS/telaDadosTurma.php
 
+-- ADMS
+INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+(1, 3, 3),  -- Cadastro ADMS
+(1, 4, 3),  -- Cadastro Staff ADMS
+(1, 5, 3),  -- Cadastro Staff
+(1, 6, 3),  -- Cadastro Jogador
+(2, 9, 3);   -- /tcc/telas/ADMS/telaDadosTurma.php
 
+-- ADMS|STAFF
+INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+(1, 3, 4),  -- Cadastro ADMS
+(1, 4, 4),  -- Cadastro Staff ADMS
+(1, 5, 4),  -- Cadastro Staff
+(1, 6, 4),  -- Cadastro Jogador
+(2, 9, 4);   -- /tcc/telas/ADMS/telaDadosTurma.php
 
+-- -- STAFF
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+
+-- -- JOGADOR
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES

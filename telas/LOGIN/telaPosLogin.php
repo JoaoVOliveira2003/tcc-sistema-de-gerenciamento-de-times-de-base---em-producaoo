@@ -15,10 +15,7 @@ $usuario = verificarLogin();
   <script>
     $(document).ready(function () {
       const usuario = <?php echo json_encode($usuario); ?>;
-
-
       document.getElementById('nome').textContent = usuario.nome;
-
     });
   </script>
 

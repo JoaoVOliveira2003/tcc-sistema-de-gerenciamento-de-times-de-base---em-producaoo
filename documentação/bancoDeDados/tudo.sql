@@ -259,11 +259,9 @@ CREATE TABLE `tcc`.`evento` (
   cod_evento INT NOT NULL AUTO_INCREMENT, 
   cod_staff INT NOT NULL, 
   titulo_evento VARCHAR(50), 
-  evento VARCHAR(50), 
   data DATE, 
   horario TIME, 
   local VARCHAR(50), 
-  titulo VARCHAR(100), 
   desc_evento VARCHAR(200), 
   ativo CHAR(1), 
   PRIMARY KEY (cod_evento), 
@@ -770,8 +768,8 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (1, 6, 4),  -- Cadastro Jogador
 (2, 9, 4);   -- /tcc/telas/ADMS/telaDadosTurma.php
 
--- STAFF
-INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- -- STAFF
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
 
--- JOGADOR
-INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- -- JOGADOR
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
