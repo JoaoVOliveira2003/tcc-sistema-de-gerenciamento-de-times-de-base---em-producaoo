@@ -53,3 +53,16 @@ function gravarEvento() {
         },
     });
 }
+
+function proximosTresEventos(){
+    var pagina = "/tcc/componentes/Evento/tabelaInicialEvento/proximoTresEventos.php";
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {},
+    success: function (data) {
+      $("#proximosTresEventos").html(data);
+    },
+  });
+}

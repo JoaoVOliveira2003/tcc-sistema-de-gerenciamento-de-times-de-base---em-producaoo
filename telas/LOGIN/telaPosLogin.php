@@ -12,10 +12,15 @@ $usuario = verificarLogin();
   <?php include('../../include/includeBase.php'); ?>
   <script src="../../js/funcoes.js"></script>
   <script src="../../js/login.js"></script>
-  <script>
+  <script src="../../js/evento.js"></script>
+
+
+<script>
     $(document).ready(function () {
       const usuario = <?php echo json_encode($usuario); ?>;
       document.getElementById('nome').textContent = usuario.nome;
+
+      proximosTresEventos()
     });
   </script>
 
@@ -36,8 +41,9 @@ $usuario = verificarLogin();
           Olá <span id="nome"></span>, seja bem vindo ao sistema!
         </h3>
 
+        <div id="proximosTresEventos"></div>
 
-        <table class="table table-bordered">
+        <!-- <table class="table table-bordered">
           <caption style="caption-side: top; text-align: left; font-weight: bold; font-size: 1.2em;">PRÓXIMOS TRÊS
             EVENTOS</caption>
           <thead class="thead-light">
@@ -69,8 +75,8 @@ $usuario = verificarLogin();
               </div>
             </td>
           </tbody>
-        </table>
-        
+        </table> -->
+
       </div>
     </div>
   </div>
