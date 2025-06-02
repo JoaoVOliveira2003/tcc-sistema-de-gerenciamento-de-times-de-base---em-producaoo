@@ -773,3 +773,53 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 
 -- -- JOGADOR
 -- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+
+
+-- STAFFS: IDs de 6 até 15
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES 
+('staff 6', 100000006, 1, 's'),
+('staff 7', 100000007, 1, 's'),
+('staff 8', 100000008, 1, 's'),
+('staff 9', 100000009, 1, 's'),
+('staff 10', 100000010, 1, 's'),
+('staff 11', 100000011, 1, 's'),
+('staff 12', 100000012, 1, 's'),
+('staff 13', 100000013, 1, 's'),
+('staff 14', 100000014, 1, 's'),
+('staff 15', 100000015, 1, 's');
+
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES
+(6, 5), (7, 5), (8, 5), (9, 5), (10, 5),
+(11, 5), (12, 5), (13, 5), (14, 5), (15, 5);
+
+INSERT INTO staff (cod_staff) VALUES
+ (8), (9), (10),
+(11), (12), (13), (14), (15);
+
+INSERT INTO subInstituticao_staff (cod_staff, cod_subInstituicao) VALUES
+(9, 1), (10, 1),
+(11, 1), (12, 1), (13, 1), (14, 1), (15, 1);
+
+INSERT INTO login_usuario (cod_usuario, email_usuario, senha) VALUES
+(9, 'staff9@gmail.com', 'staff9'),
+(10, 'staff10@gmail.com', 'staff10'),
+(11, 'staff11@gmail.com', 'staff11'),
+(12, 'staff12@gmail.com', 'staff12'),
+(13, 'staff13@gmail.com', 'staff13'),
+(14, 'staff14@gmail.com', 'staff14'),
+(15, 'staff15@gmail.com', 'staff15');
+
+-- EVENTOS com staffs de 6 a 15
+-- Turmas de 1 a 10
+
+INSERT INTO evento (cod_staff, titulo_evento, data, horario, local, desc_evento, ativo) VALUES
+(6, 'Evento 1', '2025-06-01', '09:00:00', 'Sala 1', 'Descrição do Evento 1', 'S'),
+(7, 'Evento 2', '2025-06-02', '10:00:00', 'Sala 2', 'Descrição do Evento 2', 'S'),
+(8, 'Evento 3', '2025-06-03', '11:00:00', 'Sala 3', 'Descrição do Evento 3', 'S'),
+(9, 'Evento 4', '2025-06-04', '12:00:00', 'Sala 4', 'Descrição do Evento 4', 'S'),
+(10, 'Evento 5', '2025-06-05', '13:00:00', 'Sala 5', 'Descrição do Evento 5', 'S'),
+(11, 'Evento 6', '2025-06-06', '14:00:00', 'Sala 6', 'Descrição do Evento 6', 'S'),
+(12, 'Evento 7', '2025-06-07', '15:00:00', 'Sala 7', 'Descrição do Evento 7', 'S'),
+(13, 'Evento 8', '2025-06-08', '16:00:00', 'Sala 8', 'Descrição do Evento 8', 'S'),
+(14, 'Evento 9', '2025-06-09', '17:00:00', 'Sala 9', 'Descrição do Evento 9', 'S'),
+(15, 'Evento 10','2025-06-10', '18:00:00', 'Sala 10','Descrição do Evento 10', 'S');

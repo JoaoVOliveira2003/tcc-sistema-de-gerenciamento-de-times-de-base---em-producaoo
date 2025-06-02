@@ -1,12 +1,11 @@
 function gravarEvento() {
     const cod_staff = document.getElementById('cod_staff').value;
-    cod_staff = 6; 
     const titulo = document.getElementById('titulo').value;
     const local = document.getElementById('local').value;
     const data_evento = document.getElementById('data_evento').value;
     const horario_evento = document.getElementById('horario_evento').value;
     const desc_evento = document.getElementById('desc_evento').value;
-    const selectTurma = document.getElementById('turma') ? document.getElementById('turma').value : null;
+    const turma = document.getElementById('turma') ? document.getElementById('turma').value : null;
 
     const camposObrigatorios = {
         titulo,
@@ -14,7 +13,7 @@ function gravarEvento() {
         data_evento,
         horario_evento,
         desc_evento,
-        selectTurma,
+        turma,
     };
 
     const mensagemCamposObrigatorios = {
@@ -23,7 +22,7 @@ function gravarEvento() {
         data_evento: "Data do evento",
         horario_evento: "Horário do evento",
         desc_evento: "Descrição do evento",
-        selectTurma: "Turma",
+        turma: "Turma",
     };
 
     if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) return;
@@ -38,13 +37,13 @@ function gravarEvento() {
             data_evento: data_evento,
             horario_evento: horario_evento,
             desc_evento: desc_evento,
-            turma: selectTurma
+            turma: turma
         },
         success: function (data) {
             if (data == "ok") {
                 alert("Evento cadastrado!");
-            } else if (data == 'nok1') {
-                alert("Usuário não encontrado");
+            } else if (data == 'nok1' || data == 'nok2') {
+                alert("Evento não cadastrado");
             } else {
                 alert("Resposta inesperada: " + data);
             }

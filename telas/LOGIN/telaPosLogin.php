@@ -70,6 +70,7 @@ $usuario = verificarLogin();
             </td>
           </tbody>
         </table>
+        
       </div>
     </div>
   </div>
