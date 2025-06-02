@@ -36,6 +36,9 @@ $usuario = verificarLogin();
                 }
             });
 
+            $('#data_nascimento').mask('00/00/0000');
+
+
             // Máscara telefone
             $(document).on('input', 'input[name="responsavel_telefone[]"]', function () {
                 $(this).mask('(00) 00000-0000');
@@ -110,7 +113,7 @@ $usuario = verificarLogin();
             <div class="row">
                 <div class="col-md-4 mb-3">
                     <label for="data_nascimento" class="form-label">Data de Nascimento:</label>
-                    <input type="date" class="form-control" id="data_nascimento" name="data_nascimento">
+                    <input type="text" class="form-control" id="data_nascimento" name="data_nascimento">
                 </div>
 
                 <div class="col-md-2 mb-3">
