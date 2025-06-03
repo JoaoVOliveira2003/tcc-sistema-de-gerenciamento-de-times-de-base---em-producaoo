@@ -6,7 +6,7 @@ $retorno = '';
 $titulo_evento  = getPost('titulo_evento');
 
 $cod_staff      = getPost('cod_staff');
-// $cod_staff = 6;
+//  $cod_staff = 6;
 
 $turma          = getPost('turma');
 $local          = getPost('local');

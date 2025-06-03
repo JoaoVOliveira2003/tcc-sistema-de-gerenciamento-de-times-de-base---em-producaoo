@@ -19,7 +19,11 @@ $usuario = verificarLogin();
         selectTurma(1);
 
         const usuario = <?php echo json_encode($usuario); ?>;
-        $('#cod_staff').val(usuario.cod);
+        // console.log(usuario);
+
+        console.log(usuario);
+
+        $('#cod_staff').val(usuario.cod_usuario);
 
         $('#data_evento').mask('00/00/0000');
         $('#horario_evento').mask('00:00');
