@@ -17,17 +17,59 @@ if ($cod_role == 1) {
         LIMIT 3
     ";
 } else if ($cod_role == 2) {
-    // ADMI = eventos da instituição
-    $query = "-- futura query";
+   //admi   
+    $query = "
+    SELECT e.data, e.local, e.titulo_evento,tur.desc_turma
+    FROM evento e
+    left JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
+    left JOIN turma tur ON tur.cod_turma = turev.cod_turma
+    left JOIN subinstituicao sub ON sub.cod_SubInstituicao = tur.cod_SubInstituicao
+    left JOIN instituicao inst ON inst.cod_Instituicao = sub.cod_Instituicao
+    where inst.cod_instituicao = 3
+    AND CONCAT(e.data, ' ', e.horario) >= NOW()
+    ORDER BY e.data ASC, e.horario ASC
+    LIMIT 3;
+    ";
 } else if ($cod_role == 3 || $cod_role == 4) {
     // ADMS / STAFF|ADMS
-    $query = "-- futura query";
+    $query = "
+    SELECT e.data, e.local, e.titulo_evento,tur.desc_turma
+    FROM evento e
+    left JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
+    left JOIN turma tur ON tur.cod_turma = turev.cod_turma
+    left JOIN subinstituicao sub ON sub.cod_SubInstituicao = tur.cod_SubInstituicao
+    where sub.cod_subinstituicao = 3
+    AND CONCAT(e.data, ' ', e.horario) >= NOW()
+    ORDER BY e.data ASC, e.horario ASC
+    LIMIT 3";
 } else if ($cod_role == 5) {
-    // STAFF
-    $query = "-- futura query";
+    //staff 
+    $query = "
+    SELECT e.data, e.local, e.titulo_evento,tur.desc_turma
+    FROM evento e
+    left JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
+    left JOIN turma tur ON tur.cod_turma = turev.cod_turma
+    left JOIN staff_turma sttaftur ON tur.cod_turma = sttaftur.cod_turma
+    where sttaftur.cod_staff=9
+    AND CONCAT(e.data, ' ', e.horario) >= NOW()
+    ORDER BY e.data ASC, e.horario ASC
+    LIMIT 3;
+    ";
+
 } else if ($cod_role == 6) {
     // JOGADOR
-    $query = "-- futura query";
+    $query = "
+    SELECT e.data, e.local, e.titulo_evento,tur.desc_turma
+    FROM evento e
+    left JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
+    left JOIN turma tur ON tur.cod_turma = turev.cod_turma
+    left JOIN turma_jogador jogatur ON tur.cod_turma = jogatur.cod_turma
+    left JOIN jogador joga ON jogatur.cod_jogador = joga.cod_jogador
+    where joga.cod_jogador=2
+    AND CONCAT(e.data, ' ', e.horario) >= NOW()
+    ORDER BY e.data ASC, e.horario ASC
+    LIMIT 3;
+    ";
 }
 
 // Executa a query se estiver válida

@@ -823,3 +823,17 @@ INSERT INTO evento (cod_staff, titulo_evento, data, horario, local, desc_evento,
 (13, 'Evento 8', '2025-06-08', '16:00:00', 'Sala 8', 'Descrição do Evento 8', 'S'),
 (14, 'Evento 9', '2025-06-09', '17:00:00', 'Sala 9', 'Descrição do Evento 9', 'S'),
 (15, 'Evento 10','2025-06-10', '18:00:00', 'Sala 10','Descrição do Evento 10', 'S');
+
+INSERT INTO turma_evento (cod_evento, cod_turma) VALUES
+(1, 1),
+(2, 1),
+(3, 2),
+(4, 2),
+(5, 3),
+(6, 3),
+(7, 1),
+(8, 2),
+(9, 3),
+(10, 1);
+
+insert into staff_turma(cod_staff,cod_turma) values (9,3),(9,2),(9,5);
