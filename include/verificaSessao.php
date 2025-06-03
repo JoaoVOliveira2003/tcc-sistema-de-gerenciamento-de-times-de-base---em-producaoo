@@ -9,7 +9,8 @@ function verificarLogin() {
     return [
         'nome' => $_SESSION['nome'],
         'email' => $_SESSION['email_usuario'],
-        'cod' => $_SESSION['cod_usuario']
+        'cod_usuario ' => $_SESSION['cod_usuario'],
+        'cod_tipoRole' => $_SESSION['cod_tipoRole']
     ];
 }
 ?>

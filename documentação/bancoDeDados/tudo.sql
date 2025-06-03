@@ -132,20 +132,6 @@ CREATE TABLE itemMenu_subitemMenu (
     FOREIGN KEY (cod_subitem_menu) REFERENCES subitem_menu (cod_subitem_menu) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -- Atribuição de Role ao Usuário
 CREATE TABLE `role_cadastro` (
   `cod_role_cadastro` INT NOT NULL AUTO_INCREMENT, 

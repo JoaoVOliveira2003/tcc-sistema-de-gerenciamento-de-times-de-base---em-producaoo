@@ -54,13 +54,13 @@ function gravarEvento() {
     });
 }
 
-function proximosTresEventos(){
-    var pagina = "/tcc/componentes/Evento/tabelaInicialEvento/proximoTresEventos.php";
+function proximosTresEventos(cod_role,cod_usuario){
+  var pagina = "/tcc/componentes/Evento/tabelaInicialEvento/proximoTresEventos.php";
 
   $.ajax({
     type: "POST",
     url: pagina,
-    data: {},
+    data: {cod_role:cod_role,cod_usuario:cod_usuario},
     success: function (data) {
       $("#proximosTresEventos").html(data);
     },

@@ -26,6 +26,7 @@ if ($bd->SqlExecuteQuery($query)) {
     $senhaBanco = $bd->SqlQueryShow("senha");
     $cod_usuario = $bd->SqlQueryShow("cod_usuario");
 
+
     if ($ativo == 'n') {
         $retorno = 'nok3';
     } elseif ($senhaBanco == $senha) {
@@ -40,6 +41,7 @@ if ($bd->SqlExecuteQuery($query)) {
 $_SESSION['nome'] = $nome;
 $_SESSION['email_usuario'] = $email;
 $_SESSION['cod_usuario'] = $cod_usuario;
+$_SESSION['cod_tipoRole'] = $cod_tipoRole;
 
 
 $bd->SqlDisconnect();

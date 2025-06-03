@@ -1,6 +1,7 @@
 <?php
 include '../../include/verificaSessao.php';
 $usuario = verificarLogin();
+print_r($usuario);
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +21,7 @@ $usuario = verificarLogin();
       const usuario = <?php echo json_encode($usuario); ?>;
       document.getElementById('nome').textContent = usuario.nome;
 
-      proximosTresEventos()
+      proximosTresEventos(usuario.cod_tipoRole,usuario.cod_usuario);
     });
   </script>
 

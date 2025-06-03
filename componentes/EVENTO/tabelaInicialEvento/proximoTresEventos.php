@@ -3,9 +3,13 @@ require('../../../include/conecta.php');
 $bd = conecta();
 $retorno = '';
 
-$cod_role = 1; // Substituir por getPost('cod_role') futuramente
+$cod_role = getPost('cod_role');
+$cod_usuario = getPost('cod_usuario');
 
-$query = '';
+// $cod_role = 6; 
+// $cod_usuario= 3;
+
+$query="";
 
 if ($cod_role == 1) {
     // TI: eventos futuros
@@ -17,7 +21,14 @@ if ($cod_role == 1) {
         LIMIT 3
     ";
 } else if ($cod_role == 2) {
-   //admi   
+   //admi   - cod 4
+
+    $query = "select cod_instituicao from administrador_instituicao where cod_administrador = $cod_usuario;";
+
+    if ($bd->SqlExecuteQuery($query)) {
+        $cod_instituicao = $bd->SqlQueryShow('cod_instituicao');
+    }
+        
     $query = "
     SELECT e.data, e.local, e.titulo_evento,tur.desc_turma
     FROM evento e
@@ -25,32 +36,41 @@ if ($cod_role == 1) {
     left JOIN turma tur ON tur.cod_turma = turev.cod_turma
     left JOIN subinstituicao sub ON sub.cod_SubInstituicao = tur.cod_SubInstituicao
     left JOIN instituicao inst ON inst.cod_Instituicao = sub.cod_Instituicao
-    where inst.cod_instituicao = 3
+    where inst.cod_instituicao = $cod_instituicao
     AND CONCAT(e.data, ' ', e.horario) >= NOW()
     ORDER BY e.data ASC, e.horario ASC
-    LIMIT 3;
+    LIMIT 3
     ";
+
 } else if ($cod_role == 3 || $cod_role == 4) {
     // ADMS / STAFF|ADMS
+
+    $query = "select cod_subInstituicao from administrador_subinstituicao where cod_administrador = $cod_usuario;";
+
+    if ($bd->SqlExecuteQuery($query)) {
+        $cod_subinstituicao = $bd->SqlQueryShow('cod_subinstituicao');
+    }
+
     $query = "
     SELECT e.data, e.local, e.titulo_evento,tur.desc_turma
     FROM evento e
     left JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
     left JOIN turma tur ON tur.cod_turma = turev.cod_turma
     left JOIN subinstituicao sub ON sub.cod_SubInstituicao = tur.cod_SubInstituicao
-    where sub.cod_subinstituicao = 3
+    where sub.cod_subinstituicao = $cod_subinstituicao 
     AND CONCAT(e.data, ' ', e.horario) >= NOW()
     ORDER BY e.data ASC, e.horario ASC
     LIMIT 3";
 } else if ($cod_role == 5) {
     //staff 
+
     $query = "
     SELECT e.data, e.local, e.titulo_evento,tur.desc_turma
     FROM evento e
     left JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
     left JOIN turma tur ON tur.cod_turma = turev.cod_turma
     left JOIN staff_turma sttaftur ON tur.cod_turma = sttaftur.cod_turma
-    where sttaftur.cod_staff=9
+    where sttaftur.cod_staff = $cod_usuario
     AND CONCAT(e.data, ' ', e.horario) >= NOW()
     ORDER BY e.data ASC, e.horario ASC
     LIMIT 3;
@@ -65,7 +85,7 @@ if ($cod_role == 1) {
     left JOIN turma tur ON tur.cod_turma = turev.cod_turma
     left JOIN turma_jogador jogatur ON tur.cod_turma = jogatur.cod_turma
     left JOIN jogador joga ON jogatur.cod_jogador = joga.cod_jogador
-    where joga.cod_jogador=2
+    where joga.cod_jogador = $cod_usuario 
     AND CONCAT(e.data, ' ', e.horario) >= NOW()
     ORDER BY e.data ASC, e.horario ASC
     LIMIT 3;
@@ -115,7 +135,7 @@ if (trim($query) !== '' && $bd->SqlExecuteQuery($query)) {
     </table>
     ";
 } else {
-    $retorno = "<div class='alert alert-warning'>Nenhum evento encontrado.</div>";
+    $retorno = "";
 }
 
 echo $retorno;
