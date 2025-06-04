@@ -677,66 +677,75 @@ INSERT INTO subInstituticao_staff (cod_staff, cod_subInstituicao) VALUES (7, 1);
 insert into login_usuario(cod_usuario,email_usuario,senha) values (7,'staffAdms@gmail.com','staffAdms');
 
 
--- headers (agora só para o ADMS)
 
+
+
+
+
+-- headers (agora só para o ADMS)
 INSERT INTO item_menu (role_html) VALUES 
   ('Gerenciamento de Usuários'), -- cod_item_menu = 1
   ('Relatórios');                -- cod_item_menu = 2
 
--- Submenus para "Gerenciamento de Usuários" (cod_item_menu = 1)
+-- Submenus para "Gerenciamento de Usuários"
 INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
-(1, '/tcc/telas/TI/telaCadastroTI.php', 'Cadastro TI'),
-(1, '/tcc/telas/ADMI/telaCadastroADMI.php', 'Cadastro ADMI'),
-(1, '/tcc/telas/ADMS/telaCadastroADMS.php', 'Cadastro ADMS'),
-(1, '/tcc/telas/STAFFADMS/telaCadastroStaffADMS.php', 'Cadastro Staff ADMS'),
-(1, '/tcc/telas/STAFF/telaCadastroStaff.php', 'Cadastro Staff'),
-(1, '/tcc/telas/JOGADOR/telaCadastroJogador.php', 'Cadastro Jogador');
+(1, '/tcc/telas/TI/telaCadastroTI.php', 'Cadastro TI'),                    -- 1
+(1, '/tcc/telas/ADMI/telaCadastroADMI.php', 'Cadastro ADMI'),             -- 2
+(1, '/tcc/telas/ADMS/telaCadastroADMS.php', 'Cadastro ADMS'),             -- 3
+(1, '/tcc/telas/STAFFADMS/telaCadastroStaffADMS.php', 'Cadastro Staff ADMS'), -- 4
+(1, '/tcc/telas/STAFF/telaCadastroStaff.php', 'Cadastro Staff'),          -- 5
+(1, '/tcc/telas/JOGADOR/telaCadastroJogador.php', 'Cadastro Jogador'),    -- 6
+(1, '/tcc/telas/STAFF/organizacaoTurmaPorStaff.php', 'Organização de Turmas por Staff'); -- 7
 
--- Submenus para "Relatórios" (cod_item_menu = 2)
+-- Submenus para "Relatórios"
 INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
-(2, '/tcc/telas/TI/telaDadosInstituicao.php', 'Instituição'),
-(2, '/tcc/telas/ADMI/telaDadosSubInstituicao.php', 'Sub-Instituição'),
-(2, '/tcc/telas/ADMS/telaDadosTurma.php', 'Turma'),
-(2, '/tcc/telas/TI/telaDadosNacao.php', 'Nação'),
-(2, '/tcc/telas/TI/telaDadosEstado.php', 'Estado'),
-(2, '/tcc/telas/TI/telaDadosMunicipio.php', 'Município');
-
+(2, '/tcc/telas/TI/telaDadosInstituicao.php', 'Instituição'),         -- 8
+(2, '/tcc/telas/ADMI/telaDadosSubInstituicao.php', 'Sub-Instituição'),-- 9
+(2, '/tcc/telas/ADMS/telaDadosTurma.php', 'Turma'),                   -- 10
+(2, '/tcc/telas/TI/telaDadosNacao.php', 'Nação'),                     -- 11
+(2, '/tcc/telas/TI/telaDadosEstado.php', 'Estado'),                   -- 12
+(2, '/tcc/telas/TI/telaDadosMunicipio.php', 'Município');             -- 13
 
 
 -- Relacionar todos os tipos de role com os menus principais
 INSERT INTO itemMenu_tipoRole (cod_item_menu, cod_tipo_role) VALUES
-(1, 1), (2, 1), -- TI
-(1, 2), (2, 2), -- ADMI
-(1, 3), (2, 3), -- ADMS
-(1, 4), (2, 4), -- ADMS|STAFF
-(1, 5), (2, 5), -- STAFF
-(1, 6), (2, 6); -- JOGADOR
-
+(1, 1), (2, 1),  -- TI
+(1, 2), (2, 2),  -- ADMI
+(1, 3), (2, 3),  -- ADMS
+(1, 4), (2, 4),  -- ADMS|STAFF
+(1, 5), (2, 5),  -- STAFF
+(1, 6), (2, 6);  -- JOGADOR
 
 -- TI
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
-(1, 1, 1),  -- Cadastro TI
-(1, 2, 1),  -- Cadastro ADMI
-(1, 3, 1),  -- Cadastro ADMS
-(1, 4, 1),  -- Cadastro Staff ADMS
-(1, 5, 1),  -- Cadastro Staff
-(1, 6, 1),  -- Cadastro Jogador
-(2, 7, 1),  -- /tcc/telas/TI/telaDadosInstituicao.php
-(2, 8, 1),  -- /tcc/telas/ADMI/telaDadosSubInstituicao.php
-(2, 9, 1),   -- /tcc/telas/ADMS/telaDadosTurma.php
-(2, 10, 1),  -- /tcc/telas/TI/telaDadosNacao.php
-(2, 11, 1),  -- /tcc/telas/TI/telaDadosEstado.php
-(2, 12, 1);  -- /tcc/telas/TI/telaDadosMunicipio.php
+(1, 1, 1),   -- TI pode acessar: Cadastro TI
+(1, 2, 1),   -- TI pode acessar: Cadastro ADMI
+(1, 3, 1),   -- TI pode acessar: Cadastro ADMS
+(1, 4, 1),   -- TI pode acessar: Cadastro Staff ADMS
+(1, 5, 1),   -- TI pode acessar: Cadastro Staff
+(1, 6, 1),   -- TI pode acessar: Cadastro Jogador
+(1, 7, 1),   -- TI pode acessar: Organização de Turmas por Staff
+(2, 8, 1),   -- TI pode acessar: Instituição
+(2, 9, 1),   -- TI pode acessar: Sub-Instituição
+(2, 10, 1),  -- TI pode acessar: Turma
+(2, 11, 1),  -- TI pode acessar: Nação
+(2, 12, 1);  -- TI pode acessar: Estado
+
+
+
 
 -- ADMI
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
-(1, 2, 2),  -- Cadastro ADMI
-(1, 3, 2),  -- Cadastro ADMS
-(1, 4, 2),  -- Cadastro Staff ADMS
-(1, 5, 2),  -- Cadastro Staff
-(1, 6, 2),  -- Cadastro Jogador
-(2, 8, 2),  -- /tcc/telas/ADMI/telaDadosSubInstituicao.php
-(2, 9, 2);   -- /tcc/telas/ADMS/telaDadosTurma.php
+(1, 2, 2),
+(1, 3, 2),
+(1, 4, 2),
+(1, 5, 2),
+(1, 6, 2),
+(2, 8, 2),
+(2, 9, 2),
+(2, 13, 2); -- Organização de Turmas por Staff
+
+
 
 -- ADMS
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
@@ -744,21 +753,32 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (1, 4, 3),  -- Cadastro Staff ADMS
 (1, 5, 3),  -- Cadastro Staff
 (1, 6, 3),  -- Cadastro Jogador
-(2, 9, 3);   -- /tcc/telas/ADMS/telaDadosTurma.php
+(2, 9, 3);  -- Turma
+
 
 -- ADMS|STAFF
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
-(1, 3, 4),  -- Cadastro ADMS
-(1, 4, 4),  -- Cadastro Staff ADMS
-(1, 5, 4),  -- Cadastro Staff
-(1, 6, 4),  -- Cadastro Jogador
-(2, 9, 4);   -- /tcc/telas/ADMS/telaDadosTurma.php
+(1, 3, 4),   -- Cadastro ADMS
+(1, 4, 4),   -- Cadastro Staff ADMS
+(1, 5, 4),   -- Cadastro Staff
+(1, 6, 4),   -- Cadastro Jogador
+(1, 13, 4),  -- Organização de Turmas por Staff
+(2, 9, 4);   -- Turma
 
 -- -- STAFF
 -- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
 
 -- -- JOGADOR
 -- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+
+
+
+
+
+
+
+
+
 
 
 -- STAFFS: IDs de 6 até 15
@@ -823,3 +843,14 @@ INSERT INTO turma_evento (cod_evento, cod_turma) VALUES
 (10, 1);
 
 insert into staff_turma(cod_staff,cod_turma) values (9,3),(9,2),(9,5);
+INSERT INTO staff_turma(cod_staff, cod_turma) VALUES
+(9, 1),
+(10, 2),
+(11, 3),
+(12, 4),
+(13, 5),
+(14, 2),
+(15, 3),
+(9, 4),
+(10, 5),
+(11, 1);

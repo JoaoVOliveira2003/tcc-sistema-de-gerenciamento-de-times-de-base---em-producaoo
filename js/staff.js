@@ -214,3 +214,57 @@ function deletarCadastroStaff(cod) {
     },
   });
 }
+
+
+//--------------------------------------------------------------
+
+function tabelaRelacaoStaffTurma(){
+  var pagina = "/tcc/componentes/tabelaDeleteUpdate.php";
+    
+  var query = "SELECT cad.cod_usuario, cad.nome, GROUP_CONCAT(tur.desc_turma ORDER BY tur.desc_turma SEPARATOR ', ') AS turmas FROM staff staf INNER JOIN cadastro_identificacao cad ON staf.cod_staff = cad.cod_usuario INNER JOIN staff_turma staftu ON staf.cod_staff = staftu.cod_staff INNER JOIN turma tur ON staftu.cod_turma = tur.cod_turma WHERE cad.ativo = 's' GROUP BY cad.cod_usuario, cad.nome";
+
+  let titulosTh = {
+    valor1: "Cod Staff",
+    valor2: "Nome",
+    valor3: "Turmas relacionadas",
+    valor4: "Ações",
+  };
+
+  let styleTh = {
+    valor1: "width: 10%;",
+    valor2: "width: 15%;",
+    valor3: "width: 60%;",
+    valor4: "width: 20%;",
+
+  };
+
+  let variavelTd = {
+    valor1: "cod_usuario",
+    valor2: "nome",
+    valor4: "turmas",
+  };
+
+  let botoesTd = {
+    valor1:
+      '<button type="button" class="btn btn-secondary btn-sm" onclick="atualizarRelacao($cod_usuario)">Atualizar</button>',
+  };
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {
+      query: query,
+      titulosTh: JSON.stringify(titulosTh),
+      styleTh: JSON.stringify(styleTh),
+      variavelTd: JSON.stringify(variavelTd),
+      botoesTd: JSON.stringify(botoesTd),
+    },
+    success: function (data) {
+      $("#tabelaRelacaoStaffTurma").html(data);
+    },
+  });
+}
+
+function atualizarRelacao (cod_usuario){
+  
+}

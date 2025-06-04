@@ -27,13 +27,13 @@
         <form id="formLogin" onsubmit="fazerLogin(); return false;">
           <div class="mb-3">
             <label for="email" class="form-label">E-mail de usuário</label>
-            <input type="email" value="ti@gmail.com" class="form-control" id="email" name="email" >
+            <input type="email" value="staff@gmail.com" class="form-control" id="email" name="email" >
           </div>
 
           <div class="mb-3">
             <label for="senha" class="form-label">Senha</label>
             <div class="input-group">
-              <input type="password" class="form-control" value="ti" id="senha" name="senha" >
+              <input type="password" class="form-control" value="staff" id="senha" name="senha" >
               <button class="btn btn-outline-secondary" type="button" onclick="toggleSenha()">
                 <img src="../../img\icone\olho.png" width="15" height="15" alt="">
               </button>

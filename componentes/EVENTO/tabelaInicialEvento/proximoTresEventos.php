@@ -62,32 +62,52 @@ if ($cod_role == 1) {
     ORDER BY e.data ASC, e.horario ASC
     LIMIT 3";
 } else if ($cod_role == 5) {
-    //staff 
+    $query = "select cod_turma from turma_jogador where cod_jogador = $cod_usuario;";
+
+    if ($bd->SqlExecuteQuery($query)) {
+        $cod_turma = $bd->SqlQueryShow('cod_turma');
+    }
 
     $query = "
-    SELECT e.data, e.local, e.titulo_evento,tur.desc_turma
-    FROM evento e
-    left JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
-    left JOIN turma tur ON tur.cod_turma = turev.cod_turma
-    left JOIN staff_turma sttaftur ON tur.cod_turma = sttaftur.cod_turma
-    where sttaftur.cod_staff = $cod_usuario
-    AND CONCAT(e.data, ' ', e.horario) >= NOW()
-    ORDER BY e.data ASC, e.horario ASC
+    SELECT 
+        e.data, 
+        e.ativo, 
+        e.local, 
+        e.titulo_evento, 
+        tur.desc_turma, 
+        turev.cod_turma
+    FROM evento e 
+    LEFT JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
+    LEFT JOIN turma tur ON tur.cod_turma = turev.cod_turma 
+    LEFT JOIN turma_jogador jogatur ON tur.cod_turma = jogatur.cod_turma 
+    LEFT JOIN jogador joga ON jogatur.cod_jogador = joga.cod_jogador
+    WHERE turev.cod_turma = $cod_turma  and e.ativo='S'
+    ORDER BY e.data,e.horario asc
     LIMIT 3;
     ";
 
 } else if ($cod_role == 6) {
-    // JOGADOR
+    $query = "select cod_turma from turma_jogador where cod_jogador = $cod_usuario;";
+
+    if ($bd->SqlExecuteQuery($query)) {
+        $cod_turma = $bd->SqlQueryShow('cod_turma');
+    }
+
     $query = "
-    SELECT e.data, e.local, e.titulo_evento,tur.desc_turma
-    FROM evento e
-    left JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
-    left JOIN turma tur ON tur.cod_turma = turev.cod_turma
-    left JOIN turma_jogador jogatur ON tur.cod_turma = jogatur.cod_turma
-    left JOIN jogador joga ON jogatur.cod_jogador = joga.cod_jogador
-    where joga.cod_jogador = $cod_usuario 
-    AND CONCAT(e.data, ' ', e.horario) >= NOW()
-    ORDER BY e.data ASC, e.horario ASC
+    SELECT 
+        e.data, 
+        e.ativo, 
+        e.local, 
+        e.titulo_evento, 
+        tur.desc_turma, 
+        turev.cod_turma
+    FROM evento e 
+    LEFT JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
+    LEFT JOIN turma tur ON tur.cod_turma = turev.cod_turma 
+    LEFT JOIN turma_jogador jogatur ON tur.cod_turma = jogatur.cod_turma 
+    LEFT JOIN jogador joga ON jogatur.cod_jogador = joga.cod_jogador
+    WHERE turev.cod_turma = $cod_turma  and e.ativo='S'
+    ORDER BY e.data,e.horario asc
     LIMIT 3;
     ";
 }
