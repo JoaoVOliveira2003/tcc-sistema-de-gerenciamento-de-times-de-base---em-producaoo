@@ -220,9 +220,7 @@ function deletarCadastroStaff(cod) {
 
 function tabelaRelacaoStaffTurma(){
   var pagina = "/tcc/componentes/tabelaDeleteUpdate.php";
-    
-  var query = "SELECT cad.cod_usuario, cad.nome, GROUP_CONCAT(tur.desc_turma ORDER BY tur.desc_turma SEPARATOR ', ') AS turmas FROM staff staf INNER JOIN cadastro_identificacao cad ON staf.cod_staff = cad.cod_usuario INNER JOIN staff_turma staftu ON staf.cod_staff = staftu.cod_staff INNER JOIN turma tur ON staftu.cod_turma = tur.cod_turma WHERE cad.ativo = 's' GROUP BY cad.cod_usuario, cad.nome";
-
+query = "SELECT cad.cod_usuario, cad.nome, GROUP_CONCAT(tur.desc_turma ORDER BY tur.desc_turma SEPARATOR ', ') AS turmas FROM staff staf INNER JOIN cadastro_identificacao cad ON staf.cod_staff = cad.cod_usuario LEFT JOIN staff_turma staftu ON staf.cod_staff = staftu.cod_staff LEFT JOIN turma tur ON staftu.cod_turma = tur.cod_turma WHERE cad.ativo = 's' AND staf.cod_staff <> 1 GROUP BY cad.cod_usuario, cad.nome";
   let titulosTh = {
     valor1: "Cod Staff",
     valor2: "Nome",
@@ -244,8 +242,7 @@ function tabelaRelacaoStaffTurma(){
     valor4: "turmas",
   };
 
-  let botoesTd = {
-    valor1:
+  let botoesTd = {valor1:
       '<button type="button" class="btn btn-secondary btn-sm" onclick="atualizarRelacao($cod_usuario)">Atualizar</button>',
   };
 
@@ -265,6 +262,82 @@ function tabelaRelacaoStaffTurma(){
   });
 }
 
-function atualizarRelacao (cod_usuario){
-  
+async function atualizarRelacao(cod_usuario) {
+  var pagina = "/tcc/componentes/staff/modalAtualizarRelacaoTurmaStaff.php";
+
+  var idModal = "modalAtualizarTurma";
+  var tituloModal = "Atualizar relação";
+  var funcaoModal = "atualizarRelacaoStaffTurma";
+  var textoBotao = "Atualizar";
+
+  var query = "select cod_SubInstituicao from subinstituticao_staff where cod_staff = " + cod_usuario;
+  valorProcurado = "cod_SubInstituicao";
+  var cod_SubInstituicao = await acharPai(query, valorProcurado);
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {
+      cod_SubInstituicao:cod_SubInstituicao,
+      funcaoModal: funcaoModal,
+      textoBotao: textoBotao,
+      cod_usuario: cod_usuario,
+      idModal: idModal,
+      tituloModal: tituloModal,
+    },
+    success: function (data) {
+      // console.log(data);
+      $("#modalContainer").html(data);
+
+      var modalElement = $("#" + idModal);
+      modalElement.modal("show");
+      modalElement.attr("aria-hidden", "false");
+
+      $("#cancelarModal").on("click", function () {
+        modalElement.modal("hide");
+      });
+
+      $("#funcaoDoModal").on("click", function () {
+        modalElement.modal("hide");
+      });
+    },
+    error: function (xhr, status, error) {
+      console.error("Erro ao carregar os dados do estado:", error);
+    },
+  });
+}
+
+function atualizarRelacaoStaffTurma(cod_usuario){
+    const checkboxesSelecionados = document.querySelectorAll('.form-check-input:checked');
+    const turmasSelecionadas = [];
+
+    checkboxesSelecionados.forEach(checkbox => {
+        turmasSelecionadas.push(checkbox.value);
+    });
+
+    var pagina = "/tcc/componentes/staff/atualizar/atualizarRelacaoStaffTurma.php";
+
+    $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {
+      turmasSelecionadas:turmasSelecionadas,
+      cod_usuario: cod_usuario,
+    },
+    success: function (data) {
+      if (data == "ok") {
+        alert("Dados Atualizados!", "Atenção", "80%", function () {
+          location.reload();
+        });
+      } else if (data == "nok") {
+        alert(
+          "Atualização incompleta,caso problema continuar,chame o suporte.",
+          "Atenção",
+          "50%",
+          function () {
+            location.reload();
+          }
+        );
+      }    },
+  });
 }

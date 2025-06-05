@@ -31,6 +31,9 @@
 
             <div id="tabelaRelacaoStaffTurma"></div>
 
+            <div id="modalContainer"></div>
+
+       
         </div>
     </div>
 </body>

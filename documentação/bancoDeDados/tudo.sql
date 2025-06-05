@@ -771,16 +771,6 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 -- -- JOGADOR
 -- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
 
-
-
-
-
-
-
-
-
-
-
 -- STAFFS: IDs de 6 até 15
 INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES 
 ('staff 6', 100000006, 1, 's'),
@@ -854,3 +844,15 @@ INSERT INTO staff_turma(cod_staff, cod_turma) VALUES
 (9, 4),
 (10, 5),
 (11, 1);
+
+UPDATE subinstituticao_staff SET cod_SubInstituicao = 2 WHERE cod_staff = 6;
+UPDATE subinstituticao_staff SET cod_SubInstituicao = 3 WHERE cod_staff = 7;
+UPDATE subinstituticao_staff SET cod_SubInstituicao = 1 WHERE cod_staff = 9;
+UPDATE subinstituticao_staff SET cod_SubInstituicao = 5 WHERE cod_staff = 10;
+UPDATE subinstituticao_staff SET cod_SubInstituicao = 6 WHERE cod_staff = 11;
+UPDATE subinstituticao_staff SET cod_SubInstituicao = 7 WHERE cod_staff = 12;
+UPDATE subinstituticao_staff SET cod_SubInstituicao = 8 WHERE cod_staff = 13;
+UPDATE subinstituticao_staff SET cod_SubInstituicao = 9 WHERE cod_staff = 14;
+UPDATE subinstituticao_staff SET cod_SubInstituicao = 10 WHERE cod_staff = 15;
+
+insert into staff_turma(cod_staff,cod_turma) values (14,9);

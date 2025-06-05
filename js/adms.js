@@ -4,7 +4,9 @@ function gravarTurma() {
   var pagina = "/tcc/componentes/ADMS/gravar/gravarTurma.php";
 
   var turma = document.getElementById("desc_turma").value;
-  var sub_instituto = document.getElementById("subsubinstitucao").value;
+  var sub_instituto = document.getElementById("subinstitucao").value;
+
+  console.log(turma + sub_instituto);
 
   let camposObrigatorios = {
     sub_instituto: sub_instituto,
@@ -43,7 +45,7 @@ function tabelaDeleteUpdateTurma() {
   var pagina = "/tcc/componentes/tabelaDeleteUpdate.php";
 
   var query =
-    "SELECT tur.cod_turma, tur.desc_turma, tur.ativo, sub.desc_subInstituicao FROM turma tur INNER JOIN subinstituicao sub ON sub.cod_subInstituicao = tur.cod_subInstituicao;";
+    "SELECT tur.cod_turma, tur.desc_turma, tur.ativo, sub.desc_subInstituicao FROM turma tur INNER JOIN subinstituicao sub ON sub.cod_subInstituicao = tur.cod_subInstituicao ORDER BY sub.desc_subInstituicao;";
 
   let titulosTh = {
     valor1: "Cod. turma",
