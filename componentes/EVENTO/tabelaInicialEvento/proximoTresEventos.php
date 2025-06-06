@@ -9,106 +9,107 @@ $cod_usuario = getPost('cod_usuario');
 // $cod_role = 6; 
 // $cod_usuario= 3;
 
-$query="";
+$query = "";
 
 if ($cod_role == 1) {
     // TI: eventos futuros
     $query = "
-        SELECT data, local, titulo_evento
-        FROM evento
-        WHERE CONCAT(data, ' ', horario) >= NOW()
-        ORDER BY data ASC, horario ASC
-        LIMIT 3
+        SELECT 
+          e.data, e.horario, e.local, e.titulo_evento, tur.desc_turma 
+        FROM evento e
+        INNER JOIN turma_evento turev ON turev.cod_evento = e.cod_evento 
+        INNER JOIN turma tur ON tur.cod_turma = turev.cod_turma 
+        INNER JOIN subinstituicao sub ON sub.cod_SubInstituicao = tur.cod_SubInstituicao
+        WHERE e.ativo = 'S'
+        ORDER BY e.data ASC, e.horario
+        LIMIT 3;
     ";
 } else if ($cod_role == 2) {
-   //admi   - cod 4
-
-    $query = "select cod_instituicao from administrador_instituicao where cod_administrador = $cod_usuario;";
+    // admi - cod 4
+    $query = "SELECT GROUP_CONCAT(tur.cod_turma ORDER BY tur.cod_turma SEPARATOR ',') AS turmas FROM instituicao inst INNER JOIN administrador_instituicao admins ON admins.cod_instituicao = inst.cod_instituicao INNER JOIN subinstituicao sub ON inst.cod_instituicao = sub.cod_instituicao INNER JOIN turma tur ON tur.Cod_SubInstituicao = sub.Cod_SubInstituicao WHERE admins.cod_administrador = $cod_usuario ";
 
     if ($bd->SqlExecuteQuery($query)) {
         $cod_instituicao = $bd->SqlQueryShow('cod_instituicao');
     }
-        
-    $query = "
-    SELECT e.data, e.local, e.titulo_evento,tur.desc_turma
-    FROM evento e
-    left JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
-    left JOIN turma tur ON tur.cod_turma = turev.cod_turma
-    left JOIN subinstituicao sub ON sub.cod_SubInstituicao = tur.cod_SubInstituicao
-    left JOIN instituicao inst ON inst.cod_Instituicao = sub.cod_Instituicao
-    where inst.cod_instituicao = $cod_instituicao
-    AND CONCAT(e.data, ' ', e.horario) >= NOW()
-    ORDER BY e.data ASC, e.horario ASC
-    LIMIT 3
-    ";
 
+    $query = "
+        SELECT 
+          e.data, e.horario, e.local, e.titulo_evento, tur.desc_turma 
+        FROM evento e
+        INNER JOIN turma_evento turev ON turev.cod_evento = e.cod_evento 
+        INNER JOIN turma tur ON tur.cod_turma = turev.cod_turma 
+        INNER JOIN subinstituicao sub ON sub.cod_SubInstituicao = tur.cod_SubInstituicao
+        WHERE turev.cod_turma IN ($turmas) AND e.ativo = 'S'
+        ORDER BY e.data ASC, e.horario
+        LIMIT 3;
+    ";
 } else if ($cod_role == 3 || $cod_role == 4) {
     // ADMS / STAFF|ADMS
-
-    $query = "select cod_subInstituicao from administrador_subinstituicao where cod_administrador = $cod_usuario;";
+    $query = "SELECT GROUP_CONCAT(tur.cod_turma ORDER BY tur.cod_turma SEPARATOR ',') AS turmas FROM administrador_subinstituicao admsub INNER JOIN subinstituicao sub ON admsub.cod_SubInstituicao = sub.cod_SubInstituicao INNER JOIN turma tur ON tur.cod_SubInstituicao = sub.cod_SubInstituicao WHERE admsub.cod_administrador = $cod_usuario;";
 
     if ($bd->SqlExecuteQuery($query)) {
-        $cod_subinstituicao = $bd->SqlQueryShow('cod_subinstituicao');
+        $turmas = $bd->SqlQueryShow('turmas');
     }
 
     $query = "
-    SELECT e.data, e.local, e.titulo_evento,tur.desc_turma
-    FROM evento e
-    left JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
-    left JOIN turma tur ON tur.cod_turma = turev.cod_turma
-    left JOIN subinstituicao sub ON sub.cod_SubInstituicao = tur.cod_SubInstituicao
-    where sub.cod_subinstituicao = $cod_subinstituicao 
-    AND CONCAT(e.data, ' ', e.horario) >= NOW()
-    ORDER BY e.data ASC, e.horario ASC
-    LIMIT 3";
-} else if ($cod_role == 5) {
-    $query = "select cod_turma from turma_jogador where cod_jogador = $cod_usuario;";
-
-    if ($bd->SqlExecuteQuery($query)) {
-        $cod_turma = $bd->SqlQueryShow('cod_turma');
-    }
-
-    $query = "
-    SELECT 
-        e.data, 
-        e.ativo, 
-        e.local, 
-        e.titulo_evento, 
-        tur.desc_turma, 
-        turev.cod_turma
-    FROM evento e 
-    LEFT JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
-    LEFT JOIN turma tur ON tur.cod_turma = turev.cod_turma 
-    LEFT JOIN turma_jogador jogatur ON tur.cod_turma = jogatur.cod_turma 
-    LEFT JOIN jogador joga ON jogatur.cod_jogador = joga.cod_jogador
-    WHERE turev.cod_turma = $cod_turma  and e.ativo='S'
-    ORDER BY e.data,e.horario asc
-    LIMIT 3;
+        SELECT 
+          e.data, e.horario, e.local, e.titulo_evento, tur.desc_turma 
+        FROM evento e
+        INNER JOIN turma_evento turev ON turev.cod_evento = e.cod_evento 
+        INNER JOIN turma tur ON tur.cod_turma = turev.cod_turma 
+        INNER JOIN subinstituicao sub ON sub.cod_SubInstituicao = tur.cod_SubInstituicao
+        WHERE turev.cod_turma IN ($turmas) AND e.ativo = 'S'
+        ORDER BY e.data ASC, e.horario
+        LIMIT 3;
     ";
+} else if ($cod_role == 5) {
+    // 5 Treinadores STAFF s
+    $query = "SELECT GROUP_CONCAT(tur.cod_turma ORDER BY tur.cod_turma SEPARATOR ', ') AS turmas FROM staff staf INNER JOIN cadastro_identificacao cad ON staf.cod_staff = cad.cod_usuario LEFT JOIN staff_turma staftu ON staf.cod_staff = staftu.cod_staff LEFT JOIN turma tur ON staftu.cod_turma = tur.cod_turma WHERE cad.ativo = 's' AND cod_usuario = $cod_usuario GROUP BY cad.cod_usuario, cad.nome;";
 
+    if ($bd->SqlExecuteQuery($query)) {
+        $turmas = $bd->SqlQueryShow('turmas');
+    }
+
+    $query = "
+        SELECT 
+            e.data, 
+            e.ativo, 
+            e.local, 
+            e.titulo_evento, 
+            tur.desc_turma, 
+            turev.cod_turma
+        FROM evento e 
+        LEFT JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
+        LEFT JOIN turma tur ON tur.cod_turma = turev.cod_turma 
+        LEFT JOIN turma_jogador jogatur ON tur.cod_turma = jogatur.cod_turma 
+        LEFT JOIN jogador joga ON jogatur.cod_jogador = joga.cod_jogador
+        WHERE turev.cod_turma IN ($turmas) AND e.ativo = 'S'
+        ORDER BY e.data, e.horario ASC
+        LIMIT 3;
+    ";
 } else if ($cod_role == 6) {
-    $query = "select cod_turma from turma_jogador where cod_jogador = $cod_usuario;";
+    $query = "SELECT cod_turma FROM turma_jogador WHERE cod_jogador = $cod_usuario;";
 
     if ($bd->SqlExecuteQuery($query)) {
         $cod_turma = $bd->SqlQueryShow('cod_turma');
     }
 
     $query = "
-    SELECT 
-        e.data, 
-        e.ativo, 
-        e.local, 
-        e.titulo_evento, 
-        tur.desc_turma, 
-        turev.cod_turma
-    FROM evento e 
-    LEFT JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
-    LEFT JOIN turma tur ON tur.cod_turma = turev.cod_turma 
-    LEFT JOIN turma_jogador jogatur ON tur.cod_turma = jogatur.cod_turma 
-    LEFT JOIN jogador joga ON jogatur.cod_jogador = joga.cod_jogador
-    WHERE turev.cod_turma = $cod_turma  and e.ativo='S'
-    ORDER BY e.data,e.horario asc
-    LIMIT 3;
+        SELECT 
+            e.data, 
+            e.ativo, 
+            e.local, 
+            e.titulo_evento, 
+            tur.desc_turma, 
+            turev.cod_turma
+        FROM evento e 
+        LEFT JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
+        LEFT JOIN turma tur ON tur.cod_turma = turev.cod_turma 
+        LEFT JOIN turma_jogador jogatur ON tur.cod_turma = jogatur.cod_turma 
+        LEFT JOIN jogador joga ON jogatur.cod_jogador = joga.cod_jogador
+        WHERE turev.cod_turma = $cod_turma AND e.ativo = 'S'
+        ORDER BY e.data, e.horario ASC
+        LIMIT 3;
     ";
 }
 
@@ -140,8 +141,7 @@ if (trim($query) !== '' && $bd->SqlExecuteQuery($query)) {
                 <td>$titulo</td>
             </tr>
         ";
-        } while ($bd->SqlFetchNext());
-
+    } while ($bd->SqlFetchNext());
 
     $retorno .= "
             <tr>

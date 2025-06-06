@@ -852,7 +852,7 @@ UPDATE subinstituticao_staff SET cod_SubInstituicao = 5 WHERE cod_staff = 10;
 UPDATE subinstituticao_staff SET cod_SubInstituicao = 6 WHERE cod_staff = 11;
 UPDATE subinstituticao_staff SET cod_SubInstituicao = 7 WHERE cod_staff = 12;
 UPDATE subinstituticao_staff SET cod_SubInstituicao = 8 WHERE cod_staff = 13;
-UPDATE subinstituticao_staff SET cod_SubInstituicao = 9 WHERE cod_staff = 14;
-UPDATE subinstituticao_staff SET cod_SubInstituicao = 10 WHERE cod_staff = 15;
+-- UPDATE subinstituticao_staff SET cod_SubInstituicao = 9 WHERE cod_staff = 14;
+-- UPDATE subinstituticao_staff SET cod_SubInstituicao = 10 WHERE cod_staff = 15;
 
 insert into staff_turma(cod_staff,cod_turma) values (14,9);

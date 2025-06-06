@@ -1,6 +1,6 @@
 <?php
-// include '../../include/verificaSessao.php';
-// $usuario = verificarLogin();
+include '../../include/verificaSessao.php';
+$usuario = verificarLogin();
 ?>
 
 <!DOCTYPE html>

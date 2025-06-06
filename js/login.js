@@ -20,7 +20,6 @@ function fazerLogin (){
     type: "POST",
     data: {email: email,senha:senha,},
     success: function (data) {
-
       if (data == "ok") {
            window.location.href = "telaPosLogin.php";
       }

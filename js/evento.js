@@ -57,6 +57,8 @@ function gravarEvento() {
 function proximosTresEventos(cod_role,cod_usuario){
   var pagina = "/tcc/componentes/Evento/tabelaInicialEvento/proximoTresEventos.php";
 
+console.log(cod_role + cod_usuario);
+
   $.ajax({
     type: "POST",
     url: pagina,
