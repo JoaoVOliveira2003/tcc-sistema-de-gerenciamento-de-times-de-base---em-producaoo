@@ -373,6 +373,7 @@ function listaTodosJogadores(cod_role, cod_usuario) {
     url: pagina,
     data: { cod_role: cod_role, cod_usuario: cod_usuario },
     success: function (data) {
+      console.log(data);
       $("#todosJogadores").html(data);
     },
   });

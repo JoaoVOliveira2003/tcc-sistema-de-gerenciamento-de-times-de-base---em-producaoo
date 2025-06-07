@@ -30,10 +30,6 @@ $usuario = verificarLogin();
             <hr>
 
 
-    
-    ;
-
-
 
             <div id="todosJogadores"></div>
 
