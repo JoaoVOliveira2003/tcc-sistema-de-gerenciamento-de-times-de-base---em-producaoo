@@ -32,22 +32,12 @@ class Database {
         }
     }
 
-public function SqlQueryShow($campo) {
-    // Logando o nome do campo acessado
-    error_log("SqlQueryShow - Tentando acessar o campo: " . $campo);
-
-    // Verifica se o índice existe no resultado
-    if (isset($this->result[$this->currentIndex][$campo])) {
-        // Logando o valor encontrado
-        error_log("SqlQueryShow - Valor encontrado: " . print_r($this->result[$this->currentIndex][$campo], true));
-        return $this->result[$this->currentIndex][$campo];
+    public function SqlQueryShow($campo) {
+        if (isset($this->result[$this->currentIndex][$campo])) {
+            return $this->result[$this->currentIndex][$campo];
+        }
+        return null;
     }
-
-    // Logando erro se o campo não existir
-    error_log("SqlQueryShow - Campo '$campo' não encontrado no índice atual: " . $this->currentIndex);
-    return null;
-}
-
 
     public function SqlFetchNext() {
         $this->currentIndex++;

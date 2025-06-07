@@ -411,10 +411,7 @@ function verificarCadastroADMS(codPessoa, emailPessoa) {
     url: pagina,
     data: { codPessoa: codPessoa, emailPessoa: emailPessoa },
     dataType: "json",
-    success: function (data) {
-
-      console.log(data);
-      
+    success: function (data) {      
       if (data.status === "nok1") {
         alert("Erro ao executar a consulta!", "Atenção", "80%", function () {
           window.location.href = "https://www.google.com";
@@ -435,12 +432,10 @@ function verificarCadastroADMS(codPessoa, emailPessoa) {
         }
 
         $("#cpf").val(formatarCPF(data.cpf)).prop("disabled", true);
-
         $("#nacao").val(data.nacao).prop("disabled", true);
         $("#estado").val(data.estado).prop("disabled", true);
         $("#municipio").val(data.municipio).prop("disabled", true);
         $("#instituicao").val(data.instituicao).prop("disabled", true);
-
         $("#nacao").prop("disabled", true);
         $("#estado").prop("disabled", true);
         $("#municipio").prop("disabled", true);

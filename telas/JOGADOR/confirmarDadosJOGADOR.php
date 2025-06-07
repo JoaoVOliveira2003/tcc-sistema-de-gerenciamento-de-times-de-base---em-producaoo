@@ -155,7 +155,7 @@
 
       <hr>
 
-      <button type="button" class="btn btn-primary mb-2 " id="btnConfirmar" onclick="confirmarCadastro(this.getAttribute('data-cod'))">Confirmar</button>
+      <button type="button" class="btn btn-primary mb-2 " id="btnConfirmar" onclick="confirmarCadastro(this.getAttribute('data-cod'),6)">Confirmar</button>
       <button type="button" class="btn btn-danger  mb-2 mt-1" id="btnRecusar" onclick="recusarCadastroJOGADOR(this.getAttribute('data-cod'))">Recusar</button>
   
                 <div id="modalContainer"></div>

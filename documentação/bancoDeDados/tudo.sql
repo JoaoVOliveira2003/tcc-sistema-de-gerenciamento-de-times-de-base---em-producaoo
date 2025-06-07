@@ -373,11 +373,13 @@ CREATE TABLE `tcc`.`treino_jogador` (
 
 -- nota_jogador
 CREATE TABLE `tcc`.`nota_jogador` (
+  id_nota INT NOT NULL AUTO_INCREMENT,
   cod_jogador INT NOT NULL, 
   cod_staff INT NOT NULL, 
   nota_jogador CHAR(3), 
+  data_atualizacao DATETIME,
   ativo CHAR(1), 
-  PRIMARY KEY (cod_jogador, cod_staff), 
+  PRIMARY KEY (id_nota), -- chave artificial única
   FOREIGN KEY (cod_jogador) REFERENCES `tcc`.`jogador` (cod_jogador) ON DELETE CASCADE ON UPDATE CASCADE, 
   FOREIGN KEY (cod_staff) REFERENCES `tcc`.`staff` (cod_staff) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
@@ -685,7 +687,8 @@ insert into login_usuario(cod_usuario,email_usuario,senha) values (7,'staffAdms@
 -- headers (agora só para o ADMS)
 INSERT INTO item_menu (role_html) VALUES 
   ('Gerenciamento de Usuários'), -- cod_item_menu = 1
-  ('Relatórios');                -- cod_item_menu = 2
+  ('Relatórios'),                -- cod_item_menu = 2
+  ('Eventos');                -- cod_item_menu = 2
 
 -- Submenus para "Gerenciamento de Usuários"
 INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
@@ -709,12 +712,13 @@ INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
 
 -- Relacionar todos os tipos de role com os menus principais
 INSERT INTO itemMenu_tipoRole (cod_item_menu, cod_tipo_role) VALUES
-(1, 1), (2, 1),  -- TI
-(1, 2), (2, 2),  -- ADMI
-(1, 3), (2, 3),  -- ADMS
-(1, 4), (2, 4),  -- ADMS|STAFF
-(1, 5), (2, 5),  -- STAFF
-(1, 6), (2, 6);  -- JOGADOR
+(1, 1), (2, 1),(3, 1),  -- TI
+(1, 2), (2, 2),(3, 2),  -- ADMI
+(1, 3), (2, 3),(3, 3),  -- ADMS
+(1, 4), (2, 4),(3, 4),  -- ADMS|STAFF
+(1, 5), (2, 5),(3, 5),  -- STAFF
+(1, 6), (2, 6),(3, 6);  -- JOGADOR
+
 
 -- TI
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
@@ -731,9 +735,6 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (2, 11, 1),  -- TI pode acessar: Nação
 (2, 12, 1);  -- TI pode acessar: Estado
 
-
-
-
 -- ADMI
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
 (1, 2, 2),
@@ -745,8 +746,6 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (2, 9, 2),
 (2, 13, 2); -- Organização de Turmas por Staff
 
-
-
 -- ADMS
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
 (1, 3, 3),  -- Cadastro ADMS
@@ -754,7 +753,6 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (1, 5, 3),  -- Cadastro Staff
 (1, 6, 3),  -- Cadastro Jogador
 (2, 9, 3);  -- Turma
-
 
 -- ADMS|STAFF
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
@@ -856,3 +854,64 @@ UPDATE subinstituticao_staff SET cod_SubInstituicao = 8 WHERE cod_staff = 13;
 -- UPDATE subinstituticao_staff SET cod_SubInstituicao = 10 WHERE cod_staff = 15;
 
 insert into staff_turma(cod_staff,cod_turma) values (14,9);
+
+
+-- INSERTS em cadastro_identificacao
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES 
+('Thiago Heleno', '13432640900', '1', 's'),
+('Carlos Silva', '12345678901', '2', 's'),
+('Ana Pereira', '98765432100', '3', 's'),
+('Bruna Rocha', '45612378900', '4', 's'),
+('Lucas Costa', '32165498700', '5', 's'),
+('Fernanda Lima', '14725836900', '6', 's'),
+('Paulo Sousa', '25836914700', '7', 's'),
+('Juliana Mendes', '36914725800', '8', 's'),
+('Renato Torres', '74185296300', '9', 's'),
+('Marina Alves', '85296374100', '10', 's');
+
+-- INSERTS em role_cadastro
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES 
+(18, 6), (19, 6), (20, 6), (21, 6), (22, 6), (23, 6), (24, 6), (25, 6), (26, 6), (27, 6);
+
+-- INSERTS em jogador
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, esporte) VALUES 
+(18, '2003-03-02', 5, 1),
+(19, '2004-04-15', 2, 1),
+(20, '2005-01-10', 3, 1),
+(21, '2002-07-22', 1, 2),
+(22, '2003-11-30', 4, 2),
+(23, '2001-05-18', 2, 1),
+(24, '2000-12-12', 5, 1),
+(25, '2004-09-09', 3, 1),
+(26, '2005-06-06', 1, 2),
+(27, '2002-02-28', 4, 2);
+
+-- INSERTS em turma_jogador
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES 
+(1, 18), (1, 19), (2, 20), (2, 21), (3, 22), (3, 23), (1, 24), (2, 25), (3, 26), (1, 27);
+
+-- INSERTS em midia_jogador
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES 
+(18, 'EG2x_trabalho framework-01.png'),
+(19, 'foto19.png'),
+(20, 'foto20.jpg'),
+(21, 'img21.jpeg'),
+(22, 'media22.png'),
+(23, 'arquivo23.pdf'),
+(24, 'video24.mp4'),
+(25, 'midia25.png'),
+(26, 'upload26.png'),
+(27, 'img27.jpg');
+
+-- INSERTS em fichaMedica
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) VALUES 
+(18, 1.80, 75, 'AB-', 'Nenhuma', 'Poeira', NOW()),
+(19, 1.75, 68, 'O+', 'Asma', 'Amendoim', NOW()),
+(20, 1.70, 65, 'A-', 'Miopia', 'Nenhuma', NOW()),
+(21, 1.85, 82, 'B+', 'Diabetes tipo 1', 'Pólen', NOW()),
+(22, 1.90, 88, 'AB+', 'Nenhuma', 'Glúten', NOW()),
+(23, 1.78, 74, 'O-', 'Lesão anterior no joelho', 'Nenhuma', NOW()),
+(24, 1.83, 79, 'A+', 'Nenhuma', 'Frutos do mar', NOW()),
+(25, 1.76, 70, 'B-', 'Hiperatividade', 'Nenhuma', NOW()),
+(26, 1.72, 66, 'O+', 'Bronquite', 'Leite', NOW()),
+(27, 1.80, 77, 'AB-', 'Nenhuma', 'Nenhuma', NOW());

@@ -143,20 +143,26 @@ if (trim($query) !== '' && $bd->SqlExecuteQuery($query)) {
         ";
     } while ($bd->SqlFetchNext());
 
-    $retorno .= "
-            <tr>
-                <td colspan='3'>
-                    <div style='margin-left: 64%;'>
-                        <button class='btn btn-sm btn-secondary'>Ver eventos por completo</button>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    ";
+$retorno .= "
+    <tr>
+        <td colspan='3'>
+            <div style='margin-left: 64%;'>
+                <a href='../eventos/telaTodosEventos.php' class='btn btn-sm btn-secondary'>
+                    Ver eventos por completo
+                </a>
+            </div>
+        </td>
+    </tr>
+</tbody>
+</table>
+";
+
+
+
 } else {
     $retorno = "";
 }
 
 echo $retorno;
 ?>
+

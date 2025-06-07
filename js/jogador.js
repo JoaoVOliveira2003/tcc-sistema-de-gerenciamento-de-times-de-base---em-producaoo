@@ -33,7 +33,6 @@ function selectTipoLesao() {
   });
 }
 
-
 function gravarJogador() {
   var input = document.getElementById("imagemJogador");
   var formData = new FormData();
@@ -116,7 +115,9 @@ function gravarJogador() {
   }
 
   if (responsaveis.length === 0) {
-    alert("É necessário informar pelo menos um responsável com todos os campos preenchidos.");
+    alert(
+      "É necessário informar pelo menos um responsável com todos os campos preenchidos."
+    );
     return;
   }
 
@@ -132,7 +133,8 @@ function gravarJogador() {
   const altura = document.getElementById("altura").value;
   const peso = document.getElementById("peso").value;
   const tipo_sanguineo = document.getElementById("tipo_sanguineo").value;
-  const restricoes_medicas = document.getElementById("restricoes_medicas").value;
+  const restricoes_medicas =
+    document.getElementById("restricoes_medicas").value;
   const alergias = document.getElementById("alergias").value;
   const turma = document.getElementById("turma").value;
 
@@ -174,27 +176,27 @@ function gravarJogador() {
 
   if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) return;
 
-    formData.append("municipio", municipio);
-    formData.append("nome", nome);
-    formData.append("email", email);
-    formData.append("cpf", cpf);
-    formData.append("posicao", posicao);
-    formData.append("data_nascimento", data_nascimento);
-    formData.append("esporte", esporte);
-    formData.append("altura", altura);
-    formData.append("peso", peso);
-    formData.append("tipo_sanguineo", tipo_sanguineo);
-    formData.append("restricoes_medicas", restricoes_medicas);
-    formData.append("alergias", alergias);
-    formData.append("turma", turma);
+  formData.append("municipio", municipio);
+  formData.append("nome", nome);
+  formData.append("email", email);
+  formData.append("cpf", cpf);
+  formData.append("posicao", posicao);
+  formData.append("data_nascimento", data_nascimento);
+  formData.append("esporte", esporte);
+  formData.append("altura", altura);
+  formData.append("peso", peso);
+  formData.append("tipo_sanguineo", tipo_sanguineo);
+  formData.append("restricoes_medicas", restricoes_medicas);
+  formData.append("alergias", alergias);
+  formData.append("turma", turma);
 
-    // Convertendo objetos para JSON e enviando como string
-    formData.append("lesoes", JSON.stringify(lesoes));
-    formData.append("responsaveis", JSON.stringify(responsaveis));
-    
+  // Convertendo objetos para JSON e enviando como string
+  formData.append("lesoes", JSON.stringify(lesoes));
+  formData.append("responsaveis", JSON.stringify(responsaveis));
+
   modalCarregamento();
 
-$.ajax({
+  $.ajax({
     url: "/tcc/componentes/jogador/gravar/gravarJogador.php",
     type: "POST",
     data: formData,
@@ -203,18 +205,12 @@ $.ajax({
     success: function (data) {
       escodendoModalCarregamento();
 
-      if(data =='emailJaCadastrado'){
-            escodendoModalCarregamento();
+      if (data == "emailJaCadastrado") {
+        escodendoModalCarregamento();
 
-        alert(
-          "Email já cadastrado.",
-          "Atenção",
-          "50%",
-            function () {
-                escodendoModalCarregamento();
-
-          }
-        );
+        alert("Email já cadastrado.", "Atenção", "50%", function () {
+          escodendoModalCarregamento();
+        });
       }
 
       if (data == "ok") {
@@ -243,8 +239,6 @@ function verificarCadastroJogador(codPessoa, emailPessoa) {
     data: { codPessoa: codPessoa, emailPessoa: emailPessoa },
     dataType: "json",
     success: function (data) {
-  
-
       if (data.status === "nok1") {
         alert("Erro ao executar a consulta!", "Atenção", "80%", function () {
           // window.location.href = "https://www.google.com";
@@ -258,7 +252,6 @@ function verificarCadastroJogador(codPessoa, emailPessoa) {
           // window.location.href = "https://www.google.com";
         });
       } else if (data.status === "ok") {
-
         $("#nome").val(data.nome).prop("disabled", true);
         function formatarCPF(cpf) {
           return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
@@ -275,13 +268,15 @@ function verificarCadastroJogador(codPessoa, emailPessoa) {
         $("#nacao").val(data.nacao).prop("disabled", true);
         $("#peso").val(data.peso).prop("disabled", true);
         $("#posicao").val(data.posicao).prop("disabled", true);
-        $("#restricoes_medicas").val(data.restricoes_medicas).prop("disabled", true);
+        $("#restricoes_medicas")
+          .val(data.restricoes_medicas)
+          .prop("disabled", true);
         $("#subinstituicao").val(data.instituicao).prop("disabled", true);
         $("#tipo_sanguineo").val(data.tipo_sanguineo).prop("disabled", true);
         $("#turma").val(data.turma).prop("disabled", true);
-        $("#nome_jogador").val('nome').prop("disabled", true);        
-        $("#email_jogador").val(data.emailPessoa).prop("disabled", true);      
-               
+        $("#nome_jogador").val("nome").prop("disabled", true);
+        $("#email_jogador").val(data.emailPessoa).prop("disabled", true);
+
         $("#localImagem").attr("src", data.localImagem);
 
         $("#dadosResponsaveis").html(data.dadosResponsaveis);
@@ -366,6 +361,19 @@ function deletarCadastroJOGADOR(cod) {
     },
     error: function (xhr, status, error) {
       console.error("Erro ao gravar nação:", error);
+    },
+  });
+}
+
+function listaTodosJogadores(cod_role, cod_usuario) {
+  var pagina = "/tcc/componentes/JOGADOR/listaTodosJogadores.php";
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: { cod_role: cod_role, cod_usuario: cod_usuario },
+    success: function (data) {
+      $("#todosJogadores").html(data);
     },
   });
 }

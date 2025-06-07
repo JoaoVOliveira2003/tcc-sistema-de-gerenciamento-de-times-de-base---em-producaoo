@@ -55,11 +55,9 @@ function gravarEvento() {
 }
 
 function proximosTresEventos(cod_role,cod_usuario){
-  var pagina = "/tcc/componentes/Evento/tabelaInicialEvento/proximoTresEventos.php";
+var pagina = "/tcc/componentes/Evento/tabelaInicialEvento/proximoTresEventos.php";
 
-console.log(cod_role + cod_usuario);
-
-  $.ajax({
+ $.ajax({
     type: "POST",
     url: pagina,
     data: {cod_role:cod_role,cod_usuario:cod_usuario},
@@ -67,4 +65,34 @@ console.log(cod_role + cod_usuario);
       $("#proximosTresEventos").html(data);
     },
   });
+}
+
+function todosEventos(cod_role,cod_usuario){
+  var pagina = "/tcc/componentes/Evento/tabelaInicialEvento/todosEventos.php";
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {cod_role:cod_role,cod_usuario:cod_usuario},
+    success: function (data) {
+      $("#todosEventos").html(data);
+    },
+  });
+}
+
+function cancelarEvento(cod_evento) {
+    var pagina = "/tcc/componentes/Evento/atualizar/cancelarEvento.php";
+
+    $.ajax({
+        type: "POST",
+        url: pagina,
+        data: { cod_evento: cod_evento },
+        success: function (data) {
+            if (data === "ok") {
+                alert("Evento foi desativado.","Atenção","50%",function () {location.reload();}
+                );
+            } else if (data === "nok") {
+                alert("Erro no cancelamento.","Atenção","50%");
+            }
+        }
+    });
 }

@@ -504,7 +504,7 @@ function teste(){
   console.log("teste");
 }
 
-function confirmarCadastro(cod){
+function confirmarCadastro(cod,tipo_role){
 
   var pagina = "/tcc/componentes/confirmarCadastro.php";
 
@@ -526,7 +526,7 @@ function confirmarCadastro(cod){
   $.ajax({
     type: "POST",
     url: pagina,
-    data: {email:email,cod:cod,senha:senha},
+    data: {email:email,cod:cod,senha:senha,tipo_role:tipo_role},
     success: function (data) 
    
     {
