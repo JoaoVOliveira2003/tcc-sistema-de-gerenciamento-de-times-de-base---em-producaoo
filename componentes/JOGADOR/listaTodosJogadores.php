@@ -12,20 +12,37 @@ $query = '';
 
 if ($cod_role == 1) {
     $query = "
-        SELECT 
-            e.cod_evento,
-            e.titulo_evento,
-            e.data,
-            e.horario,
-            e.local,
-            e.desc_evento,
-            tur.desc_turma 
-        FROM evento e
-        INNER JOIN turma_evento turev ON turev.cod_evento = e.cod_evento 
-        INNER JOIN turma tur ON tur.cod_turma = turev.cod_turma 
-        INNER JOIN subinstituicao sub ON sub.cod_SubInstituicao = tur.cod_SubInstituicao
-        WHERE e.ativo = 'S'
-        ORDER BY e.data ASC, e.horario
+SELECT 
+    inst.cod_instituicao,inst.desc_instituicao,
+    si.cod_subInstituicao,si.desc_subInstituicao,
+    t.cod_turma,t.desc_turma,
+    ci.cod_usuario, ci.nome, ci.cpf, ci.ativo,
+    mun.desc_municipio, est.desc_estado, nac.desc_nacao,
+    j.data_nascimento,
+    pos.desc_posicao, esp.desc_esporte,
+    fm.altura, fm.peso, fm.tipoSanguineo, fm.restricoes_medicas, fm.alergias,
+    mj.local_midia,
+    hl.desc_lesao, hl.data_lesao, hl.tempoFora_lesao,
+	nota.ativo, nota.data_atualizacao,nota.nota_jogador
+FROM cadastro_identificacao ci
+    INNER JOIN role_cadastro rc ON rc.cod_usuario = ci.cod_usuario
+    INNER JOIN jogador j ON j.cod_jogador = rc.cod_usuario
+    LEFT JOIN posicao pos ON pos.cod_posicao = j.posicao
+    LEFT JOIN esporte esp ON esp.cod_esporte = j.esporte
+    LEFT JOIN fichaMedica fm ON fm.cod_jogador = j.cod_jogador
+    LEFT JOIN midia_jogador mj ON mj.cod_jogador = j.cod_jogador
+    LEFT JOIN turma_jogador tj ON tj.cod_jogador = j.cod_jogador
+    LEFT JOIN turma t ON t.cod_turma = tj.cod_turma
+    LEFT JOIN subInstituicao si ON si.Cod_SubInstituicao = t.cod_subInstituicao
+	left join instituicao inst ON si.cod_instituicao = inst.cod_instituicao 
+	LEFT JOIN fichaMedica_historicoLesoes fmhl ON fmhl.cod_jogador = j.cod_jogador
+    LEFT JOIN historicoLesoes hl ON hl.cod_historicoLesoes = fmhl.cod_historicoLesoes
+    INNER JOIN municipio mun ON mun.cod_municipio = ci.cod_municipio
+    INNER JOIN estado est ON mun.cod_estado = est.cod_estado
+    INNER JOIN nacao nac ON nac.cod_nacao = est.cod_nacao
+	left join nota_jogador nota on j.cod_jogador = nota.cod_jogador
+	WHERE nota.ativo = 's' OR nota.ativo = '' OR nota.ativo IS NULL
+    order by inst.cod_instituicao, si.cod_subInstituicao,t.cod_turma,ci.nome
     ";
 } elseif ($cod_role == 2) {
     // Administrador Instituição
@@ -154,13 +171,15 @@ if ($cod_role == 1) {
 
 if (trim($query) !== '' && $bd->SqlExecuteQuery($query)) {
 
-    $contador = 0;
-    do {
+    
+    $retorno .= $query;
+    // $contador = 0;
+    // do {
        
         
-    } while ($bd->SqlFetchNext());
+    // } while ($bd->SqlFetchNext());
 
-    $retorno .= "</div>";
+    //$retorno .= "</div>";
 } else {
     $retorno = "<p class='text-muted'>Nenhum evento encontrado.</p>";
 }
