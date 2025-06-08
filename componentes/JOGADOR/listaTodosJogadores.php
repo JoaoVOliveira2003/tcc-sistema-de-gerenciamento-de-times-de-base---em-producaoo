@@ -78,9 +78,9 @@ if ($bd->SqlExecuteQuery($query)) {
                 $retorno .= "</tbody></table>";
             }
             $retorno .= "<h6>$turma</h6>";
-            $retorno .= "<table border='1' cellpadding='5' cellspacing='0' style='border-collapse: collapse; width: 100%; margin-bottom: 20px;'>";
-            $retorno .= "<thead>
-                            <tr style='background:#eee;'>
+            $retorno .= "<table class='table table-hover table-bordered'>";
+            $retorno .= "<thead class='table-light'>
+                            <tr>
                                 <th>Nome</th>
                                 <th>CPF</th>
                                 <th>Ações</th>
@@ -92,7 +92,7 @@ if ($bd->SqlExecuteQuery($query)) {
         $retorno .= "<tr>";
         $retorno .= "<td>$nome</td>";
         $retorno .= "<td>$cpf</td>";
-        $retorno .= "<td><button onclick=\"alert('Detalhes do usuário: $nome (ID: $cod_usuario)')\">Ver detalhes</button></td>";
+        $retorno .= "<td><button type='button' class='btn btn-secondary btn-sm' onclick='vizualizarDadosJogador($cod_usuario)'>Dados completo.</button></td>";
         $retorno .= "</tr>";
     }
 
