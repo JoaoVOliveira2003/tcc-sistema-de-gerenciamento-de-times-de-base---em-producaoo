@@ -13,43 +13,30 @@ $usuario = verificarLogin();
     <script src="../../js/jogador.js"></script>
     <script>
         $(document).ready(function () {
-        const usuario = <?php echo json_encode(value: $usuario); ?>;
-        listaTodosJogadores(usuario.cod_tipoRole,usuario.cod_usuario);
+            const usuario = <?php echo json_encode($usuario); ?>;
+            listaTodosJogadores(usuario.cod_tipoRole, usuario.cod_usuario);
         });
     </script>
 </head>
+
 <?php include('../../componentes/header.php'); ?>
 
 <body>
     <div class="container">
-
         <div class="mt-1">
-            <h2 class="mb-3">Relatorios de jogador por Instituição</h2>
-            <h5 class="mb-4">
-                Colocar um texto bom aqui posterioremente </h5>
+            <h2 class="mb-3">Relatórios de Jogador por Instituição</h2>
+            <h5 class="mb-4">Colocar um texto bom aqui posteriormente</h5>
             <hr>
 
-
-
+            <!-- Onde serão listados os jogadores -->
             <div id="todosJogadores"></div>
 
-
             <hr>
-            <!-- Modal Carregando -->
-            <div class="modal fade" id="modalCarregando" tabindex="-1" aria-labelledby="modalCarregandoLabel"
-                aria-hidden="true">
-                <div class="modal-dialog d-flex justify-content-center align-items-center">
-                    <div class="modal-content">
-                        <div class="modal-body text-center">
-                            <h5>Carregando...</h5>
-                            <div id="carregandoText">*..</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+             <!-- Aqui será inserido o modal do jogador via AJAX -->
+            <div id="modalContainer"></div>
+
         </div>
-
-
     </div>
 </body>
 

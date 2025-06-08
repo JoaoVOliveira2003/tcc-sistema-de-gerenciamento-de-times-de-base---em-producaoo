@@ -379,6 +379,40 @@ function listaTodosJogadores(cod_role, cod_usuario) {
 }
 
 
-function vizualizarDadosJogador(cod_jogador){
-  console.log(cod_jogador);
+
+ function vizualizarDadosJogador(cod_jogador) {
+  var pagina = "/tcc/componentes/JOGADOR/modalJogador.php";
+  var idModal = "modalDadosJOGADOR";
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {
+      cod_jogador: cod_jogador,
+      idModal:idModal,
+    },
+    success: function (data) {
+      // Insere o HTML do modal do jogador
+      $("#modalContainer").html(data);
+
+      // Usa a variável idModal definida no PHP via script
+      var modalElement = $("#" + idModal);
+      modalElement.modal("show");
+
+      // Fecha com botão cancelar
+      $("#cancelarModal").on("click", function () {
+        modalElement.modal("hide");
+      });
+
+      // Fecha com o botão de ação
+      $("#funcaoDoModal").on("click", function () {
+        modalElement.modal("hide");
+      });
+    },
+    error: function () {
+      // Fecha o carregando mesmo em caso de erro
+      $("#modalCarregando").modal("hide");
+      alert("Erro ao carregar os dados do jogador.");
+    }
+  });
 }
