@@ -381,7 +381,7 @@ function listaTodosJogadores(cod_role, cod_usuario) {
 
 
  function vizualizarDadosJogador(cod_jogador) {
-  var pagina = "/tcc/componentes/JOGADOR/modalJogador.php";
+  var pagina = "/tcc/componentes/JOGADOR/modalDadosJogador.php";
   var idModal = "modalDadosJOGADOR";
 
   $.ajax({
