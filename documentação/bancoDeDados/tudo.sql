@@ -344,11 +344,11 @@ CREATE TABLE `tcc`.`jogador` (
   `cod_jogador` INT NOT NULL, 
   `data_nascimento` DATE, 
   `posicao` INT, 
-  `esporte` INT,
+  `cod_esporte` INT,
   PRIMARY KEY (`cod_jogador`), 
   FOREIGN KEY (`cod_jogador`) REFERENCES `role_cadastro`(`cod_usuario`), 
   FOREIGN KEY (`posicao`) REFERENCES `posicao`(`cod_posicao`), 
-  FOREIGN KEY (`esporte`) REFERENCES `esporte`(`cod_esporte`)
+  FOREIGN KEY (`cod_esporte`) REFERENCES `esporte`(`cod_esporte`)
 );
 
 
