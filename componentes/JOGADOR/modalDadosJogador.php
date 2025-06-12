@@ -107,10 +107,8 @@ $retorno = '
         <h5 class="modal-title" id="modalLabel-' . $idModal . '">' . $nome . '</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
       </div>
+
       <div class="modal-body p-4">
-
-
-
         <ul class="nav nav-tabs" id="myTab-' . $idModal . '" role="tablist">
           <li class="nav-item" role="presentation">
             <button class="nav-link active" id="dados-pessoais-tab-' . $idModal . '" data-bs-toggle="tab" data-bs-target="#dados-pessoais-' . $idModal . '" type="button" role="tab" aria-controls="dados-pessoais-' . $idModal . '" aria-selected="true">Dados pessoais</button>
@@ -130,70 +128,67 @@ $retorno = '
         </ul>
 
       
-<div class="tab-content mt-3" id="myTabContent-' . $idModal . '">
-  <div class="tab-pane fade show active" id="dados-pessoais-' . $idModal . '" role="tabpanel" aria-labelledby="dados-pessoais-tab-' . $idModal . '">
+      <div class="tab-content mt-3" id="myTabContent-' . $idModal . '">
+        <div class="tab-pane fade show active" id="dados-pessoais-' . $idModal . '" role="tabpanel" aria-labelledby="dados-pessoais-tab-' . $idModal . '">
+          <div class="text-center mb-4">
+            <img src="../../img/jogador/' . $local_midia . '" alt="Imagem do Usuário" class="img-fluid rounded" style="max-width: 150px;">
+          </div>
+          <div class="row mb-1">
+            <div class="col-md-8">
+              <label class="form-label">Nome:</label>
+              <input disabled type="text" class="form-control" value="' . $nome . '">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Data de Nascimento:</label>
+              <input disabled type="text" class="form-control" value="' . formatarData($data_nascimento) . '">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">CPF:</label>
+              <input disabled type="text" class="form-control" value="' . formatarCPF($cpf) . '">
+            </div>
+          </div>
+          <div class="row mb-1">
+            <div class="col-md-4">
+              <label class="form-label">Instituição:</label>
+              <input disabled type="text" class="form-control" value="' . $desc_instituicao . '">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Subinstituição:</label>
+              <input disabled type="text" class="form-control" value="' . $desc_subInstituicao . '">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Turma:</label>
+              <input disabled type="text" class="form-control" value="' . $desc_turma . '">
+            </div>
+          </div>
+          <div class="row mb-1">
+            <div class="col-md-4">
+              <label class="form-label">Nação:</label>
+              <input disabled type="text" class="form-control" value="' . $desc_nacao . '">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Estado:</label>
+              <input disabled type="text" class="form-control" value="' . $desc_estado . '">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Município:</label>
+              <input disabled type="text" class="form-control" value="' . $desc_municipio . '">
+            </div>
+          </div>
 
-    <div class="text-center mb-4">
-      <img src="../../img/jogador/' . $local_midia . '" alt="Imagem do Usuário" class="img-fluid rounded" style="max-width: 150px;">
-    </div>
+          <div class="row mb-1">
+            <div class="col-md-6">
+              <label class="form-label">Esporte:</label>
+              <input disabled type="text" class="form-control" value="' . $desc_esporte . '">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Posição:</label>
+              <input disabled type="text" class="form-control" value="' . $desc_posicao . '">
+            </div>
+          </div>
 
-    <div class="row mb-1">
-      <div class="col-md-8">
-        <label class="form-label">Nome:</label>
-        <input disabled type="text" class="form-control" value="' . $nome . '">
-      </div>
-      <div class="col-md-2">
-        <label class="form-label">Data de Nascimento:</label>
-        <input disabled type="text" class="form-control" value="' . formatarData($data_nascimento) . '">
-      </div>
-      <div class="col-md-2">
-        <label class="form-label">CPF:</label>
-        <input disabled type="text" class="form-control" value="' . formatarCPF($cpf) . '">
-      </div>
-    </div>
-    <div class="row mb-1">
-      <div class="col-md-4">
-        <label class="form-label">Instituição:</label>
-        <input disabled type="text" class="form-control" value="' . $desc_instituicao . '">
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">Subinstituição:</label>
-        <input disabled type="text" class="form-control" value="' . $desc_subInstituicao . '">
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">Turma:</label>
-        <input disabled type="text" class="form-control" value="' . $desc_turma . '">
-      </div>
-    </div>
-
-    <div class="row mb-1">
-      <div class="col-md-4">
-        <label class="form-label">Nação:</label>
-        <input disabled type="text" class="form-control" value="' . $desc_nacao . '">
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">Estado:</label>
-        <input disabled type="text" class="form-control" value="' . $desc_estado . '">
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">Município:</label>
-        <input disabled type="text" class="form-control" value="' . $desc_municipio . '">
-      </div>
-    </div>
-
-    <div class="row mb-1">
-      <div class="col-md-6">
-        <label class="form-label">Esporte:</label>
-        <input disabled type="text" class="form-control" value="' . $desc_esporte . '">
-      </div>
-      <div class="col-md-6">
-        <label class="form-label">Posição:</label>
-        <input disabled type="text" class="form-control" value="' . $desc_posicao . '">
-      </div>
-    </div>
-
-  </div>
-</div>
+        </div>
+  
 
 
       <div class="tab-pane fade" id="ficha-medica-' . $idModal . '" role="tabpanel" aria-labelledby="ficha-medica-tab-' . $idModal . '">
@@ -242,7 +237,7 @@ if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
   return;
 }
 
-do{
+do {
   $desc_tipoLesao = $bd->SqlQueryShow('desc_tipoLesao');
   $desc_lesao = $bd->SqlQueryShow('desc_lesao');
   $data_lesao = $bd->SqlQueryShow('data_lesao');
@@ -275,16 +270,12 @@ do{
                     </div>
                 </div>
             </div>
-           ';
+           </div>
+         
+            ';
 
-} while ($bd->SqlFetchNext()); 
+} while ($bd->SqlFetchNext());
 
-$retorno .= '
-
-          </div>
-
-          <div class="tab-pane fade" id="dados-responsaveis-' . $idModal . '" role="tabpanel" aria-labelledby="dados-responsaveis-tab-' . $idModal . '">';
-          
 
 
 $query = "
@@ -296,48 +287,75 @@ where cont.cod_jogador = $cod_jogador
 if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
   return;
 }
-do{
+do {
   $nomeResponsavel = $bd->SqlQueryShow('nomeResponsavel');
   $tipoFiliacao = $bd->SqlQueryShow('tipoFiliacao');
   $emailResponsavel = $bd->SqlQueryShow('emailResponsavel');
   $telefoneResponsavel = $bd->SqlQueryShow('telefoneResponsavel');
 
   $retorno .= '
-            <label class="form-label">Lesoes:</label>
+<div class="tab-pane fade" id="dados-responsaveis-' . $idModal . '" role="tabpanel" aria-labelledby="dados-responsaveis-tab-' . $idModal . '">
+  <label class="form-label">Responsaveis:</label>
             <div id="responsaveis-container">
                 <div class="responsavel card border rounded p-3 bg-light">
                     <div class="row g-2 mb-2">
                         <div class="col-md-6">
-        <label class="form-label">desc_tipoLesao:</label>
+        <label class="form-label">Nome do responsavel:</label>
         <input disabled type="text" class="form-control" value="' . $nomeResponsavel . '">
                         </div>
                         <div class="col-md-6">
-        <label class="form-label">desc_lesao:</label>
+        <label class="form-label">Tipo de filiação:</label>
         <input disabled type="text" class="form-control" value="' . $tipoFiliacao . '">
                         </div>
                     </div>
                     <div class="row g-2">
-                        <div class="col-md-6">
-        <label class="form-label">data_lesao:</label>
-        <input disabled type="text" class="form-control" value="' . $emailResponsavel . '">
-                        </div>
-                        <div class="col-md-6">
-        <label class="form-label">tempoFora_lesao:</label>
-        <input disabled type="text" class="form-control" value="' . $telefoneResponsavel . '">
+                   <div class="col-md-6">
+                          <label class="form-label">Email:</label>
+                          <input disabled type="text" class="form-control" value="' . $emailResponsavel . '">
                         </div>
 
+                      <div class="col-md-6 d-flex align-items-end">
+                      <div style="width: 100%;">
+                              <label class="form-label">Telefone:</label>
+                              <input disabled type="text" class="form-control" value="' . $telefoneResponsavel . '">
+                          </div>
+                            <div class="ms-2 mb-1">
+                              <a href="https://wa.me/55' . preg_replace('/\D/', '', $telefoneResponsavel) . '" target="_blank">
+                                  <img src="../../img/icone/whatsapp.png" alt="WhatsApp" title="Enviar mensagem via WhatsApp">
+                              </a>
+                          </div>
+                      </div>
                     </div>
                 </div>
             </div>
            ';
 
-} while ($bd->SqlFetchNext()); 
+} while ($bd->SqlFetchNext());
 
 
 
 $retorno .= '  </div>
+          <div class="tab-pane fade" id="nota-jogador-' . $idModal . '" role="tabpanel" aria-labelledby="nota-jogador-tab-' . $idModal . '">';
 
-          <div class="tab-pane fade" id="nota-jogador-' . $idModal . '" role="tabpanel" aria-labelledby="nota-jogador-tab-' . $idModal . '">
+          
+$query = "
+SELECT contre.nomeResponsavel,contre.tipoFiliacao,contre.emailResponsavel,contre.telefoneResponsavel
+FROM jogador_contatoResponsavel cont
+inner join  contato_responsavel contre on cont.cod_contatoResponsavel = contre.cod_contatoResponsavel
+where cont.cod_jogador = $cod_jogador
+;";
+if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
+  return;
+}
+do {
+  $nomeResponsavel = $bd->SqlQueryShow('nomeResponsavel');
+  $tipoFiliacao = $bd->SqlQueryShow('tipoFiliacao');
+  $emailResponsavel = $bd->SqlQueryShow('emailResponsavel');
+  $telefoneResponsavel = $bd->SqlQueryShow('telefoneResponsavel');
+
+  $retorno .= '
+
+
             <!-- conteúdo nota do jogador -->
           </div>
 
@@ -352,7 +370,6 @@ $retorno .= '  </div>
   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
 </div>
       </div>
-
     </div>
   </div>
 </div>';
