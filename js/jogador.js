@@ -392,7 +392,8 @@ function listaTodosJogadores(cod_role, cod_usuario) {
       idModal:idModal,
     },
     success: function (data) {
-      // Insere o HTML do modal do jogador
+      console.log(data);
+
       $("#modalContainer").html(data);
 
       // Usa a variável idModal definida no PHP via script

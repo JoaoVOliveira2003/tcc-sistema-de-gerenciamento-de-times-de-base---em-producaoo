@@ -339,23 +339,96 @@ $retorno .= '  </div>
 
           
 $query = "
-SELECT contre.nomeResponsavel,contre.tipoFiliacao,contre.emailResponsavel,contre.telefoneResponsavel
-FROM jogador_contatoResponsavel cont
-inner join  contato_responsavel contre on cont.cod_contatoResponsavel = contre.cod_contatoResponsavel
-where cont.cod_jogador = $cod_jogador
-;";
-if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
-  return;
-}
+select jo.cod_jogador,noj.nota_jogador,noj.data_atualizacao,noj.ativo,cad.nome
+from jogador jo
+inner join nota_jogador noj on noj.cod_jogador = jo.cod_jogador
+inner join staff st on st.cod_staff = noj.cod_staff
+inner join cadastro_identificacao cad on cad.cod_usuario = st.cod_staff
+where noj.cod_jogador=$cod_jogador
+order by ativo desc
+";
+
+$bd->SqlExecuteQuery($query);
+
 do {
-  $nomeResponsavel = $bd->SqlQueryShow('nomeResponsavel');
-  $tipoFiliacao = $bd->SqlQueryShow('tipoFiliacao');
-  $emailResponsavel = $bd->SqlQueryShow('emailResponsavel');
-  $telefoneResponsavel = $bd->SqlQueryShow('telefoneResponsavel');
+  $nota_jogador = $bd->SqlQueryShow('nota_jogador');
+  $data_atualizacao = $bd->SqlQueryShow('data_atualizacao');
+  $nome = $bd->SqlQueryShow('nome');
+  $ativo = $bd->SqlQueryShow('ativo');     
 
+  if($ativo == 'S'){
+  $retorno .='
+  <label class="form-label">Nota atual:</label>
+            <div id="responsaveis-container">
+                <div class="responsavel card border rounded p-3 bg-light">
+                    <div class="row g-2 mb-2">
+                        <div class="col-md-6">
+          <label class="form-label">nota_jogador:</label>
+          <input disabled type="text" class="form-control" value="' . $nota_jogador . '">
+                        </div>
+                        <div class="col-md-6">
+        <label class="form-label">data_atualizacao:</label>
+        <input disabled type="text" class="form-control" value="' . $data_atualizacao . '">
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                   <div class="col-md-6">
+                          <label class="form-label">nome:</label>
+                          <input disabled type="text" class="form-control" value="' . $nome . '">
+                        </div>
+
+                      <div class="col-md-6 d-flex align-items-end">
+                      <div style="width: 100%;">
+                              <label class="form-label">ativo:</label>
+                              <input disabled type="text" class="form-control" value="' . $ativo . '">
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <hr>
+            <br><br>
+           ';
+  }
+  else {
+  $retorno .='
+  <label class="form-label"></label>
+            <div id="responsaveis-container">
+                <div class="responsavel card border rounded p-3 bg-light">
+                    <div class="row g-2 mb-2">
+                        <div class="col-md-6">
+          <label class="form-label">nota_jogador:</label>
+          <input disabled type="text" class="form-control" value="' . $nota_jogador . '">
+                        </div>
+                        <div class="col-md-6">
+        <label class="form-label">data_atualizacao:</label>
+        <input disabled type="text" class="form-control" value="' . $data_atualizacao . '">
+                        </div>
+                    </div>
+                    <div class="row g-2">
+                   <div class="col-md-6">
+                          <label class="form-label">nome:</label>
+                          <input disabled type="text" class="form-control" value="' . $nome . '">
+                        </div>
+
+                      <div class="col-md-6 d-flex align-items-end">
+                      <div style="width: 100%;">
+                              <label class="form-label">ativo:</label>
+                              <input disabled type="text" class="form-control" value="' . $ativo . '">
+                          </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+           ';
+  }
+  
+
+
+  } while ($bd->SqlFetchNext());
+ 
   $retorno .= '
-
-
             <!-- conteúdo nota do jogador -->
           </div>
 
