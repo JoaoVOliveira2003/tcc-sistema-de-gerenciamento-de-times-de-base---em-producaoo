@@ -715,3 +715,13 @@ function selectTurma(cod) {
     },
   });
 }
+
+function somenteNumeros(e) {
+  const charCode = e.which ? e.which : e.keyCode;
+  // Permitir apenas números (0 a 9)
+  if (charCode < 48 || charCode > 57) {
+    e.preventDefault();
+    return false;
+  }
+  return true;
+}

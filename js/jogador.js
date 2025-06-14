@@ -343,7 +343,6 @@ function deletarCadastroJOGADOR(cod) {
     url: pagina,
     data: { cod: cod },
     success: function (data) {
-      console.log(data);
       if (data == "ok") {
         alert("Dados deletados!", "Atenção", "80%", function () {
           window.location.href = "https://www.google.com";
@@ -392,7 +391,6 @@ function listaTodosJogadores(cod_role, cod_usuario) {
       idModal:idModal,
     },
     success: function (data) {
-      console.log(data);
 
       $("#modalContainer").html(data);
 
@@ -416,4 +414,16 @@ function listaTodosJogadores(cod_role, cod_usuario) {
       alert("Erro ao carregar os dados do jogador.");
     }
   });
+}
+
+
+function abrirModalAtualizarNota(){
+      const modal2 = new bootstrap.Modal(document.getElementById('modal2'));
+      modal2.show();
+}
+
+function adicionarNota(cod_jogador){
+  var cod_jogador = document.getElementById('novaNota').value;
+
+  console.log(cod_jogador);
 }

@@ -31,5 +31,19 @@ function formatarData($dataBruta) {
 
     return 'Data inválida';
 }
+
+function formatarDataHora($dataBruta) {
+    if (empty($dataBruta)) {
+        return '';
+    }
+
+    try {
+        $data = new DateTime($dataBruta);
+        return $data->format('d/m/Y | H:i');
+    } catch (Exception $e) {
+        return 'Data inválida';
+    }
+}
+
     
 ?>

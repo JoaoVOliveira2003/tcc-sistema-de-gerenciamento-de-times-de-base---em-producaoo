@@ -356,76 +356,62 @@ do {
   $nome = $bd->SqlQueryShow('nome');
   $ativo = $bd->SqlQueryShow('ativo');     
 
-  if($ativo == 'S'){
+  if($ativo == 's'){
   $retorno .='
   <label class="form-label">Nota atual:</label>
             <div id="responsaveis-container">
                 <div class="responsavel card border rounded p-3 bg-light">
                     <div class="row g-2 mb-2">
-                        <div class="col-md-6">
-          <label class="form-label">nota_jogador:</label>
+                        <div class="col-md-12">
+          <label class="form-label">Nota atual:</label>
           <input disabled type="text" class="form-control" value="' . $nota_jogador . '">
                         </div>
-                        <div class="col-md-6">
-        <label class="form-label">data_atualizacao:</label>
-        <input disabled type="text" class="form-control" value="' . $data_atualizacao . '">
-                        </div>
+
                     </div>
                     <div class="row g-2">
                    <div class="col-md-6">
-                          <label class="form-label">nome:</label>
+                          <label class="form-label">Nota gerada pelo:</label>
                           <input disabled type="text" class="form-control" value="' . $nome . '">
                         </div>
-
-                      <div class="col-md-6 d-flex align-items-end">
-                      <div style="width: 100%;">
-                              <label class="form-label">ativo:</label>
-                              <input disabled type="text" class="form-control" value="' . $ativo . '">
-                          </div>
-                      </div>
+                        <div class="col-md-6">
+                          <label class="form-label">Data e hora de atualizacao:</label>
+                          <input disabled type="text" class="form-control" value="' . formatarDataHora($data_atualizacao) . '">
+                        </div>
                     </div>
-                </div>
-            </div>
-            <br><br>
+                    </div>
+                <button type="button" class="mt-3 btn btn-sm btn-success" onclick="abrirModalAtualizarNota()">Atualizar nota</button>
+                    </div>
             <hr>
-            <br><br>
+  <label class="form-label">Notas anteriores:</label>
+            <div id="responsaveis-container">
+
            ';
   }
   else {
   $retorno .='
-  <label class="form-label"></label>
-            <div id="responsaveis-container">
-                <div class="responsavel card border rounded p-3 bg-light">
+
+                <div class="responsavel card border rounded p-2 bg-light">
                     <div class="row g-2 mb-2">
-                        <div class="col-md-6">
-          <label class="form-label">nota_jogador:</label>
-          <input disabled type="text" class="form-control" value="' . $nota_jogador . '">
-                        </div>
-                        <div class="col-md-6">
-        <label class="form-label">data_atualizacao:</label>
-        <input disabled type="text" class="form-control" value="' . $data_atualizacao . '">
+                        <div class="col-md-12">
+                          <label class="form-label">Nota anterior:</label>
+                          <input disabled type="text" class="form-control" value="' . $nota_jogador . '">
                         </div>
                     </div>
                     <div class="row g-2">
                    <div class="col-md-6">
-                          <label class="form-label">nome:</label>
+                          <label class="form-label">Nota gerada pelo:</label>
                           <input disabled type="text" class="form-control" value="' . $nome . '">
                         </div>
-
-                      <div class="col-md-6 d-flex align-items-end">
-                      <div style="width: 100%;">
-                              <label class="form-label">ativo:</label>
-                              <input disabled type="text" class="form-control" value="' . $ativo . '">
-                          </div>
-                      </div>
+                        <div class="col-md-6">
+                          <label class="form-label">Data e hora de atualizacao:</label>
+                          <input disabled type="text" class="form-control" value="' . formatarDataHora($data_atualizacao) . '">
+                        </div>
                     </div>
                 </div>
+                <br>
             </div>
            ';
   }
-  
-
-
   } while ($bd->SqlFetchNext());
  
   $retorno .= '
@@ -446,6 +432,48 @@ do {
     </div>
   </div>
 </div>';
+
+
+$retorno .= '
+  <style>
+    /* Corrigir sobreposição do segundo modal e backdrop */
+    .modal-backdrop.show:nth-of-type(2) {
+      z-index: 1055;
+    }
+
+    #modal2 {
+      z-index: 1060;
+    }
+  </style>
+
+  <div class="modal fade" id="modal2" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      <div class="modal-header">
+          <h5 class="modal-title">Atualização de nota</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+
+        <div class="modal-body">
+          <p>Este é o local para atualizar a tela para os jogadores. <br>
+          As notas são de 0 até 100. Quando um usuário é cadastrado, ele tem sua nota padrão de 60.</p>
+
+          <div class="row">
+          <div class="mb-3 col-12">
+            <label class="form-label">Nova nota:</label>
+            <input type="text" max id="novaNota" onkeypress="return somenteNumeros(event)" maxlength="3" class="form-control">
+          </div>
+
+          </div>
+          <button type="button" class="btn btn-sm btn-success mt-3" onclick="adicionarNota(' . $cod_jogador . ')">
+            Atualizar nota
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+';
 
 
 
