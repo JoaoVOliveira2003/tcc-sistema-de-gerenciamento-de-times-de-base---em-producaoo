@@ -725,3 +725,8 @@ function somenteNumeros(e) {
   }
   return true;
 }
+
+function fecharModalCorretamente() {
+  // Remover backdrops pendentes
+  document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+}

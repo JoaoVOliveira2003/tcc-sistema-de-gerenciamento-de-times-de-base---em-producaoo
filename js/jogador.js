@@ -382,6 +382,7 @@ function listaTodosJogadores(cod_role, cod_usuario) {
  function vizualizarDadosJogador(cod_jogador) {
   var pagina = "/tcc/componentes/JOGADOR/modalDadosJogador.php";
   var idModal = "modalDadosJOGADOR";
+  var cod_role = document.getElementById('cod_role').value;
 
   $.ajax({
     type: "POST",
@@ -389,6 +390,7 @@ function listaTodosJogadores(cod_role, cod_usuario) {
     data: {
       cod_jogador: cod_jogador,
       idModal:idModal,
+      cod_role:cod_role
     },
     success: function (data) {
 
@@ -422,8 +424,43 @@ function abrirModalAtualizarNota(){
       modal2.show();
 }
 
-function adicionarNota(cod_jogador){
-  var cod_jogador = document.getElementById('novaNota').value;
+function adicionarNota(cod_jogador) {
+  var novaNota = document.getElementById('novaNota').value;
+  var usuarioCodStaff = document.getElementById('usuarioCodStaff').value;
 
-  console.log(cod_jogador);
+  var pagina = "/tcc/componentes/JOGADOR/atualizar/atualizarNotaJogador.php";
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {
+      cod_jogador: cod_jogador,
+      novaNota: novaNota,
+      usuarioCodStaff: usuarioCodStaff
+    },
+    success: function (data) {
+      if (data.trim() === 'ok') {
+        var modalEl = document.getElementById('modalDadosJOGADOR');
+        var modal2 =document.getElementById('modal2');
+        var modalInstance = bootstrap.Modal.getInstance(modalEl);
+        var modalInstance2 = bootstrap.Modal.getInstance(modal2);
+
+
+        if (modalInstance) {
+          modalInstance.hide(); 
+          
+        }
+
+        modalEl.addEventListener('hidden.bs.modal', function handler() {
+        var novaInstancia = new bootstrap.Modal(modalEl);       
+        vizualizarDadosJogador(cod_jogador)
+        document.getElementById('nota-jogador-tab-modalDadosJOGADOR').click();
+
+        });
+
+      } else {
+        alert('Erro ao salvar a nota: ' + data);
+      }
+    }
+  });
 }

@@ -5,6 +5,7 @@ $retorno = '';
 
 $cod_jogador = getPost('cod_jogador');
 $idModal = getPost('idModal');
+$cod_role = getPost('cod_role');
 
 // Sua query
 $query = "
@@ -105,7 +106,7 @@ $retorno = '
     <div class="modal-content shadow-sm border-0">
       <div class="modal-header bg-primary text-white">
         <h5 class="modal-title" id="modalLabel-' . $idModal . '">' . $nome . '</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar" onclick="fecharModalCorretamente()"></button>
       </div>
 
       <div class="modal-body p-4">
@@ -334,12 +335,15 @@ do {
 
 
 
-$retorno .= '  </div>
-          <div class="tab-pane fade" id="nota-jogador-' . $idModal . '" role="tabpanel" aria-labelledby="nota-jogador-tab-' . $idModal . '">';
+$retorno .= '  
+  </div>
+  <div class="tab-pane fade" id="nota-jogador-' . $idModal . '" role="tabpanel" aria-labelledby="nota-jogador-tab-' . $idModal . '">
 
-          
+    <label class="form-label">Nota atual:</label>
+    <div id="nota-atual-container">';
+
 $query = "
-select jo.cod_jogador,noj.nota_jogador,noj.data_atualizacao,noj.ativo,cad.nome
+select jo.cod_jogador, noj.nota_jogador, noj.data_atualizacao, noj.ativo, cad.nome
 from jogador jo
 inner join nota_jogador noj on noj.cod_jogador = jo.cod_jogador
 inner join staff st on st.cod_staff = noj.cod_staff
@@ -350,74 +354,80 @@ order by ativo desc
 
 $bd->SqlExecuteQuery($query);
 
+$temNotaAtual = false;
+$retornoNotasAnteriores = ''; // armazena notas anteriores separadas
+
 do {
   $nota_jogador = $bd->SqlQueryShow('nota_jogador');
   $data_atualizacao = $bd->SqlQueryShow('data_atualizacao');
   $nome = $bd->SqlQueryShow('nome');
-  $ativo = $bd->SqlQueryShow('ativo');     
+  $ativo = $bd->SqlQueryShow('ativo');
 
-  if($ativo == 's'){
-  $retorno .='
-  <label class="form-label">Nota atual:</label>
-            <div id="responsaveis-container">
-                <div class="responsavel card border rounded p-3 bg-light">
-                    <div class="row g-2 mb-2">
-                        <div class="col-md-12">
-          <label class="form-label">Nota atual:</label>
-          <input disabled type="text" class="form-control" value="' . $nota_jogador . '">
-                        </div>
-
-                    </div>
-                    <div class="row g-2">
-                   <div class="col-md-6">
-                          <label class="form-label">Nota gerada pelo:</label>
-                          <input disabled type="text" class="form-control" value="' . $nome . '">
-                        </div>
-                        <div class="col-md-6">
-                          <label class="form-label">Data e hora de atualizacao:</label>
-                          <input disabled type="text" class="form-control" value="' . formatarDataHora($data_atualizacao) . '">
-                        </div>
-                    </div>
-                    </div>
-                <button type="button" class="mt-3 btn btn-sm btn-success" onclick="abrirModalAtualizarNota()">Atualizar nota</button>
-                    </div>
-            <hr>
-  <label class="form-label">Notas anteriores:</label>
-            <div id="responsaveis-container">
-
-           ';
-  }
-  else {
-  $retorno .='
-
-                <div class="responsavel card border rounded p-2 bg-light">
-                    <div class="row g-2 mb-2">
-                        <div class="col-md-12">
-                          <label class="form-label">Nota anterior:</label>
-                          <input disabled type="text" class="form-control" value="' . $nota_jogador . '">
-                        </div>
-                    </div>
-                    <div class="row g-2">
-                   <div class="col-md-6">
-                          <label class="form-label">Nota gerada pelo:</label>
-                          <input disabled type="text" class="form-control" value="' . $nome . '">
-                        </div>
-                        <div class="col-md-6">
-                          <label class="form-label">Data e hora de atualizacao:</label>
-                          <input disabled type="text" class="form-control" value="' . formatarDataHora($data_atualizacao) . '">
-                        </div>
-                    </div>
-                </div>
-                <br>
-            </div>
-           ';
-  }
-  } while ($bd->SqlFetchNext());
- 
-  $retorno .= '
-            <!-- conteúdo nota do jogador -->
+if ($ativo == 's') {
+    $temNotaAtual = true;
+    $retorno .= '
+      <div class="responsavel card border rounded p-3 bg-light mb-3">
+        <div class="row g-2 mb-2">
+          <div class="col-md-12">Nota atual:
+            <input disabled type="text" class="form-control" value="' . $nota_jogador . '">
           </div>
+        </div>
+        <div class="row g-2">
+          <div class="col-md-6">Inserido por :
+            <input disabled type="text" class="form-control" value="' . $nome . '">
+          </div>
+          <div class="col-md-6">Data de atualização: 
+            <input disabled type="text" class="form-control" value="' . formatarDataHora($data_atualizacao) . '">
+          </div>
+        </div>';
+        
+    if ($cod_role == 4 || $cod_role == 5) {
+        $retorno .= '<button type="button" class="btn mt-3 btn-sm btn-success col-1" onclick="abrirModalAtualizarNota()">Nova nota</button>';
+    }
 
+    $retorno .= '
+      </div>
+    ';
+}
+
+  
+  else {
+    // Acumula as notas anteriores numa string, para mostrar depois
+    $retornoNotasAnteriores .= '
+      <div class="responsavel card border rounded p-2 bg-light mb-3">
+        <div class="row g-2 mb-2">
+          <div class="col-md-12">Notas anteriores
+            <input disabled type="text" class="form-control" value="' . $nota_jogador . '">
+          </div>
+        </div>
+        <div class="row g-2">
+          <div class="col-md-6">Inserido por
+            <input disabled type="text" class="form-control" value="' . $nome . '">
+          </div>
+          <div class="col-md-6">Data de atualização:
+            <input disabled type="text" class="form-control" value="' . formatarDataHora($data_atualizacao) . '">
+          </div>
+        </div>
+      </div>
+    ';
+  }
+} while ($bd->SqlFetchNext());
+
+$retorno .= '</div>'; // fecha nota-atual-container
+
+if ($retornoNotasAnteriores !== '') {
+  $retorno .= '
+    <hr>
+    <label class="form-label">Notas anteriores:</label>
+    <div id="notas-anteriores-container">
+      ' . $retornoNotasAnteriores . '
+    </div>
+  ';
+}
+
+$retorno .= '
+  <!-- conteúdo nota do jogador -->
+    </div>
           <div class="tab-pane fade" id="notas-treino-' . $idModal . '" role="tabpanel" aria-labelledby="notas-treino-tab-' . $idModal . '">
             <!-- conteúdo notas de treino -->
           </div>
