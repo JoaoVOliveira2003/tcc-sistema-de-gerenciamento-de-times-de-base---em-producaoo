@@ -15,10 +15,8 @@ $usuario = verificarLogin();
         $(document).ready(function () {
             const usuario = <?php echo json_encode($usuario); ?>;
             listaTodosJogadores(usuario.cod_tipoRole, usuario.cod_usuario);
-            console.log(usuario.cod_usuario);
             document.getElementById("usuarioCodStaff").value = usuario.cod_usuario;
             document.getElementById("cod_role").value = usuario.cod_tipoRole;
-            console.log(usuario);
         });
     </script>
 </head>

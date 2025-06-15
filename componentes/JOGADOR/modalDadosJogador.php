@@ -276,9 +276,6 @@ do {
             ';
 
 } while ($bd->SqlFetchNext());
-
-
-
 $query = "
 SELECT contre.nomeResponsavel,contre.tipoFiliacao,contre.emailResponsavel,contre.telefoneResponsavel
 FROM jogador_contatoResponsavel cont
