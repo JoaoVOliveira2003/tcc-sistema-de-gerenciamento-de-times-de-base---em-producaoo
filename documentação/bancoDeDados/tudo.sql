@@ -688,7 +688,8 @@ insert into login_usuario(cod_usuario,email_usuario,senha) values (7,'staffAdms@
 INSERT INTO item_menu (role_html) VALUES 
   ('Gerenciamento de Usuários'), -- cod_item_menu = 1
   ('Relatórios'),                -- cod_item_menu = 2
-  ('Eventos');                -- cod_item_menu = 2
+  ('Eventos'),                -- cod_item_menu = 2
+  ('Meus dados');
 
 -- Submenus para "Gerenciamento de Usuários"
 INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
@@ -708,6 +709,8 @@ INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
 (2, '/tcc/telas/TI/telaDadosNacao.php', 'Nação'),                     -- 11
 (2, '/tcc/telas/TI/telaDadosEstado.php', 'Estado'),                   -- 12
 (2, '/tcc/telas/TI/telaDadosMunicipio.php', 'Município');             -- 13
+
+
 
 
 -- Relacionar todos os tipos de role com os menus principais
@@ -762,6 +765,11 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (1, 6, 4),   -- Cadastro Jogador
 (1, 13, 4),  -- Organização de Turmas por Staff
 (2, 9, 4);   -- Turma
+
+
+INSERT INTO item_menu (role_html) VALUES ('Meus dados');
+INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES (4, '/tcc/telas/MEUSDADOS/meusDados.php', 'Meus dados'); 
+INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES (3, 15, 4);   
 
 -- -- STAFF
 -- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
@@ -915,3 +923,5 @@ INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_me
 (25, 1.76, 70, 'B-', 'Hiperatividade', 'Nenhuma', NOW()),
 (26, 1.72, 66, 'O+', 'Bronquite', 'Leite', NOW()),
 (27, 1.80, 77, 'AB-', 'Nenhuma', 'Nenhuma', NOW());
+
+

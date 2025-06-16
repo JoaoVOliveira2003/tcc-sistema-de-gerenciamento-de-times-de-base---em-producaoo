@@ -1,0 +1,48 @@
+// TI->
+// dados de login
+// Dados pessoais 
+
+// ADMI->
+// dados de login
+// Dados pessoais 
+// Minhas instituições
+
+
+// ADMS->
+// dados de login
+// Dados pessoais 
+// Minhas instituições
+
+// ADMS|STAFF->
+// dados de login
+// Dados pessoais 
+// Minhas instituições
+// Minhas turmas
+
+// STAFF->
+// dados de login
+// Dados pessoais 
+// Minhas instituições
+// Minhas turmas
+
+
+// jogador->
+// Dados pessoais
+// ficha medica
+// dados dos responsáveis
+// Minha nota
+// Notas de treino
+
+---------------
+if($cod_tipoRole ==1){
+}
+else if($cod_tipoRole == 2){
+}
+else if($cod_tipoRole == 3){
+}
+else if($cod_tipoRole == 4){
+}
+else if($cod_tipoRole == 5){
+}
+else if($cod_tipoRole == 6){
+}

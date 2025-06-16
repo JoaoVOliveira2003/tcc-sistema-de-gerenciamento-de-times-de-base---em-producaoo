@@ -11,7 +11,7 @@
     $cpfNumeros = preg_replace('/\D/', '', $cpfBruto);
 
     if (strlen($cpfNumeros) !== 11) {
-        return "CPF inválido";
+        return $cpfNumeros;
     }
 
     return preg_replace('/(\d{3})(\d{3})(\d{3})(\d{2})/', '$1.$2.$3-$4', $cpfNumeros);
