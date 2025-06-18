@@ -1,16 +1,22 @@
 <?php
 require('../include/conecta.php');
+$retorno='';
 
 $cod = getPost('cod');
+
+
 $idModal = getPost('idModal');
 $tituloModal = getPost('tituloModal');
 $funcaoModal = getPost('funcaoModal');
 $textoModal = getPost('textoModal');
 $textoBotao = getPost( 'textoBotao');
+$campoHidden = getPost( 'campoHidden');
+if($campoHidden){
+$retorno .= $campoHidden;
+}    
 
-
-$retorno = '
-    <div class="modal fade" id="' . $idModal . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+$retorno .= '
+    <div class="modal fade show" id="' . $idModal .'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

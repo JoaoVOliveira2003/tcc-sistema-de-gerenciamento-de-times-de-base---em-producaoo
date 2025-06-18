@@ -730,3 +730,8 @@ function fecharModalCorretamente() {
   // Remover backdrops pendentes
   document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
 }
+
+    function toggleSenha() {
+      const campoSenha = document.getElementById("senha");
+      campoSenha.type = campoSenha.type === "password" ? "text" : "password";
+    }
