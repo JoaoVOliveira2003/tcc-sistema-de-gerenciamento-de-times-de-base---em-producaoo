@@ -31,13 +31,8 @@ $usuario = verificarLogin();
             <h2 class="mb-3">Relatórios de Jogador por Instituição</h2>
             <h5 class="mb-4">Colocar um texto bom aqui posteriormente</h5>
             <hr>
-
-            <!-- Onde serão listados os jogadores -->
             <div id="todosJogadores"></div>
-
             <hr>
-
-             <!-- Aqui será inserido o modal do jogador via AJAX -->
             <div id="modalContainer"></div>
 
         </div>

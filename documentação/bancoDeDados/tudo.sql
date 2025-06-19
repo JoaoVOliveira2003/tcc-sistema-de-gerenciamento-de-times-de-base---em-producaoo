@@ -399,7 +399,7 @@ CREATE TABLE `tcc`.`contato_responsavel` (
   nomeResponsavel VARCHAR(100), 
   tipoFiliacao VARCHAR(50), 
   emailResponsavel VARCHAR(100), 
-  telefoneResponsavel CHAR(11), 
+  telefoneResponsavel int, 
   PRIMARY KEY (cod_contatoResponsavel)
 ) ENGINE = InnoDB;
 
@@ -925,3 +925,4 @@ INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_me
 (27, 1.80, 77, 'AB-', 'Nenhuma', 'Nenhuma', NOW());
 
 
+insert into login_usuario(cod_usuario,email_usuario,senha) values(18,'admir','admir');
