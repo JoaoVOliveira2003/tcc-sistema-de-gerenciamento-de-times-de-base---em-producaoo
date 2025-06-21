@@ -42,14 +42,19 @@ if ($bd->SqlExecuteQuery($query)) {
             $cod_turmaAtual = $cod_turma;
         }
 
-        // Adiciona o checkbox do jogador
-        $retorno .= '
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="' . htmlentities($cod_usuario) . '" id="user_' . htmlentities($cod_usuario) . '">
-                <label class="form-check-label" for="user_' . htmlentities($cod_usuario) . '">
-                    ' . htmlentities($nome) . '
-                </label>
-            </div>';
+// Adiciona o checkbox do jogador
+$retorno .= '
+    <div class="form-check">
+        <input class="form-check-input" 
+               name="listarJogadoresParaTreino[]" 
+               type="checkbox" 
+               value="' . htmlentities($cod_usuario) . '" 
+               id="user_' . htmlentities($cod_usuario) . '">
+        <label class="form-check-label" for="user_' . htmlentities($cod_usuario) . '">
+            ' . htmlentities($nome) . '
+        </label>
+    </div>';
+
   } while ($bd->SqlFetchNext());
 
 } else {

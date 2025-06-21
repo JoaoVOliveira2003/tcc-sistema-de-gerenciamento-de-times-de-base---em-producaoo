@@ -14,7 +14,7 @@ $usuario = verificarLogin();
   <script>
     $(document).ready(function() {
       const usuario = <?php echo json_encode($usuario); ?>;
-      
+
       listarEsportes();
       listarJogadoresParaTreino(usuario.cod_usuario)
 
@@ -52,34 +52,40 @@ $usuario = verificarLogin();
       Tempo do treino
       -- placar do treino(vai ser feito com o codesporte)
       -- cod staff -->
-       <form method="POST" action="treino.php">
+      <form method="POST" action="treino.php">
         <input type="hidden" id="usuarioCodStaff">
 
         <div class="row mt-3">
           <div class="col-md-6 mb-3">
             <div id="selectEsportes"></div>
           </div>
-          <div class="col-md-6 mb-3">
-            <label for="tempoInicial" class="form-label font-weight-bold">Tempo de treino (min:seg):</label>
-            <input type="text" class="form-control" id="tempoInicial" placeholder="00:00" maxlength="5">
-          </div>
+  <div class="col-md-6 mb-3">
+    <label for="tempoInicial" class="form-label font-weight-bold">Tempo de treino (min:seg):</label>
+    <input
+      type="text"
+      class="form-control"
+      id="tempoInicial"
+      name="tempoInicial"
+      placeholder="00:00"
+      maxlength="5"
+    />
+  </div>
         </div>
- <hr>
+        <hr>
         <div class="row mt-1">
-          
+
           <div class="col-md-12 ">
             <div>
 
             </div>
-            
+
             <div id="listarJogadoresParaTreino"></div>
+          </div>
         </div>
-        </div>
-    <hr>
+        <hr>
         <!-- <input type="text" name="tempo" placeholder="Tempo">
         <input type="text" name="pessoas" placeholder="Pessoas"> -->
         <button type="submit" class="btn btn-primary btn-sm">Iniciar treino</button>
-
       </form>
 
 
