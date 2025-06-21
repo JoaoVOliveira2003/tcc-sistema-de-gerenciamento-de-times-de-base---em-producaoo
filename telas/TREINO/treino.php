@@ -1,0 +1,84 @@
+<?php
+$tempo = $_POST['tempo'];
+$pessoas = $_POST['pessoas'];
+
+echo "Tempo: $tempo, Pessoas: $pessoas.";
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Cartas Arrastáveis</title>
+  <style>
+    .carta {
+      width: 200px;
+      height: 120px;
+      background-color: #e0f7fa;
+      border: 2px solid #00838f;
+      border-radius: 10px;
+      padding: 10px;
+      position: absolute;
+      cursor: grab;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+<body>
+
+<div id="areaCartas"></div>
+
+<script>
+  const cartas = [
+    { id: 1, titulo: "Carta 1", conteudo: "Conteúdo da carta 1" },
+    { id: 2, titulo: "Carta 2", conteudo: "Conteúdo da carta 2" },
+    { id: 3, titulo: "Carta 3", conteudo: "Conteúdo da carta 3" }
+  ];
+
+  cartas.forEach((carta, index) => {
+    const div = document.createElement("div");
+    div.classList.add("carta");
+    div.innerHTML = `<strong>${carta.titulo}</strong><br>${carta.conteudo}`;
+    div.style.top = `${100 + index * 150}px`;
+    div.style.left = `50px`;
+
+    div.onmousedown = function (e) {
+      const el = this;
+      el.style.cursor = "grabbing";
+      const shiftX = e.clientX - el.getBoundingClientRect().left;
+      const shiftY = e.clientY - el.getBoundingClientRect().top;
+
+      function moveAt(pageX, pageY) {
+        el.style.left = pageX - shiftX + 'px';
+        el.style.top = pageY - shiftY + 'px';
+      }
+
+      function onMouseMove(e) {
+        moveAt(e.pageX, e.pageY);
+      }
+
+      document.addEventListener('mousemove', onMouseMove);
+
+      el.onmouseup = function () {
+        document.removeEventListener('mousemove', onMouseMove);
+        el.onmouseup = null;
+        el.style.cursor = "grab";
+      };
+    };
+
+    div.ondragstart = () => false;
+
+    // Clique
+    div.onclick = () => abrirDados(carta.titulo);
+
+    document.getElementById("areaCartas").appendChild(div);
+  });
+
+  function abrirDados(titulo) {
+    console.log('foi clicado carta ' + titulo);
+  }
+</script>
+
+</body>
+</html>
+
