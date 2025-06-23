@@ -1,0 +1,26 @@
+#areaCartas {
+  position: relative;
+  flex: 1;
+  height: 600px;
+  border: 1px solid #ccc;
+  background-image: url('http://localhost/tcc/img/icone/campoFutebol.jpg');
+  background-size: cover;       /* cobre toda a área */
+  background-position: center;  /* centraliza a imagem */
+  background-repeat: no-repeat; /* não repete */
+  overflow: hidden;
+}
+
+.carta {
+  position: absolute;
+  width: 200px;
+  height: 120px;
+  background-color: #e0f7fa;
+  border: 2px solid #00838f;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: grab;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+.sidebar {
+  flex: 0 0 250px;
+}
