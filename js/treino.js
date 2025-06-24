@@ -1,5 +1,4 @@
 function listarJogadoresParaTreino(cod_staff){
-  console.log(cod_staff);
   var pagina = "/tcc/componentes/TREINO/listarJogadoresParaTreino.php";
 
   $.ajax({
@@ -7,7 +6,6 @@ function listarJogadoresParaTreino(cod_staff){
     url: pagina,
     data: {cod_staff: cod_staff,},
     success: function (data) {
-      console.log(data);
       $("#listarJogadoresParaTreino").html(data);
     },
   });
@@ -47,3 +45,5 @@ function listarEsportes(){
     },
   });
 }
+
+

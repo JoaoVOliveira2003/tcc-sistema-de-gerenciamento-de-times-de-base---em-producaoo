@@ -277,6 +277,7 @@ CREATE TABLE `tcc`.`Treino` (
   `cod_staff` INT NOT NULL, 
   `cod_esporte` INT NOT NULL, 
   `tempo_treino` CHAR(10), 
+  `placar_treino` CHAR(10),
   FOREIGN KEY (`cod_staff`) REFERENCES `staff`(`cod_staff`) ON DELETE NO ACTION ON UPDATE NO ACTION, 
   FOREIGN KEY (`cod_esporte`) REFERENCES `esporte`(`cod_esporte`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB;

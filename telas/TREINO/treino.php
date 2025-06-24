@@ -1,10 +1,11 @@
 <?php
-
 include '../../include/verificaSessao.php';
 $usuario = verificarLogin();
+
 $listarJogadoresParaTreino = $_POST['listarJogadoresParaTreino'];
 $esporte = $_POST['escolhaEsporte'];
 $tempoInicial = $_POST['tempoInicial'];
+print_r($listarJogadoresParaTreino);
 list($minutos, $segundos) = explode(':', $tempoInicial);
 $minutos = (int)$minutos;
 include('../../componentes/header.php'); 
