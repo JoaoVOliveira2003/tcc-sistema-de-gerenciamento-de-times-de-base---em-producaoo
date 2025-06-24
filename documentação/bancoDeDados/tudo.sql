@@ -282,7 +282,7 @@ CREATE TABLE `tcc`.`Treino` (
   FOREIGN KEY (`cod_esporte`) REFERENCES `esporte`(`cod_esporte`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
-ALTER TABLE Treino MODIFY COLUMN tempo_treino INT;
+ALTER TABLE Treino MODIFY COLUMN tempo_treino CHAR(10);
 
 -- midia_treino
 CREATE TABLE `tcc`.`midia_treino` (

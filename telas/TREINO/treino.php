@@ -5,7 +5,17 @@ $usuario = verificarLogin();
 $listarJogadoresParaTreino = $_POST['listarJogadoresParaTreino'];
 $esporte = $_POST['escolhaEsporte'];
 $tempoInicial = $_POST['tempoInicial'];
-print_r($listarJogadoresParaTreino);
+
+if($esporte=='1'){
+$url='http://localhost/tcc/img/icone/campoFutebol.jpg';
+}
+elseif($esporte=='2'){
+$url='http://localhost/tcc/img/icone/campoVolei.jpg';
+}
+elseif($esporte=='3'){
+  $url='http://localhost/tcc/img/icone/campoBasquete.png';
+}
+
 list($minutos, $segundos) = explode(':', $tempoInicial);
 $minutos = (int)$minutos;
 include('../../componentes/header.php'); 
@@ -24,16 +34,18 @@ include('../../componentes/header.php');
 </head>
 <body>
 
+
+
 <style>
   #areaCartas {
   position: relative;
   flex: 1;
   height: 600px;
   border: 1px solid #ccc;
-  background-image: url('http://localhost/tcc/img/icone/campoFutebol.jpg');
-  background-size: cover;       /* cobre toda a área */
-  background-position: center;  /* centraliza a imagem */
-  background-repeat: no-repeat; /* não repete */
+  background-image: url('<?php echo $url; ?>'); /* A variável entra aqui */
+  background-size: cover;      
+  background-position: center;  
+  background-repeat: no-repeat;
   overflow: hidden;
 }
 
