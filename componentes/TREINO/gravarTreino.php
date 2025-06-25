@@ -30,7 +30,7 @@ if ($bd->SqlExecuteQuery($query)) {
         }
     }
 
-    $retorno = $todas_insercoes_ok ? 'ok' : 'nok1';
+    $retorno = $todas_insercoes_ok ? $cod_treino : 'nok1';
 } else {
     $retorno = 'nok2';
 }

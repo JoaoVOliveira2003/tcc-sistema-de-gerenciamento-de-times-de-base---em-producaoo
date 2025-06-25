@@ -6,6 +6,10 @@ $listarJogadoresParaTreino = $_POST['listarJogadoresParaTreino'];
 $esporte = $_POST['escolhaEsporte'];
 $tempoInicial = $_POST['tempoInicial'];
 
+$cod_treino = $_POST['cod_treino']; 
+
+echo $cod_treino;
+
 if($esporte=='1'){
 $url='http://localhost/tcc/img/icone/campoFutebol.jpg';
 }
@@ -69,7 +73,7 @@ include('../../componentes/header.php');
   <button class="btn btn-primary" id="toggleLeft">☰ Esquerda</button>
 
   <div id="relogio" style="display:inline-block; margin: 0 20px; font-weight:bold; font-size:1.2em;">
-    00:00
+    00:00  |  0:0
   </div>
   
   <button class="btn btn-primary" id="toggleRight">☰ Direita</button>

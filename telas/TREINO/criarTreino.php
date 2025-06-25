@@ -14,20 +14,19 @@ $usuario = verificarLogin();
 $(document).ready(function() {
   const usuario = <?php echo json_encode($usuario); ?>;
 
-  // Carrega esportes e jogadores
   listarEsportes();
   listarJogadoresParaTreino(usuario.cod_usuario);
 
-  // Copia para o hidden
-  document.getElementById("usuarioCodStaff").value = usuario.cod_usuario;
+  // Preenche o campo hidden com o ID do staff
+  $("#usuarioCodStaff").val(usuario.cod_usuario);
 
-  // Máscara de tempo (MM:SS)
-  const tempoInput = document.getElementById('tempoInicial');
-  tempoInput.addEventListener('input', function(e) {
-    let value = e.target.value.replace(/\D/g, '');
+  // Máscara para o campo de tempo
+  const tempoInput = document.getElementById("tempoInicial");
+  tempoInput.addEventListener("input", function (e) {
+    let value = e.target.value.replace(/\D/g, "");
     if (value.length > 4) value = value.slice(0, 4);
     if (value.length >= 3) {
-      value = value.slice(0, 2) + ':' + value.slice(2);
+      value = value.slice(0, 2) + ":" + value.slice(2);
     }
     e.target.value = value;
   });
@@ -35,13 +34,11 @@ $(document).ready(function() {
 
 // Valida e envia o formulário
 function enviarFormularioSeValido() {
-  const cod_staff = document.getElementById("usuarioCodStaff").value.trim();
-  const tempo_treino = document.getElementById("tempoInicial").value.trim();
-  const cod_esporte = document.querySelector('#selectEsportes select')?.value || '';
-  const valores = document.querySelectorAll('#listarJogadoresParaTreino input[type="checkbox"]:checked');
-  const cod_jogadores = Array.from(valores).map(cb => cb.value);
 
-  console.log(cod_jogadores);
+  const cod_staff = $("#usuarioCodStaff").val().trim();
+  const tempo_treino = $("#tempoInicial").val().trim();
+  const cod_esporte = $("#selectEsportes select").val() || '';
+  const cod_jogadores = Array.from(document.querySelectorAll('#listarJogadoresParaTreino input[type="checkbox"]:checked')).map(cb => cb.value);
 
   const camposObrigatorios = {
     tempo_treino,
@@ -55,51 +52,63 @@ function enviarFormularioSeValido() {
     cod_jogadores: "Jogadores que participarão no treino",
     cod_staff: "Responsável (cod_staff)",
   };
-  if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) return;
+  if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) {
+    return;
+  }
 
   $.ajax({
     type: "POST",
     url: "/tcc/componentes/TREINO/gravarTreino.php",
     data: {
-      cod_staff: cod_staff,
-      tempo_treino: tempo_treino,
-      cod_esporte: cod_esporte,
-      cod_jogadores: cod_jogadores
+      cod_staff,
+      tempo_treino,
+      cod_esporte,
+      cod_jogadores
     },
     success: function(data) {
-      console.log(data);
-      if(data == 'ok') {
 
-  const form = document.getElementById('formTreino');
+      if (data != 'nok2' || data != 'nok1') {
 
-  let inputEsporte = document.querySelector('input[name="escolhaEsporte"]');
-  if (!inputEsporte) {
-    inputEsporte = document.createElement('input');
-    inputEsporte.type = 'hidden';
-    inputEsporte.name = 'escolhaEsporte';
-    form.appendChild(inputEsporte);
-  }
-  inputEsporte.value = cod_esporte;
+        const form = document.getElementById('formTreino');
+  
+        const cod_treino = data.trim();
 
-  // Jogadores: múltiplos valores, crie inputs hidden para cada um:
-  // Remova inputs antigos para evitar duplicidade
-  document.querySelectorAll('input[name="listarJogadoresParaTreino[]"]').forEach(el => el.remove());
 
-  cod_jogadores.forEach(cod => {
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = 'listarJogadoresParaTreino[]';
-    input.value = cod;
-    form.appendChild(input);
-  });
+            let inputTreino = document.querySelector('input[name="cod_treino"]');
+    if (!inputTreino) {
+      inputTreino = document.createElement('input');
+      inputTreino.type = 'hidden';
+      inputTreino.name = 'cod_treino';
+      form.appendChild(inputTreino);
+    }
+    inputTreino.value = cod_treino;
 
-  // Envia o formulário via POST para treino.php
-  form.action = 'treino.php';
-  form.method = 'POST';
-  form.submit();
 
-      }
-      else {
+        // Esporte
+        let inputEsporte = document.querySelector('input[name="escolhaEsporte"]');
+        if (!inputEsporte) {
+          inputEsporte = document.createElement('input');
+          inputEsporte.type = 'hidden';
+          inputEsporte.name = 'escolhaEsporte';
+          form.appendChild(inputEsporte);
+        }
+        inputEsporte.value = cod_esporte;
+
+        // Jogadores
+        document.querySelectorAll('input[name="listarJogadoresParaTreino[]"]').forEach(el => el.remove());
+        cod_jogadores.forEach(cod => {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'listarJogadoresParaTreino[]';
+          input.value = cod;
+          form.appendChild(input);
+        });
+
+        // Submete para treino.php
+        form.action = 'treino.php';
+        form.method = 'POST';
+        form.submit();
+      } else {
         alert(data);
       }
     },
@@ -120,7 +129,6 @@ function enviarFormularioSeValido() {
     <h5 class="mb-4">Colocar um texto descritivo aqui depois</h5>
 
     <form method="POST" id="formTreino">
-      <!-- Campo hidden para o id do staff -->
       <input type="hidden" id="usuarioCodStaff" name="cod_staff">
 
       <div class="row mt-3">
@@ -143,7 +151,7 @@ function enviarFormularioSeValido() {
       <hr>
 
       <div class="row mt-1">
-        <div class="col-md-12">
+        <div class="col-12">
           <div id="listarJogadoresParaTreino"></div>
         </div>
       </div>
