@@ -46,4 +46,15 @@ function listarEsportes(){
   });
 }
 
+function listaDeJogadores(todosJogadores){
+    var pagina = "/tcc/componentes/TREINO/listaDeJogadores.php";
 
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {todosJogadores: todosJogadores,},
+    success: function (data) {
+      $("#listaDeJogadores").html(data);
+    },
+  });
+}

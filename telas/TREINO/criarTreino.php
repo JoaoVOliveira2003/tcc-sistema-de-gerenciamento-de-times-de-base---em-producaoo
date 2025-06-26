@@ -12,6 +12,7 @@ $usuario = verificarLogin();
 <script src="../../js/treino.js"></script>
 <script>
 $(document).ready(function() {
+
   const usuario = <?php echo json_encode($usuario); ?>;
 
   listarEsportes();
