@@ -47,7 +47,7 @@ function listarEsportes(){
 }
 
 function listaDeJogadores(todosJogadores){
-    var pagina = "/tcc/componentes/TREINO/listaDeJogadores.php";
+  var pagina = "/tcc/componentes/TREINO/listaDeJogadores.php";
 
   $.ajax({
     type: "POST",

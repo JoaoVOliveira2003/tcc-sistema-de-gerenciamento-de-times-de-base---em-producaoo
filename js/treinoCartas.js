@@ -89,6 +89,9 @@ function criarCarta(cod_jogador, nome, local_midia) {
   areaCartas.appendChild(elementoCarta);
 }
 
+function abrirDados(nome){
+
+}
 
 // Função para remover carta permanece a mesma
 function retirarCarta(cod_jogador) {

@@ -101,6 +101,7 @@ include('../../componentes/header.php');
     <!-- Sidebar Esquerda -->
     <div class="sidebar p-3 bg-light border-end" id="sidebarLeft">
       <h5>Lista Jogadores</h5>
+      <hr>
       <div class="accordion" id="accordionLeft">
         <div id="listaDeJogadores"></div>
       </div>
@@ -110,31 +111,37 @@ include('../../componentes/header.php');
     <div id="areaCartas" class="d-flex justify-content-center align-items-center"></div>
 
     <!-- Sidebar Direita -->
-    <div class="sidebar p-3 bg-light border-start" id="sidebarRight">
-      <h5>Ações</h5>
-      <div class="accordion" id="accordionRight">
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingRight1">
-            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseRight1">
-              Info A
-            </button>
-          </h2>
-          <div id="collapseRight1" class="accordion-collapse collapse show">
-            <div class="accordion-body">Detalhes para o lado direito.</div>
-          </div>
-        </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingRight2">
-            <button class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseRight2">
-              Info B
-            </button>
-          </h2>
-          <div id="collapseRight2" class="accordion-collapse collapse">
-            <div class="accordion-body">Outra informação para o lado direito.</div>
-          </div>
-        </div>
-      </div>
+<div class="sidebar p-3 bg-light border-start" id="sidebarRight">
+  <h5>Ações</h5>
+  <div class="accordion" id="accordionRight">
+<hr>
+    <button class="btn btn-primary btn-sm mb-5" onclick="terminarTreino()">Finalizar treino</button>
+
+      <br>
+
+    <!-- Controle Ponto Direita -->
+    <label class="form-label ">Ponto Direita</label>
+  
+    <div class="btn-group w-100 mb-2" role="group">
+      <button type="button" class="btn btn-outline-success w-50">-</button>
+      <button type="button" class="btn btn-outline-success w-50">+</button>
     </div>
+
+    <!-- Controle Ponto Esquerda -->
+    <label class="form-label">Ponto Esquerda</label>
+    <div class="btn-group w-100" role="group">
+      <button type="button" class="btn btn-outline-danger w-50">-</button>
+      <button type="button" class="btn btn-outline-danger w-50">+</button>
+    </div>
+
+
+
+  </div>
+</div>
+
+
+
+
   </div>
 </body>
 </html>
