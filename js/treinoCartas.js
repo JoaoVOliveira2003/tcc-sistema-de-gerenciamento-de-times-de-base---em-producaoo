@@ -121,3 +121,68 @@ function mudarCorAzul(cod_jogador) {
     console.log(`Carta com id ${cod_jogador} não encontrada.`);
   }
 }
+
+function inserirRetirarBola() {
+  const campo = document.getElementById("areaCartas");
+  if (!campo) {
+    console.log("Campo não encontrado");
+    return;
+  }
+
+  let bola = campo.querySelector(".bola");
+  if (bola) {
+    bola.remove();
+  } else {
+    bola = document.createElement("div");
+    bola.classList.add("bola");
+    bola.style.width = "20px";
+    bola.style.height = "20px";
+    bola.style.backgroundColor = "rgba(120, 79, 19, 0.88)";
+    bola.style.borderRadius = "50%";
+    bola.style.position = "absolute";
+    bola.style.top = "5px";
+    bola.style.right = "5px";
+    bola.style.cursor = "grab";
+    bola.style.boxShadow = "0 0 5px rgba(0,0,0,0.3)";
+    
+    campo.style.position = "relative"; // importante para posicionar a bola dentro do campo
+    campo.appendChild(bola);
+
+    // Vamos adicionar o drag para a bola:
+    bola.onmousedown = function(event) {
+      event.preventDefault();
+      bola.style.cursor = "grabbing";
+
+      const limitesCampo = campo.getBoundingClientRect();
+
+      // Distância do clique relativo à bola
+      const deslocX = event.clientX - bola.getBoundingClientRect().left;
+      const deslocY = event.clientY - bola.getBoundingClientRect().top;
+
+      function mover(eventMove) {
+        let x = eventMove.clientX - limitesCampo.left - deslocX;
+        let y = eventMove.clientY - limitesCampo.top - deslocY;
+
+        // Limita dentro do campo
+        x = Math.max(0, Math.min(x, campo.clientWidth - bola.offsetWidth));
+        y = Math.max(0, Math.min(y, campo.clientHeight - bola.offsetHeight));
+
+        bola.style.left = x + "px";
+        bola.style.top = y + "px";
+        bola.style.right = "auto"; // tira o right pra não conflitar
+      }
+
+      function soltar() {
+        document.removeEventListener("mousemove", mover);
+        document.removeEventListener("mouseup", soltar);
+        bola.style.cursor = "grab";
+      }
+
+      document.addEventListener("mousemove", mover);
+      document.addEventListener("mouseup", soltar);
+    };
+
+    bola.ondragstart = () => false;
+  }
+}
+

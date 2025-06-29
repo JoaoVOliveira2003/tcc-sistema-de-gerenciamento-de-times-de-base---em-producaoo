@@ -58,3 +58,68 @@ function listaDeJogadores(todosJogadores){
     },
   });
 }
+
+// controleTreino.js
+
+let tempoMaxSegundos;
+let segundosPassados = 0;
+let pausado = false;
+let intervalo = null;
+
+let placarEsquerda = 0;
+let placarDireita = 0;
+
+function formatarTempo(segundos) {
+  const min = Math.floor(segundos / 60);
+  const seg = segundos % 60;
+  return `${min.toString().padStart(2, '0')}:${seg.toString().padStart(2, '0')}`;
+}
+
+function atualizarRelogio() {
+  if (!pausado) {
+    if (segundosPassados > tempoMaxSegundos) {
+      clearInterval(intervalo);
+      document.getElementById('relogio').textContent = "Encerrado!";
+      return;
+    }
+    document.getElementById('relogio').textContent = formatarTempo(segundosPassados);
+    segundosPassados++;
+  }
+}
+
+function pausarOuRetomar() {
+  pausado = !pausado;
+  if (!pausado) {
+    intervalo = setInterval(atualizarRelogio, 1000);
+  } else {
+    clearInterval(intervalo);
+  }
+}
+
+function alterarPlacar(lado, valor) {
+  if (lado === 'esquerda') {
+    placarEsquerda = Math.max(0, placarEsquerda + valor);
+    document.getElementById('placarEsquerda').textContent = placarEsquerda;
+  } else if (lado === 'direita') {
+    placarDireita = Math.max(0, placarDireita + valor);
+    document.getElementById('placarDireita').textContent = placarDireita;
+  }
+}
+
+function finalizarTreino() {
+  window.location.href = "http://localhost/tcc/telas/login/telaPosLogin.php";
+}
+
+function iniciarControlesTreino(jogadores, tempoEmSegundos) {
+  tempoMaxSegundos = tempoEmSegundos;
+  listaDeJogadores(jogadores);
+  intervalo = setInterval(atualizarRelogio, 1000);
+
+  document.getElementById("toggleLeft").addEventListener("click", () => {
+    document.getElementById("sidebarLeft").classList.toggle("d-none");
+  });
+
+  document.getElementById("toggleRight").addEventListener("click", () => {
+    document.getElementById("sidebarRight").classList.toggle("d-none");
+  });
+}

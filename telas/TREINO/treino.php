@@ -31,76 +31,71 @@ include('../../componentes/header.php');
   <script src="../../js/treino.js"></script>
   <script src="../../js/treinoCartas.js"></script>
   <link rel="stylesheet" href="treino.css">
+  <style>
+    .sidebar {
+      flex: 0 0 250px;
+    }
 
+    #relogio {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .placar {
+      font-size: 1.3rem;
+      font-weight: bold;
+      min-width: 30px;
+      display: inline-block;
+      text-align: center;
+    }
+  </style>
 </head>
 
 <body>
-  <style>
-   .sidebar {
-      flex: 0 0 250px;
-    }
-  </style>
 
-  <div class="p-2 mx-auto d-flex justify-content-center align-items-center">
+  <!-- TOPO COM PLACARES E RELÓGIO -->
+  <div class="p-2 mx-auto d-flex justify-content-center align-items-center gap-4 flex-wrap">
+
     <button class="btn btn-primary" id="toggleLeft">☰ Esquerda</button>
 
-    <div id="relogio" style="display:inline-block; margin: 0 20px; font-weight:bold; font-size:1.2em;">
-      00:00 | 0:0
+    <!-- Placar Esquerda -->
+    <div class="text-center">
+      <label class="form-label m-0">Time vermelho.</label>
+      <div class="btn-group btn-group-sm">
+        <button type="button" class="btn btn-outline-danger" onclick="alterarPlacar('esquerda', -1)">-</button>
+        <span class="placar px-2" id="placarEsquerda">0</span>
+        <button type="button" class="btn btn-outline-danger" onclick="alterarPlacar('esquerda', 1)">+</button>
+      </div>
+    </div>
+
+    <!-- Relógio -->
+    <div class="text-center">
+      <div id="relogio" class="mb-1">00:00</div>
+      <button class="btn btn-warning btn-sm" onclick="pausarOuRetomar()">Pausar / Retomar</button>
+   
+    </div>
+
+    <!-- Placar Direita -->
+    <div class="text-center">
+      <label class="form-label m-0">Time azul.</label>
+      <div class="btn-group btn-group-sm">
+        <button type="button" class="btn btn-outline-primary" onclick="alterarPlacar('direita', -1)">-</button>
+        <span class="placar px-2" id="placarDireita">0</span>
+        <button type="button" class="btn btn-outline-primary" onclick="alterarPlacar('direita', 1)">+</button>
+      </div>
     </div>
 
     <button class="btn btn-primary" id="toggleRight">☰ Direita</button>
   </div>
 
-  <script>
-    const tempoMaxMinutos = <?php echo $minutos; ?>;
-    const tempoMaxSegundos = tempoMaxMinutos * 60;
-
-    const relogio = document.getElementById('relogio');
-
-    let segundosPassados = 0;
-
-    function formatarTempo(segundos) {
-      const min = Math.floor(segundos / 60);
-      const seg = segundos % 60;
-      return `${min.toString().padStart(2,'0')}:${seg.toString().padStart(2,'0')}`;
-    }
-
-    function atualizarRelogio() {
-      if (segundosPassados > tempoMaxSegundos) {
-        clearInterval(intervalo);
-        relogio.textContent = "Tempo encerrado!";
-        return;
-      }
-
-      relogio.textContent = formatarTempo(segundosPassados);
-      segundosPassados++;
-    }
-
-    // Começa o cronômetro
-    atualizarRelogio();
-
-    const intervalo = setInterval(atualizarRelogio, 1000);
-    const todosJogadores = <?php echo json_encode($listarJogadoresParaTreino); ?>;
-    const esporte = <?php echo json_encode($esporte); ?>;
-    const tempoInicial = <?php echo json_encode($tempoInicial); ?>;
-    const codTreino = <?php echo json_encode($cod_treino); ?>;
-
-    listaDeJogadores(todosJogadores);
-
-    document.getElementById("toggleLeft").addEventListener("click", () => {
-      document.getElementById("sidebarLeft").classList.toggle("d-none");
-    });
-
-    document.getElementById("toggleRight").addEventListener("click", () => {
-      document.getElementById("sidebarRight").classList.toggle("d-none");
-    });
-</script>
-
+  <!-- LAYOUT PRINCIPAL -->
   <div class="d-flex" style="min-height:100vh;">
 
     <!-- Sidebar Esquerda -->
     <div class="sidebar p-3 bg-light border-end" id="sidebarLeft">
       <h5>Lista Jogadores</h5>
+      <!-- <button onclick="inserirRetirarBola()">inserirRetirarBola</button> -->
+<button onclick="inserirRetirarBola()" type="button" class="btn btn-light" style="border: 1px solid #000;">Inserir/retirar bola</button>
       <hr>
       <div class="accordion" id="accordionLeft">
         <div id="listaDeJogadores"></div>
@@ -108,40 +103,26 @@ include('../../componentes/header.php');
     </div>
 
     <!-- Área Central -->
-    <div id="areaCartas" class="d-flex justify-content-center align-items-center"></div>
+    <div id="areaCartas" class="d-flex justify-content-center align-items-center flex-grow-1"></div>
 
     <!-- Sidebar Direita -->
-<div class="sidebar p-3 bg-light border-start" id="sidebarRight">
-  <h5>Ações</h5>
-  <div class="accordion" id="accordionRight">
-<hr>
-    <button class="btn btn-primary btn-sm mb-5" onclick="terminarTreino()">Finalizar treino</button>
-
-      <br>
-
-    <!-- Controle Ponto Direita -->
-    <label class="form-label ">Ponto Direita</label>
-  
-    <div class="btn-group w-100 mb-2" role="group">
-      <button type="button" class="btn btn-outline-success w-50">-</button>
-      <button type="button" class="btn btn-outline-success w-50">+</button>
+    <div class="sidebar p-3 bg-light border-start" id="sidebarRight">
+      <h5>Ações</h5>
+      <hr>
+      <div class="mt-4">
+        <button class="btn btn-success btn-sm w-100 mb-2" onclick="finalizarTreino()">Finalizar Treino</button>
+      </div>
     </div>
 
-    <!-- Controle Ponto Esquerda -->
-    <label class="form-label">Ponto Esquerda</label>
-    <div class="btn-group w-100" role="group">
-      <button type="button" class="btn btn-outline-danger w-50">-</button>
-      <button type="button" class="btn btn-outline-danger w-50">+</button>
-    </div>
-
-
-
   </div>
-</div>
 
+  <!-- SCRIPT -->
+<script src="../../js/controleTreino.js"></script>
+<script>
+  const tempoMaxSegundosPHP = <?php echo $minutos * 60; ?>;
+  const todosJogadores = <?php echo json_encode($listarJogadoresParaTreino); ?>;
+  iniciarControlesTreino(todosJogadores, tempoMaxSegundosPHP);
+</script>
 
-
-
-  </div>
 </body>
 </html>
