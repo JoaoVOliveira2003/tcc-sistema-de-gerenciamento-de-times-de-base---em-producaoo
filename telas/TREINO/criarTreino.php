@@ -41,17 +41,21 @@ function enviarFormularioSeValido() {
   const cod_esporte = $("#selectEsportes select").val() || '';
   const cod_jogadores = Array.from(document.querySelectorAll('#listarJogadoresParaTreino input[type="checkbox"]:checked')).map(cb => cb.value);
 
+const nomeTreino = $("#nomeTreino").val().trim();
+
   const camposObrigatorios = {
     tempo_treino,
     cod_esporte,
     cod_jogadores,
     cod_staff,
+    nomeTreino,
   };
   const mensagemCamposObrigatorios = {
     tempo_treino: "Tempo de treino",
     cod_esporte: "Esporte do treino",
     cod_jogadores: "Jogadores que participarão no treino",
     cod_staff: "Responsável (cod_staff)",
+    nomeTreino : "Nome do treino"
   };
   if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) {
     return;
@@ -61,6 +65,7 @@ function enviarFormularioSeValido() {
     type: "POST",
     url: "/tcc/componentes/TREINO/gravarTreino.php",
     data: {
+      nomeTreino,
       cod_staff,
       tempo_treino,
       cod_esporte,
@@ -131,6 +136,11 @@ function enviarFormularioSeValido() {
 
     <form method="POST" id="formTreino">
       <input type="hidden" id="usuarioCodStaff" name="cod_staff">
+
+      <div class="col-12 mb-3">
+        <label for="nomeTreino" class="form-label">Nome do Treino</label>
+        <input type="text" class="form-control" id="nomeTreino" name="nomeTreino" placeholder="Digite o nome do treino">
+      </div>
 
       <div class="row mt-3">
         <div class="col-md-6 mb-3">

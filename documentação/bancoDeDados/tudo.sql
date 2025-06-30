@@ -284,18 +284,23 @@ CREATE TABLE `tcc`.`Treino` (
 
 ALTER TABLE Treino MODIFY COLUMN tempo_treino INT;
 
+ALTER TABLE `tcc`.`treino`
+ADD COLUMN `dataTreino` DATE NULL,
+ADD COLUMN `nomeTreino` VARCHAR(200) NULL;
+
+
 -- midia_treino
 CREATE TABLE `tcc`.`midia_treino` (
   `cod_midiaTreino` INT NOT NULL, 
---  `local_midia` VARCHAR(45) NULL, 
   `cod_treino` INT NOT NULL, 
- -- `cod_midiaJogo` INT, 
   PRIMARY KEY (`cod_midiaTreino`), 
   CONSTRAINT `fk_midia_treino_treino` FOREIGN KEY (`cod_treino`) REFERENCES `tcc`.`Treino`(`cod_treino`) ON DELETE CASCADE ON UPDATE CASCADE, 
   CONSTRAINT `fk_midia_treino_midiaJogo` FOREIGN KEY (`cod_midiaJogo`) REFERENCES `tcc`.`midia_TreinoJogo`(`cod_midiaJogo`) ON DELETE 
   SET 
     NULL ON UPDATE CASCADE
 ) ENGINE = InnoDB;
+
+
 
 -- midia_TreinoJogo
 CREATE TABLE `tcc`.`midia_TreinoJogo` (

@@ -7,14 +7,19 @@ $cod_staff      = getPost('cod_staff');
 $tempo_treino   = getPost('tempo_treino');
 $cod_jogadores  = getPost('cod_jogadores');
 
+$nomeTreino  = getPost('nomeTreino');
+$diaHoje = date('Y-m-d');
+
+
 $bd = conecta();
 
 if (!is_array($cod_jogadores)) {
     $cod_jogadores = explode(',', $cod_jogadores);
 }
 
-$query = "INSERT INTO treino (cod_esporte, cod_staff, tempo_treino) 
-          VALUES ($cod_esporte, $cod_staff, '$tempo_treino')";
+$query = "INSERT INTO treino (cod_esporte, cod_staff, tempo_treino, dataTreino, nomeTreino) 
+          VALUES ($cod_esporte, $cod_staff, '$tempo_treino', '$diaHoje', '$nomeTreino')";
+
 
 if ($bd->SqlExecuteQuery($query)) {
     $cod_treino = $bd->getLastInsertId();

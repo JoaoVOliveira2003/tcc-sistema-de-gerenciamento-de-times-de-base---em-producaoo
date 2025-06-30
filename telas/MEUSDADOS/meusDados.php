@@ -16,7 +16,6 @@ $usuario = verificarLogin();
         $(document).ready(function () {
             const usuario = <?php echo json_encode($usuario); ?>;
             meusDados(usuario.cod_usuario , usuario.cod_tipoRole);
-            // console.log(usuario);
         });
     </script>
 </head>
@@ -27,8 +26,7 @@ $usuario = verificarLogin();
             <div id="meusDados" class="mb-2"></div>
         </div>
     </div>
-      <div id="modalContainer"></div>
-
+    <div id="modalContainer"></div>
 </body>
 
 </html>

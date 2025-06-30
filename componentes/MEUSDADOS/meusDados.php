@@ -1,7 +1,7 @@
 <?php
 require('../../include/conecta.php');
 $bd = conecta();
-$cod_usuario =  30;
+$cod_usuario =  20;
 $cod_tipoRole = 6;
 
 //$cod_usuario  = getPost('cod_usuario');
@@ -655,12 +655,25 @@ function conteudoMinhaNota($idModal, $cod_usuario)
 
 
 
-function conteudoNotasTreino($idModal)
+function conteudoNotasTreino($idModal, $cod_usuario,$cod_tipoRole)
 {
+    if($cod_tipoRole==6){
+
+    $query='
+    select * from treino_jogador a
+    inner join treino b on b.cod_treino = a.cod_treino
+    inner join  notatreino_jogador c on c.cod_treino = b.cod_treino
+    where a.cod_jogador='.$cod_usuario.' and cod_grau_privacidade=3
+    ';
+
+    }
+    else{
     return '
     <div class="tab-pane fade" id="notas-treino-' . $idModal . '" role="tabpanel" aria-labelledby="notas-treino-tab-' . $idModal . '">
-        <p>Conteúdo da Aba Notas de Treino</p>
+        <p>Conteúdo da Aba Notas de Treino '.$cod_tipoRole.'</p>
     </div>';
+
+    }
 }
 
 
@@ -754,7 +767,7 @@ function navAdmsStaff($idModal)
 {
     return '
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="dados-dmsStaff-tab-' . $idModal . '" data-bs-toggle="tab" data-bs-target="#dados-dmsStaff-' . $idModal . '" type="button" role="tab" aria-controls="dados-dmsStaff-' . $idModal . '" aria-selected="true">Dados dmsStaff</button>
+        <button class="nav-link active" id="dados-dmsStaff-tab-' . $idModal . '" data-bs-toggle="tab" data-bs-target="#dados-dmsStaff-' . $idModal . '" type="button" role="tab" aria-controls="dados-dmsStaff-' . $idModal . '" aria-selected="true">Dados Admistrador e staff</button>
     </li>';
 }
 
@@ -916,8 +929,7 @@ if ($cod_tipoRole == 1) {
 elseif ($cod_tipoRole == 6) {
     $retorno .= conteudoDadosResponsaveis($idModal,$cod_usuario);
     $retorno .= conteudoMinhaNota($idModal,$cod_usuario);
-    $retorno .= conteudoNotasTreino($idModal);
-
+    $retorno .= conteudoNotasTreino($idModal, $cod_usuario,$cod_tipoRole);
     $retorno .= conteudoDadosPessoais($idModal, $cod_tipoRole, $cod_usuario);
     $retorno .= conteudoFichaMedica($idModal,$cod_usuario);
 }
