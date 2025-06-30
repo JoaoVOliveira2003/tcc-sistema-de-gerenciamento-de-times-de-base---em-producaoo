@@ -72,6 +72,12 @@ function criarCarta(cod_jogador, nome, local_midia) {
       moverPara(evento.pageX, evento.pageY);
     }
 
+    elementoCarta.onclick = () => {
+
+    abrirAnotacao(nome, cod_jogador);
+};
+
+
     function aoSoltarMouse() {
       document.removeEventListener("mousemove", aoMoverMouse);
       document.removeEventListener("mouseup", aoSoltarMouse);
@@ -84,14 +90,11 @@ function criarCarta(cod_jogador, nome, local_midia) {
 
   elementoCarta.ondragstart = () => false;
   // Ajuste aqui se quiser usar o nome direto, pois novaCarta não está definida no seu código
-  elementoCarta.onclick = () => abrirDados(nome);
+  elementoCarta.onclick = () => abrirAnotacao(nome);
 
   areaCartas.appendChild(elementoCarta);
 }
 
-function abrirDados(nome){
-
-}
 
 // Função para remover carta permanece a mesma
 function retirarCarta(cod_jogador) {
@@ -137,7 +140,7 @@ function inserirRetirarBola() {
     bola.classList.add("bola");
     bola.style.width = "20px";
     bola.style.height = "20px";
-    bola.style.backgroundColor = "rgba(120, 79, 19, 0.88)";
+    bola.style.backgroundColor = "rgb(207, 135, 28)";
     bola.style.borderRadius = "50%";
     bola.style.position = "absolute";
     bola.style.top = "5px";
@@ -184,5 +187,19 @@ function inserirRetirarBola() {
 
     bola.ondragstart = () => false;
   }
+}
+
+
+function abrirAnotacao(nome, cod_jogador) { 
+  var pagina = "/tcc/componentes/TREINO/abrirAnotacao.php";
+
+  $.ajax({
+    type: "POST",
+    url: pagina,
+    data: {cod_jogador: cod_jogador,nome:nome},
+    success: function (data) {
+      $("#abrirAnotacao").html(data);
+    },
+  });
 }
 

@@ -2,7 +2,6 @@
 require('../../include/conecta.php');
 
 $retorno = '';
-
 $cod_esporte    = getPost('cod_esporte');
 $cod_staff      = getPost('cod_staff');
 $tempo_treino   = getPost('tempo_treino');

@@ -75,7 +75,7 @@ function enviarFormularioSeValido() {
         const cod_treino = data.trim();
 
 
-            let inputTreino = document.querySelector('input[name="cod_treino"]');
+     let inputTreino = document.querySelector('input[name="cod_treino"]');
     if (!inputTreino) {
       inputTreino = document.createElement('input');
       inputTreino.type = 'hidden';

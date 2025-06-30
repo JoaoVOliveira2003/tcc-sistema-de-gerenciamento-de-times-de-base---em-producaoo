@@ -287,9 +287,9 @@ ALTER TABLE Treino MODIFY COLUMN tempo_treino INT;
 -- midia_treino
 CREATE TABLE `tcc`.`midia_treino` (
   `cod_midiaTreino` INT NOT NULL, 
-  `local_midia` VARCHAR(45) NULL, 
+--  `local_midia` VARCHAR(45) NULL, 
   `cod_treino` INT NOT NULL, 
-  `cod_midiaJogo` INT, 
+ -- `cod_midiaJogo` INT, 
   PRIMARY KEY (`cod_midiaTreino`), 
   CONSTRAINT `fk_midia_treino_treino` FOREIGN KEY (`cod_treino`) REFERENCES `tcc`.`Treino`(`cod_treino`) ON DELETE CASCADE ON UPDATE CASCADE, 
   CONSTRAINT `fk_midia_treino_midiaJogo` FOREIGN KEY (`cod_midiaJogo`) REFERENCES `tcc`.`midia_TreinoJogo`(`cod_midiaJogo`) ON DELETE 
@@ -312,13 +312,25 @@ CREATE TABLE grau_privacidade(
 );
 
 -- notaTreino_jogador
-CREATE TABLE `notaTreino_jogador` (
+-- CREATE TABLE `notaTreino_jogador` (
+--   cod_jogador INT NOT NULL, 
+--   cod_treino INT NOT NULL, 
+--   minuto_nota CHAR(10), 
+--   desc_notaTreino VARCHAR(100), 
+--   cod_grau_privacidade INT, 
+--   PRIMARY KEY (cod_jogador, cod_treino), 
+--   FOREIGN KEY (cod_grau_privacidade) REFERENCES grau_privacidade(cod_grau_privacidade),
+--   FOREIGN KEY (cod_jogador) REFERENCES jogador(cod_jogador), 
+--   FOREIGN KEY (cod_treino) REFERENCES treino(cod_treino)
+-- );
+
+CREATE TABLE notaTreino_jogador (
+  cod_notaTreino INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   cod_jogador INT NOT NULL, 
   cod_treino INT NOT NULL, 
   minuto_nota CHAR(10), 
   desc_notaTreino VARCHAR(100), 
-  cod_grau_privacidade INT, 
-  PRIMARY KEY (cod_jogador, cod_treino), 
+  cod_grau_privacidade INT,
   FOREIGN KEY (cod_grau_privacidade) REFERENCES grau_privacidade(cod_grau_privacidade),
   FOREIGN KEY (cod_jogador) REFERENCES jogador(cod_jogador), 
   FOREIGN KEY (cod_treino) REFERENCES treino(cod_treino)
@@ -406,8 +418,6 @@ CREATE TABLE `tcc`.`contato_responsavel` (
   PRIMARY KEY (cod_contatoResponsavel)
 ) ENGINE = InnoDB;
 
-
-
 -- fichaMedica
 CREATE TABLE `tcc`.`fichaMedica` (
   `cod_jogador` INT NOT NULL, 
@@ -420,7 +430,6 @@ CREATE TABLE `tcc`.`fichaMedica` (
   PRIMARY KEY (`cod_jogador`),
   FOREIGN KEY (`cod_jogador`) REFERENCES `tcc`.`jogador`(`cod_jogador`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
-
 
 -- jogador_contatoResponsavel
 CREATE TABLE `tcc`.`jogador_contatoResponsavel` (
