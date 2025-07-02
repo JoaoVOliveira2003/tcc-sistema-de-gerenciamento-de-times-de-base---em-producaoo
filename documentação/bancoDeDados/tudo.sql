@@ -218,7 +218,6 @@ CREATE TABLE `tcc`.`administrador_subInstituicao` (
 
 
 -- turma
-
 CREATE TABLE turma (
   cod_turma INT PRIMARY KEY AUTO_INCREMENT, 
   desc_turma VARCHAR(50), 
@@ -290,23 +289,48 @@ ADD COLUMN `nomeTreino` VARCHAR(200) NULL;
 
 
 -- midia_treino
-CREATE TABLE `tcc`.`midia_treino` (
-  `cod_midiaTreino` INT NOT NULL, 
-  `cod_treino` INT NOT NULL, 
-  PRIMARY KEY (`cod_midiaTreino`), 
-  CONSTRAINT `fk_midia_treino_treino` FOREIGN KEY (`cod_treino`) REFERENCES `tcc`.`Treino`(`cod_treino`) ON DELETE CASCADE ON UPDATE CASCADE, 
-  CONSTRAINT `fk_midia_treino_midiaJogo` FOREIGN KEY (`cod_midiaJogo`) REFERENCES `tcc`.`midia_TreinoJogo`(`cod_midiaJogo`) ON DELETE 
-  SET 
-    NULL ON UPDATE CASCADE
-) ENGINE = InnoDB;
+-- CREATE TABLE `tcc`.`midia_treino` (
+--   `cod_midiaTreino` INT NOT NULL, 
+--   `cod_treino` INT NOT NULL, 
+--   PRIMARY KEY (`cod_midiaTreino`), 
+--   CONSTRAINT `fk_midia_treino_treino` FOREIGN KEY (`cod_treino`) REFERENCES `tcc`.`Treino`(`cod_treino`) ON DELETE CASCADE ON UPDATE CASCADE, 
+--   CONSTRAINT `fk_midia_treino_midiaJogo` FOREIGN KEY (`cod_midiaJogo`) REFERENCES `tcc`.`midia_TreinoJogo`(`cod_midiaJogo`) ON DELETE 
+--   SET 
+--     NULL ON UPDATE CASCADE
+-- ) ENGINE = InnoDB;
 
 
 
--- midia_TreinoJogo
+-- -- midia_TreinoJogo
+-- CREATE TABLE `tcc`.`midia_TreinoJogo` (
+--   `cod_midiaJogo` INT NOT NULL, 
+--   `local_midia` VARCHAR(45) NULL, 
+--   PRIMARY KEY (`cod_midiaJogo`)
+-- ) ENGINE = InnoDB;
+
+
 CREATE TABLE `tcc`.`midia_TreinoJogo` (
   `cod_midiaJogo` INT NOT NULL, 
   `local_midia` VARCHAR(45) NULL, 
   PRIMARY KEY (`cod_midiaJogo`)
+) ENGINE = InnoDB;
+
+-- 2. Criar midia_treino (com a coluna cod_midiaJogo!)
+CREATE TABLE `tcc`.`midia_treino` (
+  `cod_midiaTreino` INT NOT NULL, 
+  `cod_treino` INT NOT NULL, 
+  `cod_midiaJogo` INT NULL,  -- Adicionada aqui!
+  PRIMARY KEY (`cod_midiaTreino`), 
+
+  CONSTRAINT `fk_midia_treino_treino` 
+    FOREIGN KEY (`cod_treino`) 
+    REFERENCES `tcc`.`Treino`(`cod_treino`) 
+    ON DELETE CASCADE ON UPDATE CASCADE,
+
+  CONSTRAINT `fk_midia_treino_midiaJogo` 
+    FOREIGN KEY (`cod_midiaJogo`) 
+    REFERENCES `tcc`.`midia_TreinoJogo`(`cod_midiaJogo`) 
+    ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 -- grauPrivacidade
@@ -654,10 +678,10 @@ insert into login_usuario(cod_usuario,email_usuario,senha) values (2,'ti@gmail.c
 -- CADASTRO DE JOGADOR
 INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('joselito', '13432640900', 1, 's');
 INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (2, 6);
-INSERT INTO jogador(cod_jogador, data_nascimento, posicao, esporte) VALUES (2, '2025-12-31', 1, 1);
+INSERT INTO jogador(cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (2, '2025-12-31', 1, 1);
 INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (1, 2);
 INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (2, 'midia/zjor.png');
-INSERT INTO contato_responsavel (nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) VALUES ('maria vlau', 'mae', 'jora@gmail.com', '41940804942');
+INSERT INTO contato_responsavel (nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) VALUES ('maria vlau', 'mae', 'jora@gmail.com', '444444');
 INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (2, 1);
 INSERT INTO historicoLesoes (cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) VALUES (3, 'quebrou pé', '2003-02-13', '40 dias');
 INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) VALUES (2, 182, 765, 'O+', 'Nenhuma', 'Poeira, Pólen', '2025-04-22');
@@ -899,7 +923,7 @@ INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES
 (18, 6), (19, 6), (20, 6), (21, 6), (22, 6), (23, 6), (24, 6), (25, 6), (26, 6), (27, 6);
 
 -- INSERTS em jogador
-INSERT INTO jogador (cod_jogador, data_nascimento, posicao, esporte) VALUES 
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES 
 (18, '2003-03-02', 5, 1),
 (19, '2004-04-15', 2, 1),
 (20, '2005-01-10', 3, 1),
@@ -930,16 +954,16 @@ INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES
 
 -- INSERTS em fichaMedica
 INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) VALUES 
-(18, 1.80, 75, 'AB-', 'Nenhuma', 'Poeira', NOW()),
-(19, 1.75, 68, 'O+', 'Asma', 'Amendoim', NOW()),
-(20, 1.70, 65, 'A-', 'Miopia', 'Nenhuma', NOW()),
-(21, 1.85, 82, 'B+', 'Diabetes tipo 1', 'Pólen', NOW()),
-(22, 1.90, 88, 'AB+', 'Nenhuma', 'Glúten', NOW()),
-(23, 1.78, 74, 'O-', 'Lesão anterior no joelho', 'Nenhuma', NOW()),
-(24, 1.83, 79, 'A+', 'Nenhuma', 'Frutos do mar', NOW()),
-(25, 1.76, 70, 'B-', 'Hiperatividade', 'Nenhuma', NOW()),
-(26, 1.72, 66, 'O+', 'Bronquite', 'Leite', NOW()),
-(27, 1.80, 77, 'AB-', 'Nenhuma', 'Nenhuma', NOW());
+(18, 80, 75, 'AB-', 'Nenhuma', 'Poeira', NOW()),
+(19, 175, 68, 'O+', 'Asma', 'Amendoim', NOW()),
+(20, 170, 65, 'A-', 'Miopia', 'Nenhuma', NOW()),
+(21, 185, 82, 'B+', 'Diabetes tipo 1', 'Pólen', NOW()),
+(22, 190, 88, 'AB+', 'Nenhuma', 'Glúten', NOW()),
+(23, 178, 74, 'O-', 'Lesão anterior no joelho', 'Nenhuma', NOW()),
+(24, 183, 79, 'A+', 'Nenhuma', 'Frutos do mar', NOW()),
+(25, 176, 70, 'B-', 'Hiperatividade', 'Nenhuma', NOW()),
+(26, 172, 66, 'O+', 'Bronquite', 'Leite', NOW()),
+(27, 180, 77, 'AB-', 'Nenhuma', 'Nenhuma', NOW());
 
 
 insert into login_usuario(cod_usuario,email_usuario,senha) values(18,'admir','admir');

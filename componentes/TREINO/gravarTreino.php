@@ -8,7 +8,9 @@ $tempo_treino   = getPost('tempo_treino');
 $cod_jogadores  = getPost('cod_jogadores');
 
 $nomeTreino  = getPost('nomeTreino');
+date_default_timezone_set('America/Sao_Paulo');
 $diaHoje = date('Y-m-d');
+
 
 
 $bd = conecta();
