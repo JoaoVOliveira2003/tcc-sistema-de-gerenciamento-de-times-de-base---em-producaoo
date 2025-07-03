@@ -40,8 +40,8 @@ function enviarFormularioSeValido() {
   const tempo_treino = $("#tempoInicial").val().trim();
   const cod_esporte = $("#selectEsportes select").val() || '';
   const cod_jogadores = Array.from(document.querySelectorAll('#listarJogadoresParaTreino input[type="checkbox"]:checked')).map(cb => cb.value);
+  const nomeTreino = $("#nomeTreino").val().trim();
 
-const nomeTreino = $("#nomeTreino").val().trim();
 
   const camposObrigatorios = {
     tempo_treino,
@@ -74,11 +74,8 @@ const nomeTreino = $("#nomeTreino").val().trim();
     success: function(data) {
 
       if (data != 'nok2' || data != 'nok1') {
-
         const form = document.getElementById('formTreino');
-  
         const cod_treino = data.trim();
-
 
      let inputTreino = document.querySelector('input[name="cod_treino"]');
     if (!inputTreino) {
@@ -122,6 +119,7 @@ const nomeTreino = $("#nomeTreino").val().trim();
       alert("Houve um erro ao tentar salvar o treino.");
     }
   });
+
 }
 </script>
 </head>

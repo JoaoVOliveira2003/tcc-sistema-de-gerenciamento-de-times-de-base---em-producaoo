@@ -657,16 +657,93 @@ function conteudoMinhaNota($idModal, $cod_usuario)
 
 function conteudoNotasTreino($idModal, $cod_usuario,$cod_tipoRole)
 {
-    if($cod_tipoRole==6){
+if ($cod_tipoRole == 6) {
 
-    $query='
-    select * from treino_jogador a
-    inner join treino b on b.cod_treino = a.cod_treino
-    inner join  notatreino_jogador c on c.cod_treino = b.cod_treino
-    where a.cod_jogador='.$cod_usuario.' and cod_grau_privacidade=3
-    ';
+    $query = '
+        SELECT 
+            a.cod_treino, 
+            c.desc_esporte,
+            b.desc_notaTreino,
+            b.minuto_nota,
+            a.nomeTreino,
+            a.dataTreino 
+        FROM treino a
+        INNER JOIN notatreino_jogador b ON a.cod_treino = b.cod_treino
+        INNER JOIN esporte c ON c.cod_esporte = a.cod_esporte
+        WHERE cod_grau_privacidade = 3 AND cod_jogador = ' . intval($cod_usuario);
 
+    $bd = conecta();
+    $retorno = '';
+
+    if ($bd->SqlExecuteQuery($query) && $bd->SqlNumRows() > 0) {
+
+        $retorno .= '<div class="tab-pane fade" id="notas-treino-' . $idModal . '" role="tabpanel" aria-labelledby="notas-treino-tab-' . $idModal . '">';
+
+        $cod_treinoAtual = null;
+        $contador = 0; // Para IDs únicos nos colapsáveis
+
+        do {
+            $cod_treino      = $bd->SqlQueryShow('cod_treino');
+            $desc_esporte    = $bd->SqlQueryShow('desc_esporte');
+            $desc_notaTreino = $bd->SqlQueryShow('desc_notaTreino');
+            $minuto_nota     = $bd->SqlQueryShow('minuto_nota');
+            $nomeTreino      = $bd->SqlQueryShow('nomeTreino');
+            $dataTreino      = $bd->SqlQueryShow('dataTreino');
+
+            // Novo bloco de treino
+            if ($cod_treino != $cod_treinoAtual) {
+                $contador++;
+
+                // Fecha bloco anterior
+                if ($cod_treinoAtual !== null) {
+                    $retorno .= '</div></div>';
+                }
+
+                $collapseId = 'treino-collapse-' . $contador;
+
+                // Cabeçalho clicável e corpo colapsável
+                $retorno .= '
+                    <div class="card border rounded mb-3">
+                        <div class="card-header bg-light fw-bold" style="cursor:pointer;" data-bs-toggle="collapse" data-bs-target="#' . $collapseId . '">
+                            ' . htmlspecialchars($nomeTreino) . ' | ' . formatarData(htmlspecialchars($dataTreino)) . ' | ' . htmlspecialchars($desc_esporte) . '
+                        </div>
+                        <div id="' . $collapseId . '" class="collapse">
+                            <div class="card-body">
+                ';
+
+                $cod_treinoAtual = $cod_treino;
+            }
+
+            // Adiciona notas
+            $retorno .= '
+                <div class="row g-2 mb-3 border-bottom pb-2">
+                    <div class="col-md-6">
+                        <label class="form-label">Descrição:</label>
+                        <input disabled type="text" class="form-control" value="' . htmlspecialchars($desc_notaTreino) . '">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Minuto que ela foi tirada:</label>
+                        <input disabled type="text" class="form-control" value="' . htmlspecialchars($minuto_nota) . '">
+                    </div>
+                </div>
+            ';
+
+        } while ($bd->SqlFetchNext());
+
+        // Fecha último card
+        if ($cod_treinoAtual !== null) {
+            $retorno .= '</div></div>';
+        }
+
+        $retorno .= '</div>'; // fecha a tab-pane
     }
+
+    return $retorno;
+}
+
+
+
+
     else{
     return '
     <div class="tab-pane fade" id="notas-treino-' . $idModal . '" role="tabpanel" aria-labelledby="notas-treino-tab-' . $idModal . '">

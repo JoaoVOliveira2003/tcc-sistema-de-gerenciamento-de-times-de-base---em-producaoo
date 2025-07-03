@@ -7,8 +7,9 @@ $todosJogadores = getPost('todosJogadores');
 $todosJogadores = array_map('intval', $todosJogadores);
 $todosJogadores = implode(", ", $todosJogadores);
 
+error_log($todosJogadores);
 
-$todosJogadores = '28,30';
+
 
 $bd = conecta();
 
@@ -25,7 +26,7 @@ SELECT
 FROM jogador a
 INNER JOIN cadastro_identificacao c ON c.cod_usuario = a.cod_jogador
 INNER JOIN posicao d ON d.cod_posicao = a.posicao
-INNER JOIN esporte e ON e.cod_esporte = a.esporte
+INNER JOIN esporte e ON e.cod_esporte = a.cod_esporte
 INNER JOIN midia_jogador f ON f.cod_jogador = a.cod_jogador
 LEFT JOIN (
     -- Nota com ativo = 's'
@@ -39,8 +40,9 @@ LEFT JOIN (
     FROM nota_jogador
 ) b_any ON b_any.cod_jogador = a.cod_jogador AND b_s.cod_jogador IS NULL
 WHERE a.cod_jogador IN ($todosJogadores);
- 
 ";
+
+error_log($query);
 
 if ($bd->SqlExecuteQuery($query)) {
 

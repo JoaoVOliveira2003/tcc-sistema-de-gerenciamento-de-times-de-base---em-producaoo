@@ -48,6 +48,7 @@ function listarEsportes() {
 
 function listaDeJogadores(todosJogadores) {
   var pagina = "/tcc/componentes/TREINO/listaDeJogadores.php";
+  console.log('oie |'+ todosJogadores);
 
   $.ajax({
     type: "POST",
@@ -111,8 +112,10 @@ function finalizarTreino() {
   window.location.href = "http://localhost/tcc/telas/login/telaPosLogin.php";
 }
 
-function iniciarControlesTreino(jogadores, tempoEmSegundos) {
+function iniciarControlesTreino(jogadores,tempoEmSegundos) {
+  console.log('ac');
   tempoMaxSegundos = tempoEmSegundos;
+  
   listaDeJogadores(jogadores);
   intervalo = setInterval(atualizarRelogio, 1000);
 
