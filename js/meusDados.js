@@ -7,7 +7,6 @@ function meusDados(cod_usuario,cod_tipoRole){
       cod_usuario: cod_usuario,cod_tipoRole:cod_tipoRole
     },
     success: function (data) {
-      console.log(data);
       $("#meusDados").html(data);
     }
   });
