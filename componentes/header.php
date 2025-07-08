@@ -3,6 +3,8 @@ require('../../include/conecta.php');
 $bd = conecta();
 $retorno = '';
 
+$cod_tipo_role = $usuario['cod_tipoRole'];
+
 /*
 mostra tudo - 0
 TI - 1
@@ -13,7 +15,8 @@ STAFF - 5
 jogadores - 6
 */
 
-$cod_tipo_role = 0;
+// $cod_tipo_role = 3;
+
 
 if ($cod_tipo_role == 0) {
   $query = "SELECT 

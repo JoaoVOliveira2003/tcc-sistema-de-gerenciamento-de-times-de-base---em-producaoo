@@ -1,5 +1,5 @@
 <?php
-include '../../include/verificaSessao.php';
+ include '../../include/verificaSessao.php';
 $usuario = verificarLogin();
 ?>
 
@@ -26,7 +26,8 @@ $usuario = verificarLogin();
 
   <title>Seja bem vindo</title>
 </head>
-<?php include('../../componentes/header.php'); ?>
+
+<?php include('../../componentes/header.php');?>
 
 <body>
   <div class="container mt-5">

@@ -1,0 +1,51 @@
+INSERT INTO item_menu (role_html) VALUES 
+  ('Gerenciamento de Usuários'), -- cod_item_menu = 1
+  ('Relatórios'),                -- cod_item_menu = 2
+  ('Eventos'),                   -- cod_item_menu = 2
+  ('Meus dados'),
+  ('Treino')
+  ;
+
+
+
+
+
+
+
+
+------------------------------
+TREINO(arrumar)
+criarTreino.php - ADMS e ADMSTAFF
+
+EVENTOS (arrumar)
+telaCadastroEvento.php - ADMS e ADMSTAFF
+telaTodosEventos.php - TODOS
+
+jogador 
+relatorioTodosJogadores.php - TI,ADMS,ADMI,ADMSSTTAFF
+
+
+MEUSDADOS (arrumar)
+meusDados.php - TODOS
+------------------------------
+ADMI(em tese esta tranquilo)
+telaCadastroADMI.php
+telaDadosSubInstituicao.php
+
+ADMS(em tese esta tranquilo)
+telaCadastroADMS.php
+telaDadosTurma.php
+
+STAFF
+organizacaoTurmaPorStaff.php
+telaCadastroSTAFF.php
+
+STAFFADMS
+telaCadastroSTAFFADMS.php
+
+TI
+telaCadastroTI.php
+telaDadosEstado.php
+telaDadosInstituicao.php
+telaDadosMunicipio.php
+telaDadosNacao.php

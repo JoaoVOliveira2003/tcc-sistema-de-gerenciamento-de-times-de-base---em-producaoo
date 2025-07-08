@@ -722,64 +722,236 @@ insert into login_usuario(cod_usuario,email_usuario,senha) values (7,'staffAdms@
 
 
 
+--
+-- INSERT INTO item_menu (role_html) VALUES 
+--   ('Gerenciamento de Usuários'),  -- 1
+--   ('Relatórios'),               -- 2
+--   ('Eventos'),                  -- 3
+--   ('Meus dados'),-- 5
+--   ('Treino')-- 6
+--   ;
+
+-- INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
+-- (1, '/tcc/telas/JOGADOR/relatorioTodosJogadores.php', 'Relatório Jogadores'),    -- 6
+
+
+-- -- Submenus para "Gerenciamento de Usuários"
+-- INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
+-- (1, '/tcc/telas/TI/telaCadastroTI.php', 'Cadastro TI'),                    -- 1
+-- (1, '/tcc/telas/ADMI/telaCadastroADMI.php', 'Cadastro ADMI'),             -- 2
+-- (1, '/tcc/telas/ADMS/telaCadastroADMS.php', 'Cadastro ADMS'),             -- 3
+-- (1, '/tcc/telas/STAFFADMS/telaCadastroStaffADMS.php', 'Cadastro Staff ADMS'), -- 4
+-- (1, '/tcc/telas/STAFF/telaCadastroStaff.php', 'Cadastro Staff'),          -- 5
+-- (1, '/tcc/telas/JOGADOR/telaCadastroJogador.php', 'Cadastro Jogador'),    -- 6
+-- (1, '/tcc/telas/STAFF/organizacaoTurmaPorStaff.php', 'Organização de Turmas por Staff'); -- 7
+
+-- -- Submenus para "Relatórios"
+-- INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
+-- (2, '/tcc/telas/TI/telaDadosInstituicao.php', 'Instituição'),         -- 8
+-- (2, '/tcc/telas/ADMI/telaDadosSubInstituicao.php', 'Sub-Instituição'),-- 9
+-- (2, '/tcc/telas/ADMS/telaDadosTurma.php', 'Turma'),                   -- 10
+-- (2, '/tcc/telas/TI/telaDadosNacao.php', 'Nação'),                     -- 11
+-- (2, '/tcc/telas/TI/telaDadosEstado.php', 'Estado'),                   -- 12
+-- (2, '/tcc/telas/TI/telaDadosMunicipio.php', 'Município');             -- 13
+
+-- INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
+-- (3, '/tcc/telas/EVENTOS/telaCadastroEvento.php', 'Cadastro Evento'),
+-- (3, '/tcc/telas/EVENTOS/telaTodosEventos.php', 'Eventos ativos');
+
+-- INSERT INTO subitem_menu (cod_item_menu, href, label) 
+-- VALUES (4, '/tcc/telas/MEUSDADOS/meusDados.php', 'Meus dados'); 
+
+-- -- Não tem a 5 agora,quando criar a ultima versão arrumar
+-- INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
+-- (6, '/tcc/telas/TREINO/criarTreino.php', 'Criar treino');
+
+-- INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
+-- (6, '/tcc/telas/MEUSDADOS/meusDados.php', 'Meus dados');
+
+
+-- -- Relacionar todos os tipos de role com os menus principais
+-- INSERT INTO itemMenu_tipoRole (cod_item_menu, cod_tipo_role) VALUES
+-- (1, 1), (2, 1),(3, 1),  -- TI
+-- (1, 2), (2, 2),(3, 2),  -- ADMI
+-- (1, 3), (2, 3),(3, 3),  -- ADMS
+-- (1, 4), (2, 4),(3, 4),  -- ADMS|STAFF
+-- (1, 5), (2, 5),(3, 5),  -- STAFF
+-- (1, 6), (2, 6),(3, 6);  -- JOGADOR
+
+-- INSERT INTO itemMenu_tipoRole (cod_item_menu, cod_tipo_role) VALUES
+-- (5, 1),(6, 1),
+-- (5, 2),(6, 2),
+-- (5, 3),(6, 3),
+-- (5, 4),(6, 4),
+-- (5, 5),(6, 5),
+-- (5, 6),(6, 6);
+
+-- -- TI
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- (1, 1, 1),   -- TI pode acessar: Cadastro TI
+-- (1, 2, 1),   -- TI pode acessar: Cadastro ADMI
+-- (1, 3, 1),   -- TI pode acessar: Cadastro ADMS
+-- (1, 4, 1),   -- TI pode acessar: Cadastro Staff ADMS
+-- (1, 5, 1),   -- TI pode acessar: Cadastro Staff
+-- (1, 6, 1),   -- TI pode acessar: Cadastro Jogador
+-- (1, 7, 1),   -- TI pode acessar: Organização de Turmas por Staff
+-- (2, 8, 1),   -- TI pode acessar: Instituição
+-- (2, 9, 1),   -- TI pode acessar: Sub-Instituição
+-- (2, 10, 1),  -- TI pode acessar: Turma
+-- (2, 11, 1),  -- TI pode acessar: Nação
+-- (2, 12, 1);  -- TI pode acessar: Estado
+
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- (3, 17, 1);  -- Eventos ativos
+
+
+-- -- ADMI
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- (1, 2, 2),
+-- (1, 3, 2),
+-- (1, 4, 2),
+-- (1, 5, 2),
+-- (1, 6, 2),
+-- (2, 8, 2),
+-- (2, 9, 2),
+-- (2, 13, 2); -- Organização de Turmas por Staff
+
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- (3, 17, 2);  -- Eventos ativos
+
+-- -- ADMS
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- (1, 3, 3),  -- Cadastro ADMS
+-- (1, 4, 3),  -- Cadastro Staff ADMS
+-- (1, 5, 3),  -- Cadastro Staff
+-- (1, 6, 3),  -- Cadastro Jogador
+-- (2, 9, 3);  -- Turma
+
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- (3, 17, 3);  -- Eventos ativos
+
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- (6, 16, 3);  -- Criar treino
+
+
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES (3, 16, 3);  -- Criar telaCadastroEvento
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES (3, 16, 4);  -- Criar telaCadastroEvento
+
+
+-- -- ADMS|STAFF
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- (1, 3, 4),   -- Cadastro ADMS
+-- (1, 4, 4),   -- Cadastro Staff ADMS
+-- (1, 5, 4),   -- Cadastro Staff
+-- (1, 6, 4),   -- Cadastro Jogador
+-- (1, 13, 4),  -- Organização de Turmas por Staff
+-- (2, 9, 4);   -- Turma
+
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- (6, 16, 4);  -- Criar treino
 
 
 
--- headers (agora só para o ADMS)
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- (6, 15, 4);  -- Criar treino
+
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- (3, 17, 4); 
+
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role)
+-- VALUES (3, 15, 4);   
+
+-- -- -- STAFF
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- (3, 17, 5);  -- Eventos ativos
+
+
+-- -- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- -- (3, 17, 5);  -- Eventos ativos
+
+-- -- telaCadastroEvento.php
+
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- (6, 15, 5);  -- Criar treino
+
+
+-- -- -- JOGADOR
+-- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+-- (3, 17, 6);  -- Eventos ativos
+
+-- ===============================
+-- 1. MENUS PRINCIPAIS
+-- ===============================
 INSERT INTO item_menu (role_html) VALUES 
-  ('Gerenciamento de Usuários'), -- cod_item_menu = 1
-  ('Relatórios'),                -- cod_item_menu = 2
-  ('Eventos'),                -- cod_item_menu = 2
-  ('Meus dados');
+  ('Gerenciamento de Usuários'),  -- cod_item_menu = 1
+  ('Relatórios'),                 -- cod_item_menu = 2
+  ('Eventos'),                    -- cod_item_menu = 3
+  ('Meus dados'),                 -- cod_item_menu = 4
+  ('Treino');                     -- cod_item_menu = 5
 
+-- ===============================
+-- 2. SUBITENS DE MENU
+-- ===============================
 -- Submenus para "Gerenciamento de Usuários"
 INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
-(1, '/tcc/telas/TI/telaCadastroTI.php', 'Cadastro TI'),                    -- 1
-(1, '/tcc/telas/ADMI/telaCadastroADMI.php', 'Cadastro ADMI'),             -- 2
-(1, '/tcc/telas/ADMS/telaCadastroADMS.php', 'Cadastro ADMS'),             -- 3
+(1, '/tcc/telas/TI/telaCadastroTI.php', 'Cadastro TI'),                     -- cod_subitem_menu = 1
+(1, '/tcc/telas/ADMI/telaCadastroADMI.php', 'Cadastro ADMI'),              -- 2
+(1, '/tcc/telas/ADMS/telaCadastroADMS.php', 'Cadastro ADMS'),              -- 3
 (1, '/tcc/telas/STAFFADMS/telaCadastroStaffADMS.php', 'Cadastro Staff ADMS'), -- 4
-(1, '/tcc/telas/STAFF/telaCadastroStaff.php', 'Cadastro Staff'),          -- 5
-(1, '/tcc/telas/JOGADOR/telaCadastroJogador.php', 'Cadastro Jogador'),    -- 6
+(1, '/tcc/telas/STAFF/telaCadastroStaff.php', 'Cadastro Staff'),           -- 5
+(1, '/tcc/telas/JOGADOR/telaCadastroJogador.php', 'Cadastro Jogador'),     -- 6
 (1, '/tcc/telas/STAFF/organizacaoTurmaPorStaff.php', 'Organização de Turmas por Staff'); -- 7
 
 -- Submenus para "Relatórios"
 INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
-(2, '/tcc/telas/TI/telaDadosInstituicao.php', 'Instituição'),         -- 8
-(2, '/tcc/telas/ADMI/telaDadosSubInstituicao.php', 'Sub-Instituição'),-- 9
-(2, '/tcc/telas/ADMS/telaDadosTurma.php', 'Turma'),                   -- 10
-(2, '/tcc/telas/TI/telaDadosNacao.php', 'Nação'),                     -- 11
-(2, '/tcc/telas/TI/telaDadosEstado.php', 'Estado'),                   -- 12
-(2, '/tcc/telas/TI/telaDadosMunicipio.php', 'Município');             -- 13
+(2, '/tcc/telas/TI/telaDadosInstituicao.php', 'Instituição'),              -- 8
+(2, '/tcc/telas/ADMI/telaDadosSubInstituicao.php', 'Sub-Instituição'),     -- 9
+(2, '/tcc/telas/ADMS/telaDadosTurma.php', 'Turma'),                        -- 10
+(2, '/tcc/telas/TI/telaDadosNacao.php', 'Nação'),                          -- 11
+(2, '/tcc/telas/TI/telaDadosEstado.php', 'Estado'),                        -- 12
+(2, '/tcc/telas/TI/telaDadosMunicipio.php', 'Município');                  -- 13
 
+-- Submenus diversos
+INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
+(3, '/tcc/telas/EVENTOS/telaCadastroEvento.php', 'Cadastro Evento'),       -- 14
+(3, '/tcc/telas/EVENTOS/telaTodosEventos.php', 'Eventos ativos'),          -- 15
+(4, '/tcc/telas/MEUSDADOS/meusDados.php', 'Meus dados'),                   -- 16
+(5, '/tcc/telas/TREINO/criarTreino.php', 'Criar treino');                  -- 17
 
-
-
--- Relacionar todos os tipos de role com os menus principais
+-- ===============================
+-- 3. RELAÇÃO ROLE x MENU PRINCIPAL
+-- ===============================
 INSERT INTO itemMenu_tipoRole (cod_item_menu, cod_tipo_role) VALUES
-(1, 1), (2, 1),(3, 1),  -- TI
-(1, 2), (2, 2),(3, 2),  -- ADMI
-(1, 3), (2, 3),(3, 3),  -- ADMS
-(1, 4), (2, 4),(3, 4),  -- ADMS|STAFF
-(1, 5), (2, 5),(3, 5),  -- STAFF
-(1, 6), (2, 6),(3, 6);  -- JOGADOR
+(1, 1), (2, 1), (3, 1), (4, 1), (5, 1),  -- TI
+(1, 2), (2, 2), (3, 2), (4, 2), (5, 2),  -- ADMI
+(1, 3), (2, 3), (3, 3), (4, 3), (5, 3),  -- ADMS
+(1, 4), (2, 4), (3, 4), (4, 4), (5, 4),  -- ADMS|STAFF
+(1, 5), (2, 5), (3, 5), (4, 5), (5, 5),  -- STAFF
+(1, 6), (2, 6), (3, 6), (4, 6), (5, 6);  -- JOGADOR
 
+-- ===============================
+-- 4. RELAÇÃO ROLE x SUBITENS (ORDENADO POR cod_tipo_role)
+-- ===============================
 
--- TI
+-- TI (cod_tipo_role = 1)
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
-(1, 1, 1),   -- TI pode acessar: Cadastro TI
-(1, 2, 1),   -- TI pode acessar: Cadastro ADMI
-(1, 3, 1),   -- TI pode acessar: Cadastro ADMS
-(1, 4, 1),   -- TI pode acessar: Cadastro Staff ADMS
-(1, 5, 1),   -- TI pode acessar: Cadastro Staff
-(1, 6, 1),   -- TI pode acessar: Cadastro Jogador
-(1, 7, 1),   -- TI pode acessar: Organização de Turmas por Staff
-(2, 8, 1),   -- TI pode acessar: Instituição
-(2, 9, 1),   -- TI pode acessar: Sub-Instituição
-(2, 10, 1),  -- TI pode acessar: Turma
-(2, 11, 1),  -- TI pode acessar: Nação
-(2, 12, 1);  -- TI pode acessar: Estado
+(1, 1, 1),
+(1, 2, 1),
+(1, 3, 1),
+(1, 4, 1),
+(1, 5, 1),
+(1, 6, 1),
+(1, 7, 1),
+(2, 8, 1),
+(2, 9, 1),
+(2, 10, 1),
+(2, 11, 1),
+(2, 12, 1),
+(3, 15, 1),
+(4, 16, 1),
+(5, 17, 1);
 
--- ADMI
+-- ADMI (cod_tipo_role = 2)
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
 (1, 2, 2),
 (1, 3, 2),
@@ -788,35 +960,50 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (1, 6, 2),
 (2, 8, 2),
 (2, 9, 2),
-(2, 13, 2); -- Organização de Turmas por Staff
+(2, 13, 2),
+(3, 15, 2),
+(4, 16, 2),
+(5, 17, 2);
 
--- ADMS
+-- ADMS (cod_tipo_role = 3)
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
-(1, 3, 3),  -- Cadastro ADMS
-(1, 4, 3),  -- Cadastro Staff ADMS
-(1, 5, 3),  -- Cadastro Staff
-(1, 6, 3),  -- Cadastro Jogador
-(2, 9, 3);  -- Turma
+(1, 3, 3),
+(1, 4, 3),
+(1, 5, 3),
+(1, 6, 3),
+(2, 9, 3),
+(3, 15, 3),
+(3, 14, 3),
+(4, 16, 3),
+(5, 17, 3);
 
--- ADMS|STAFF
+-- ADMS/STAFF (cod_tipo_role = 4)
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
-(1, 3, 4),   -- Cadastro ADMS
-(1, 4, 4),   -- Cadastro Staff ADMS
-(1, 5, 4),   -- Cadastro Staff
-(1, 6, 4),   -- Cadastro Jogador
-(1, 13, 4),  -- Organização de Turmas por Staff
-(2, 9, 4);   -- Turma
+(1, 3, 4),
+(1, 4, 4),
+(1, 5, 4),
+(1, 6, 4),
+(1, 13, 4),
+(2, 9, 4),
+(3, 14, 4),
+(3, 15, 4),
+(4, 16, 4),
+(5, 17, 4);
+
+-- STAFF (cod_tipo_role = 5)
+INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+(3, 15, 5),
+(4, 16, 5),
+(5, 17, 5);
+
+-- JOGADOR (cod_tipo_role = 6)
+INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+(3, 15, 6),
+(4, 16, 6),
+(5, 17, 6);
 
 
-INSERT INTO item_menu (role_html) VALUES ('Meus dados');
-INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES (4, '/tcc/telas/MEUSDADOS/meusDados.php', 'Meus dados'); 
-INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES (3, 15, 4);   
 
--- -- STAFF
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
-
--- -- JOGADOR
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
 
 -- STAFFS: IDs de 6 até 15
 INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES 
