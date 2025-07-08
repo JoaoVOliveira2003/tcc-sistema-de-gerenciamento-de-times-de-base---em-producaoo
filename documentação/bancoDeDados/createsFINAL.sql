@@ -57,20 +57,6 @@ CREATE TABLE `login_usuario` (
   CONSTRAINT `fk_login_usuario_identificacao` FOREIGN KEY (`cod_usuario`) REFERENCES `cadastro_identificacao` (`cod_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
-
--- Item de Menu
--- CREATE TABLE `item_menu` (
---   `cod_item_menu` INT NOT NULL AUTO_INCREMENT, 
---   `href` VARCHAR(200), 
---   `html_id` VARCHAR(200), 
---   `role_html` VARCHAR(200), 
---   `label` VARCHAR(200), 
---   `cod_tipo_role` INT NOT NULL, 
---   PRIMARY KEY (`cod_item_menu`), 
---   CONSTRAINT `fk_item_menu_tipo_role` FOREIGN KEY (`cod_tipo_role`) REFERENCES `tipo_role` (`cod_tipo_role`) ON DELETE NO ACTION ON UPDATE NO ACTION
--- ) ENGINE = InnoDB;
-
-
 -- Tipo de Role
 CREATE TABLE `tipo_role` (
   `cod_tipo_role` INT NOT NULL AUTO_INCREMENT, 
@@ -219,7 +205,6 @@ CREATE TABLE turma (
     ON DELETE NO ACTION ON UPDATE CASCADE
 );
 
-
 -- staff_turma
 CREATE TABLE `tcc`.`staff_turma` (
   `cod_staff` INT NOT NULL, 
@@ -262,41 +247,15 @@ CREATE TABLE `tcc`.`posicao` (
 
 -- Treino
 CREATE TABLE `tcc`.`Treino` (
-  `cod_treino` INT AUTO_INCREMENT PRIMARY KEY, 
-  `cod_staff` INT NOT NULL, 
-  `cod_esporte` INT NOT NULL, 
-  `tempo_treino` CHAR(10), 
-  `placar_treino` CHAR(10),
-  FOREIGN KEY (`cod_staff`) REFERENCES `staff`(`cod_staff`) ON DELETE NO ACTION ON UPDATE NO ACTION, 
+  `cod_treino` INT AUTO_INCREMENT PRIMARY KEY,
+  `cod_staff` INT NOT NULL,
+  `cod_esporte` INT NOT NULL,
+  `tempo_treino` INT,
+  `dataTreino` DATE NULL,
+  `nomeTreino` VARCHAR(200) NULL,
+  FOREIGN KEY (`cod_staff`) REFERENCES `staff`(`cod_staff`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   FOREIGN KEY (`cod_esporte`) REFERENCES `esporte`(`cod_esporte`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
-
-ALTER TABLE Treino MODIFY COLUMN tempo_treino INT;
-
-ALTER TABLE `tcc`.`treino`
-ADD COLUMN `dataTreino` DATE NULL,
-ADD COLUMN `nomeTreino` VARCHAR(200) NULL;
-
-
--- midia_treino
--- CREATE TABLE `tcc`.`midia_treino` (
---   `cod_midiaTreino` INT NOT NULL, 
---   `cod_treino` INT NOT NULL, 
---   PRIMARY KEY (`cod_midiaTreino`), 
---   CONSTRAINT `fk_midia_treino_treino` FOREIGN KEY (`cod_treino`) REFERENCES `tcc`.`Treino`(`cod_treino`) ON DELETE CASCADE ON UPDATE CASCADE, 
---   CONSTRAINT `fk_midia_treino_midiaJogo` FOREIGN KEY (`cod_midiaJogo`) REFERENCES `tcc`.`midia_TreinoJogo`(`cod_midiaJogo`) ON DELETE 
---   SET 
---     NULL ON UPDATE CASCADE
--- ) ENGINE = InnoDB;
-
-
-
--- -- midia_TreinoJogo
--- CREATE TABLE `tcc`.`midia_TreinoJogo` (
---   `cod_midiaJogo` INT NOT NULL, 
---   `local_midia` VARCHAR(45) NULL, 
---   PRIMARY KEY (`cod_midiaJogo`)
--- ) ENGINE = InnoDB;
 
 -- -- midia_TreinoJogo
 CREATE TABLE `tcc`.`midia_TreinoJogo` (
@@ -327,21 +286,7 @@ CREATE TABLE `tcc`.`midia_treino` (
 CREATE TABLE grau_privacidade(
   cod_grau_privacidade INT PRIMARY KEY, 
   desc_grau_privacidade VARCHAR(100) NOT NULL
-
 );
-
--- notaTreino_jogador
--- CREATE TABLE `notaTreino_jogador` (
---   cod_jogador INT NOT NULL, 
---   cod_treino INT NOT NULL, 
---   minuto_nota CHAR(10), 
---   desc_notaTreino VARCHAR(100), 
---   cod_grau_privacidade INT, 
---   PRIMARY KEY (cod_jogador, cod_treino), 
---   FOREIGN KEY (cod_grau_privacidade) REFERENCES grau_privacidade(cod_grau_privacidade),
---   FOREIGN KEY (cod_jogador) REFERENCES jogador(cod_jogador), 
---   FOREIGN KEY (cod_treino) REFERENCES treino(cod_treino)
--- );
 
 CREATE TABLE notaTreino_jogador (
   cod_notaTreino INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -500,13 +445,11 @@ CREATE TABLE `tcc`.`midia_jogador` (
 -- =========================
 -- REATIVAR REGRAS
 -- =========================
-SET 
-  SQL_MODE = @OLD_SQL_MODE;
-SET 
-  FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
-SET 
-  UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
+SET SQL_MODE = @OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
 
+---------------------- INSERTS----------------------
 -- Inserção de nações-- Inserção de nação (somente Brasil)
 INSERT INTO nacao (sigla_nacao, desc_nacao) VALUES
 ('br', 'Brasil');
@@ -655,219 +598,12 @@ INSERT INTO tipo_lesao (desc_tipoLesao) VALUES
 ('Lesões nos Ossos'),
 ('Lesões nos Tendões');
 
+--- insert do cadastro do sistema
 INSERT INTO cadastro_identificacao (nome, cpf,cod_municipio,ativo) VALUES ('sistema','1',1,'s');
 INSERT INTO role_cadastro (cod_usuario,cod_tipoRole) VALUES (1,5);
 INSERT INTO staff(cod_staff) VALUES (1);
 
--- aqui
--- CAADASTRO DE TI
-insert into cadastro_identificacao(nome,cpf,ativo,cod_municipio) values ('Cadastro TI',123,'s',2);
-insert into role_cadastro(cod_usuario,cod_tipoRole) values(2,1);
-insert into login_usuario(cod_usuario,email_usuario,senha) values (2,'ti@gmail.com','ti');
-
--- CADASTRO DE JOGADOR
-INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('joselito', '13432640900', 1, 's');
-INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (2, 6);
-INSERT INTO jogador(cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (2, '2025-12-31', 1, 1);
-INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (1, 2);
-INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (2, 'midia/zjor.png');
-INSERT INTO contato_responsavel (nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) VALUES ('maria vlau', 'mae', 'jora@gmail.com', '444444');
-INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (2, 1);
-INSERT INTO historicoLesoes (cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) VALUES (3, 'quebrou pé', '2003-02-13', '40 dias');
-INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) VALUES (2, 182, 765, 'O+', 'Nenhuma', 'Poeira, Pólen', '2025-04-22');
-INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (2, 1);
-insert into login_usuario(cod_usuario,email_usuario,senha) values (3,'jogador@gmail.com','jogador');
-
--- cadastro ADMI
-INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('admi', 123, 1, 's');
-INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (4, 4);
-INSERT INTO administrador (cod_administrador, tipo_role) VALUES (4,2);
-INSERT INTO administrador_instituicao (cod_administrador, cod_instituicao) VALUES (4, 1);
-insert into login_usuario(cod_usuario,email_usuario,senha) values (4,'admi@gmail.com','admi');
-
--- cadastro ADMS
-INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('adms', 123, 1, 's');
-INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (5, 4);
-INSERT INTO administrador (cod_administrador, tipo_role) VALUES (5,3);
-INSERT INTO administrador_subInstituicao (cod_administrador, cod_subInstituicao) VALUES (4, 1);
-insert into login_usuario(cod_usuario,email_usuario,senha) values (5,'adms@gmail.com','adms');
-
--- cadastro staff
-INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('staff', 123, 1, 's');
-INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (6, 5);
-INSERT INTO staff (cod_staff) VALUES (6);
-INSERT INTO subInstituticao_staff (cod_staff, cod_subInstituicao) VALUES (6, 1);
-insert into login_usuario(cod_usuario,email_usuario,senha) values (6,'staff@gmail.com','staff');
-
-
--- cadastro staffAdms
-INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('staffAdms', 123, 1, 's');
-INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (7,5);
-INSERT INTO staff (cod_staff) VALUES (7);
-INSERT INTO administrador (cod_administrador, tipo_role) VALUES (7,4);
-INSERT INTO administrador_subInstituicao (cod_administrador, cod_subInstituicao) VALUES (7, 1);
-INSERT INTO subInstituticao_staff (cod_staff, cod_subInstituicao) VALUES (7, 1);
-insert into login_usuario(cod_usuario,email_usuario,senha) values (7,'staffAdms@gmail.com','staffAdms');
-
-
-
-
---
--- INSERT INTO item_menu (role_html) VALUES 
---   ('Gerenciamento de Usuários'),  -- 1
---   ('Relatórios'),               -- 2
---   ('Eventos'),                  -- 3
---   ('Meus dados'),-- 5
---   ('Treino')-- 6
---   ;
-
--- INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
--- (1, '/tcc/telas/JOGADOR/relatorioTodosJogadores.php', 'Relatório Jogadores'),    -- 6
-
-
--- -- Submenus para "Gerenciamento de Usuários"
--- INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
--- (1, '/tcc/telas/TI/telaCadastroTI.php', 'Cadastro TI'),                    -- 1
--- (1, '/tcc/telas/ADMI/telaCadastroADMI.php', 'Cadastro ADMI'),             -- 2
--- (1, '/tcc/telas/ADMS/telaCadastroADMS.php', 'Cadastro ADMS'),             -- 3
--- (1, '/tcc/telas/STAFFADMS/telaCadastroStaffADMS.php', 'Cadastro Staff ADMS'), -- 4
--- (1, '/tcc/telas/STAFF/telaCadastroStaff.php', 'Cadastro Staff'),          -- 5
--- (1, '/tcc/telas/JOGADOR/telaCadastroJogador.php', 'Cadastro Jogador'),    -- 6
--- (1, '/tcc/telas/STAFF/organizacaoTurmaPorStaff.php', 'Organização de Turmas por Staff'); -- 7
-
--- -- Submenus para "Relatórios"
--- INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
--- (2, '/tcc/telas/TI/telaDadosInstituicao.php', 'Instituição'),         -- 8
--- (2, '/tcc/telas/ADMI/telaDadosSubInstituicao.php', 'Sub-Instituição'),-- 9
--- (2, '/tcc/telas/ADMS/telaDadosTurma.php', 'Turma'),                   -- 10
--- (2, '/tcc/telas/TI/telaDadosNacao.php', 'Nação'),                     -- 11
--- (2, '/tcc/telas/TI/telaDadosEstado.php', 'Estado'),                   -- 12
--- (2, '/tcc/telas/TI/telaDadosMunicipio.php', 'Município');             -- 13
-
--- INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
--- (3, '/tcc/telas/EVENTOS/telaCadastroEvento.php', 'Cadastro Evento'),
--- (3, '/tcc/telas/EVENTOS/telaTodosEventos.php', 'Eventos ativos');
-
--- INSERT INTO subitem_menu (cod_item_menu, href, label) 
--- VALUES (4, '/tcc/telas/MEUSDADOS/meusDados.php', 'Meus dados'); 
-
--- -- Não tem a 5 agora,quando criar a ultima versão arrumar
--- INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
--- (6, '/tcc/telas/TREINO/criarTreino.php', 'Criar treino');
-
--- INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
--- (6, '/tcc/telas/MEUSDADOS/meusDados.php', 'Meus dados');
-
-
--- -- Relacionar todos os tipos de role com os menus principais
--- INSERT INTO itemMenu_tipoRole (cod_item_menu, cod_tipo_role) VALUES
--- (1, 1), (2, 1),(3, 1),  -- TI
--- (1, 2), (2, 2),(3, 2),  -- ADMI
--- (1, 3), (2, 3),(3, 3),  -- ADMS
--- (1, 4), (2, 4),(3, 4),  -- ADMS|STAFF
--- (1, 5), (2, 5),(3, 5),  -- STAFF
--- (1, 6), (2, 6),(3, 6);  -- JOGADOR
-
--- INSERT INTO itemMenu_tipoRole (cod_item_menu, cod_tipo_role) VALUES
--- (5, 1),(6, 1),
--- (5, 2),(6, 2),
--- (5, 3),(6, 3),
--- (5, 4),(6, 4),
--- (5, 5),(6, 5),
--- (5, 6),(6, 6);
-
--- -- TI
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
--- (1, 1, 1),   -- TI pode acessar: Cadastro TI
--- (1, 2, 1),   -- TI pode acessar: Cadastro ADMI
--- (1, 3, 1),   -- TI pode acessar: Cadastro ADMS
--- (1, 4, 1),   -- TI pode acessar: Cadastro Staff ADMS
--- (1, 5, 1),   -- TI pode acessar: Cadastro Staff
--- (1, 6, 1),   -- TI pode acessar: Cadastro Jogador
--- (1, 7, 1),   -- TI pode acessar: Organização de Turmas por Staff
--- (2, 8, 1),   -- TI pode acessar: Instituição
--- (2, 9, 1),   -- TI pode acessar: Sub-Instituição
--- (2, 10, 1),  -- TI pode acessar: Turma
--- (2, 11, 1),  -- TI pode acessar: Nação
--- (2, 12, 1);  -- TI pode acessar: Estado
-
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
--- (3, 17, 1);  -- Eventos ativos
-
-
--- -- ADMI
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
--- (1, 2, 2),
--- (1, 3, 2),
--- (1, 4, 2),
--- (1, 5, 2),
--- (1, 6, 2),
--- (2, 8, 2),
--- (2, 9, 2),
--- (2, 13, 2); -- Organização de Turmas por Staff
-
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
--- (3, 17, 2);  -- Eventos ativos
-
--- -- ADMS
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
--- (1, 3, 3),  -- Cadastro ADMS
--- (1, 4, 3),  -- Cadastro Staff ADMS
--- (1, 5, 3),  -- Cadastro Staff
--- (1, 6, 3),  -- Cadastro Jogador
--- (2, 9, 3);  -- Turma
-
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
--- (3, 17, 3);  -- Eventos ativos
-
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
--- (6, 16, 3);  -- Criar treino
-
-
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES (3, 16, 3);  -- Criar telaCadastroEvento
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES (3, 16, 4);  -- Criar telaCadastroEvento
-
-
--- -- ADMS|STAFF
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
--- (1, 3, 4),   -- Cadastro ADMS
--- (1, 4, 4),   -- Cadastro Staff ADMS
--- (1, 5, 4),   -- Cadastro Staff
--- (1, 6, 4),   -- Cadastro Jogador
--- (1, 13, 4),  -- Organização de Turmas por Staff
--- (2, 9, 4);   -- Turma
-
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
--- (6, 16, 4);  -- Criar treino
-
-
-
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
--- (6, 15, 4);  -- Criar treino
-
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
--- (3, 17, 4); 
-
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role)
--- VALUES (3, 15, 4);   
-
--- -- -- STAFF
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
--- (3, 17, 5);  -- Eventos ativos
-
-
--- -- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
--- -- (3, 17, 5);  -- Eventos ativos
-
--- -- telaCadastroEvento.php
-
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
--- (6, 15, 5);  -- Criar treino
-
-
--- -- -- JOGADOR
--- INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
--- (3, 17, 6);  -- Eventos ativos
+----
 
 -- ===============================
 -- 1. MENUS PRINCIPAIS
@@ -992,155 +728,52 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (4, 16, 6),
 (5, 17, 6);
 
+--------- Usuaros basicos para teste
+
+insert into cadastro_identificacao(nome,cpf,ativo,cod_municipio) values ('Cadastro TI',123,'s',2);
+insert into role_cadastro(cod_usuario,cod_tipoRole) values(2,1);
+insert into login_usuario(cod_usuario,email_usuario,senha) values (2,'ti@gmail.com','ti');
+
+-- CADASTRO DE JOGADOR
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('joselito', '13432640900', 1, 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (2, 6);
+INSERT INTO jogador(cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (2, '2025-12-31', 1, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (1, 2);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (2, 'midia/zjor.png');
+INSERT INTO contato_responsavel (nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) VALUES ('maria vlau', 'mae', 'jora@gmail.com', '444444');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (2, 1);
+INSERT INTO historicoLesoes (cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) VALUES (3, 'quebrou pé', '2003-02-13', '40 dias');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) VALUES (2, 182, 765, 'O+', 'Nenhuma', 'Poeira, Pólen', '2025-04-22');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (2, 1);
+insert into login_usuario(cod_usuario,email_usuario,senha) values (3,'jogador@gmail.com','jogador');
+
+-- cadastro ADMI
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('admi', 123, 1, 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (4, 4);
+INSERT INTO administrador (cod_administrador, tipo_role) VALUES (4,2);
+INSERT INTO administrador_instituicao (cod_administrador, cod_instituicao) VALUES (4, 1);
+insert into login_usuario(cod_usuario,email_usuario,senha) values (4,'admi@gmail.com','admi');
+
+-- cadastro ADMS
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('adms', 123, 1, 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (5, 4);
+INSERT INTO administrador (cod_administrador, tipo_role) VALUES (5,3);
+INSERT INTO administrador_subInstituicao (cod_administrador, cod_subInstituicao) VALUES (4, 1);
+insert into login_usuario(cod_usuario,email_usuario,senha) values (5,'adms@gmail.com','adms');
+
+-- cadastro staff
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('staff', 123, 1, 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (6, 5);
+INSERT INTO staff (cod_staff) VALUES (6);
+INSERT INTO subInstituticao_staff (cod_staff, cod_subInstituicao) VALUES (6, 1);
+insert into login_usuario(cod_usuario,email_usuario,senha) values (6,'staff@gmail.com','staff');
 
 
-
--- STAFFS: IDs de 6 até 15
-INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES 
-('staff 6', 100000006, 1, 's'),
-('staff 7', 100000007, 1, 's'),
-('staff 8', 100000008, 1, 's'),
-('staff 9', 100000009, 1, 's'),
-('staff 10', 100000010, 1, 's'),
-('staff 11', 100000011, 1, 's'),
-('staff 12', 100000012, 1, 's'),
-('staff 13', 100000013, 1, 's'),
-('staff 14', 100000014, 1, 's'),
-('staff 15', 100000015, 1, 's');
-
-INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES
-(6, 5), (7, 5), (8, 5), (9, 5), (10, 5),
-(11, 5), (12, 5), (13, 5), (14, 5), (15, 5);
-
-INSERT INTO staff (cod_staff) VALUES
- (8), (9), (10),
-(11), (12), (13), (14), (15);
-
-INSERT INTO subInstituticao_staff (cod_staff, cod_subInstituicao) VALUES
-(9, 1), (10, 1),
-(11, 1), (12, 1), (13, 1), (14, 1), (15, 1);
-
-INSERT INTO login_usuario (cod_usuario, email_usuario, senha) VALUES
-(9, 'staff9@gmail.com', 'staff9'),
-(10, 'staff10@gmail.com', 'staff10'),
-(11, 'staff11@gmail.com', 'staff11'),
-(12, 'staff12@gmail.com', 'staff12'),
-(13, 'staff13@gmail.com', 'staff13'),
-(14, 'staff14@gmail.com', 'staff14'),
-(15, 'staff15@gmail.com', 'staff15');
-
--- EVENTOS com staffs de 6 a 15
--- Turmas de 1 a 10
-
-INSERT INTO evento (cod_staff, titulo_evento, data, horario, local, desc_evento, ativo) VALUES
-(6, 'Evento 1', '2025-06-01', '09:00:00', 'Sala 1', 'Descrição do Evento 1', 'S'),
-(7, 'Evento 2', '2025-06-02', '10:00:00', 'Sala 2', 'Descrição do Evento 2', 'S'),
-(8, 'Evento 3', '2025-06-03', '11:00:00', 'Sala 3', 'Descrição do Evento 3', 'S'),
-(9, 'Evento 4', '2025-06-04', '12:00:00', 'Sala 4', 'Descrição do Evento 4', 'S'),
-(10, 'Evento 5', '2025-06-05', '13:00:00', 'Sala 5', 'Descrição do Evento 5', 'S'),
-(11, 'Evento 6', '2025-06-06', '14:00:00', 'Sala 6', 'Descrição do Evento 6', 'S'),
-(12, 'Evento 7', '2025-06-07', '15:00:00', 'Sala 7', 'Descrição do Evento 7', 'S'),
-(13, 'Evento 8', '2025-06-08', '16:00:00', 'Sala 8', 'Descrição do Evento 8', 'S'),
-(14, 'Evento 9', '2025-06-09', '17:00:00', 'Sala 9', 'Descrição do Evento 9', 'S'),
-(15, 'Evento 10','2025-06-10', '18:00:00', 'Sala 10','Descrição do Evento 10', 'S');
-
-INSERT INTO turma_evento (cod_evento, cod_turma) VALUES
-(1, 1),
-(2, 1),
-(3, 2),
-(4, 2),
-(5, 3),
-(6, 3),
-(7, 1),
-(8, 2),
-(9, 3),
-(10, 1);
-
-insert into staff_turma(cod_staff,cod_turma) values (9,3),(9,2),(9,5);
-INSERT INTO staff_turma(cod_staff, cod_turma) VALUES
-(9, 1),
-(10, 2),
-(11, 3),
-(12, 4),
-(13, 5),
-(14, 2),
-(15, 3),
-(9, 4),
-(10, 5),
-(11, 1);
-
-UPDATE subinstituticao_staff SET cod_SubInstituicao = 2 WHERE cod_staff = 6;
-UPDATE subinstituticao_staff SET cod_SubInstituicao = 3 WHERE cod_staff = 7;
-UPDATE subinstituticao_staff SET cod_SubInstituicao = 1 WHERE cod_staff = 9;
-UPDATE subinstituticao_staff SET cod_SubInstituicao = 5 WHERE cod_staff = 10;
-UPDATE subinstituticao_staff SET cod_SubInstituicao = 6 WHERE cod_staff = 11;
-UPDATE subinstituticao_staff SET cod_SubInstituicao = 7 WHERE cod_staff = 12;
-UPDATE subinstituticao_staff SET cod_SubInstituicao = 8 WHERE cod_staff = 13;
--- UPDATE subinstituticao_staff SET cod_SubInstituicao = 9 WHERE cod_staff = 14;
--- UPDATE subinstituticao_staff SET cod_SubInstituicao = 10 WHERE cod_staff = 15;
-
-insert into staff_turma(cod_staff,cod_turma) values (14,9);
-
-
--- INSERTS em cadastro_identificacao
-INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES 
-('Thiago Heleno', '13432640900', '1', 's'),
-('Carlos Silva', '12345678901', '2', 's'),
-('Ana Pereira', '98765432100', '3', 's'),
-('Bruna Rocha', '45612378900', '4', 's'),
-('Lucas Costa', '32165498700', '5', 's'),
-('Fernanda Lima', '14725836900', '6', 's'),
-('Paulo Sousa', '25836914700', '7', 's'),
-('Juliana Mendes', '36914725800', '8', 's'),
-('Renato Torres', '74185296300', '9', 's'),
-('Marina Alves', '85296374100', '10', 's');
-
--- INSERTS em role_cadastro
-INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES 
-(18, 6), (19, 6), (20, 6), (21, 6), (22, 6), (23, 6), (24, 6), (25, 6), (26, 6), (27, 6);
-
--- INSERTS em jogador
-INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES 
-(18, '2003-03-02', 5, 1),
-(19, '2004-04-15', 2, 1),
-(20, '2005-01-10', 3, 1),
-(21, '2002-07-22', 1, 2),
-(22, '2003-11-30', 4, 2),
-(23, '2001-05-18', 2, 1),
-(24, '2000-12-12', 5, 1),
-(25, '2004-09-09', 3, 1),
-(26, '2005-06-06', 1, 2),
-(27, '2002-02-28', 4, 2);
-
--- INSERTS em turma_jogador
-INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES 
-(1, 18), (1, 19), (2, 20), (2, 21), (3, 22), (3, 23), (1, 24), (2, 25), (3, 26), (1, 27);
-
--- INSERTS em midia_jogador
-INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES 
-(18, 'EG2x_trabalho framework-01.png'),
-(19, 'foto19.png'),
-(20, 'foto20.jpg'),
-(21, 'img21.jpeg'),
-(22, 'media22.png'),
-(23, 'arquivo23.pdf'),
-(24, 'video24.mp4'),
-(25, 'midia25.png'),
-(26, 'upload26.png'),
-(27, 'img27.jpg');
-
--- INSERTS em fichaMedica
-INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) VALUES 
-(18, 80, 75, 'AB-', 'Nenhuma', 'Poeira', NOW()),
-(19, 175, 68, 'O+', 'Asma', 'Amendoim', NOW()),
-(20, 170, 65, 'A-', 'Miopia', 'Nenhuma', NOW()),
-(21, 185, 82, 'B+', 'Diabetes tipo 1', 'Pólen', NOW()),
-(22, 190, 88, 'AB+', 'Nenhuma', 'Glúten', NOW()),
-(23, 178, 74, 'O-', 'Lesão anterior no joelho', 'Nenhuma', NOW()),
-(24, 183, 79, 'A+', 'Nenhuma', 'Frutos do mar', NOW()),
-(25, 176, 70, 'B-', 'Hiperatividade', 'Nenhuma', NOW()),
-(26, 172, 66, 'O+', 'Bronquite', 'Leite', NOW()),
-(27, 180, 77, 'AB-', 'Nenhuma', 'Nenhuma', NOW());
-
-
-insert into login_usuario(cod_usuario,email_usuario,senha) values(18,'admir','admir');
+-- cadastro staffAdms
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('staffAdms', 123, 1, 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (7,5);
+INSERT INTO staff (cod_staff) VALUES (7);
+INSERT INTO administrador (cod_administrador, tipo_role) VALUES (7,4);
+INSERT INTO administrador_subInstituicao (cod_administrador, cod_subInstituicao) VALUES (7, 1);
+INSERT INTO subInstituticao_staff (cod_staff, cod_subInstituicao) VALUES (7, 1);
+insert into login_usuario(cod_usuario,email_usuario,senha) values (7,'staffAdms@gmail.com','staffAdms');
