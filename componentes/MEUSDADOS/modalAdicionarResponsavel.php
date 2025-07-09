@@ -3,13 +3,11 @@ require('../../include/conecta.php');
 $bd = conecta();
 $retorno = '';
 
-$cod = getPost('cod');
-$idModal = getPost('idModal');
+$cod         = getPost('cod');
+$idModal     = getPost('idModal');
 $tituloModal = getPost('tituloModal');
 $funcaoModal = getPost('funcaoModal');
-$textoBotao = getPost('textoBotao');
-
-
+$textoBotao  = getPost('textoBotao');
 
 $retorno = '
 <div class="modal fade" id="' . $idModal . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -53,24 +51,18 @@ $retorno = '
             <input type="email" name="responsavel_email[]" id="responsavel_email" class="form-control" placeholder="Email do Responsável" required>
           </div>
 
-          <!-- Telefone do responsável -->
-<!-- Telefone do responsável -->
-<div class="col-md-5">
-  <label class="form-label">Telefone do Responsável:</label>
-  <input type="text" id="responsavel_telefone" name="responsavel_telefone[]"
-         class="form-control telefone-mask"
-         placeholder="(99) 99999-9999"
-         maxlength="15" inputmode="numeric" pattern="\d*" required>
-</div>
-
-
-
+          <div class="col-md-5">
+            <label class="form-label">Telefone do Responsável:</label>
+            <input type="text" id="responsavel_telefone" name="responsavel_telefone[]"
+                  class="form-control telefone-mask"
+                  placeholder="(99) 99999-9999"
+                  maxlength="15" inputmode="numeric" pattern="\d*" required>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 
       <div class="modal-footer ">
         <button type="button" class="btn btn-danger" id="funcaoDoModal" onclick="' . $funcaoModal . '(\'' . $cod . '\')">' . $textoBotao . '</button>
@@ -95,7 +87,6 @@ $retorno = '
   });
 </script>
 ';
-
 
 echo $retorno;
 ?>

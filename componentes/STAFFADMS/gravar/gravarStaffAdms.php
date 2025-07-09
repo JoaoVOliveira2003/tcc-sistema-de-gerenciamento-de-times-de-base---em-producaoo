@@ -5,12 +5,12 @@ require('../../Email/EnviarGmail.php');
 $retorno = '';
 
 $subinstitucao = getPost('subinstitucao');
-$municipio = getPost('municipio');
-$nome = getPost('nome');
-$email = getPost('email');
-$cpf = getPost('cpf');
-$cpf = preg_replace('/[^0-9]/', '', $cpf);
-$cod_role = 4;
+$municipio     = getPost('municipio');
+$nome          = getPost('nome');
+$email         = getPost('email');
+$cpf           = getPost('cpf');
+$cpf           = preg_replace('/[^0-9]/', '', $cpf);
+$cod_role      = 4;
 
 $bd = conecta();
 
@@ -25,10 +25,7 @@ if ($bd->SqlExecuteQuery($query)) {
     }
 }
 
-
-$query = "INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
-          VALUES ('$nome', '$cpf', '$municipio', 'n')";
-
+$query = "INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('$nome', '$cpf', '$municipio', 'n')";
 
 if ($bd->SqlExecuteQuery($query)) {
     $cod_pessoa = $bd->getLastInsertId();

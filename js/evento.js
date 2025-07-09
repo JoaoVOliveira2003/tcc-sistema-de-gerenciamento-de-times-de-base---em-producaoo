@@ -7,6 +7,13 @@ function gravarEvento() {
     const desc_evento = document.getElementById('desc_evento').value;
     const turma = document.getElementById('turma') ? document.getElementById('turma').value : null;
 
+    const regexHorario = /^([01]\d|2[0-3]):([0-5]\d)$/;
+
+    if (!regexHorario.test(horario_evento)) {
+        alert("Dado horário incorreto");
+        return false;
+    }
+
     const camposObrigatorios = {
         titulo,
         local,
@@ -42,6 +49,7 @@ function gravarEvento() {
         success: function (data) {
             if (data == "ok") {
                 alert("Evento cadastrado!");
+                limparCampos();
             } else if (data == 'nok1' || data == 'nok2') {
                 alert("Evento não cadastrado");
             } else {
@@ -95,4 +103,17 @@ function cancelarEvento(cod_evento) {
             }
         }
     });
+}
+
+function limparCampos() {
+    document.getElementById('titulo').value = '';
+    document.getElementById('local').value = '';
+    document.getElementById('data_evento').value = '';
+    document.getElementById('horario_evento').value = '';
+    document.getElementById('desc_evento').value = '';
+
+    const turmaField = document.getElementById('turma');
+    if (turmaField) {
+        turmaField.value = '';
+    }
 }

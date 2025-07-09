@@ -23,7 +23,7 @@ if ($bd->SqlExecuteQuery($query)) {
             $ativo = $bd->SqlQueryShow('ativo');
 
             if ($ativo == 'n') {
-              $query = "SELECT ci.nome, ci.cpf, ci.ativo, mun.desc_municipio, est.desc_estado, nac.desc_nacao,ins.desc_instituicao
+                $query = "SELECT ci.nome, ci.cpf, ci.ativo, mun.desc_municipio, est.desc_estado, nac.desc_nacao,ins.desc_instituicao
                         FROM cadastro_identificacao ci
                         INNER JOIN municipio mun ON mun.cod_municipio = ci.cod_municipio
                         INNER JOIN estado est ON mun.cod_estado = est.cod_estado
@@ -32,7 +32,7 @@ if ($bd->SqlExecuteQuery($query)) {
                         inner join instituicao ins on ins.cod_instituicao = admins.cod_instituicao
                         WHERE ci.cod_usuario = " . $cod_pessoa;
 
-                
+
                 if ($bd->SqlExecuteQuery($query)) {
                     $retorno = [
                         'status' => 'ok',
@@ -41,8 +41,8 @@ if ($bd->SqlExecuteQuery($query)) {
                         'municipio' => $bd->SqlQueryShow('desc_municipio'),
                         'estado' => $bd->SqlQueryShow('desc_estado'),
                         'nacao' => $bd->SqlQueryShow('desc_nacao'),
-                        'instituicao' => $bd->SqlQueryShow('desc_instituicao'),  
-                        'emailPessoa'=> $emailPessoa
+                        'instituicao' => $bd->SqlQueryShow('desc_instituicao'),
+                        'emailPessoa' => $emailPessoa
                     ];
                 } else {
                     $retorno['status'] = 'nok1'; // Erro na consulta de dados
@@ -62,4 +62,4 @@ if ($bd->SqlExecuteQuery($query)) {
 
 $bd->SqlDisconnect();
 
-echo(json_encode($retorno));
+echo (json_encode($retorno));

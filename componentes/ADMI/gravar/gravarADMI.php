@@ -5,12 +5,12 @@ require('../../Email/EnviarGmail.php');
 $retorno = '';
 
 $institucao = getPost('institucao');
-$municipio = getPost('municipio');
-$nome = getPost('nome');
-$email = getPost('email');
-$cpf = getPost('cpf');
-$cpf = preg_replace('/[^0-9]/', '', $cpf); 
-$cod_role = 2; 
+$municipio  = getPost('municipio');
+$nome       = getPost('nome');
+$email      = getPost('email');
+$cpf        = getPost('cpf');
+$cpf        = preg_replace('/[^0-9]/', '', $cpf);
+$cod_role   = 2;
 
 $bd = conecta();
 

@@ -10,11 +10,7 @@ $sigla_municipio  = getPost('sigla_municipio');
 
 $bd = conecta();
 
-$query = "UPDATE municipio 
-          SET cod_estado = '$cod_estado', 
-              desc_municipio  = '$desc_municipio', 
-              sigla_municipio = '$sigla_municipio' 
-          WHERE cod_municipio = '$cod';"; 
+$query = "UPDATE municipio SET cod_estado = '$cod_estado', desc_municipio  = '$desc_municipio', sigla_municipio = '$sigla_municipio' WHERE cod_municipio = '$cod';"; 
 
 if ($bd->SqlExecuteQuery($query)) {
     $retorno = 'ok';

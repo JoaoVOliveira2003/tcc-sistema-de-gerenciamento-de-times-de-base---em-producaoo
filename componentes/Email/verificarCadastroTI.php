@@ -4,25 +4,16 @@ $bd = conecta();
 
 $cod_pessoa = getPost('codPessoa');
 $emailPessoa = getPost('emailPessoa');
-
-
-
-$retorno = [
-    'status' => '',
-];
+$retorno = ['status' => '',];
 
 $query = "SELECT count(*) FROM cadastro_identificacao WHERE cod_usuario = " . $cod_pessoa;
-
  
 if ($bd->SqlExecuteQuery($query)) {
-
     $existePessoa = $bd->SqlQueryShow('count(*)');
-
+   
     if ($existePessoa > 0) {
-
         $query = "SELECT ativo FROM cadastro_identificacao WHERE cod_usuario = " . $cod_pessoa;
-         
-
+        
         if ($bd->SqlExecuteQuery($query)) {
             $ativo = $bd->SqlQueryShow('ativo');
 

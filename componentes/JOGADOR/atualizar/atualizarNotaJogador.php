@@ -7,10 +7,6 @@ $cod_jogador = getPost('cod_jogador');
 $usuarioCodStaff = getPost('usuarioCodStaff');
 $novaNota = getPost('novaNota');
 
-// $cod_jogador = 28;
-// $usuarioCodStaff = 1;
-// $novaNota = '7.2';
-
 $bd = conecta();
 
 $query = "UPDATE nota_jogador SET ativo = 'n' WHERE cod_jogador = $cod_jogador";
@@ -31,38 +27,3 @@ if ($bd->SqlExecuteQuery($query)) {
 
 $bd->SqlDisconnect();
 exit($retorno);
-
-// TI->
-// dados de login
-// Dados pessoais 
-
-// ADMI->
-// dados de login
-// Dados pessoais 
-// Minhas instituições
-
-
-// ADMS->
-// dados de login
-// Dados pessoais 
-// Minhas instituições
-
-// ADMS|STAFF->
-// dados de login
-// Dados pessoais 
-// Minhas instituições
-// Minhas turmas
-
-// STAFF->
-// dados de login
-// Dados pessoais 
-// Minhas instituições
-// Minhas turmas
-
-
-// jogador->
-// Dados pessoais
-// ficha medica
-// dados dos responsáveis
-// Minha nota
-// Notas de treino

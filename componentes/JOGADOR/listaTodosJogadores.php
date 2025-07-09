@@ -5,9 +5,9 @@ $bd = conecta();
 $cod_role = getPost('cod_role');
 $cod_usuario = getPost('cod_usuario');
 
-$cod_role = 1;
+$cod_role    = 1;
 $cod_usuario = 4;
-$retorno = "";
+$retorno     = "";
 
 if ($cod_role == 1) {
     $query = "
@@ -37,9 +37,7 @@ if ($cod_role == 1) {
         WHERE admins.cod_administrador = $cod_usuario
     ";
 
-    if ($bd->SqlExecuteQuery($query)) {
-        $turmas = $bd->SqlQueryShow('turmas');
-    }
+    if ($bd->SqlExecuteQuery($query)) {$turmas = $bd->SqlQueryShow('turmas');}
 
     $query = "
         SELECT 
@@ -69,9 +67,7 @@ if ($cod_role == 1) {
         WHERE admsub.cod_administrador = $cod_usuario
     ";
 
-    if ($bd->SqlExecuteQuery($query)) {
-        $turmas = $bd->SqlQueryShow('turmas');
-    }
+    if ($bd->SqlExecuteQuery($query)) {$turmas = $bd->SqlQueryShow('turmas'); }
 
     $query = "
         SELECT 

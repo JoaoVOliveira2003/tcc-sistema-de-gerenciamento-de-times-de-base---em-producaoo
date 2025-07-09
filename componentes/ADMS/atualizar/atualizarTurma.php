@@ -9,11 +9,7 @@ $turma = getPost('turma');
 $ativo = getPost('ativo');
 
 
-$query = "UPDATE turma
-          SET desc_turma = '$turma',
-              ativo = '$ativo',
-              cod_subInstituicao = '$subIntituicao'
-          WHERE cod_turma = '$cod';";
+$query = "UPDATE turma SET desc_turma = '$turma', ativo = '$ativo', cod_subInstituicao = '$subIntituicao' WHERE cod_turma = '$cod';";
 
 $bd = conecta();
 

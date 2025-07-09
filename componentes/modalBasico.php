@@ -5,15 +5,13 @@ $retorno='';
 $cod = getPost('cod');
 
 
-$idModal = getPost('idModal');
+$idModal     = getPost('idModal');
 $tituloModal = getPost('tituloModal');
 $funcaoModal = getPost('funcaoModal');
-$textoModal = getPost('textoModal');
-$textoBotao = getPost( 'textoBotao');
+$textoModal  = getPost('textoModal');
+$textoBotao  = getPost( 'textoBotao');
 $campoHidden = getPost( 'campoHidden');
-if($campoHidden){
-$retorno .= $campoHidden;
-}    
+if($campoHidden){$retorno .= $campoHidden;}    
 
 $retorno .= '
     <div class="modal fade show" id="' . $idModal .'" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >

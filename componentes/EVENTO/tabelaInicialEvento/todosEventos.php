@@ -3,11 +3,8 @@ require('../../../include/conecta.php');
 $bd = conecta();
 $retorno = '';
 
-// $cod_role = getPost('cod_role');
-// $cod_usuario = getPost('cod_usuario');
 $cod_role = 1;
 $cod_usuario = 4;
-
 $query = '';
 
 if ($cod_role == 1) {

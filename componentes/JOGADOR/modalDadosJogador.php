@@ -92,12 +92,6 @@ $tipoSanguineo = $bd->SqlQueryShow('tipoSanguineo');
 $restricoes_medicas = $bd->SqlQueryShow('restricoes_medicas');
 $alergias = $bd->SqlQueryShow('alergias');
 $local_midia = $bd->SqlQueryShow('local_midia');
-// $desc_lesao = $bd->SqlQueryShow('desc_lesao');
-// $data_lesao = $bd->SqlQueryShow('data_lesao');
-// $tempoFora_lesao = $bd->SqlQueryShow('tempoFora_lesao');
-// $nota_ativa = $bd->SqlQueryShow('nota_ativa');
-// $data_atualizacao = $bd->SqlQueryShow('data_atualizacao');
-// $nota_jogador = $bd->SqlQueryShow('nota_jogador');
 
 // Exemplo de uso no modal:
 $retorno = '
@@ -127,8 +121,7 @@ $retorno = '
             <button class="nav-link" id="notas-treino-tab-' . $idModal . '" data-bs-toggle="tab" data-bs-target="#notas-treino-' . $idModal . '" type="button" role="tab" aria-controls="notas-treino-' . $idModal . '" aria-selected="false">Notas de treino</button>
           </li>
         </ul>
-
-      
+     
       <div class="tab-content mt-3" id="myTabContent-' . $idModal . '">
         <div class="tab-pane fade show active" id="dados-pessoais-' . $idModal . '" role="tabpanel" aria-labelledby="dados-pessoais-tab-' . $idModal . '">
           <div class="text-center mb-4">
@@ -189,11 +182,7 @@ $retorno = '
           </div>
 
         </div>
-  
-
-
       <div class="tab-pane fade" id="ficha-medica-' . $idModal . '" role="tabpanel" aria-labelledby="ficha-medica-tab-' . $idModal . '">
-
       <div class="row mb-1">
       <div class="col-md-4">
         <label class="form-label">Altura:</label>
@@ -221,8 +210,6 @@ $retorno = '
     </div>
  ';
 
-
-
 $query = "SELECT  
 ti.desc_tipoLesao,
 hi.desc_lesao,
@@ -231,8 +218,7 @@ hi.tempoFora_lesao
 FROM fichaMedica_historicoLesoes fihi 
 INNER JOIN historicoLesoes hi ON fihi.cod_historicoLesoes = hi.cod_historicoLesoes
 inner join tipo_lesao ti on ti.cod_tipoLesao = hi.cod_tipoLesao
-where fihi.cod_jogador = $cod_jogador
-;";
+where fihi.cod_jogador = $cod_jogador;";
 
 if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
   return;
@@ -271,9 +257,7 @@ do {
                     </div>
                 </div>
             </div>
-           </div>
-         
-            ';
+           </div>';
 
 } while ($bd->SqlFetchNext());
 $query = "
@@ -327,17 +311,14 @@ do {
                 </div>
             </div>
            ';
-
 } while ($bd->SqlFetchNext());
-
 
 
 $retorno .= '  
   </div>
   <div class="tab-pane fade" id="nota-jogador-' . $idModal . '" role="tabpanel" aria-labelledby="nota-jogador-tab-' . $idModal . '">
-
-    <label class="form-label">Nota atual:</label>
-    <div id="nota-atual-container">';
+  <label class="form-label">Nota atual:</label>
+  <div id="nota-atual-container">';
 
 $query = "
 select jo.cod_jogador, noj.nota_jogador, noj.data_atualizacao, noj.ativo, cad.nome
@@ -381,14 +362,10 @@ if ($ativo == 's') {
     if ($cod_role == 4 || $cod_role == 5) {
         $retorno .= '<button type="button" class="btn mt-3 btn-sm btn-success col-1" onclick="abrirModalAtualizarNota()">Nova nota</button>';
     }
-
-    $retorno .= '
-      </div>
-    ';
+    $retorno .= '</div>';
 }
 
-  
-  else {
+else {
     // Acumula as notas anteriores numa string, para mostrar depois
     $retornoNotasAnteriores .= '
       <div class="responsavel card border rounded p-2 bg-light mb-3">
@@ -423,15 +400,11 @@ if ($retornoNotasAnteriores !== '') {
 }
 
 $retorno .= '
-  <!-- conteúdo nota do jogador -->
     </div>
           <div class="tab-pane fade" id="notas-treino-' . $idModal . '" role="tabpanel" aria-labelledby="notas-treino-tab-' . $idModal . '">
             <!-- conteúdo notas de treino -->
           </div>
-
-
         </div>
-
         <div class="modal-footer">
   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
 </div>
@@ -440,10 +413,8 @@ $retorno .= '
   </div>
 </div>';
 
-
 $retorno .= '
   <style>
-    /* Corrigir sobreposição do segundo modal e backdrop */
     .modal-backdrop.show:nth-of-type(2) {
       z-index: 1055;
     }
@@ -481,8 +452,6 @@ $retorno .= '
     </div>
   </div>
 ';
-
-
 
 echo $retorno;
 ?>

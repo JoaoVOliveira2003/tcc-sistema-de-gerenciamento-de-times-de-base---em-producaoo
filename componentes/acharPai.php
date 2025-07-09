@@ -7,17 +7,11 @@ $retorno = '';
 $query = getPost('query');
 $valorProcurado = getPost('valorProcurado');
 
+if (empty($query)) {return false;}
 
-if (empty($query)) {
-    return false;
-}
-
-if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
-    return;
-}
+if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {return;}
 
 $valorProcurado = $bd->SqlQueryShow($valorProcurado);
-
 
 echo $valorProcurado;
 ?>

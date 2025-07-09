@@ -7,8 +7,9 @@ require __DIR__ . '/../../include/PHPMailer/src/Exception.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-function corpoEmail($gmailDestino,$nome,$tipoRole,$cod_pessoa) {
-    $link='';
+function corpoEmail($gmailDestino, $nome, $tipoRole, $cod_pessoa)
+{
+    $link = '';
 
     if ($tipoRole == 1) {
         $tipoRole = 'Administrador de sistemas (TI)';
@@ -88,7 +89,7 @@ function corpoEmail($gmailDestino,$nome,$tipoRole,$cod_pessoa) {
             <h2>Olá <strong>' . htmlspecialchars($nome) . '</strong>,</h2>
             <p>Você foi cadastrado como <strong>' . htmlspecialchars($tipoRole) . '</strong> no <strong>Sistema Gerenciador de Bases</strong>.</p>
             <p>Para ativar sua conta, clique no botão abaixo:</p>
-            <a class="btn" href="'.$link.'">Ativar Conta</a>
+            <a class="btn" href="' . $link . '">Ativar Conta</a>
             <div class="footer">Se você não solicitou esse cadastro, ignore este e-mail.</div>
         </div>
     </body>
@@ -97,63 +98,62 @@ function corpoEmail($gmailDestino,$nome,$tipoRole,$cod_pessoa) {
     return $corpo;
 }
 
-function enviarGmail($gmailDestino,$nome,$tipoRole,$cod_pessoa) {
+function enviarGmail($gmailDestino, $nome, $tipoRole, $cod_pessoa)
+{
     $mail = new PHPMailer(true);
 
     try {
         $mail->CharSet = 'UTF-8';
         $mail->Encoding = 'base64';
-
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = 'sistemagerenciadordebases@gmail.com';
-        $mail->Password   = 'xjlk uvwm bagk giip';  
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
+        $mail->Password   = 'xjlk uvwm bagk giip';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
-        
+
         $mail->setFrom('sistemaGerenciadorDeBases@gmail.com', 'Sistema Gerenciador de Bases');
         $mail->addAddress($gmailDestino, 'Joao');
-        
-        $textoEmail = corpoEmail($gmailDestino,$nome,$tipoRole,$cod_pessoa);
+
+        $textoEmail = corpoEmail($gmailDestino, $nome, $tipoRole, $cod_pessoa);
 
         $mail->isHTML(true);
         $mail->Subject = 'Email para ativação de conta no Sistema Gerenciador de Bases';
         $mail->Body    = $textoEmail;
         $mail->AltBody = 'Problema na criação do email.';
-    
+
         $mail->send();
     } catch (Exception $e) {
     }
 }
 
-function enviarGmailEsqueciSenha($gmailDestino,$cod_pessoa) {
-  
+function enviarGmailEsqueciSenha($gmailDestino, $cod_pessoa)
+{
+
     $mail = new PHPMailer(true);
 
     try {
         $mail->CharSet = 'UTF-8';
         $mail->Encoding = 'base64';
-
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
         $mail->Username   = 'sistemagerenciadordebases@gmail.com';
-        $mail->Password   = 'xjlk uvwm bagk giip';  
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; 
+        $mail->Password   = 'xjlk uvwm bagk giip';
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
-        
         $mail->setFrom('sistemaGerenciadorDeBases@gmail.com', 'Sistema Gerenciador de Bases');
         $mail->addAddress($gmailDestino, 'Joao');
-        
-        $textoEmail = corpoEmailEsqueciSenha($gmailDestino,$cod_pessoa);
+
+        $textoEmail = corpoEmailEsqueciSenha($gmailDestino, $cod_pessoa);
 
         $mail->isHTML(true);
         $mail->Subject = 'Atualização de senha no Sistema Gerenciador de Bases';
         $mail->Body    = $textoEmail;
         $mail->AltBody = 'Problema na criação do email.';
-        
-        if ($mail->send()){
+
+        if ($mail->send()) {
             return true;
         } else {
             return false;
@@ -162,7 +162,8 @@ function enviarGmailEsqueciSenha($gmailDestino,$cod_pessoa) {
     }
 }
 
-function corpoEmailEsqueciSenha($gmailDestino, $cod_pessoa) {
+function corpoEmailEsqueciSenha($gmailDestino, $cod_pessoa)
+{
     $link = 'http://localhost/tcc/telas/login/telaAtualizarSenha.php?cod_pessoa=' . urlencode($cod_pessoa) . '&email=' . urlencode($gmailDestino);
 
     $corpo = '
@@ -224,7 +225,7 @@ function corpoEmailEsqueciSenha($gmailDestino, $cod_pessoa) {
             <p>Olá</p>
             <p>Recebemos uma solicitação para redefinir a senha da sua conta no <strong>Sistema Gerenciador de Bases</strong> associada a este e-mail.</p>
             <p>Se você fez essa solicitação, clique no botão abaixo para criar uma nova senha:</p>
-            <a class="btn" href="'.$link.'">Redefinir Senha</a>
+            <a class="btn" href="' . $link . '">Redefinir Senha</a>
             <p>Se você não solicitou a redefinição, nenhuma ação é necessária. Apenas ignore este e-mail.</p>
             <div class="footer">Este é um e-mail automático. Por favor, não responda.</div>
         </div>
@@ -233,7 +234,3 @@ function corpoEmailEsqueciSenha($gmailDestino, $cod_pessoa) {
 
     return $corpo;
 }
-
-
-//  enviarGmailEsqueciSenha('ojoao953@gmail.com','2')
-?>

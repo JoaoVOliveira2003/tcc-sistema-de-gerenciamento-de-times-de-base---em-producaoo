@@ -6,9 +6,6 @@ $retorno = '';
 $cod_role = getPost('cod_role');
 $cod_usuario = getPost('cod_usuario');
 
-// $cod_role = 6; 
-// $cod_usuario= 3;
-
 $query = "";
 
 if ($cod_role == 1) {
@@ -28,9 +25,7 @@ if ($cod_role == 1) {
     // admi - cod 4
     $query = "SELECT GROUP_CONCAT(tur.cod_turma ORDER BY tur.cod_turma SEPARATOR ',') AS turmas FROM instituicao inst INNER JOIN administrador_instituicao admins ON admins.cod_instituicao = inst.cod_instituicao INNER JOIN subinstituicao sub ON inst.cod_instituicao = sub.cod_instituicao INNER JOIN turma tur ON tur.Cod_SubInstituicao = sub.Cod_SubInstituicao WHERE admins.cod_administrador = $cod_usuario ";
 
-    if ($bd->SqlExecuteQuery($query)) {
-        $cod_instituicao = $bd->SqlQueryShow('cod_instituicao');
-    }
+    if ($bd->SqlExecuteQuery($query)) {$cod_instituicao = $bd->SqlQueryShow('cod_instituicao');}
 
     $query = "
         SELECT 
@@ -47,9 +42,7 @@ if ($cod_role == 1) {
     // ADMS / STAFF|ADMS
     $query = "SELECT GROUP_CONCAT(tur.cod_turma ORDER BY tur.cod_turma SEPARATOR ',') AS turmas FROM administrador_subinstituicao admsub INNER JOIN subinstituicao sub ON admsub.cod_SubInstituicao = sub.cod_SubInstituicao INNER JOIN turma tur ON tur.cod_SubInstituicao = sub.cod_SubInstituicao WHERE admsub.cod_administrador = $cod_usuario;";
 
-    if ($bd->SqlExecuteQuery($query)) {
-        $turmas = $bd->SqlQueryShow('turmas');
-    }
+    if ($bd->SqlExecuteQuery($query)) {$turmas = $bd->SqlQueryShow('turmas');}
 
     $query = "
         SELECT 
@@ -66,9 +59,7 @@ if ($cod_role == 1) {
     // 5 Treinadores STAFF s
     $query = "SELECT GROUP_CONCAT(tur.cod_turma ORDER BY tur.cod_turma SEPARATOR ', ') AS turmas FROM staff staf INNER JOIN cadastro_identificacao cad ON staf.cod_staff = cad.cod_usuario LEFT JOIN staff_turma staftu ON staf.cod_staff = staftu.cod_staff LEFT JOIN turma tur ON staftu.cod_turma = tur.cod_turma WHERE cad.ativo = 's' AND cod_usuario = $cod_usuario GROUP BY cad.cod_usuario, cad.nome;";
 
-    if ($bd->SqlExecuteQuery($query)) {
-        $turmas = $bd->SqlQueryShow('turmas');
-    }
+    if ($bd->SqlExecuteQuery($query)) {$turmas = $bd->SqlQueryShow('turmas');}
 
     $query = "
         SELECT 
@@ -90,9 +81,7 @@ if ($cod_role == 1) {
 } else if ($cod_role == 6) {
     $query = "SELECT cod_turma FROM turma_jogador WHERE cod_jogador = $cod_usuario;";
 
-    if ($bd->SqlExecuteQuery($query)) {
-        $cod_turma = $bd->SqlQueryShow('cod_turma');
-    }
+    if ($bd->SqlExecuteQuery($query)) {$cod_turma = $bd->SqlQueryShow('cod_turma');}
 
     $query = "
         SELECT 
@@ -156,9 +145,6 @@ $retorno .= "
 </tbody>
 </table>
 ";
-
-
-
 } else {
     $retorno = "";
 }

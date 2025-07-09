@@ -1,10 +1,8 @@
 <?php
 require('../../include/conecta.php');
 $bd = conecta();
-$cod_usuario =  6;
-$cod_tipoRole = 6;
-
-
+$cod_usuario =  getPost('cod_usuario');
+$cod_tipoRole =  getPost('cod_tipoRole');
 
 $idModal = "modalDadosPessoa";
 $retorno = '';
@@ -28,8 +26,7 @@ function conteudoADMS($idModal, $cod_usuario): string
     INNER JOIN administrador_subinstituicao c ON a.cod_usuario = c.cod_administrador
     inner join subinstituicao d on d.cod_subInstituicao = c.cod_subInstituicao
     inner join instituicao e on e.cod_instituicao = d.cod_instituicao
-    WHERE a.cod_usuario = $cod_usuario
-    ";
+    WHERE a.cod_usuario = $cod_usuario";
 
     $bd = conecta();
     if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
@@ -1211,9 +1208,6 @@ elseif ($cod_tipoRole == 6) {
     $retorno .= conteudoDadosPessoais($idModal, $cod_tipoRole, $cod_usuario);
     $retorno .= conteudoFichaMedica($idModal,$cod_usuario);
 }
-
-
-
 
 $bd->SqlDisconnect();
 exit($retorno);

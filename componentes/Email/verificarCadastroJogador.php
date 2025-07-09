@@ -121,7 +121,6 @@ if ($bd->SqlExecuteQuery($query)) {
                                                 </div> 
                                             </div>
                                             </div>";
-
                     }
                 }
 
@@ -179,7 +178,7 @@ if ($bd->SqlExecuteQuery($query)) {
                         </div>";
                     }
                 }
-                
+
                 if ($bd->SqlExecuteQuery($query)) {
                     // Montar o array de retorno com os dados buscados
                     $retorno = [
@@ -204,23 +203,18 @@ if ($bd->SqlExecuteQuery($query)) {
                         'emailPessoa' => $emailPessoa,
                         'localImagem' => '../../img/jogador/' . $bd->SqlQueryShow('local_midia'),
                     ];
-
                 } else {
                     $retorno['status'] = 'nok1'; // Erro na consulta detalhada
                 }
-
             } else {
                 $retorno['status'] = 'nok3'; // Cadastro já confirmado (ativo != 'n')
             }
-
         } else {
             $retorno['status'] = 'nok1'; // Erro ao buscar status "ativo"
         }
-
     } else {
         $retorno['status'] = 'nok2'; // Pessoa não existe
     }
-
 } else {
     $retorno['status'] = 'nok1'; // Erro na consulta inicial
 }

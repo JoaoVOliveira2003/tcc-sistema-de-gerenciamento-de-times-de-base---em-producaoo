@@ -7,9 +7,7 @@ $senha       = getPost('senha');
 $cod_usuario = getPost('cod_usuario');
 
 
-$query = "UPDATE login_usuario
-          SET senha = '$senha'
-          WHERE cod_usuario = $cod_usuario";
+$query = "UPDATE login_usuario SET senha = '$senha' WHERE cod_usuario = $cod_usuario";
 
 $bd = conecta();
 

@@ -2,13 +2,9 @@
 require('../../include/conecta.php');
 $bd = conecta();
 
-$cod_pessoa = getPost('codPessoa');
+$cod_pessoa  = getPost('codPessoa');
 $emailPessoa = getPost('emailPessoa');
-
-
-$retorno = [
-    'status' => '',
-];
+$retorno = ['status' => '',];
 
 $query = "SELECT count(*) FROM cadastro_identificacao WHERE cod_usuario = " . $cod_pessoa;
 
@@ -42,8 +38,6 @@ if ($bd->SqlExecuteQuery($query)) {
 				inner join subInstituticao_staff sustra on sustra.cod_staff = ci.cod_usuario
                 inner join subInstituicao sub on sustra.cod_SubInstituicao = sub.Cod_SubInstituicao
                 WHERE ci.cod_usuario =  {$cod_pessoa} ";
-
-
 
                 if ($bd->SqlExecuteQuery($query)) {
                     $retorno = [

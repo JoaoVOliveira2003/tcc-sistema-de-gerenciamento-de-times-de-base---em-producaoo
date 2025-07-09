@@ -3,13 +3,11 @@ require('../../include/conecta.php');
 $bd = conecta();
 $retorno = '';
 
-$cod = getPost('cod');
-$idModal = getPost('idModal');
+$cod         = getPost('cod');
+$idModal     = getPost('idModal');
 $tituloModal = getPost('tituloModal');
 $funcaoModal = getPost('funcaoModal');
-$textoBotao = getPost('textoBotao');
-
-
+$textoBotao  = getPost('textoBotao');
 
 $retorno = '
 <div class="modal fade" id="' . $idModal . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -78,7 +76,6 @@ $retorno = '
     </div>
   </div>
 </div>';
-
 
 echo $retorno;
 ?>

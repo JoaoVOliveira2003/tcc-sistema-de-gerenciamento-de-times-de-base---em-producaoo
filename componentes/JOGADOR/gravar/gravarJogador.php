@@ -5,22 +5,22 @@ $retorno = 'ok';
 
 $bd = conecta();
 
-$cod_role = 6;
-$municipio = getPost('municipio');
-$nome = getPost('nome');
-$email = getPost('email');
-$cpf = getPost('cpf');
-$posicao = getPost('posicao');
-$data_nascimento = getPost('data_nascimento');
-$esporte = getPost('esporte');
-$altura = getPost('altura');
-$peso = getPost('peso');
-$tipo_sanguineo = getPost('tipo_sanguineo');
+$cod_role           = 6;
+$municipio          = getPost('municipio');
+$nome               = getPost('nome');
+$email              = getPost('email');
+$cpf                = getPost('cpf');
+$posicao            = getPost('posicao');
+$data_nascimento    = getPost('data_nascimento');
+$esporte            = getPost('esporte');
+$altura             = getPost('altura');
+$peso               = getPost('peso');
+$tipo_sanguineo     = getPost('tipo_sanguineo');
 $restricoes_medicas = getPost('restricoes_medicas');
-$alergias = getPost('alergias');
-$responsaveis = json_decode(getPost('responsaveis'), true);
-$lesoes = json_decode(getPost('lesoes'), true);
-$cod_turma = getPost('turma');
+$alergias           = getPost('alergias');
+$responsaveis       = json_decode(getPost('responsaveis'), true);
+$lesoes             = json_decode(getPost('lesoes'), true);
+$cod_turma          = getPost('turma');
 
 $emailBase = 'ojoao953@gmail.com';
 $query = "SELECT COUNT(*) FROM login_usuario WHERE email_usuario = '$email'";
@@ -150,13 +150,13 @@ if ($bd->SqlExecuteQuery($query1)) {
 }
 
 // Se tudo ocorreu bem, envia o e-mail
-                $query = "INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('$email', $cod_pessoa)";
-                if ($bd->SqlExecuteQuery($query)) {
-                    enviarGmail($email, $nome, $cod_role, $cod_pessoa);
-                    $retorno = 'ok';
-                } else {
-                    $retorno = 'nok';
-                }
+$query = "INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('$email', $cod_pessoa)";
+if ($bd->SqlExecuteQuery($query)) {
+ enviarGmail($email, $nome, $cod_role, $cod_pessoa);
+ $retorno = 'ok';
+} else {
+ $retorno = 'nok';
+}
 // Resposta final
 exit($retorno);
 ?>

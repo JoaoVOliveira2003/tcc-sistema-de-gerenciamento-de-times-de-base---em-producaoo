@@ -3,19 +3,15 @@ require('../include/conecta.php');
 $bd = conecta();
 $retorno = '';
 
-$query = getPost('query');
-$titulosTh = json_decode($_POST['titulosTh'], true);
-$styleTh = json_decode($_POST['styleTh'], true);
+$query      = getPost('query');
+$titulosTh  = json_decode($_POST['titulosTh'], true);
+$styleTh    = json_decode($_POST['styleTh'], true);
 $variavelTd = json_decode($_POST['variavelTd'], true);
-$botoesTd = json_decode($_POST['botoesTd'], true);
+$botoesTd   = json_decode($_POST['botoesTd'], true);
 
-if (empty($query)) {
-    return false;
-}
+if (empty($query)) {return false;}
 
-if (!$bd->SqlExecuteQuery($query)) {
-    return;
-}
+if (!$bd->SqlExecuteQuery($query)) {return;}
 
 
 $retorno .= '<table class="table table-hover table-bordered">

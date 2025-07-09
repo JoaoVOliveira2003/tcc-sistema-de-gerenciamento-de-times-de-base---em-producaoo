@@ -13,19 +13,17 @@ if ($bd->SqlExecuteQuery($query)) {
     $existe = $bd->SqlQueryShow("existe");
 
     if ($existe > 0) {
-        $cod_usuario = $bd->SqlQueryShow("cod_usuario"); 
+        $cod_usuario = $bd->SqlQueryShow("cod_usuario");
 
-    $funcionou = enviarGmailEsqueciSenha($email, $cod_usuario);
+        $funcionou = enviarGmailEsqueciSenha($email, $cod_usuario);
 
-    if($funcionou) {
-        $retorno = 'ok';
-    } else {
-        $retorno = 'nok2';
-    }
-    
+        if ($funcionou) {
+            $retorno = 'ok';
+        } else {
+            $retorno = 'nok2';
+        }
     } elseif ($existe == 0) {
         $retorno = 'nok1';
-
     } else {
         $retorno = 'nok3';
     }

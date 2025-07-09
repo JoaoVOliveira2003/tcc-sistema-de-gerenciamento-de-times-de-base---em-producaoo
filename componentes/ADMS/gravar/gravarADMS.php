@@ -5,12 +5,12 @@ require('../../Email/EnviarGmail.php');
 $retorno = '';
 
 $subinstitucao = getPost('subinstitucao');
-$municipio = getPost('municipio');
-$nome = getPost('nome');
-$email = getPost('email');
-$cpf = getPost('cpf');
-$cpf = preg_replace('/[^0-9]/', '', $cpf); 
-$cod_role = 3; 
+$municipio     = getPost('municipio');
+$nome          = getPost('nome');
+$email         = getPost('email');
+$cpf           = getPost('cpf');
+$cpf           = preg_replace('/[^0-9]/', '', $cpf); 
+$cod_role      = 3; 
 
 $bd = conecta();
 
@@ -24,7 +24,6 @@ if ($bd->SqlExecuteQuery($query)) {
         exit($retorno);
     }
 }
-
 
 $query = "INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
           VALUES ('$nome', '$cpf', '$municipio', 'n')";

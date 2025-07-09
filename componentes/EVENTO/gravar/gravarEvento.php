@@ -4,14 +4,11 @@ require('../../../include/conecta.php');
 $retorno = '';
 
 $titulo_evento  = getPost('titulo_evento');
-
 $cod_staff      = getPost('cod_staff');
-//  $cod_staff = 6;
-
 $turma          = getPost('turma');
 $local          = getPost('local');
-$data_evento    = getPost('data_evento');     
-$horario_evento = getPost('horario_evento'); 
+$data_evento    = getPost('data_evento');
+$horario_evento = getPost('horario_evento');
 $desc_evento    = getPost('desc_evento');
 
 $data_evento_formatada    = DateTime::createFromFormat('d/m/Y', $data_evento)->format('Y-m-d');
@@ -30,10 +27,10 @@ if ($bd->SqlExecuteQuery($query)) {
     if ($bd->SqlExecuteQuery($query)) {
         $retorno = 'ok';
     } else {
-        $retorno = 'nok1'; 
+        $retorno = 'nok1';
     }
 } else {
-    $retorno = 'nok2'; 
+    $retorno = 'nok2';
 }
 
 $bd->SqlDisconnect();

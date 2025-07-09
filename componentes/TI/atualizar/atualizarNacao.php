@@ -10,10 +10,7 @@ $sigla_nacao  = getPost('sigla_nacao');
 
 $bd = conecta();
 
-$query = "UPDATE nacao 
-          SET desc_nacao = '$desc_nacao', 
-              sigla_nacao = '$sigla_nacao' 
-          WHERE cod_nacao = '$cod_nacao';"; 
+$query = "UPDATE nacao SET desc_nacao = '$desc_nacao', sigla_nacao = '$sigla_nacao' WHERE cod_nacao = '$cod_nacao';"; 
 
 if ($bd->SqlExecuteQuery($query)) {
     $retorno = 'ok';

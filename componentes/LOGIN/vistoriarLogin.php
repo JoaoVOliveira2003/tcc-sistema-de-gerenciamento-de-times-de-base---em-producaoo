@@ -18,7 +18,6 @@ $query = "
     WHERE lu.email_usuario = '$email'
 ";
 
-
 if ($bd->SqlExecuteQuery($query)) {
     $cod_tipoRole = $bd->SqlQueryShow("cod_tipoRole");
     $nome = $bd->SqlQueryShow("nome");
@@ -42,7 +41,6 @@ $_SESSION['nome'] = $nome;
 $_SESSION['email_usuario'] = $email;
 $_SESSION['cod_usuario'] = $cod_usuario;
 $_SESSION['cod_tipoRole'] = $cod_tipoRole;
-
 
 $bd->SqlDisconnect();
 echo $retorno;

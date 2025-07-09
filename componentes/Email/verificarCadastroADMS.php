@@ -6,9 +6,7 @@ $cod_pessoa = getPost('codPessoa');
 $emailPessoa = getPost('emailPessoa');
 
 
-$retorno = [
-    'status' => '',
-];
+$retorno = ['status' => '',];
 
 $query = "SELECT count(*) FROM cadastro_identificacao WHERE cod_usuario = " . $cod_pessoa;
 

@@ -1,7 +1,6 @@
 <?php
 include '../../include/verificaSessao.php';
 $usuario = verificarLogin();
-print_r($usuario) ;
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +26,7 @@ print_r($usuario) ;
         <div class="mt-1">
             <h2 class="mb-3">Cadastro de <b>Administrador de Insitituição (ADMI)</b></h2>
             <h5 class="mb-4">
-                Olá! Lembre-se de que, para que o cadastro seja totalmente validado, a pesCOsoa cadastrada receberá um
+                Olá! Lembre-se de que, para que o cadastro seja totalmente validado, a pessoa cadastrada.<br>Devera finalizar o cadastro num
                 e-mail de confirmação. <br> Nesse e-mail, ela deverá aceitar ou recusar o cadastro, além de inserir a
                 senha que deseja. Por isso, certifique-se de que o endereço de e-mail informado está correto.
             </h5>
@@ -44,11 +43,11 @@ print_r($usuario) ;
             <div class="row">
                 <div class="col-md-6 mb-2">
                     <label for="nome" class="form-label">Nome do administrador:</label>
-                    <input type="text" class="form-control" value="admi" id="nome" placeholder="Digite o nome...">
+                    <input type="text" class="form-control"  id="nome" placeholder="Digite o nome...">
                 </div>
                 <div class="col-md-6 mb-2">
                     <label for="email_usuario" class="form-label">Email do administrador:</label>
-                    <input type="text" class="form-control" id="email_usuario" value="ojoao953@gmail.com"
+                    <input type="text" class="form-control" id="email_usuario" 
                         placeholder="Digite o email...">
                 </div>
             </div>
@@ -56,8 +55,7 @@ print_r($usuario) ;
             <div class="row">
                 <div class="col-md-3 mb-4">
                     <label for="cpf" class="form-label">CPF:</label>
-                    <input maxlength="14" oninput="aplicarMascaraCPF(this)"  type="text" value="13432640900"
-                        class="form-control" id="cpf" placeholder="Digite o CPF...">
+                    <input maxlength="14" oninput="aplicarMascaraCPF(this)"  type="text" class="form-control" id="cpf" placeholder="Digite o CPF...">
                 </div>
             </div>
 

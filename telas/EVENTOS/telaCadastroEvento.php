@@ -56,11 +56,11 @@ $usuario = verificarLogin();
             <div class="row">
                 <div class="col-md-6 mb-2">
                     <label for="titulo" class="form-label">Título do evento:</label>
-                    <input value="titulo" type="text" class="form-control" name="titulo" id="titulo" placeholder="Digite o título...">
+                    <input  type="text" class="form-control" name="titulo" id="titulo" placeholder="Digite o título...">
                 </div>
                 <div class="col-md-6 mb-2">
                     <label for="local" class="form-label">Local do evento:</label>
-                    <input value="MarianaCross" type="text" class="form-control" name="local" id="local" placeholder="Local do evento...">
+                    <input type="text" class="form-control" name="local" id="local" placeholder="Local do evento...">
                 </div>
             </div>
 
@@ -68,11 +68,11 @@ $usuario = verificarLogin();
             <div class="row">
                 <div class="col-md-6 mb-1">
                     <label for="data_evento" class="form-label">Data do evento:</label>
-                    <input type="text" value="02/05/2003" class="form-control" id="data_evento" name="data_evento" placeholder="dd/mm/aaaa">
+                    <input type="text" class="form-control" id="data_evento" name="data_evento" placeholder="dd/mm/aaaa">
                 </div>
                 <div class="col-md-6 mb-1">
                     <label for="horario_evento" class="form-label">Horário do evento :</label>
-                    <input type="text" value="02:01" class="form-control" id="horario_evento" name="horario_evento" placeholder="HH:mm">
+                    <input type="text" class="form-control" id="horario_evento" name="horario_evento" placeholder="HH:mm">
                 </div>
             </div>
 
@@ -80,7 +80,7 @@ $usuario = verificarLogin();
              <!-- Descrição do evento -->
             <div class="mb-1">
                 <label for="desc_evento" class="form-label">Descrição do evento:</label>
-                <textarea class="form-control" id="desc_evento" name="desc_evento" rows="3" placeholder="Descreva o evento...">descrição desci4</textarea>
+                <textarea class="form-control" id="desc_evento" name="desc_evento" rows="3" placeholder="Descreva o evento..."></textarea>
             </div>
 
 

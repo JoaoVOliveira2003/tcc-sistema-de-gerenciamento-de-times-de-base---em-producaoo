@@ -5,9 +5,9 @@ $retorno = '';
 
 $cod_usuario = getPost('cod_usuario');
 
-$altura = getPost('altura');
+$altura   = getPost('altura');
 $alergias = getPost('alergias');
-$peso = getPost('peso');
+$peso     = getPost('peso');
 $restricoesMedicas = getPost('restricoesMedicas');
 
 

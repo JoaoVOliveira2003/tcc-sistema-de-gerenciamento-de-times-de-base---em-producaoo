@@ -3,7 +3,7 @@ require('../../../include/conecta.php');
 
 $retorno = '';
 
-$cod = getPost('cod');
+$cod   = getPost('cod');
 $email = getPost('email');
 $senha = getPost('senha');
 
@@ -16,11 +16,9 @@ if ($bd->SqlExecuteQuery($query)) {
     $query = "UPDATE cadastro_identificacao SET ativo = 's' WHERE cod_usuario =" . $cod;
     if ($bd->SqlExecuteQuery($query)) {
         $retorno = 'ok';
-    }
-    else {
+    } else {
         $retorno = 'nok';
     }
-
 } else {
     $retorno = 'nok';
 }

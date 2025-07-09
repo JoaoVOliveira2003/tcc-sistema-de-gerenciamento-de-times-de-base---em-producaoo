@@ -1,12 +1,9 @@
-
 <?php
-
-
 require('../../../include/conecta.php');
 
 $retorno = '';
-$cod = getPost('cod');
-$bd = conecta();
+$cod     = getPost('cod');
+$bd      = conecta();
 
 $query = "delete from login_usuario where cod_usuario= " . $cod . "";
 if (!$bd->SqlExecuteQuery($query)) {

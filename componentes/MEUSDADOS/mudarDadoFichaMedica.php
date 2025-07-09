@@ -6,9 +6,9 @@ $retorno = '';
 $cod = getPost('cod'); // cod_pessoa (jogador)
 
 $cod_tipoLesao = getPost('cod_tipoLesao');
-$tempo_fora = getPost('tempo_fora');
-$data_lesao = getPost('data_lesao');
-$desc_lesao = getPost('desc_lesao');
+$tempo_fora    = getPost('tempo_fora');
+$data_lesao    = getPost('data_lesao');
+$desc_lesao    = getPost('desc_lesao');
 
 $bd = conecta(); 
 
@@ -18,9 +18,7 @@ $queryLesao = "INSERT INTO historicoLesoes (cod_tipoLesao, desc_lesao, data_lesa
 if ($bd->SqlExecuteQuery($queryLesao)) {
     $cod_lesao = $bd->getLastInsertId();
 
-    // Vincula a lesão ao jogador
-    $queryVinculoLesao = "INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) 
-                          VALUES ($cod, $cod_lesao)";
+    $queryVinculoLesao = "INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES ($cod, $cod_lesao)";
     
     $bd->SqlExecuteQuery($queryVinculoLesao);
     $retorno = 'ok';

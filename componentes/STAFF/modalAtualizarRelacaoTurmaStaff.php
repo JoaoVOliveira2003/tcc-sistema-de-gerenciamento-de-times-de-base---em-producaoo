@@ -35,8 +35,7 @@ $retorno .= '<div class="modal fade" id="' . $idModal . '" tabindex="-1" role="d
                 <h5 class="modal-title" id="exampleModalLabel">' . $tituloModal . ' - ao selecionar uma turma, você estará vinculando a turma ao staff.</h5>
             </div>
             <div class="modal-body p-4">
-                <div class="row mt-3">
-';
+                <div class="row mt-3">';
 
 do {
     $cod_turma = $bd->SqlQueryShow('cod_turma');

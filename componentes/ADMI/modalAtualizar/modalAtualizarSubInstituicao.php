@@ -10,12 +10,11 @@ $funcaoModal  = getPost('funcaoModal');
 $textoModal   = getPost('textoModal');
 $textoBotao   = getPost('textoBotao');
 
-$cod_nacao = '';
-$desc_estado = '';
-$sigla_estado = '';
+$cod_nacao     = '';
+$desc_estado   = '';
+$sigla_estado  = '';
 
 $cod = getPost('cod');
-
 
 $query = "
     SELECT 
@@ -38,15 +37,11 @@ if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
 $ativo = $bd->SqlQueryShow('ativo');
 $desc_subInstituicao = $bd->SqlQueryShow('desc_subInstituicao');
 
-
-
 $retorno = '<div class="modal fade" id="' . $idModal . '" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content shadow-sm border-0">
-        
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title" id="exampleModalLabel">' . $tituloModal . '</h5>
-
             </div>
             <div class="modal-body p-4">
                     <div id="selectEstadoAtualizarMunicipio"></div>
