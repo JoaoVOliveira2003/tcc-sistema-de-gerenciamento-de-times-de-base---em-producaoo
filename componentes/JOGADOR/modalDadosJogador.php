@@ -42,7 +42,7 @@ FROM cadastro_identificacao ci
 INNER JOIN role_cadastro rc ON rc.cod_usuario = ci.cod_usuario
 INNER JOIN jogador j ON j.cod_jogador = rc.cod_usuario
 LEFT JOIN posicao pos ON pos.cod_posicao = j.posicao
-LEFT JOIN esporte esp ON esp.cod_esporte = j.esporte
+LEFT JOIN esporte esp ON esp.cod_esporte = j.cod_esporte
 LEFT JOIN fichaMedica fm ON fm.cod_jogador = j.cod_jogador
 LEFT JOIN midia_jogador mj ON mj.cod_jogador = j.cod_jogador
 LEFT JOIN turma_jogador tj ON tj.cod_jogador = j.cod_jogador
@@ -147,7 +147,7 @@ $retorno = '
               <input disabled type="text" class="form-control" value="' . $desc_instituicao . '">
             </div>
             <div class="col-md-4">
-              <label class="form-label">Subinstituição:</label>
+              <label class="form-label">Sub-Instituição:</label>
               <input disabled type="text" class="form-control" value="' . $desc_subInstituicao . '">
             </div>
             <div class="col-md-4">
@@ -231,26 +231,26 @@ do {
   $tempoFora_lesao = $bd->SqlQueryShow('tempoFora_lesao');
 
   $retorno .= '
-            <label class="form-label">Lesoes:</label>
+            <label class="form-label">Lesões :</label>
             <div id="responsaveis-container">
                 <div class="responsavel card border rounded p-3 bg-light">
                     <div class="row g-2 mb-2">
                         <div class="col-md-6">
-        <label class="form-label">desc_tipoLesao:</label>
+        <label class="form-label">Tipo de lesão:</label>
         <input disabled type="text" class="form-control" value="' . $desc_tipoLesao . '">
                         </div>
                         <div class="col-md-6">
-        <label class="form-label">desc_lesao:</label>
+        <label class="form-label">Descrição da lesão:</label>
         <input disabled type="text" class="form-control" value="' . $desc_lesao . '">
                         </div>
                     </div>
                     <div class="row g-2">
                         <div class="col-md-6">
-        <label class="form-label">data_lesao:</label>
+        <label class="form-label">Data lesão:</label>
         <input disabled type="text" class="form-control" value="' . $data_lesao . '">
                         </div>
                         <div class="col-md-6">
-        <label class="form-label">tempoFora_lesao:</label>
+        <label class="form-label">Tempo fora</label>
         <input disabled type="text" class="form-control" value="' . $tempoFora_lesao . '">
                         </div>
 

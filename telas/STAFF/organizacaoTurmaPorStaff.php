@@ -25,7 +25,7 @@ $usuario = verificarLogin();
         <div class="mt-1">
             <h2 class="mb-3"><b>Organização de turmas a staff</b></h2>
             <h5 class="mb-4">
-                escrever texto posteriormente!
+                Organize sobre quais turmas o staff terá controle. Ao clicar em 'Atualizar', serão exibidas as turmas disponíveis.
             </h5>
 
 

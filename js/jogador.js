@@ -218,9 +218,9 @@ function gravarJogador() {
           "Dados de jogadores foram gravados. Para que o usuário possa se inscrever, ele deve confirmar seus dados pelo e-mail enviado.",
           "Atenção",
           "50%",
-          function () {
-            location.reload();
-          }
+          // function () {
+          //   location.reload();
+          // }
         );
       }
     },

@@ -252,7 +252,7 @@ function conteudoDadosPessoais($idModal, $cod_tipoRole, $cod_usuario)
         INNER JOIN role_cadastro rc ON rc.cod_usuario = ci.cod_usuario 
         INNER JOIN jogador j ON j.cod_jogador = rc.cod_usuario 
         LEFT JOIN posicao pos ON pos.cod_posicao = j.posicao 
-        LEFT JOIN esporte esp ON esp.cod_esporte = j.esporte 
+        LEFT JOIN esporte esp ON esp.cod_esporte = j.cod_esporte 
         LEFT JOIN fichaMedica fm ON fm.cod_jogador = j.cod_jogador 
         LEFT JOIN midia_jogador mj ON mj.cod_jogador = j.cod_jogador 
         LEFT JOIN turma_jogador tj ON tj.cod_jogador = j.cod_jogador 
