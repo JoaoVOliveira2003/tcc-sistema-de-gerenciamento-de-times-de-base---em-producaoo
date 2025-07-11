@@ -5,9 +5,17 @@ $bd = conecta();
 $cod_role = getPost('cod_role');
 $cod_usuario = getPost('cod_usuario');
 
-$cod_role    = 1;
-$cod_usuario = 4;
+
 $retorno     = "";
+
+// Função auxiliar para evitar SQL com IN vazio
+function safeTurmasInClause($turmas) {
+    if (empty($turmas)) {
+        // Retorna algo que nunca exista
+        return "0";
+    }
+    return $turmas;
+}
 
 if ($cod_role == 1) {
     $query = "
@@ -22,7 +30,7 @@ if ($cod_role == 1) {
         LEFT JOIN turma_jogador tj ON tj.cod_turma = t.cod_turma
         LEFT JOIN jogador j ON tj.cod_jogador = j.cod_jogador
         LEFT JOIN role_cadastro rc ON rc.cod_usuario = j.cod_jogador
-        LEFT JOIN cadastro_identificacao ci ON ci.cod_usuario = rc.cod_usuario
+        LEFT JOIN cadastro_identificacao ci ON ci.cod_usuario = rc.cod_usuario AND ci.ativo = 's'
         LEFT JOIN nota_jogador nota ON nota.cod_jogador = j.cod_jogador 
             AND (nota.ativo = 's' OR nota.ativo = '' OR nota.ativo IS NULL)
         ORDER BY inst.cod_instituicao, si.cod_subInstituicao, t.cod_turma, ci.nome
@@ -37,7 +45,13 @@ if ($cod_role == 1) {
         WHERE admins.cod_administrador = $cod_usuario
     ";
 
-    if ($bd->SqlExecuteQuery($query)) {$turmas = $bd->SqlQueryShow('turmas');}
+    if ($bd->SqlExecuteQuery($query)) {
+        $turmas = $bd->SqlQueryShow('turmas');
+    } else {
+        $turmas = null;
+    }
+
+    $turmasIn = safeTurmasInClause($turmas);
 
     $query = "
         SELECT 
@@ -51,14 +65,13 @@ if ($cod_role == 1) {
         LEFT JOIN turma_jogador tj ON tj.cod_turma = t.cod_turma
         LEFT JOIN jogador j ON tj.cod_jogador = j.cod_jogador
         LEFT JOIN role_cadastro rc ON rc.cod_usuario = j.cod_jogador
-        LEFT JOIN cadastro_identificacao ci ON ci.cod_usuario = rc.cod_usuario
+        LEFT JOIN cadastro_identificacao ci ON ci.cod_usuario = rc.cod_usuario AND ci.ativo = 's'
         LEFT JOIN nota_jogador nota ON nota.cod_jogador = j.cod_jogador 
             AND (nota.ativo = 's' OR nota.ativo = '' OR nota.ativo IS NULL)
-        WHERE t.cod_turma IN ($turmas)
+        WHERE t.cod_turma IN ($turmasIn)
         ORDER BY inst.cod_instituicao, si.cod_subInstituicao, t.cod_turma, ci.nome;
     ";
 } elseif ($cod_role == 3 || $cod_role == 4) {
-    // Administradores Subinstituição ou Staff/ADM
     $query = "
         SELECT GROUP_CONCAT(tur.cod_turma ORDER BY tur.cod_turma SEPARATOR ',') AS turmas 
         FROM administrador_subinstituicao admsub
@@ -67,7 +80,13 @@ if ($cod_role == 1) {
         WHERE admsub.cod_administrador = $cod_usuario
     ";
 
-    if ($bd->SqlExecuteQuery($query)) {$turmas = $bd->SqlQueryShow('turmas'); }
+    if ($bd->SqlExecuteQuery($query)) {
+        $turmas = $bd->SqlQueryShow('turmas');
+    } else {
+        $turmas = null;
+    }
+
+    $turmasIn = safeTurmasInClause($turmas);
 
     $query = "
         SELECT 
@@ -81,16 +100,15 @@ if ($cod_role == 1) {
         LEFT JOIN turma_jogador tj ON tj.cod_turma = t.cod_turma
         LEFT JOIN jogador j ON tj.cod_jogador = j.cod_jogador
         LEFT JOIN role_cadastro rc ON rc.cod_usuario = j.cod_jogador
-        LEFT JOIN cadastro_identificacao ci ON ci.cod_usuario = rc.cod_usuario
+        LEFT JOIN cadastro_identificacao ci ON ci.cod_usuario = rc.cod_usuario AND ci.ativo = 's'
         LEFT JOIN nota_jogador nota ON nota.cod_jogador = j.cod_jogador 
             AND (nota.ativo = 's' OR nota.ativo = '' OR nota.ativo IS NULL)
-        WHERE t.cod_turma IN ($turmas)
+        WHERE t.cod_turma IN ($turmasIn)
         ORDER BY inst.cod_instituicao, si.cod_subInstituicao, t.cod_turma, ci.nome;
     ";
 } elseif ($cod_role == 5) {
-    // Treinadores Staff
     $query = "
-        SELECT GROUP_CONCAT(tur.cod_turma ORDER BY tur.cod_turma SEPARATOR ', ') AS turmas 
+        SELECT GROUP_CONCAT(tur.cod_turma ORDER BY tur.cod_turma SEPARATOR ',') AS turmas 
         FROM staff staf
         INNER JOIN cadastro_identificacao cad ON staf.cod_staff = cad.cod_usuario 
         LEFT JOIN staff_turma staftu ON staf.cod_staff = staftu.cod_staff 
@@ -101,7 +119,11 @@ if ($cod_role == 1) {
 
     if ($bd->SqlExecuteQuery($query)) {
         $turmas = $bd->SqlQueryShow('turmas');
+    } else {
+        $turmas = null;
     }
+
+    $turmasIn = safeTurmasInClause($turmas);
 
     $query = "
         SELECT 
@@ -115,10 +137,10 @@ if ($cod_role == 1) {
         LEFT JOIN turma_jogador tj ON tj.cod_turma = t.cod_turma
         LEFT JOIN jogador j ON tj.cod_jogador = j.cod_jogador
         LEFT JOIN role_cadastro rc ON rc.cod_usuario = j.cod_jogador
-        LEFT JOIN cadastro_identificacao ci ON ci.cod_usuario = rc.cod_usuario
+        LEFT JOIN cadastro_identificacao ci ON ci.cod_usuario = rc.cod_usuario AND ci.ativo = 's'
         LEFT JOIN nota_jogador nota ON nota.cod_jogador = j.cod_jogador 
             AND (nota.ativo = 's' OR nota.ativo = '' OR nota.ativo IS NULL)
-        WHERE t.cod_turma IN ($turmas)
+        WHERE t.cod_turma IN ($turmasIn)
         ORDER BY inst.cod_instituicao, si.cod_subInstituicao, t.cod_turma, ci.nome;
     ";
 }
@@ -141,7 +163,7 @@ if ($bd->SqlExecuteQuery($query)) {
         if ($instituicao !== $instituicaoAtual) {
             if ($turmaAtual !== null) {
                 if (!$tem_jogador_na_turma) {
-                    $retorno .= "<tr><td colspan='4' class='text-center'>Nenhum jogador cadastrado</td></tr>";
+                    $retorno .= "<tr><td colspan='4' class='text-center'>Nenhum jogador cadastrado</td></tr>" . $turma;
                 }
                 $retorno .= "</tbody></table>";
             }
@@ -156,7 +178,7 @@ if ($bd->SqlExecuteQuery($query)) {
         if ($subinstituicao !== $subinstituicaoAtual) {
             if ($turmaAtual !== null) {
                 if (!$tem_jogador_na_turma) {
-                    $retorno .= "<tr><td colspan='4' class='text-center'>Nenhum jogador cadastrado</td></tr>";
+                    $retorno .= "<tr><td colspan='4' class='text-center'>Nenhum jogador cadastrado</td></tr>" . $turma;
                 }
                 $retorno .= "</tbody></table>";
             }
@@ -168,7 +190,7 @@ if ($bd->SqlExecuteQuery($query)) {
         // Nova Turma
         if ($turma !== $turmaAtual) {
             if ($turmaAtual !== null && !$tem_jogador_na_turma) {
-                $retorno .= "<tr><td colspan='4' class='text-center'>Nenhum jogador cadastrado</td></tr>";
+                $retorno .= "<tr><td colspan='4' class='text-center'>Nenhum jogador cadastrado</td></tr> . $turma";
                 $retorno .= "</tbody></table>";
             }
 

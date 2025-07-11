@@ -26,4 +26,4 @@ if ($bd->SqlExecuteQuery($query)) {
 }
 
 $bd->SqlDisconnect();
-exit($retorno);
+exit($query);

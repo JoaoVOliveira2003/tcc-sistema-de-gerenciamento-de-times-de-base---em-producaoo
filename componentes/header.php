@@ -15,7 +15,7 @@ STAFF - 5
 jogadores - 6
 */
 
-// $cod_tipo_role = 0;
+$cod_tipo_role = 0;
 
 
 if ($cod_tipo_role == 0) {

@@ -51,6 +51,7 @@ if ($bd->SqlExecuteQuery($query)) {
                     if ($bd->SqlExecuteQuery($query)) {
 
                 $query = "INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('$email', $cod_pessoa)";
+                
                 if ($bd->SqlExecuteQuery($query)) {
                     enviarGmail($email, $nome, $cod_role, $cod_pessoa);
                     $retorno = 'ok';

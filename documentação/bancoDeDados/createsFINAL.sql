@@ -550,40 +550,48 @@ INSERT INTO tipo_role(desc_tipo_role,abrev_tipo_role,ativo) values
 ('jogadores','','s');
 
 INSERT INTO instituicao (desc_instituicao, ativo, cod_tipo_instituicao) VALUES 
-('Universidade do Sol', 's', 3),
-('Centro Técnico Alfa', 's', 1),
-('Instituto Delta', 's', 7),
-('Faculdade Horizonte', 's', 2),
-('Escola Técnica Nova Geração', 's', 5),
-('Academia Científica Orion', 's', 9),
-('Colégio Saber Futuro', 's', 4),
-('Instituto de Pesquisas Quark', 's', 11),
-('Universidade Internacional PontoCom', 's', 6),
-('Centro de Inovação Vortex', 's', 8);
+('Instituto Federal do Paraná', 's', 8),
+('Centro Esportivo Paulista', 's', 1)
+;
 
 INSERT INTO subInstituicao (Cod_Instituicao, ativo, desc_subInstituicao, Cod_Municipio) VALUES
-(1, 's', 'Campus Central - Bloco A', 2),
-(2, 's', 'Unidade Zona Norte', 5),
-(3, 's', 'Extensão Tecnológica Sul', 1),
-(4, 's', 'Polo Educacional Mar Azul', 3),
-(5, 's', 'Núcleo de Pesquisa Aurora', 7),
-(6, 's', 'Centro de Formação Técnica', 4),
-(7, 's', 'Campus Avançado Oeste', 6),
-(8, 's', 'Unidade Experimental Leste', 8),
-(9, 's', 'Subunidade Acadêmica Alfa', 9),
-(9, 's', 'Ponto de Apoio Regional', 10);
+(1, 's', 'IFPR - Campus Colombo', 1),
+(1, 's', 'IFPR - Campus Curitiba', 2),
+(1, 's', 'IFPR - Campus Londrina', 3),
+(2, 's', 'Centro de São Paulo', 7),
+(2, 's', 'Centro de São Bernardo do Campo', 10),
+(2, 's', 'Centro de Campinas', 8)
+;
 
 INSERT INTO turma (desc_turma, ativo, cod_subInstituicao) VALUES
-('Turma A - Manhã', 's', 1),
-('Turma B - Tarde', 's', 2),
-('Turma C - Noite', 's', 3),
-('Turma D - Integral', 's', 4),
-('Turma E - Manhã', 's', 5),
-('Turma F - Tarde', 's', 6),
-('Turma G - Noite', 's', 7),
-('Turma H - Integral', 's', 8),
-('Turma I - Manhã', 's', 9),
-('Turma J - Tarde', 's', 10);
+('TADS2023', 's', 1),
+('IFPR2019', 's', 1),
+('INFO2022', 's', 1),
+
+-- IFPR Curitiba
+('ENGCOMP2021', 's', 2),
+('TADS2022', 's', 2),
+('IFPR2020', 's', 2),
+
+-- IFPR Londrina
+('ELETRO2023', 's', 3),
+('INFO2021', 's', 3),
+('IFPR2022', 's', 3),
+
+-- Centro de São Paulo
+('CENTRO2023-A', 's', 4),
+('CENTRO2022-B', 's', 4),
+('ADMIN2019', 's', 4),
+
+-- Centro de São Bernardo do Campo
+('SBC2023', 's', 5),
+('SBC2022-TI', 's', 5),
+('GEST2021', 's', 5),
+
+-- Centro de Campinas
+('CAMP2020-TADS', 's', 6),
+('INFOCAMP2021', 's', 6),
+('ADM2023', 's', 6);
 
 INSERT INTO tipo_lesao (desc_tipoLesao) VALUES 
 ('Lesões de Pele'),
@@ -600,8 +608,9 @@ INSERT INTO tipo_lesao (desc_tipoLesao) VALUES
 
 --- insert do cadastro do sistema
 INSERT INTO cadastro_identificacao (nome, cpf,cod_municipio,ativo) VALUES ('sistema','1',1,'s');
-INSERT INTO role_cadastro (cod_usuario,cod_tipoRole) VALUES (1,5);
+INSERT INTO role_cadastro (cod_usuario,cod_tipoRole) VALUES (1,1);
 INSERT INTO staff(cod_staff) VALUES (1);
+insert into login_usuario(cod_usuario,email_usuario,senha) values (1,'a@gmail.com','a');
 
 ----
 
@@ -728,52 +737,313 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (4, 16, 6),
 (5, 17, 6);
 
---------- Usuaros basicos para teste
+-- Usuário 2
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('AdministradorTi02', '12345678901', 3, 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (2, 1);
+INSERT INTO login_usuario (cod_usuario, email_usuario, senha) VALUES (2, 'admin02@ifpr.edu.br', 'senhaSegura02');
 
-insert into cadastro_identificacao(nome,cpf,ativo,cod_municipio) values ('Cadastro TI',123,'s',2);
-insert into role_cadastro(cod_usuario,cod_tipoRole) values(2,1);
-insert into login_usuario(cod_usuario,email_usuario,senha) values (2,'ti@gmail.com','ti');
+-- Usuário 3
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('AdministradorTi03', '23456789012', 7, 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (3, 1);
+INSERT INTO login_usuario (cod_usuario, email_usuario, senha) VALUES (3, 'admin03@ifpr.edu.br', 'senhaSegura03');
 
--- CADASTRO DE JOGADOR
-INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('joselito', '13432640900', 1, 's');
-INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (2, 6);
-INSERT INTO jogador(cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (2, '2025-12-31', 1, 1);
-INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (1, 2);
-INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (2, 'midia/zjor.png');
-INSERT INTO contato_responsavel (nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) VALUES ('maria vlau', 'mae', 'jora@gmail.com', '444444');
-INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (2, 1);
-INSERT INTO historicoLesoes (cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) VALUES (3, 'quebrou pé', '2003-02-13', '40 dias');
-INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) VALUES (2, 182, 765, 'O+', 'Nenhuma', 'Poeira, Pólen', '2025-04-22');
-INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (2, 1);
-insert into login_usuario(cod_usuario,email_usuario,senha) values (3,'jogador@gmail.com','jogador');
-
--- cadastro ADMI
-INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('admi', 123, 1, 's');
-INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (4, 4);
-INSERT INTO administrador (cod_administrador, tipo_role) VALUES (4,2);
-INSERT INTO administrador_instituicao (cod_administrador, cod_instituicao) VALUES (4, 1);
-insert into login_usuario(cod_usuario,email_usuario,senha) values (4,'admi@gmail.com','admi');
-
--- cadastro ADMS
-INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('adms', 123, 1, 's');
-INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (5, 4);
-INSERT INTO administrador (cod_administrador, tipo_role) VALUES (5,3);
-INSERT INTO administrador_subInstituicao (cod_administrador, cod_subInstituicao) VALUES (4, 1);
-insert into login_usuario(cod_usuario,email_usuario,senha) values (5,'adms@gmail.com','adms');
-
--- cadastro staff
-INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('staff', 123, 1, 's');
-INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (6, 5);
-INSERT INTO staff (cod_staff) VALUES (6);
-INSERT INTO subInstituticao_staff (cod_staff, cod_subInstituicao) VALUES (6, 1);
-insert into login_usuario(cod_usuario,email_usuario,senha) values (6,'staff@gmail.com','staff');
+-- Usuário 4
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)  VALUES ('AdministradorTi04', '34567890123', 12, 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (4, 1);
+INSERT INTO login_usuario (cod_usuario, email_usuario, senha) VALUES (4, 'admin04@ifpr.edu.br', 'senhaSegura04');
 
 
--- cadastro staffAdms
-INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('staffAdms', 123, 1, 's');
-INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (7,5);
-INSERT INTO staff (cod_staff) VALUES (7);
-INSERT INTO administrador (cod_administrador, tipo_role) VALUES (7,4);
-INSERT INTO administrador_subInstituicao (cod_administrador, cod_subInstituicao) VALUES (7, 1);
-INSERT INTO subInstituticao_staff (cod_staff, cod_subInstituicao) VALUES (7, 1);
-insert into login_usuario(cod_usuario,email_usuario,senha) values (7,'staffAdms@gmail.com','staffAdms');
+-- 🔹 Administradores para cod_instituicao = 1
+-- Usuário 5
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
+VALUES ('AdministradorInst1_01', '45678901234', 4, 's');
+
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
+VALUES (5, 2);
+
+INSERT INTO administrador (cod_administrador, tipo_role)
+VALUES (5, 2);
+
+INSERT INTO administrador_instituicao (cod_administrador, cod_instituicao)
+VALUES (5, 1);
+
+INSERT INTO login_usuario (cod_usuario, email_usuario, senha)
+VALUES (5, 'admin05@ifpr.edu.br', 'senhaSegura05');
+
+-- Usuário 6
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
+VALUES ('AdministradorInst1_02', '56789012345', 6, 's');
+
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
+VALUES (6, 2);
+
+INSERT INTO administrador (cod_administrador, tipo_role)
+VALUES (6, 2);
+
+INSERT INTO administrador_instituicao (cod_administrador, cod_instituicao)
+VALUES (6, 1);
+
+INSERT INTO login_usuario (cod_usuario, email_usuario, senha)
+VALUES (6, 'admin06@ifpr.edu.br', 'senhaSegura06');
+
+-- Usuário 7
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
+VALUES ('AdministradorInst1_03', '67890123456', 8, 's');
+
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
+VALUES (7, 2);
+
+INSERT INTO administrador (cod_administrador, tipo_role)
+VALUES (7, 2);
+
+INSERT INTO administrador_instituicao (cod_administrador, cod_instituicao)
+VALUES (7, 1);
+
+INSERT INTO login_usuario (cod_usuario, email_usuario, senha)
+VALUES (7, 'admin07@ifpr.edu.br', 'senhaSegura07');
+
+
+-- 🔹 Administradores para cod_instituicao = 2
+
+-- Usuário 8
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
+VALUES ('AdministradorInst2_01', '78901234567', 9, 's');
+
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
+VALUES (8, 2);
+
+INSERT INTO administrador (cod_administrador, tipo_role)
+VALUES (8, 2);
+
+INSERT INTO administrador_instituicao (cod_administrador, cod_instituicao)
+VALUES (8, 2);
+
+INSERT INTO login_usuario (cod_usuario, email_usuario, senha)
+VALUES (8, 'admin08@ifpr.edu.br', 'senhaSegura08');
+
+-- Usuário 9
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
+VALUES ('AdministradorInst2_02', '89012345678', 10, 's');
+
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
+VALUES (9, 2);
+
+INSERT INTO administrador (cod_administrador, tipo_role)
+VALUES (9, 2);
+
+INSERT INTO administrador_instituicao (cod_administrador, cod_instituicao)
+VALUES (9, 2);
+
+INSERT INTO login_usuario (cod_usuario, email_usuario, senha)
+VALUES (9, 'admin09@ifpr.edu.br', 'senhaSegura09');
+
+-- Usuário 10
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
+VALUES ('AdministradorInst2_03', '90123456789', 11, 's');
+
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
+VALUES (10, 2);
+
+INSERT INTO administrador (cod_administrador, tipo_role)
+VALUES (10, 2);
+
+INSERT INTO administrador_instituicao (cod_administrador, cod_instituicao)
+VALUES (10, 2);
+
+INSERT INTO login_usuario (cod_usuario, email_usuario, senha)
+VALUES (10, 'admin10@ifpr.edu.br', 'senhaSegura10');
+
+-- 🔹 Administrador Subinstituição - Usuário 11
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
+VALUES ('AdministradorSub1_01', '01234567890', 2, 's');
+
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
+VALUES (11, 3);
+
+INSERT INTO administrador (cod_administrador, tipo_role)
+VALUES (11, 3);
+
+INSERT INTO administrador_subInstituicao (cod_administrador, cod_subInstituicao)
+VALUES (11, 1);
+
+INSERT INTO login_usuario (email_usuario, cod_usuario, senha)
+VALUES ('admin11@ifpr.edu.br', 11, 'senhaSegura11');
+
+
+-- 🔹 Administrador Subinstituição - Usuário 12
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
+VALUES ('AdministradorSub1_02', '12345678901', 4, 's');
+
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
+VALUES (12, 3);
+
+INSERT INTO administrador (cod_administrador, tipo_role)
+VALUES (12, 3);
+
+INSERT INTO administrador_subInstituicao (cod_administrador, cod_subInstituicao)
+VALUES (12, 1);
+
+INSERT INTO login_usuario (email_usuario, cod_usuario, senha)
+VALUES ('admin12@ifpr.edu.br', 12, 'senhaSegura12');
+
+
+-- 🔹 Administrador Subinstituição - Usuário 13
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
+VALUES ('AdministradorSub1_03', '23456789012', 6, 's');
+
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
+VALUES (13, 3);
+
+INSERT INTO administrador (cod_administrador, tipo_role)
+VALUES (13, 3);
+
+INSERT INTO administrador_subInstituicao (cod_administrador, cod_subInstituicao)
+VALUES (13, 1);
+
+INSERT INTO login_usuario (email_usuario, cod_usuario, senha)
+VALUES ('admin13@ifpr.edu.br', 13, 'senhaSegura13');
+
+
+
+-- 🔹 Staff da Subinstituição - Usuário 14
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
+VALUES ('StaffSub1_01', '34567890123', 5, 's');
+
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
+VALUES (14, 5);
+
+INSERT INTO staff(cod_staff) VALUES (14);
+
+INSERT INTO subInstituticao_staff (cod_staff,cod_SubInstituicao) VALUES  (14, 1);
+
+INSERT INTO login_usuario (email_usuario, cod_usuario,senha)
+VALUES ('staff14@ifpr.edu.br', 14,'senha14');
+
+
+-- 🔹 Staff da Subinstituição - Usuário 15
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
+VALUES ('StaffSub1_02', '45678901234', 8, 's');
+
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
+VALUES (15, 5);
+
+INSERT INTO staff(cod_staff) VALUES (15);
+
+INSERT INTO subInstituticao_staff (cod_staff, cod_SubInstituicao)
+VALUES (15, 1);
+
+INSERT INTO login_usuario (email_usuario, cod_usuario,senha)
+VALUES ('staff15@ifpr.edu.br', 15,'12');
+
+
+-- 🔹 Staff da Subinstituição - Usuário 16
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
+VALUES ('StaffSub1_03', '56789012345', 11, 's');
+
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
+VALUES (16, 5);
+
+INSERT INTO staff(cod_staff) VALUES (16);
+
+INSERT INTO subInstituticao_staff (cod_staff, cod_SubInstituicao)
+VALUES (16, 1);
+
+INSERT INTO login_usuario (email_usuario, cod_usuario)
+VALUES ('staff16@ifpr.edu.br', 16);
+
+-- Staff 14 vinculado às turmas 1 e 2
+INSERT INTO staff_turma (cod_staff, cod_turma) VALUES (14, 1);
+INSERT INTO staff_turma (cod_staff, cod_turma) VALUES (14, 2);
+
+-- Staff 15 vinculado à turma nenhuma
+
+
+-- Staff 16 vinculado a todas as turmas
+INSERT INTO staff_turma (cod_staff, cod_turma) VALUES (16, 1);
+INSERT INTO staff_turma (cod_staff, cod_turma) VALUES (16, 2);
+INSERT INTO staff_turma (cod_staff, cod_turma) VALUES (16, 3);
+
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('Staffano AdmsStaff', '46672656049', '1', 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (17, 4);
+INSERT INTO staff (cod_staff) VALUES (17);
+INSERT INTO subInstituticao_staff (cod_staff, cod_SubInstituicao) VALUES (17, 1);
+INSERT INTO administrador (cod_administrador, tipo_role) VALUES (17, 4);
+INSERT INTO administrador_subInstituicao (cod_administrador, cod_subInstituicao) VALUES (17, 1);
+INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('OJOAO953@GMAIL.COM', 17);
+
+
+
+-- Jogador 1
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
+VALUES ('Lucas Henrique da Silva', '134.326.409-00', '1', 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (18, 6);
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (18, '2007-04-15', 3, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (2, 18);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (18, 'jogadorPadrao.png');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) VALUES (18, 178, 65, 'O+', 'Nenhuma', 'Amendoim', NOW());
+INSERT INTO contato_responsavel (cod_contatoResponsavel, nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) VALUES (1, 'Marcelo da Silva', 'Pai', 'marcelo.silva@gmail.com', '41998765432');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (18, 1);
+INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) VALUES (1, 1, 'Entorse no tornozelo direito durante partida', '2024-10-21', '15 dias');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (18, 1);
+INSERT INTO login_usuario (email_usuario, cod_usuario,senha) VALUES ('lucas.silva@gmail.com', 18,'senhaLuscar');
+INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) VALUES (18, 1, '6.0', 's', NOW());
+
+-- Jogador 2
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
+VALUES ('Mariana Costa Oliveira', '245.789.123-99', '1', 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (19, 6);
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (19, '2006-07-22', 2, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (2, 19);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (19, 'jogadorPadrao.png');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) VALUES (19, 165, 58, 'A-', 'Asma', 'Nenhuma', NOW());
+INSERT INTO contato_responsavel (cod_contatoResponsavel, nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) VALUES (2, 'Ana Costa', 'Mãe', 'ana.costa@gmail.com', '41987654321');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (19, 2);
+INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) VALUES (2, 2, 'Lesão muscular na coxa esquerda', '2023-12-10', '30 dias');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (19, 2);
+INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('mariana.oliveira@gmail.com', 19);
+INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) VALUES (19, 1, '7.5', 's', NOW());
+
+-- Jogador 3
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
+VALUES ('Felipe Augusto Ramos', '312.456.789-11', '1', 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (20, 6);
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (20, '2008-01-05', 1, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (2, 20);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (20, 'jogadorPadrao.png');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) VALUES (20, 180, 70, 'B+', 'Nenhuma', 'Pólen', NOW());
+INSERT INTO contato_responsavel (cod_contatoResponsavel, nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) VALUES (3, 'Carlos Ramos', 'Pai', 'carlos.ramos@gmail.com', '41991234567');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (20, 3);
+INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) VALUES (3, 3, 'Contusão no joelho direito', '2025-01-15', '20 dias');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (20, 3);
+INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('felipe.ramos@gmail.com', 20);
+INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) VALUES (20, 1, '8.0', 's', NOW());
+
+-- Jogador 4
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
+VALUES ('Ana Beatriz Souza', '498.321.654-77', '1', 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (21, 6);
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (21, '2007-09-12', 4, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (2, 21);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (21, 'jogadorPadrao.png');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) VALUES (21, 170, 60, 'AB+', 'Hipertensão', 'Nenhuma', NOW());
+INSERT INTO contato_responsavel (cod_contatoResponsavel, nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) VALUES (4, 'Roberto Souza', 'Pai', 'roberto.souza@gmail.com', '41999887766');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (21, 4);
+INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) VALUES (4, 4, 'Fratura no braço esquerdo', '2024-05-18', '60 dias');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (21, 4);
+INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('ana.souza@gmail.com', 21);
+INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) VALUES (21, 1, '7.0', 's', NOW());
+
+-- Jogador 5
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
+VALUES ('Pedro Henrique Lima', '589.741.258-44', '1', 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (22, 6);
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (22, '2006-11-30', 5, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (2, 22);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (22, 'jogadorPadrao.png');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) VALUES (22, 175, 68, 'A+', 'Nenhuma', 'Lactose', NOW());
+INSERT INTO contato_responsavel (cod_contatoResponsavel, nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) VALUES (5, 'Luciana Lima', 'Mãe', 'luciana.lima@gmail.com', '41993445566');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (22, 5);
+INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) VALUES (5, 5, 'Distensão muscular na coxa direita', '2024-09-10', '25 dias');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (22, 5);
+INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('pedro.lima@gmail.com', 22);
+INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) VALUES (22, 1, '7.8', 's', NOW());

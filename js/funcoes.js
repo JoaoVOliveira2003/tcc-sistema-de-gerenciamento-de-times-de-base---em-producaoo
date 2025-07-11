@@ -506,6 +506,8 @@ function teste(){
 
 function confirmarCadastro(cod,tipo_role){
 
+  console.log('aaa - '+ tipo_role);
+
   var pagina = "/tcc/componentes/confirmarCadastro.php";
 
   var senha = document.getElementById("senha_usuario").value;
