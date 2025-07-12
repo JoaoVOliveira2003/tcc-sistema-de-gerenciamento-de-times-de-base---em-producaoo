@@ -653,6 +653,9 @@ INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
 (4, '/tcc/telas/MEUSDADOS/meusDados.php', 'Meus dados'),                   -- 16
 (5, '/tcc/telas/TREINO/criarTreino.php', 'Criar treino');                  -- 17
 
+INSERT INTO subitem_menu (cod_item_menu, href, label) VALUES
+(2, '/tcc/telas/JOGADOR/relatorioTodosJogadores.php', 'Relatório todos jogadores'); -- 18
+
 -- ===============================
 -- 3. RELAÇÃO ROLE x MENU PRINCIPAL
 -- ===============================
@@ -683,8 +686,9 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (2, 11, 1),
 (2, 12, 1),
 (3, 15, 1),
-(4, 16, 1),
-(5, 17, 1);
+(4, 16, 1)
+-- (5, 17, 1)
+;
 
 -- ADMI (cod_tipo_role = 2)
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
@@ -737,10 +741,23 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (4, 16, 6),
 (5, 17, 6);
 
+-- RELATORIOS TODOS JOGADORES.
+INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+(2, 18, 1),
+(2, 18, 2),
+(2, 18, 3),
+(2, 18, 4),
+(2, 18, 5)
+;
+
+
+
+
+
 -- Usuário 2
-INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('AdministradorTi02', '12345678901', 3, 's');
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('ti', '12345678901', 3, 's');
 INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (2, 1);
-INSERT INTO login_usuario (cod_usuario, email_usuario, senha) VALUES (2, 'admin02@ifpr.edu.br', 'senhaSegura02');
+INSERT INTO login_usuario (cod_usuario, email_usuario, senha) VALUES (2, 'ti@gmail.com', 'ti');
 
 -- Usuário 3
 INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('AdministradorTi03', '23456789012', 7, 's');
@@ -1047,3 +1064,193 @@ INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, dat
 INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (22, 5);
 INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('pedro.lima@gmail.com', 22);
 INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) VALUES (22, 1, '7.8', 's', NOW());
+
+-- Jogador 1 (cod_usuario = 23)
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
+VALUES ('Lucas Ferreira da Silva', '111.111.111-11', '1', 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (23, 6);
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (23, '2006-05-14', 1, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (1, 23);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (23, 'jogadorPadrao.png');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) 
+VALUES (23, 178, 72, 'O+', 'Nenhuma', 'Nenhuma', NOW());
+INSERT INTO contato_responsavel (cod_contatoResponsavel, nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) 
+VALUES (6, 'Marcos da Silva', 'Pai', 'marcos.silva@gmail.com', '41999999991');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (23, 6);
+INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) 
+VALUES (6, 3, 'Entorse no tornozelo esquerdo', '2024-06-12', '15 dias');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (23, 6);
+INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('lucas.ferreira@gmail.com', 23);
+INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) 
+VALUES (23, 1, '8.2', 's', NOW());
+
+-- Jogador 2 (cod_usuario = 24)
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
+VALUES ('Gabriel Santos Lima', '222.222.222-22', '1', 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (24, 6);
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (24, '2006-03-09', 2, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (1, 24);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (24, 'jogadorPadrao.png');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) 
+VALUES (24, 180, 75, 'A+', 'Nenhuma', 'Pólen', NOW());
+INSERT INTO contato_responsavel (cod_contatoResponsavel, nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) 
+VALUES (7, 'Renata Lima', 'Mãe', 'renata.lima@gmail.com', '41999999992');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (24, 7);
+INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) 
+VALUES (7, 2, 'Luxação no ombro direito', '2023-10-20', '30 dias');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (24, 7);
+INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('gabriel.lima@gmail.com', 24);
+INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) 
+VALUES (24, 1, '7.5', 's', NOW());
+
+-- Jogador 3 (cod_usuario = 25)
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
+VALUES ('Matheus Rocha Almeida', '333.333.333-33', '1', 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (25, 6);
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (25, '2006-07-22', 3, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (1, 25);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (25, 'jogadorPadrao.png');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) 
+VALUES (25, 176, 70, 'B-', 'Nenhuma', 'Frutos do mar', NOW());
+INSERT INTO contato_responsavel (cod_contatoResponsavel, nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) 
+VALUES (8, 'Joana Almeida', 'Mãe', 'joana.almeida@gmail.com', '41999999993');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (25, 8);
+INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) 
+VALUES (8, 4, 'Fratura no dedo mindinho do pé', '2023-12-01', '10 dias');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (25, 8);
+INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('matheus.almeida@gmail.com', 25);
+INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) 
+VALUES (25, 1, '8.0', 's', NOW());
+
+-- Jogador 4 (cod_usuario = 26)
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
+VALUES ('Henrique Oliveira Costa', '444.444.444-44', '1', 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (26, 6);
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (26, '2006-01-30', 4, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (1, 26);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (26, 'jogadorPadrao.png');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) 
+VALUES (26, 183, 80, 'AB+', 'Asma leve', 'Nenhuma', NOW());
+INSERT INTO contato_responsavel (cod_contatoResponsavel, nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) 
+VALUES (9, 'Carlos Costa', 'Pai', 'carlos.costa@gmail.com', '41999999994');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (26, 9);
+INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) 
+VALUES (9, 1, 'Corte na sobrancelha em treino', '2025-01-15', '5 dias');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (26, 9);
+INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('henrique.costa@gmail.com', 26);
+INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) 
+VALUES (26, 1, '7.9', 's', NOW());
+
+-- Jogador 5 (cod_usuario = 27)
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
+VALUES ('Diego Martins Souza', '555.555.555-55', '1', 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (27, 6);
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (27, '2006-11-11', 5, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (1, 27);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (27, 'jogadorPadrao.png');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) 
+VALUES (27, 177, 73, 'O-', 'Nenhuma', 'Nenhuma', NOW());
+INSERT INTO contato_responsavel (cod_contatoResponsavel, nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) 
+VALUES (10, 'Sandra Souza', 'Mãe', 'sandra.souza@gmail.com', '41999999995');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (27, 10);
+INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) 
+VALUES (10, 6, 'Tendinite no joelho esquerdo', '2024-08-05', '20 dias');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (27, 10);
+INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('diego.souza@gmail.com', 27);
+INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) 
+VALUES (27, 1, '8.1', 's', NOW());
+
+-- Jogador 1 (cod_usuario = 28)
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
+VALUES ('João Victor Mendes', '666.666.666-66', '1', 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (28, 6);
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (28, '2006-08-20', 1, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (3, 28);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (28, 'jogadorPadrao.png');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) 
+VALUES (28, 179, 74, 'A-', 'Nenhuma', 'Nenhuma', NOW());
+INSERT INTO contato_responsavel (cod_contatoResponsavel, nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) 
+VALUES (11, 'Carla Mendes', 'Mãe', 'carla.mendes@gmail.com', '41999999996');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (28, 11);
+INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) 
+VALUES (11, 1, 'Torção leve no tornozelo', '2024-07-01', '7 dias');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (28, 11);
+INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('joao.mendes@gmail.com', 28);
+INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) 
+VALUES (28, 1, '7.7', 's', NOW());
+
+-- Jogador 2 (cod_usuario = 29)
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
+VALUES ('Thiago Costa Ribeiro', '777.777.777-77', '1', 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (29, 6);
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (29, '2006-10-15', 2, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (3, 29);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (29, 'jogadorPadrao.png');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) 
+VALUES (29, 181, 76, 'O+', 'Nenhuma', 'Ácaro', NOW());
+INSERT INTO contato_responsavel (cod_contatoResponsavel, nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) 
+VALUES (12, 'Roberto Ribeiro', 'Pai', 'roberto.ribeiro@gmail.com', '41999999997');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (29, 12);
+INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) 
+VALUES (12, 3, 'Contusão no joelho direito', '2024-05-10', '20 dias');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (29, 12);
+INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('thiago.ribeiro@gmail.com', 29);
+INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) 
+VALUES (29, 1, '8.3', 's', NOW());
+
+-- Jogador 3 (cod_usuario = 30)
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
+VALUES ('Ricardo Alves Moreira', '888.888.888-88', '1', 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (30, 6);
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (30, '2006-09-12', 3, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (3, 30);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (30, 'jogadorPadrao.png');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) 
+VALUES (30, 174, 69, 'B+', 'Nenhuma', 'Picada de inseto', NOW());
+INSERT INTO contato_responsavel (cod_contatoResponsavel, nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) 
+VALUES (13, 'Fernanda Moreira', 'Mãe', 'fernanda.moreira@gmail.com', '41999999998');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (30, 13);
+INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) 
+VALUES (13, 4, 'Estiramento muscular', '2024-04-18', '18 dias');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (30, 13);
+INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('ricardo.moreira@gmail.com', 30);
+INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) 
+VALUES (30, 1, '7.9', 's', NOW());
+
+-- Jogador 4 (cod_usuario = 31)
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
+VALUES ('André Luiz Barreto', '999.999.999-99', '1', 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (31, 6);
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (31, '2006-06-06', 4, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (3, 31);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (31, 'jogadorPadrao.png');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) 
+VALUES (31, 182, 78, 'AB-', 'Bronquite', 'Nenhuma', NOW());
+INSERT INTO contato_responsavel (cod_contatoResponsavel, nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) 
+VALUES (14, 'Lucia Barreto', 'Mãe', 'lucia.barreto@gmail.com', '41999999999');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (31, 14);
+INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) 
+VALUES (14, 2, 'Corte no supercílio', '2024-01-09', '4 dias');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (31, 14);
+INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('andre.barreto@gmail.com', 31);
+INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) 
+VALUES (31, 1, '8.0', 's', NOW());
+
+-- Jogador 5 (cod_usuario = 32)
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) 
+VALUES ('Felipe Augusto Nunes', '000.000.000-00', '1', 's');
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (32, 6);
+INSERT INTO jogador (cod_jogador, data_nascimento, posicao, cod_esporte) VALUES (32, '2006-02-28', 5, 1);
+INSERT INTO turma_jogador (cod_turma, cod_jogador) VALUES (3, 32);
+INSERT INTO midia_jogador (cod_jogador, local_midia) VALUES (32, 'jogadorPadrao.png');
+INSERT INTO fichaMedica (cod_jogador, altura, peso, tipoSanguineo, restricoes_medicas, alergias, data_atualizacao) 
+VALUES (32, 175, 71, 'A+', 'Nenhuma', 'Nenhuma', NOW());
+INSERT INTO contato_responsavel (cod_contatoResponsavel, nomeResponsavel, tipoFiliacao, emailResponsavel, telefoneResponsavel) 
+VALUES (15, 'Patricia Nunes', 'Mãe', 'patricia.nunes@gmail.com', '41999999000');
+INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (32, 15);
+INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) 
+VALUES (15, 6, 'Dor lombar após treino', '2024-06-20', '7 dias');
+INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (32, 15);
+INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('felipe.nunes@gmail.com', 32);
+INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) 
+VALUES (32, 1, '7.8', 's', NOW());

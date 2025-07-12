@@ -193,18 +193,18 @@ $retorno = '
         <input disabled type="text" class="form-control" value="' . $peso . '">
       </div>
           <div class="col-md-4">
-        <label class="form-label">alergias:</label>
+        <label class="form-label">Alergias :</label>
         <input disabled type="text" class="form-control" value="' . $alergias . '">
       </div>
       </div>
 
       <div class="row mb-1">
       <div class="col-md-6">
-        <label class="form-label">tipoSanguineo:</label>
+        <label class="form-label">Tipo sanguíneo:</label>
         <input disabled type="text" class="form-control" value="' . $tipoSanguineo . '">
       </div>
       <div class="col-md-6">
-        <label class="form-label">restricoes_medicas:</label>
+        <label class="form-label">Restrições médicas:</label>
         <input disabled type="text" class="form-control" value="' . $restricoes_medicas . '">
       </div>
     </div>

@@ -4,6 +4,7 @@ $bd = conecta();
 $retorno = '';
 
 $cod_tipo_role = $usuario['cod_tipoRole'];
+$retorno .= 'codigo tipo tole ->'.$cod_tipo_role;
 
 /*
 mostra tudo - 0
@@ -15,7 +16,7 @@ STAFF - 5
 jogadores - 6
 */
 
-$cod_tipo_role = 0;
+// $cod_tipo_role = 0;
 
 
 if ($cod_tipo_role == 0) {
