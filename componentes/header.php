@@ -4,7 +4,9 @@ $bd = conecta();
 $retorno = '';
 
 $cod_tipo_role = $usuario['cod_tipoRole'];
-$retorno .= 'codigo tipo tole ->'.$cod_tipo_role;
+// $retorno .= 'codigo tipo tole ->'.$cod_tipo_role;
+
+$retorno .=  'codigo tipo tole ->'.print_r($usuario);
 
 /*
 mostra tudo - 0
@@ -59,6 +61,8 @@ ORDER BY im.cod_item_menu, sim.cod_subitem_menu
 
 }
 $executou = $bd->SqlExecuteQuery($query);
+
+
 
 // Início do container e header com estilo Bootstrap
 $retorno .= '<div class="container">';

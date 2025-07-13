@@ -42,8 +42,14 @@ function gravarTurma() {
 function tabelaDeleteUpdateTurma() {
   var pagina = "/tcc/componentes/tabelaDeleteUpdate.php";
 
-  var query =
-    "SELECT tur.cod_turma, tur.desc_turma, tur.ativo, sub.desc_subInstituicao FROM turma tur INNER JOIN subinstituicao sub ON sub.cod_subInstituicao = tur.cod_subInstituicao ORDER BY sub.desc_subInstituicao;";
+  if(cod_tipoRole == 2){
+  var query ="SELECT tur.cod_turma, tur.desc_turma, tur.ativo, sub.desc_subInstituicao FROM turma tur INNER JOIN subinstituicao sub ON sub.cod_subInstituicao = tur.cod_subInstituicao INNER JOIN instituicao c ON sub.cod_instituicao = c.cod_instituicao inner join administrador_instituicao d on d.cod_instituicao = c.cod_instituicao where d.cod_administrador="+cod_tipoUsuario + " ORDER BY sub.desc_subInstituicao";
+  }
+  else{
+  var query ="SELECT tur.cod_turma, tur.desc_turma, tur.ativo, sub.desc_subInstituicao FROM turma tur INNER JOIN subinstituicao sub ON sub.cod_subInstituicao = tur.cod_subInstituicao ORDER BY sub.desc_subInstituicao;";
+  }
+
+console.log(query);
 
   let titulosTh = {
     valor1: "Cod. turma",

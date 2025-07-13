@@ -702,7 +702,9 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (2, 13, 2),
 (3, 15, 2),
 (4, 16, 2),
-(5, 17, 2);
+(2, 10, 2),
+(1, 7, 2)
+;
 
 -- ADMS (cod_tipo_role = 3)
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
@@ -710,11 +712,13 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (1, 4, 3),
 (1, 5, 3),
 (1, 6, 3),
-(2, 9, 3),
+-- (2, 9, 3),
 (3, 15, 3),
-(3, 14, 3),
+-- (3, 14, 3),
 (4, 16, 3),
-(5, 17, 3);
+(1, 7, 3)
+-- ,(5, 17, 3)
+;
 
 -- ADMS/STAFF (cod_tipo_role = 4)
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
@@ -723,11 +727,12 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (1, 5, 4),
 (1, 6, 4),
 (1, 13, 4),
-(2, 9, 4),
+-- (2, 9, 4),
 (3, 14, 4),
 (3, 15, 4),
 (4, 16, 4),
-(5, 17, 4);
+(5, 17, 4)
+;
 
 -- STAFF (cod_tipo_role = 5)
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
@@ -750,10 +755,6 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (2, 18, 5)
 ;
 
-
-
-
-
 -- Usuário 2
 INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('ti', '12345678901', 3, 's');
 INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (2, 1);
@@ -772,20 +773,15 @@ INSERT INTO login_usuario (cod_usuario, email_usuario, senha) VALUES (4, 'admin0
 
 -- 🔹 Administradores para cod_instituicao = 1
 -- Usuário 5
-INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
-VALUES ('AdministradorInst1_01', '45678901234', 4, 's');
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('AdministradorInst1_01', '45678901234', 4, 's');
 
-INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
-VALUES (5, 2);
+INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (5, 2);
 
-INSERT INTO administrador (cod_administrador, tipo_role)
-VALUES (5, 2);
+INSERT INTO administrador (cod_administrador, tipo_role) VALUES (5, 2);
 
-INSERT INTO administrador_instituicao (cod_administrador, cod_instituicao)
-VALUES (5, 1);
+INSERT INTO administrador_instituicao (cod_administrador, cod_instituicao) VALUES (5, 1);
 
-INSERT INTO login_usuario (cod_usuario, email_usuario, senha)
-VALUES (5, 'admin05@ifpr.edu.br', 'senhaSegura05');
+INSERT INTO login_usuario (cod_usuario, email_usuario, senha)VALUES (5, 'admi@gmail.com', 'admi');
 
 -- Usuário 6
 INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
@@ -824,7 +820,7 @@ VALUES (7, 'admin07@ifpr.edu.br', 'senhaSegura07');
 
 -- Usuário 8
 INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
-VALUES ('AdministradorInst2_01', '78901234567', 9, 's');
+VALUES ('admi', '78901234567', 9, 's');
 
 INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
 VALUES (8, 2);
@@ -836,7 +832,7 @@ INSERT INTO administrador_instituicao (cod_administrador, cod_instituicao)
 VALUES (8, 2);
 
 INSERT INTO login_usuario (cod_usuario, email_usuario, senha)
-VALUES (8, 'admin08@ifpr.edu.br', 'senhaSegura08');
+VALUES (8, 'admi@gmail.br', 'admi');
 
 -- Usuário 9
 INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
@@ -872,7 +868,7 @@ VALUES (10, 'admin10@ifpr.edu.br', 'senhaSegura10');
 
 -- 🔹 Administrador Subinstituição - Usuário 11
 INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
-VALUES ('AdministradorSub1_01', '01234567890', 2, 's');
+VALUES ('adms', '01234567890', 2, 's');
 
 INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
 VALUES (11, 3);
@@ -884,7 +880,7 @@ INSERT INTO administrador_subInstituicao (cod_administrador, cod_subInstituicao)
 VALUES (11, 1);
 
 INSERT INTO login_usuario (email_usuario, cod_usuario, senha)
-VALUES ('admin11@ifpr.edu.br', 11, 'senhaSegura11');
+VALUES ('adms@gmail.com', 11, 'adms');
 
 
 -- 🔹 Administrador Subinstituição - Usuário 12
@@ -903,10 +899,9 @@ VALUES (12, 1);
 INSERT INTO login_usuario (email_usuario, cod_usuario, senha)
 VALUES ('admin12@ifpr.edu.br', 12, 'senhaSegura12');
 
-
 -- 🔹 Administrador Subinstituição - Usuário 13
 INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
-VALUES ('AdministradorSub1_03', '23456789012', 6, 's');
+VALUES ('adms', '23456789012', 6, 's');
 
 INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
 VALUES (13, 3);
@@ -917,14 +912,11 @@ VALUES (13, 3);
 INSERT INTO administrador_subInstituicao (cod_administrador, cod_subInstituicao)
 VALUES (13, 1);
 
-INSERT INTO login_usuario (email_usuario, cod_usuario, senha)
-VALUES ('admin13@ifpr.edu.br', 13, 'senhaSegura13');
-
-
+INSERT INTO login_usuario (email_usuario, cod_usuario, senha) VALUES ('adms@gmail.br', 13, 'adms');
 
 -- 🔹 Staff da Subinstituição - Usuário 14
 INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo)
-VALUES ('StaffSub1_01', '34567890123', 5, 's');
+VALUES ('staff', '34567890123', 5, 's');
 
 INSERT INTO role_cadastro (cod_usuario, cod_tipoRole)
 VALUES (14, 5);
@@ -934,7 +926,7 @@ INSERT INTO staff(cod_staff) VALUES (14);
 INSERT INTO subInstituticao_staff (cod_staff,cod_SubInstituicao) VALUES  (14, 1);
 
 INSERT INTO login_usuario (email_usuario, cod_usuario,senha)
-VALUES ('staff14@ifpr.edu.br', 14,'senha14');
+VALUES ('staff@gmail.br', 14,'staff');
 
 
 -- 🔹 Staff da Subinstituição - Usuário 15
@@ -980,14 +972,16 @@ INSERT INTO staff_turma (cod_staff, cod_turma) VALUES (16, 1);
 INSERT INTO staff_turma (cod_staff, cod_turma) VALUES (16, 2);
 INSERT INTO staff_turma (cod_staff, cod_turma) VALUES (16, 3);
 
-INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('Staffano AdmsStaff', '46672656049', '1', 's');
+INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('AdmsStaff', '46672656049', '1', 's');
 INSERT INTO role_cadastro (cod_usuario, cod_tipoRole) VALUES (17, 4);
 INSERT INTO staff (cod_staff) VALUES (17);
 INSERT INTO subInstituticao_staff (cod_staff, cod_SubInstituicao) VALUES (17, 1);
 INSERT INTO administrador (cod_administrador, tipo_role) VALUES (17, 4);
 INSERT INTO administrador_subInstituicao (cod_administrador, cod_subInstituicao) VALUES (17, 1);
-INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('OJOAO953@GMAIL.COM', 17);
+INSERT INTO login_usuario (email_usuario, cod_usuario,senha) VALUES ('AdmsStaff@gmail.com', 17,'AdmsStaff');
 
+INSERT INTO staff_turma (cod_staff, cod_turma) VALUES (17, 1);
+INSERT INTO staff_turma (cod_staff, cod_turma) VALUES (17, 2);
 
 
 -- Jogador 1
@@ -1254,3 +1248,40 @@ INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUE
 INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('felipe.nunes@gmail.com', 32);
 INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) 
 VALUES (32, 1, '7.8', 's', NOW());
+
+-- Eventos
+
+-- Eventos criados por cod_staff = 1
+INSERT INTO evento (cod_staff, titulo_evento, data, horario, local, desc_evento, ativo) VALUES
+(1, 'Treinamento Técnico',       '2025-08-01', '09:00', 'Quadra A', 'Sessão de aprimoramento técnico para todos os atletas.', 'S'),
+(1, 'Palestra Motivacional',     '2025-08-05', '14:00', 'Sala Multiuso', 'Palestra com ex-atleta olímpico sobre foco e motivação.', 'S'),
+(1, 'Avaliação Física Inicial',  '2025-08-10', '08:30', 'Centro de Avaliação', 'Exames físicos e testes de resistência.', 'S'),
+(1, 'Simulado de Competição',    '2025-08-15', '10:00', 'Ginásio Principal', 'Competição simulada para preparação do campeonato.', 'S'),
+(1, 'Aula de Nutrição Esportiva','2025-08-20', '15:00', 'Auditório', 'Nutricionista apresentará dicas de alimentação esportiva.', 'S');
+
+-- Supondo que os cod_evento de cima sejam 1 a 5
+INSERT INTO turma_evento (cod_evento, cod_turma) VALUES (1, 1), (2, 1), (3, 1), (4, 1), (5, 1);
+
+-- Novos eventos
+INSERT INTO evento (cod_staff, titulo_evento, data, horario, local, desc_evento, ativo) VALUES
+(1, 'Treino Funcional Avançado',   '2025-08-03', '07:30', 'Campo 2', 'Treinamento funcional com foco em agilidade e força.', 'S'),
+(1, 'Sessão de Vídeo Tática',      '2025-08-06', '13:00', 'Sala de Vídeo', 'Análise de jogos para melhorar decisões em campo.', 'S'),
+(1, 'Treinamento de Resistência',  '2025-08-11', '10:00', 'Pista de Atletismo', 'Série de corridas e circuitos para resistência.', 'S'),
+(1, 'Oficina de Liderança',        '2025-08-17', '16:00', 'Sala B', 'Atividades para desenvolvimento de liderança em grupo.', 'S'),
+(1, 'Reunião com Pais',            '2025-08-21', '18:00', 'Auditório', 'Encontro com pais/responsáveis para apresentação dos objetivos.', 'S');
+
+-- cod_evento = 6 a 10
+INSERT INTO turma_evento (cod_evento, cod_turma) VALUES
+(6, 2), (7, 2), (8, 2), (9, 2), (10, 2);
+
+INSERT INTO evento (cod_staff, titulo_evento, data, horario, local, desc_evento, ativo) VALUES
+(1, 'Treino Tático Coletivo',   '2025-08-04', '08:00', 'Quadra Coberta', 'Trabalho de posicionamento e entrosamento tático.', 'S'),
+(1, 'Workshop de Primeiros Socorros', '2025-08-08', '14:00', 'Sala C', 'Instruções básicas de primeiros socorros em campo.', 'S'),
+(1, 'Atividade de Recuperação', '2025-08-13', '11:00', 'Sala de Fisioterapia', 'Alongamentos e relaxamento após treinos intensos.', 'S'),
+(1, 'Campeonato Interno',       '2025-08-18', '09:00', 'Ginásio', 'Competições internas entre os times da turma.', 'S'),
+(1, 'Sessão de Feedback Técnico','2025-08-22', '17:00', 'Sala de Reunião', 'Discussão com os treinadores sobre o desempenho.', 'S');
+
+
+-- cod_evento = 11 a 15
+INSERT INTO turma_evento (cod_evento, cod_turma) VALUES
+(11, 3), (12, 3), (13, 3), (14, 3), (15, 3);

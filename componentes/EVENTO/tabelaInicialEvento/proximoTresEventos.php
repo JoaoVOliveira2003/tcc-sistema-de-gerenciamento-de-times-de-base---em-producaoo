@@ -22,10 +22,14 @@ if ($cod_role == 1) {
         LIMIT 3;
     ";
 } else if ($cod_role == 2) {
-    // admi - cod 4
-    $query = "SELECT GROUP_CONCAT(tur.cod_turma ORDER BY tur.cod_turma SEPARATOR ',') AS turmas FROM instituicao inst INNER JOIN administrador_instituicao admins ON admins.cod_instituicao = inst.cod_instituicao INNER JOIN subinstituicao sub ON inst.cod_instituicao = sub.cod_instituicao INNER JOIN turma tur ON tur.Cod_SubInstituicao = sub.Cod_SubInstituicao WHERE admins.cod_administrador = $cod_usuario ";
+    
+    $query = "
+    SELECT GROUP_CONCAT(tur.cod_turma ORDER BY tur.cod_turma SEPARATOR ',') AS turmas FROM instituicao inst INNER JOIN administrador_instituicao admins ON admins.cod_instituicao = inst.cod_instituicao INNER JOIN subinstituicao sub ON inst.cod_instituicao = sub.cod_instituicao INNER JOIN turma tur ON tur.Cod_SubInstituicao = sub.Cod_SubInstituicao WHERE admins.cod_administrador = $cod_usuario 
+    ";
 
-    if ($bd->SqlExecuteQuery($query)) {$cod_instituicao = $bd->SqlQueryShow('cod_instituicao');}
+    if ($bd->SqlExecuteQuery($query)) {
+        $turmas = $bd->SqlQueryShow('turmas');
+    }
 
     $query = "
         SELECT 

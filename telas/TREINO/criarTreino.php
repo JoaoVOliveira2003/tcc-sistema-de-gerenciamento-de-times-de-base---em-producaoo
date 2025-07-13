@@ -130,8 +130,7 @@ function enviarFormularioSeValido() {
 <div class="container">
   <div class="mt-1">
     <h2 class="mb-3">Criar treino</h2>
-    <h5 class="mb-4">Colocar um texto descritivo aqui depois</h5>
-
+<h5 class="mb-4">Passos para criar um treino: <br> Insira o nome do treino, o esporte ao qual ele se aplica, o tipo de treino e os jogadores desejados.</h5>
     <form method="POST" id="formTreino">
       <input type="hidden" id="usuarioCodStaff" name="cod_staff">
 

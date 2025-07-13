@@ -2,8 +2,10 @@
 include '../../include/verificaSessao.php';
 $usuario = verificarLogin();
 ?>
-
-
+<script>
+  var cod_tipoRole = <?php echo json_encode($usuario['cod_tipoRole']); ?>;
+  var cod_tipoUsuario = <?php echo json_encode($usuario['cod_usuario']); ?>;
+</script>
 <!DOCTYPE html>
 <html lang="en">
 

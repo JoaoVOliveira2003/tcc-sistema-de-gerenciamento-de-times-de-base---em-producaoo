@@ -661,215 +661,126 @@ function navNotasTreinoADMS($idModal)
 
 function conteudoNotasTreinoAdms($idModal, $cod_usuario)
 {
-    //  $cod_usuario= 10;
     $retorno = '';
 
     $retorno .= '<div class="tab-pane fade" id="notas-treino-' . $idModal . '" role="tabpanel" aria-labelledby="notas-treino-tab-' . $idModal . '">';
     $retorno .= '<h3>Anotações particulares.</h3>';
 
-    $query = '
-        SELECT  
-            b.cod_treino,
-            d.desc_esporte,
-            c.desc_notaTreino,
-            c.minuto_nota,
-            b.nomeTreino,
-            b.dataTreino
-        FROM staff a
-        INNER JOIN treino b ON a.cod_staff = b.cod_staff
-        INNER JOIN notatreino_jogador c ON c.cod_treino = b.cod_treino
-        INNER JOIN esporte d ON d.cod_esporte = b.cod_esporte
-        WHERE cod_grau_privacidade=1 and a.cod_staff = ' . (int)$cod_usuario;
+    $graus = [
+        1 => 'Anotações particulares.',
+        2 => 'Anotações compartilhadas pelas turmas.',
+        3 => 'Anotações públicas.'
+    ];
 
-    $bd = conecta();
+    foreach ($graus as $grau => $titulo) {
+        if ($grau != 1) {
+            $retorno .= '<h3>' . $titulo . '</h3>';
+        }
 
-    if ($bd->SqlExecuteQuery($query) && $bd->SqlNumRows() > 0) {
-        $cod_treinoAtual = null;
+        $query = '
+            SELECT  
+                b.cod_treino,
+                d.desc_esporte,
+                c.desc_notaTreino,
+                c.minuto_nota,
+                b.nomeTreino,
+                b.dataTreino,
+                e.nome AS nome_jogador
+            FROM staff a
+            INNER JOIN treino b ON a.cod_staff = b.cod_staff
+            INNER JOIN notatreino_jogador c ON c.cod_treino = b.cod_treino
+            INNER JOIN esporte d ON d.cod_esporte = b.cod_esporte
+            INNER JOIN cadastro_identificacao e ON e.cod_usuario = c.cod_jogador
+            WHERE cod_grau_privacidade = ' . (int)$grau . ' 
+              AND a.cod_staff = ' . (int)$cod_usuario;
 
-        do {
-            $cod_treino      = $bd->SqlQueryShow('cod_treino');
-            $desc_esporte    = $bd->SqlQueryShow('desc_esporte');
-            $desc_notaTreino = $bd->SqlQueryShow('desc_notaTreino');
-            $minuto_nota     = $bd->SqlQueryShow('minuto_nota');
-            $nomeTreino      = $bd->SqlQueryShow('nomeTreino');
-            $dataTreino      = $bd->SqlQueryShow('dataTreino');
+        $bd = conecta();
 
-            if ($cod_treino != $cod_treinoAtual) {
-                if ($cod_treinoAtual !== null) {
-                    $retorno .= '</div></div>';
+        if ($bd->SqlExecuteQuery($query) && $bd->SqlNumRows() > 0) {
+            $cod_treinoAtual = null;
+
+            do {
+                $cod_treino      = $bd->SqlQueryShow('cod_treino');
+                $desc_esporte    = $bd->SqlQueryShow('desc_esporte');
+                $desc_notaTreino = $bd->SqlQueryShow('desc_notaTreino');
+                $minuto_nota     = $bd->SqlQueryShow('minuto_nota');
+                $nomeTreino      = $bd->SqlQueryShow('nomeTreino');
+                $dataTreino      = $bd->SqlQueryShow('dataTreino');
+                $nome_jogador    = $bd->SqlQueryShow('nome_jogador');
+
+                if ($cod_treino != $cod_treinoAtual) {
+                    if ($cod_treinoAtual !== null) {
+                        $retorno .= '</div></div>';
+                    }
+
+                    $retorno .= '
+                        <div class="card border rounded mb-3">
+                            <div class="card-header bg-light fw-bold">
+                                ' . htmlspecialchars($nomeTreino) . ' | ' . formatarData(htmlspecialchars($dataTreino)) . ' | ' . htmlspecialchars($desc_esporte) . '
+                            </div>
+                            <div class="card-body">
+                    ';
+
+                    $cod_treinoAtual = $cod_treino;
                 }
 
                 $retorno .= '
-                    <div class="card border rounded mb-3">
-                        <div class="card-header bg-light fw-bold">
-                            ' . htmlspecialchars($nomeTreino) . ' | ' . formatarData(htmlspecialchars($dataTreino)) . ' | ' . htmlspecialchars($desc_esporte) . '
+                    <div class="row g-2 mb-3 border-bottom pb-2">
+                        <div class="col-md-4">
+                            <label class="form-label">Descrição:</label>
+                            <input disabled type="text" class="form-control" value="' . htmlspecialchars($desc_notaTreino) . '">
                         </div>
-                        <div class="card-body">
-                ';
-
-                $cod_treinoAtual = $cod_treino;
-            }
-
-            $retorno .= '
-                <div class="row g-2 mb-3 border-bottom pb-2">
-                    <div class="col-md-6">
-                        <label class="form-label">Descrição:</label>
-                        <input disabled type="text" class="form-control" value="' . htmlspecialchars($desc_notaTreino) . '">
+                        <div class="col-md-2">
+                            <label class="form-label">Minuto que ela foi tirada:</label>
+                            <input disabled type="text" class="form-control" value="' . htmlspecialchars($minuto_nota) . '">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Nota do jogador:</label>
+                            <input disabled type="text" class="form-control" value="' . htmlspecialchars($nome_jogador) . '">
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Minuto que ela foi tirada:</label>
-                        <input disabled type="text" class="form-control" value="' . htmlspecialchars($minuto_nota) . '">
+                ';
+            } while ($bd->SqlFetchNext());
+
+            if ($cod_treinoAtual !== null) {
+                $retorno .= '</div></div>';
+            }
+        } else {
+            // Exibe card cinza mesmo sem anotações
+            $retorno .= '
+                <div class="card border border-secondary text-muted mb-3">
+                    <div class="card-header bg-light fw-bold">
+                        Nenhuma anotação disponível
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label">Descrição:</label>
+                                <input disabled type="text" class="form-control bg-light" value="">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Minuto que ela foi tirada:</label>
+                                <input disabled type="text" class="form-control bg-light" value="">
+                            </div>
+                        </div>
                     </div>
                 </div>
             ';
-
-        } while ($bd->SqlFetchNext());
-
-        if ($cod_treinoAtual !== null) {
-            $retorno .= '</div></div>';
         }
-
-
-        $retorno .= '<h3>Anotações compartilhados pelas turmas.</h3>';
-            $query = '
-        SELECT  
-            b.cod_treino,
-            d.desc_esporte,
-            c.desc_notaTreino,
-            c.minuto_nota,
-            b.nomeTreino,
-            b.dataTreino
-        FROM staff a
-        INNER JOIN treino b ON a.cod_staff = b.cod_staff
-        INNER JOIN notatreino_jogador c ON c.cod_treino = b.cod_treino
-        INNER JOIN esporte d ON d.cod_esporte = b.cod_esporte
-        WHERE cod_grau_privacidade=2 and a.cod_staff = ' . (int)$cod_usuario;
-
-    $bd = conecta();
-
-    if ($bd->SqlExecuteQuery($query) && $bd->SqlNumRows() > 0) {
-        $cod_treinoAtual = null;
-
-        do {
-            $cod_treino      = $bd->SqlQueryShow('cod_treino');
-            $desc_esporte    = $bd->SqlQueryShow('desc_esporte');
-            $desc_notaTreino = $bd->SqlQueryShow('desc_notaTreino');
-            $minuto_nota     = $bd->SqlQueryShow('minuto_nota');
-            $nomeTreino      = $bd->SqlQueryShow('nomeTreino');
-            $dataTreino      = $bd->SqlQueryShow('dataTreino');
-
-            if ($cod_treino != $cod_treinoAtual) {
-                if ($cod_treinoAtual !== null) {
-                    $retorno .= '</div></div>';
-                }
-
-                $retorno .= '
-                    <div class="card border rounded mb-3">
-                        <div class="card-header bg-light fw-bold">
-                            ' . htmlspecialchars($nomeTreino) . ' | ' . formatarData(htmlspecialchars($dataTreino)) . ' | ' . htmlspecialchars($desc_esporte) . '
-                        </div>
-                        <div class="card-body">
-                ';
-
-                $cod_treinoAtual = $cod_treino;
-            }
-
-            $retorno .= '
-                <div class="row g-2 mb-3 border-bottom pb-2">
-                    <div class="col-md-6">
-                        <label class="form-label">Descrição:</label>
-                        <input disabled type="text" class="form-control" value="' . htmlspecialchars($desc_notaTreino) . '">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Minuto que ela foi tirada:</label>
-                        <input disabled type="text" class="form-control" value="' . htmlspecialchars($minuto_nota) . '">
-                    </div>
-                </div>
-            ';
-
-        } while ($bd->SqlFetchNext());
-
-        if ($cod_treinoAtual !== null) {
-            $retorno .= '</div></div>';
-        }
-
-        $retorno .= '<h3>Anotações publicas.</h3>';
-            $query = '
-        SELECT  
-            b.cod_treino,
-            d.desc_esporte,
-            c.desc_notaTreino,
-            c.minuto_nota,
-            b.nomeTreino,
-            b.dataTreino
-        FROM staff a
-        INNER JOIN treino b ON a.cod_staff = b.cod_staff
-        INNER JOIN notatreino_jogador c ON c.cod_treino = b.cod_treino
-        INNER JOIN esporte d ON d.cod_esporte = b.cod_esporte
-        WHERE cod_grau_privacidade=3 and a.cod_staff = ' . (int)$cod_usuario;
-
-    $bd = conecta();
-
-    if ($bd->SqlExecuteQuery($query) && $bd->SqlNumRows() > 0) {
-        $cod_treinoAtual = null;
-
-        do {
-            $cod_treino      = $bd->SqlQueryShow('cod_treino');
-            $desc_esporte    = $bd->SqlQueryShow('desc_esporte');
-            $desc_notaTreino = $bd->SqlQueryShow('desc_notaTreino');
-            $minuto_nota     = $bd->SqlQueryShow('minuto_nota');
-            $nomeTreino      = $bd->SqlQueryShow('nomeTreino');
-            $dataTreino      = $bd->SqlQueryShow('dataTreino');
-
-            if ($cod_treino != $cod_treinoAtual) {
-                if ($cod_treinoAtual !== null) {
-                    $retorno .= '</div></div>';
-                }
-
-                $retorno .= '
-                    <div class="card border rounded mb-3">
-                        <div class="card-header bg-light fw-bold">
-                            ' . htmlspecialchars($nomeTreino) . ' | ' . formatarData(htmlspecialchars($dataTreino)) . ' | ' . htmlspecialchars($desc_esporte) . '
-                        </div>
-                        <div class="card-body">
-                ';
-
-                $cod_treinoAtual = $cod_treino;
-            }
-
-            $retorno .= '
-                <div class="row g-2 mb-3 border-bottom pb-2">
-                    <div class="col-md-6">
-                        <label class="form-label">Descrição:</label>
-                        <input disabled type="text" class="form-control" value="' . htmlspecialchars($desc_notaTreino) . '">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Minuto que ela foi tirada:</label>
-                        <input disabled type="text" class="form-control" value="' . htmlspecialchars($minuto_nota) . '">
-                    </div>
-                </div>
-            ';
-
-        } while ($bd->SqlFetchNext());
-
-        if ($cod_treinoAtual !== null) {
-            $retorno .= '</div></div>';
-        }
-
-    } else {
-        $retorno .= '<div class="alert alert-info mt-3">Nenhuma anotação encontrada.</div>';
     }
 
-    $retorno .= '</div>'; // fecha a tab-pane
+    $retorno .= '</div>'; // Fecha tab-pane
     return $retorno;
 }
-    }
-}
+
+
+
 
 function conteudoNotasTreino($idModal, $cod_usuario, $cod_tipoRole)
 {
-    if ($cod_tipoRole == 6) {
+    $retorno = '';
 
+    if ($cod_tipoRole == 6) {
         $query = '
             SELECT 
                 a.cod_treino, 
@@ -884,7 +795,6 @@ function conteudoNotasTreino($idModal, $cod_usuario, $cod_tipoRole)
             WHERE cod_grau_privacidade = 3 AND cod_jogador = ' . intval($cod_usuario);
 
         $bd = conecta();
-        $retorno = '';
 
         if ($bd->SqlExecuteQuery($query) && $bd->SqlNumRows() > 0) {
 
@@ -1059,8 +969,6 @@ function conteudoAdmsStaff($idModal, $cod_usuario): string
     WHERE a.cod_usuario = $cod_usuario
     ";
 
-// -- return $query;
-
     $bd = conecta();
     if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
         return '';
@@ -1080,7 +988,7 @@ function conteudoAdmsStaff($idModal, $cod_usuario): string
     inner JOIN staff sta on sta.cod_staff = a.cod_usuario
     inner JOIN staff_turma f on f.cod_staff = sta.cod_staff
     inner join turma g on f.cod_turma = g.cod_turma
-    WHERE a.cod_usuario = 10
+    WHERE a.cod_usuario = $cod_usuario
     ";
 
     if (!$bd->SqlExecuteQuery($query2) || $bd->SqlNumRows() <= 0) {
@@ -1200,7 +1108,6 @@ if ($cod_tipoRole == 1) {
     $retorno .= conteudoAdmsStaff($idModal, $cod_usuario);
     $retorno .= conteudoNotasTreinoAdms($idModal, $cod_usuario);
 } 
-
 elseif ($cod_tipoRole == 6) {
     $retorno .= conteudoDadosResponsaveis($idModal,$cod_usuario);
     $retorno .= conteudoMinhaNota($idModal,$cod_usuario);

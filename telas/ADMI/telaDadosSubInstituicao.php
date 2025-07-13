@@ -26,7 +26,7 @@ $usuario = verificarLogin();
 <body>
   <div class="container">
     <div class=" mt-4">
-      <h2 class="mb-4">Gerenciamento de <b>Sub-instituiçoes</b></h2>
+      <h2 class="mb-4">Gerenciamento de <b>Sub-instituições</b></h2>
 
       <h4 class="text-success mb-3">Inserir nova Sub-instituição</h4>
 
