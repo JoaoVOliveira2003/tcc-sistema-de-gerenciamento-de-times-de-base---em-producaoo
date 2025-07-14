@@ -12,12 +12,23 @@ $usuario = verificarLogin();
     <?php include('../../include/includeBase.php'); ?>
     <script src="../../js/funcoes.js"></script>
     <script src="../../js/meusDados.js"></script>
-    <script>
-        $(document).ready(function () {
-            const usuario = <?php echo json_encode($usuario); ?>;
-            meusDados(usuario.cod_usuario , usuario.cod_tipoRole);
-        });
-    </script>
+<script>
+    $(document).ready(function () {
+        const usuario = <?php echo json_encode($usuario); ?>;
+        meusDados(usuario.cod_usuario, usuario.cod_tipoRole);
+
+        if (usuario.cod_tipoRole == 6) {
+            const idModal = "modalDadosPessoa";
+            const tabTrigger = document.querySelector('#dados-pessoais-tab-' + idModal);
+            
+            if (tabTrigger) {
+                const tab = new bootstrap.Tab(tabTrigger);
+                tab.show();
+            }
+        }
+    });
+</script>
+
 </head>
 <?php include('../../componentes/header.php'); ?>
 <body>

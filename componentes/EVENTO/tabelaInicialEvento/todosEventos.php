@@ -3,8 +3,8 @@ require('../../../include/conecta.php');
 $bd = conecta();
 $retorno = '';
 
-$cod_role = 1;
-$cod_usuario = 4;
+$cod_role = getPost('cod_role');
+$cod_usuario = getPost('cod_usuario');
 $query = '';
 
 if ($cod_role == 1) {
@@ -118,7 +118,8 @@ if ($cod_role == 1) {
         WHERE turev.cod_turma IN ($turmas) AND e.ativo = 'S'
         ORDER BY e.data ASC, e.horario
     ";
-} elseif ($cod_role == 6) {
+ }
+elseif ($cod_role == 6) {
     // Jogador
     $query = "
         SELECT cod_turma 
@@ -126,26 +127,28 @@ if ($cod_role == 1) {
         WHERE cod_jogador = $cod_usuario
     ";
 
+
     if ($bd->SqlExecuteQuery($query)) {
         $cod_turma = $bd->SqlQueryShow('cod_turma');
     }
 
     $query = "
-        SELECT 
-            e.cod_evento,
-            e.titulo_evento,
-            e.data,
-            e.horario,
-            e.local,
-            e.desc_evento,
-            tur.desc_turma 
-        FROM evento e 
-        LEFT JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
-        LEFT JOIN turma tur ON tur.cod_turma = turev.cod_turma 
-        LEFT JOIN turma_jogador jogatur ON tur.cod_turma = jogatur.cod_turma 
-        LEFT JOIN jogador joga ON jogatur.cod_jogador = joga.cod_jogador
-        WHERE turev.cod_turma = $cod_turma AND e.ativo = 'S'
-        ORDER BY e.data ASC, e.horario
+SELECT DISTINCT
+    e.cod_evento,
+    e.titulo_evento,
+    e.data,
+    e.horario,
+    e.local,
+    e.desc_evento,
+    tur.desc_turma 
+FROM evento e 
+LEFT JOIN turma_evento turev ON turev.cod_evento = e.cod_evento
+LEFT JOIN turma tur ON tur.cod_turma = turev.cod_turma 
+LEFT JOIN turma_jogador jogatur ON tur.cod_turma = jogatur.cod_turma 
+LEFT JOIN jogador joga ON jogatur.cod_jogador = joga.cod_jogador
+WHERE turev.cod_turma = $cod_turma AND e.ativo = 'S'
+ORDER BY e.data ASC, e.horario;
+
     ";
 }
 

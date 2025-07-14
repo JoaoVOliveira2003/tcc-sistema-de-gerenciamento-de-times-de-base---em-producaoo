@@ -743,8 +743,9 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 -- JOGADOR (cod_tipo_role = 6)
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
 (3, 15, 6),
-(4, 16, 6),
-(5, 17, 6);
+(4, 16, 6)
+-- (5, 17, 6)
+;
 
 -- RELATORIOS TODOS JOGADORES.
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
@@ -926,7 +927,7 @@ INSERT INTO staff(cod_staff) VALUES (14);
 INSERT INTO subInstituticao_staff (cod_staff,cod_SubInstituicao) VALUES  (14, 1);
 
 INSERT INTO login_usuario (email_usuario, cod_usuario,senha)
-VALUES ('staff@gmail.br', 14,'staff');
+VALUES ('staff@gmail.com', 14,'staff');
 
 
 -- 🔹 Staff da Subinstituição - Usuário 15

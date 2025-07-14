@@ -187,7 +187,7 @@ function navDadosPessoais($idModal)
 {
     return '
     <li class="nav-item" role="presentation">
-        <button class="nav-link" id="dados-pessoais-tab-' . $idModal . '" data-bs-toggle="tab" data-bs-target="#dados-pessoais-' . $idModal . '" type="button" role="tab" aria-controls="dados-pessoais-' . $idModal . '" aria-selected="false">Dados Pessoais</button>
+        <button class="nav-link active" id="dados-pessoais-tab-' . $idModal . '" data-bs-toggle="tab" data-bs-target="#dados-pessoais-' . $idModal . '" type="button" role="tab" aria-controls="dados-pessoais-' . $idModal . '" aria-selected="true">Dados Pessoais</button>
     </li>';
 }
 
@@ -223,7 +223,7 @@ function conteudoDadosPessoais($idModal, $cod_tipoRole, $cod_usuario)
         $cpf = $bd->SqlQueryShow('cpf');
 
         return '
-        <div class="tab-pane fade show" id="dados-pessoais-' . $idModal . '" role="tabpanel" aria-labelledby="dados-pessoais-tab-' . $idModal . '">
+    <div class="tab-pane fade show active" id="dados-pessoais-' . $idModal . '" role="tabpanel" aria-labelledby="dados-pessoais-tab-' . $idModal . '">
             <div class="mb-3">
                 <h5 class="mb-2">Dados Pessoais</h5>
                 <div class="row g-3 align-items-center">
@@ -289,7 +289,9 @@ function conteudoDadosPessoais($idModal, $cod_tipoRole, $cod_usuario)
         $senha               = $bd->SqlQueryShow('senha');
 
         return '
-        <div class="tab-pane fade show" id="dados-pessoais-' . $idModal . '" role="tabpanel" aria-labelledby="dados-pessoais-tab-' . $idModal . '">
+
+
+    <div class="tab-pane fade show active" id="dados-pessoais-' . $idModal . '" role="tabpanel" aria-labelledby="dados-pessoais-tab-' . $idModal . '">
             <div class="text-center mb-4">
                 <img src="../../img/jogador/' . $local_midia . '" alt="Imagem do Usuário" class="img-fluid rounded" style="max-width: 150px;">
             </div>
@@ -952,12 +954,15 @@ function navAdmsStaff($idModal)
 {
     return '
     <li class="nav-item" role="presentation">
-        <button class="nav-link active" id="dados-dmsStaff-tab-' . $idModal . '" data-bs-toggle="tab" data-bs-target="#dados-dmsStaff-' . $idModal . '" type="button" role="tab" aria-controls="dados-dmsStaff-' . $idModal . '" aria-selected="true">Dados Admistrador e staff</button>
+        <button class="nav-link active" id="dados-dmsStaff-tab-' . $idModal . '" data-bs-toggle="tab" data-bs-target="#dados-dmsStaff-' . $idModal . '" type="button" role="tab" aria-controls="dados-dmsStaff-' . $idModal . '" aria-selected="true">Dados pessoais</button>
     </li>';
 }
 
-function conteudoAdmsStaff($idModal, $cod_usuario): string
+function conteudoAdmsTodosTipos($idModal, $cod_usuario,$cod_tipoRole)
 {
+    $bd = conecta();
+
+    if($cod_tipoRole == 4){
     $query = "
     SELECT 
     a.cod_usuario ,a.nome, a.cpf, b.email_usuario, b.senha,e.desc_instituicao,d.desc_subInstituicao
@@ -969,7 +974,7 @@ function conteudoAdmsStaff($idModal, $cod_usuario): string
     WHERE a.cod_usuario = $cod_usuario
     ";
 
-    $bd = conecta();
+
     if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
         return '';
     }
@@ -1003,7 +1008,6 @@ function conteudoAdmsStaff($idModal, $cod_usuario): string
     }while($bd->SqlFetchNext());
 
     $turmasString = is_array($turmasArray) ? implode(' | ', $turmasArray) : $turmasArray;
-
 
     return '
     <div class="tab-pane fade show active" id="dados-dmsStaff-' . $idModal . '" role="tabpanel" aria-labelledby="dados-dmsStaff-tab-' . $idModal . '">
@@ -1058,6 +1062,111 @@ function conteudoAdmsStaff($idModal, $cod_usuario): string
          </div>
         </div> 
     </div>';
+    }
+    else if ($cod_tipoRole == 5){
+
+        $query = "
+select 
+a.cod_usuario ,a.nome, a.cpf, e.email_usuario, e.senha,d.desc_instituicao,c.desc_subInstituicao
+from cadastro_identificacao a
+inner join  subinstituticao_staff b on a.cod_usuario = b.cod_staff
+inner join  subinstituicao c on c.cod_SubInstituicao = b.cod_SubInstituicao
+inner join  instituicao d on d.cod_instituicao = c.cod_instituicao
+inner join login_usuario e on e.cod_usuario = a.cod_usuario
+    WHERE a.cod_usuario = $cod_usuario
+    ";
+
+
+    if (!$bd->SqlExecuteQuery($query) ) {
+        return '';
+    }
+
+    $desc_subInstituicao = $bd->SqlQueryShow('desc_subInstituicao');
+    $desc_instituicao = $bd->SqlQueryShow('desc_instituicao');
+    $nome = $bd->SqlQueryShow('nome');
+    $cpf = $bd->SqlQueryShow('cpf');
+    $email_usuario = $bd->SqlQueryShow('email_usuario');
+    $senha = $bd->SqlQueryShow('senha');
+
+
+    $query2="
+    SELECT 
+    g.desc_turma
+    FROM cadastro_identificacao a
+    inner JOIN staff sta on sta.cod_staff = a.cod_usuario
+    inner JOIN staff_turma f on f.cod_staff = sta.cod_staff
+    inner join turma g on f.cod_turma = g.cod_turma
+    WHERE a.cod_usuario = $cod_usuario
+    ";
+
+    if (!$bd->SqlExecuteQuery($query2) || $bd->SqlNumRows() <= 0) {
+        return '';
+    }
+
+    $turmasArray = [];
+
+    do {
+        $desc_turma = $bd->SqlQueryShow('desc_turma');
+        $turmasArray[] = $desc_turma;
+    }while($bd->SqlFetchNext());
+
+    $turmasString = is_array($turmasArray) ? implode(' | ', $turmasArray) : $turmasArray;
+
+    return '
+    <div class="tab-pane fade show active" id="dados-dmsStaff-' . $idModal . '" role="tabpanel" aria-labelledby="dados-dmsStaff-tab-' . $idModal . '">
+        <div class="mb-">
+            <div class="row g-3 align-items-center">
+                <div class="col-md-8">
+                    <label for="nome-' . $idModal . '" class="form-label fw-semibold">Nome</label>
+                    <input type="text" id="nome-' . $idModal . '" class="form-control" value="' . htmlspecialchars($nome) . '" disabled>
+                </div>
+                <div class="col-md-4">
+                    <label for="cpf-' . $idModal . '" class="form-label fw-semibold">CPF</label>
+                    <input type="text" id="cpf-' . $idModal . '" class="form-control" value="' . formatarCPF($cpf) . '" disabled>
+                </div>
+                <div class="col-md-6">
+                    <label for="nome-' . $idModal . '" class="form-label fw-semibold">Pertence a instituição:</label>
+                    <input type="text" id="nome-' . $idModal . '" class="form-control" value="' . htmlspecialchars($desc_instituicao) . '" disabled>
+                </div>
+                <div class="col-md-6">
+                    <label for="nome-' . $idModal . '" class="form-label fw-semibold">Sub-Instituição:</label>
+                    <input type="text" id="nome-' . $idModal . '" class="form-control" value="' . htmlspecialchars($desc_subInstituicao) . '" disabled>
+                </div>
+                <div class="col-md-12">
+                    <label for="nome-' . $idModal . '" class="form-label fw-semibold">Turmas:</label>
+                    <input type="text" id="nome-' . $idModal . '" class="form-control" value="' . $turmasString . '" disabled>
+                </div>
+            </div>
+        </div>
+        <hr>
+<h5>Dados de Login </h5>  
+<p>Para atualizar a senha do seu login, digite a nova senha no campo da senha atual, clique no botão para prosseguir e confirme a alteração.</p>
+<div class="mb-3">
+    <div class="row g-3 align-items-center">
+        <div class="col-md-6">
+            <label  class="form-label fw-semibold">Email Cadastrado</label>
+            <input type="text"  class="form-control" value="' . $email_usuario . '" disabled>
+        </div>
+
+        <div class="col-md-6">
+            <label for="senha" class="form-label fw-semibold">Senha</label>
+            <div class="input-group">
+                <input type="password" class="form-control" value="' . $senha . '" id="senha" name="senha">
+                <button class="btn btn-outline-secondary" type="button" onclick="toggleSenha()">
+                    <img src="../../img/icone/olho.png" width="15" height="15" alt="Mostrar senha">
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+                <div class="col-md-2">
+                <button type="button" onclick="modalMudarSenha(' . $cod_usuario . ')" class="btn btn-primary btn-sm">Modificar senha</button>
+                </div>
+         </div>
+        </div> 
+    </div>';
+    }
+
 }
 
 $retorno .= '<ul class="nav nav-tabs" id="abas" role="tablist">';
@@ -1101,11 +1210,11 @@ if ($cod_tipoRole == 1) {
     $retorno .= conteudoadmi($idModal, $cod_usuario);
 } elseif ($cod_tipoRole == 3) {
     $retorno .= conteudoadms($idModal, $cod_usuario);
-        $retorno .= conteudoNotasTreinoAdms($idModal, $cod_usuario);
+    $retorno .= conteudoNotasTreinoAdms($idModal, $cod_usuario);
 
  
 } elseif ($cod_tipoRole == 4 || $cod_tipoRole == 5) {
-    $retorno .= conteudoAdmsStaff($idModal, $cod_usuario);
+    $retorno .= conteudoAdmsTodosTipos($idModal, $cod_usuario,$cod_tipoRole);
     $retorno .= conteudoNotasTreinoAdms($idModal, $cod_usuario);
 } 
 elseif ($cod_tipoRole == 6) {
