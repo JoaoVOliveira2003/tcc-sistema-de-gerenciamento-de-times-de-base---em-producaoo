@@ -697,8 +697,8 @@ function conteudoNotasTreinoAdms($idModal, $cod_usuario)
         WHERE cod_grau_privacidade = " . $grau . " 
           AND a.cod_staff = " . $cod_usuario;
         } else if ($grau == 2 || $grau == 3) {
-   
-   
+
+
             $query2 = "
     SELECT 
    g.cod_turma
@@ -722,7 +722,7 @@ function conteudoNotasTreinoAdms($idModal, $cod_usuario)
 
             $cod_turmas = is_array($turmasArray) ? implode(',', $turmasArray) : $turmasArray;
 
-$query = "
+            $query = "
     SELECT  
         b.cod_treino,
         d.desc_esporte,
@@ -742,9 +742,6 @@ $query = "
     WHERE cod_grau_privacidade = $grau
       AND g.cod_turma IN ($cod_turmas)
 ";
-
-        echo $query;
-
         }
 
 
