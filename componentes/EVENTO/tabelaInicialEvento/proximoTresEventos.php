@@ -11,7 +11,7 @@ $query = "";
 if ($cod_role == 1) {
     // TI: eventos futuros
     $query = "
-        SELECT 
+        SELECT DISTINCT 
           e.data, e.horario, e.local, e.titulo_evento, tur.desc_turma 
         FROM evento e
         INNER JOIN turma_evento turev ON turev.cod_evento = e.cod_evento 
@@ -32,7 +32,7 @@ if ($cod_role == 1) {
     }
 
     $query = "
-        SELECT 
+        SELECT DISTINCT
           e.data, e.horario, e.local, e.titulo_evento, tur.desc_turma 
         FROM evento e
         INNER JOIN turma_evento turev ON turev.cod_evento = e.cod_evento 
@@ -42,6 +42,7 @@ if ($cod_role == 1) {
         ORDER BY e.data ASC, e.horario
         LIMIT 3;
     ";
+
 } else if ($cod_role == 3 || $cod_role == 4) {
     // ADMS / STAFF|ADMS
     $query = "SELECT GROUP_CONCAT(tur.cod_turma ORDER BY tur.cod_turma SEPARATOR ',') AS turmas FROM administrador_subinstituicao admsub INNER JOIN subinstituicao sub ON admsub.cod_SubInstituicao = sub.cod_SubInstituicao INNER JOIN turma tur ON tur.cod_SubInstituicao = sub.cod_SubInstituicao WHERE admsub.cod_administrador = $cod_usuario;";
@@ -51,7 +52,7 @@ if ($cod_role == 1) {
     }
 
     $query = "
-        SELECT 
+        SELECT DISTINCT
           e.data, e.horario, e.local, e.titulo_evento, tur.desc_turma 
         FROM evento e
         INNER JOIN turma_evento turev ON turev.cod_evento = e.cod_evento 
@@ -70,7 +71,7 @@ if ($cod_role == 1) {
     }
 
     $query = "
-        SELECT 
+        SELECT DISTINCT
             e.data, 
             e.ativo, 
             e.local, 

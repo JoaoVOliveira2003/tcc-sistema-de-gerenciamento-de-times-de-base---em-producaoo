@@ -7,7 +7,7 @@ $cod_jogador = getPost('cod_jogador');
 $idModal = getPost('idModal');
 $cod_role = getPost('cod_role');
 
-// Sua query
+// Query principal
 $query = "
 SELECT 
     inst.cod_instituicao,
@@ -69,7 +69,7 @@ if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
   return;
 }
 
-// Cada campo separado em variáveis individuais
+// Obter dados do jogador
 $cod_instituicao = $bd->SqlQueryShow('cod_instituicao');
 $desc_instituicao = $bd->SqlQueryShow('desc_instituicao');
 $cod_subInstituicao = $bd->SqlQueryShow('cod_subInstituicao');
@@ -93,14 +93,14 @@ $restricoes_medicas = $bd->SqlQueryShow('restricoes_medicas');
 $alergias = $bd->SqlQueryShow('alergias');
 $local_midia = $bd->SqlQueryShow('local_midia');
 
-// Exemplo de uso no modal:
+// Construir o modal
 $retorno = '
 <div class="modal fade" id="' . $idModal . '" tabindex="-1" aria-labelledby="modalLabel-' . $idModal . '" aria-hidden="true">
-  <div class="modal-dialog modal-xl">  <!-- modal-xl para largura extra -->
+  <div class="modal-dialog modal-xl">
     <div class="modal-content shadow-sm border-0">
       <div class="modal-header bg-primary text-white">
         <h5 class="modal-title" id="modalLabel-' . $idModal . '">' . $nome . '</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar" onclick="fecharModalCorretamente()"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar" onclick="fecharModalCorretamente()"></button>
       </div>
 
       <div class="modal-body p-4">
@@ -122,336 +122,439 @@ $retorno = '
           </li>
         </ul>
      
-      <div class="tab-content mt-3" id="myTabContent-' . $idModal . '">
-        <div class="tab-pane fade show active" id="dados-pessoais-' . $idModal . '" role="tabpanel" aria-labelledby="dados-pessoais-tab-' . $idModal . '">
-          <div class="text-center mb-4">
-            <img src="../../img/jogador/' . $local_midia . '" alt="Imagem do Usuário" class="img-fluid rounded" style="max-width: 150px;">
-          </div>
-          <div class="row mb-1">
-            <div class="col-md-8">
-              <label class="form-label">Nome:</label>
-              <input disabled type="text" class="form-control" value="' . $nome . '">
+        <div class="tab-content mt-3" id="myTabContent-' . $idModal . '">
+          <!-- Dados Pessoais -->
+          <div class="tab-pane fade show active" id="dados-pessoais-' . $idModal . '" role="tabpanel" aria-labelledby="dados-pessoais-tab-' . $idModal . '">
+            <div class="text-center mb-4">
+              <img src="../../img/jogador/' . $local_midia . '" alt="Imagem do Usuário" class="img-fluid rounded" style="max-width: 150px;">
             </div>
-            <div class="col-md-2">
-              <label class="form-label">Data de Nascimento:</label>
-              <input disabled type="text" class="form-control" value="' . formatarData($data_nascimento) . '">
+            <div class="row mb-1">
+              <div class="col-md-8">
+                <label class="form-label">Nome:</label>
+                <input disabled type="text" class="form-control" value="' . $nome . '">
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">Data de Nascimento:</label>
+                <input disabled type="text" class="form-control" value="' . formatarData($data_nascimento) . '">
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">CPF:</label>
+                <input disabled type="text" class="form-control" value="' . formatarCPF($cpf) . '">
+              </div>
             </div>
-            <div class="col-md-2">
-              <label class="form-label">CPF:</label>
-              <input disabled type="text" class="form-control" value="' . formatarCPF($cpf) . '">
+            <div class="row mb-1">
+              <div class="col-md-4">
+                <label class="form-label">Instituição:</label>
+                <input disabled type="text" class="form-control" value="' . $desc_instituicao . '">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Sub-Instituição:</label>
+                <input disabled type="text" class="form-control" value="' . $desc_subInstituicao . '">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Turma:</label>
+                <input disabled type="text" class="form-control" value="' . $desc_turma . '">
+              </div>
             </div>
-          </div>
-          <div class="row mb-1">
-            <div class="col-md-4">
-              <label class="form-label">Instituição:</label>
-              <input disabled type="text" class="form-control" value="' . $desc_instituicao . '">
+            <div class="row mb-1">
+              <div class="col-md-4">
+                <label class="form-label">Nação:</label>
+                <input disabled type="text" class="form-control" value="' . $desc_nacao . '">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Estado:</label>
+                <input disabled type="text" class="form-control" value="' . $desc_estado . '">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Município:</label>
+                <input disabled type="text" class="form-control" value="' . $desc_municipio . '">
+              </div>
             </div>
-            <div class="col-md-4">
-              <label class="form-label">Sub-Instituição:</label>
-              <input disabled type="text" class="form-control" value="' . $desc_subInstituicao . '">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">Turma:</label>
-              <input disabled type="text" class="form-control" value="' . $desc_turma . '">
-            </div>
-          </div>
-          <div class="row mb-1">
-            <div class="col-md-4">
-              <label class="form-label">Nação:</label>
-              <input disabled type="text" class="form-control" value="' . $desc_nacao . '">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">Estado:</label>
-              <input disabled type="text" class="form-control" value="' . $desc_estado . '">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label">Município:</label>
-              <input disabled type="text" class="form-control" value="' . $desc_municipio . '">
+            <div class="row mb-1">
+              <div class="col-md-6">
+                <label class="form-label">Esporte:</label>
+                <input disabled type="text" class="form-control" value="' . $desc_esporte . '">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Posição:</label>
+                <input disabled type="text" class="form-control" value="' . $desc_posicao . '">
+              </div>
             </div>
           </div>
 
-          <div class="row mb-1">
-            <div class="col-md-6">
-              <label class="form-label">Esporte:</label>
-              <input disabled type="text" class="form-control" value="' . $desc_esporte . '">
+          <!-- Ficha Médica -->
+          <div class="tab-pane fade" id="ficha-medica-' . $idModal . '" role="tabpanel" aria-labelledby="ficha-medica-tab-' . $idModal . '">
+            <div class="row mb-1">
+              <div class="col-md-4">
+                <label class="form-label">Altura:</label>
+                <input disabled type="text" class="form-control" value="' . $altura . '">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Peso:</label>
+                <input disabled type="text" class="form-control" value="' . $peso . '">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Alergias:</label>
+                <input disabled type="text" class="form-control" value="' . $alergias . '">
+              </div>
             </div>
-            <div class="col-md-6">
-              <label class="form-label">Posição:</label>
-              <input disabled type="text" class="form-control" value="' . $desc_posicao . '">
-            </div>
-          </div>
+            <div class="row mb-1">
+              <div class="col-md-6">
+                <label class="form-label">Tipo sanguíneo:</label>
+                <input disabled type="text" class="form-control" value="' . $tipoSanguineo . '">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Restrições médicas:</label>
+                <input disabled type="text" class="form-control" value="' . $restricoes_medicas . '">
+              </div>
+            </div>';
 
-        </div>
-      <div class="tab-pane fade" id="ficha-medica-' . $idModal . '" role="tabpanel" aria-labelledby="ficha-medica-tab-' . $idModal . '">
-      <div class="row mb-1">
-      <div class="col-md-4">
-        <label class="form-label">Altura:</label>
-        <input disabled type="text" class="form-control" value="' . $altura . '">
-      </div>
-      <div class="col-md-4">
-        <label class="form-label">Peso:</label>
-        <input disabled type="text" class="form-control" value="' . $peso . '">
-      </div>
-          <div class="col-md-4">
-        <label class="form-label">Alergias :</label>
-        <input disabled type="text" class="form-control" value="' . $alergias . '">
-      </div>
-      </div>
-
-      <div class="row mb-1">
-      <div class="col-md-6">
-        <label class="form-label">Tipo sanguíneo:</label>
-        <input disabled type="text" class="form-control" value="' . $tipoSanguineo . '">
-      </div>
-      <div class="col-md-6">
-        <label class="form-label">Restrições médicas:</label>
-        <input disabled type="text" class="form-control" value="' . $restricoes_medicas . '">
-      </div>
-    </div>
- ';
-
-$query = "SELECT  
-ti.desc_tipoLesao,
-hi.desc_lesao,
-hi.data_lesao,
-hi.tempoFora_lesao
+// Query para lesões
+$queryLesoes = "SELECT  
+  ti.desc_tipoLesao,
+  hi.desc_lesao,
+  hi.data_lesao,
+  hi.tempoFora_lesao
 FROM fichaMedica_historicoLesoes fihi 
 INNER JOIN historicoLesoes hi ON fihi.cod_historicoLesoes = hi.cod_historicoLesoes
-inner join tipo_lesao ti on ti.cod_tipoLesao = hi.cod_tipoLesao
-where fihi.cod_jogador = $cod_jogador;";
+INNER JOIN tipo_lesao ti ON ti.cod_tipoLesao = hi.cod_tipoLesao
+WHERE fihi.cod_jogador = $cod_jogador;";
 
-if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
-  return;
+if ($bd->SqlExecuteQuery($query) && $bd->SqlNumRows() > 0) {
+  if ($bd->SqlNumRows() > 0) {
+    $retorno .= '<div id="lesoes-container">';
+    $firstLesao = true;
+    
+    do {
+      $desc_tipoLesao = $bd->SqlQueryShow('desc_tipoLesao');
+      $desc_lesao = $bd->SqlQueryShow('desc_lesao');
+      $data_lesao = $bd->SqlQueryShow('data_lesao');
+      $tempoFora_lesao = $bd->SqlQueryShow('tempoFora_lesao');
+
+      if ($firstLesao) {
+        $retorno .= '<label class="form-label">Lesões:</label>';
+        $firstLesao = false;
+      }
+
+      $retorno .= '
+        <div class="responsavel card border rounded p-3 bg-light mb-3">
+          <div class="row g-2 mb-2">
+            <div class="col-md-6">
+              <label class="form-label">Tipo de lesão:</label>
+              <input disabled type="text" class="form-control" value="' . htmlspecialchars($desc_tipoLesao) . '">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Descrição da lesão:</label>
+              <input disabled type="text" class="form-control" value="' . htmlspecialchars($desc_lesao) . '">
+            </div>
+          </div>
+          <div class="row g-2">
+            <div class="col-md-6">
+              <label class="form-label">Data lesão:</label>
+              <input disabled type="text" class="form-control" value="' . htmlspecialchars($data_lesao) . '">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Tempo fora:</label>
+              <input disabled type="text" class="form-control" value="' . htmlspecialchars($tempoFora_lesao) . '">
+            </div>
+          </div>
+        </div>';
+    } while ($bd->SqlFetchNext());
+    
+    $retorno .= '</div>'; // Fecha lesoes-container
+  }
 }
 
-do {
-  $desc_tipoLesao = $bd->SqlQueryShow('desc_tipoLesao');
-  $desc_lesao = $bd->SqlQueryShow('desc_lesao');
-  $data_lesao = $bd->SqlQueryShow('data_lesao');
-  $tempoFora_lesao = $bd->SqlQueryShow('tempoFora_lesao');
 
-  $retorno .= '
-            <label class="form-label">Lesões :</label>
-            <div id="responsaveis-container">
-                <div class="responsavel card border rounded p-3 bg-light">
-                    <div class="row g-2 mb-2">
-                        <div class="col-md-6">
-        <label class="form-label">Tipo de lesão:</label>
-        <input disabled type="text" class="form-control" value="' . $desc_tipoLesao . '">
-                        </div>
-                        <div class="col-md-6">
-        <label class="form-label">Descrição da lesão:</label>
-        <input disabled type="text" class="form-control" value="' . $desc_lesao . '">
-                        </div>
-                    </div>
-                    <div class="row g-2">
-                        <div class="col-md-6">
-        <label class="form-label">Data lesão:</label>
-        <input disabled type="text" class="form-control" value="' . $data_lesao . '">
-                        </div>
-                        <div class="col-md-6">
-        <label class="form-label">Tempo fora</label>
-        <input disabled type="text" class="form-control" value="' . $tempoFora_lesao . '">
-                        </div>
+$retorno .= '</div>'; // Fecha tab-pane da ficha médica
 
-                    </div>
-                </div>
-            </div>
-           </div>';
-
-} while ($bd->SqlFetchNext());
-$query = "
-SELECT contre.nomeResponsavel,contre.tipoFiliacao,contre.emailResponsavel,contre.telefoneResponsavel
+// Query para responsáveis
+$queryResponsaveis = "
+SELECT contre.nomeResponsavel, contre.tipoFiliacao, contre.emailResponsavel, contre.telefoneResponsavel
 FROM jogador_contatoResponsavel cont
-inner join  contato_responsavel contre on cont.cod_contatoResponsavel = contre.cod_contatoResponsavel
-where cont.cod_jogador = $cod_jogador
-;";
-if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
-  return;
-}
-do {
-  $nomeResponsavel = $bd->SqlQueryShow('nomeResponsavel');
-  $tipoFiliacao = $bd->SqlQueryShow('tipoFiliacao');
-  $emailResponsavel = $bd->SqlQueryShow('emailResponsavel');
-  $telefoneResponsavel = $bd->SqlQueryShow('telefoneResponsavel');
+INNER JOIN contato_responsavel contre ON cont.cod_contatoResponsavel = contre.cod_contatoResponsavel
+WHERE cont.cod_jogador = $cod_jogador;";
 
-  $retorno .= '
-<div class="tab-pane fade" id="dados-responsaveis-' . $idModal . '" role="tabpanel" aria-labelledby="dados-responsaveis-tab-' . $idModal . '">
-  <label class="form-label">Responsaveis:</label>
-            <div id="responsaveis-container">
-                <div class="responsavel card border rounded p-3 bg-light">
-                    <div class="row g-2 mb-2">
-                        <div class="col-md-6">
-        <label class="form-label">Nome do responsavel:</label>
-        <input disabled type="text" class="form-control" value="' . $nomeResponsavel . '">
-                        </div>
-                        <div class="col-md-6">
-        <label class="form-label">Tipo de filiação:</label>
-        <input disabled type="text" class="form-control" value="' . $tipoFiliacao . '">
-                        </div>
-                    </div>
-                    <div class="row g-2">
-                   <div class="col-md-6">
-                          <label class="form-label">Email:</label>
-                          <input disabled type="text" class="form-control" value="' . $emailResponsavel . '">
-                        </div>
+if ($bd->SqlExecuteQuery($queryResponsaveis)) {
+  if ($bd->SqlNumRows() > 0) {
+    $retorno .= '
+    <div class="tab-pane fade" id="dados-responsaveis-' . $idModal . '" role="tabpanel" aria-labelledby="dados-responsaveis-tab-' . $idModal . '">
+      <label class="form-label">Responsáveis:</label>
+      <div id="responsaveis-container">';
+    
+    do {
+      $nomeResponsavel = $bd->SqlQueryShow('nomeResponsavel');
+      $tipoFiliacao = $bd->SqlQueryShow('tipoFiliacao');
+      $emailResponsavel = $bd->SqlQueryShow('emailResponsavel');
+      $telefoneResponsavel = $bd->SqlQueryShow('telefoneResponsavel');
 
-                      <div class="col-md-6 d-flex align-items-end">
-                      <div style="width: 100%;">
-                              <label class="form-label">Telefone:</label>
-                              <input disabled type="text" class="form-control" value="' . $telefoneResponsavel . '">
-                          </div>
-                            <div class="ms-2 mb-1">
-                              <a href="https://wa.me/55' . preg_replace('/\D/', '', $telefoneResponsavel) . '" target="_blank">
-                                  <img src="../../img/icone/whatsapp.png" alt="WhatsApp" title="Enviar mensagem via WhatsApp">
-                              </a>
-                          </div>
-                      </div>
-                    </div>
-                </div>
+      $retorno .= '
+      <div class="responsavel card border rounded p-3 bg-light mb-2">
+        <div class="row g-2 mb-2">
+          <div class="col-md-6">
+            <label class="form-label">Nome do responsável:</label>
+            <input disabled type="text" class="form-control" value="' . htmlspecialchars($nomeResponsavel) . '">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Tipo de filiação:</label>
+            <input disabled type="text" class="form-control" value="' . htmlspecialchars($tipoFiliacao) . '">
+          </div>
+        </div>
+        <div class="row g-2">
+          <div class="col-md-6">
+            <label class="form-label">Email:</label>
+            <input disabled type="text" class="form-control" value="' . htmlspecialchars($emailResponsavel) . '">
+          </div>
+          <div class="col-md-6 d-flex align-items-end">
+            <div style="width: 100%;">
+              <label class="form-label">Telefone:</label>
+              <input disabled type="text" class="form-control" value="' . htmlspecialchars($telefoneResponsavel) . '">
             </div>
-           ';
-} while ($bd->SqlFetchNext());
+            <div class="ms-2 mb-1">
+              <a href="https://wa.me/55' . preg_replace('/\D/', '', $telefoneResponsavel) . '" target="_blank">
+                <img src="../../img/icone/whatsapp.png" alt="WhatsApp" title="Enviar mensagem via WhatsApp">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>';
+    } while ($bd->SqlFetchNext());
+    
+    $retorno .= '</div></div>'; // Fecha container e tab-pane
+  }
+}
 
-
+// Nota do Jogador
 $retorno .= '  
-  </div>
-  <div class="tab-pane fade" id="nota-jogador-' . $idModal . '" role="tabpanel" aria-labelledby="nota-jogador-tab-' . $idModal . '">
+<div class="tab-pane fade" id="nota-jogador-' . $idModal . '" role="tabpanel" aria-labelledby="nota-jogador-tab-' . $idModal . '">
   <label class="form-label">Nota atual:</label>
   <div id="nota-atual-container">';
 
-$query = "
-select jo.cod_jogador, noj.nota_jogador, noj.data_atualizacao, noj.ativo, cad.nome
-from jogador jo
-inner join nota_jogador noj on noj.cod_jogador = jo.cod_jogador
-inner join staff st on st.cod_staff = noj.cod_staff
-inner join cadastro_identificacao cad on cad.cod_usuario = st.cod_staff
-where noj.cod_jogador=$cod_jogador
-order by ativo desc
-";
+$queryNotas = "
+SELECT jo.cod_jogador, noj.nota_jogador, noj.data_atualizacao, noj.ativo, cad.nome
+FROM jogador jo
+INNER JOIN nota_jogador noj ON noj.cod_jogador = jo.cod_jogador
+INNER JOIN staff st ON st.cod_staff = noj.cod_staff
+INNER JOIN cadastro_identificacao cad ON cad.cod_usuario = st.cod_staff
+WHERE noj.cod_jogador = $cod_jogador
+ORDER BY ativo DESC;";
 
-$bd->SqlExecuteQuery($query);
+if ($bd->SqlExecuteQuery($queryNotas)) {
+  $temNotaAtual = false;
+  $retornoNotasAnteriores = '';
 
-$temNotaAtual = false;
-$retornoNotasAnteriores = ''; // armazena notas anteriores separadas
+  do {
+    $nota_jogador = $bd->SqlQueryShow('nota_jogador');
+    $data_atualizacao = $bd->SqlQueryShow('data_atualizacao');
+    $nome = $bd->SqlQueryShow('nome');
+    $ativo = $bd->SqlQueryShow('ativo');
 
-do {
-  $nota_jogador = $bd->SqlQueryShow('nota_jogador');
-  $data_atualizacao = $bd->SqlQueryShow('data_atualizacao');
-  $nome = $bd->SqlQueryShow('nome');
-  $ativo = $bd->SqlQueryShow('ativo');
-
-if ($ativo == 's') {
-    $temNotaAtual = true;
-    $retorno .= '
-      <div class="responsavel card border rounded p-3 bg-light mb-3">
-        <div class="row g-2 mb-2">
-          <div class="col-md-12">Nota atual:
-            <input disabled type="text" class="form-control" value="' . $nota_jogador . '">
+    if ($ativo == 's') {
+      $temNotaAtual = true;
+      $retorno .= '
+        <div class="responsavel card border rounded p-3 bg-light mb-3">
+          <div class="row g-2 mb-2">
+            <div class="col-md-12">Nota atual:
+              <input disabled type="text" class="form-control" value="' . htmlspecialchars($nota_jogador) . '">
+            </div>
           </div>
-        </div>
-        <div class="row g-2">
-          <div class="col-md-6">Inserido por :
-            <input disabled type="text" class="form-control" value="' . $nome . '">
-          </div>
-          <div class="col-md-6">Data de atualização: 
-            <input disabled type="text" class="form-control" value="' . formatarDataHora($data_atualizacao) . '">
-          </div>
-        </div>';
-        
-    if ($cod_role == 4 || $cod_role == 5) {
+          <div class="row g-2">
+            <div class="col-md-6">Inserido por:
+              <input disabled type="text" class="form-control" value="' . htmlspecialchars($nome) . '">
+            </div>
+            <div class="col-md-6">Data de atualização: 
+              <input disabled type="text" class="form-control" value="' . htmlspecialchars(formatarDataHora($data_atualizacao)) . '">
+            </div>
+          </div>';
+      
+      if ($cod_role == 4 || $cod_role == 5) {
         $retorno .= '<button type="button" class="btn mt-3 btn-sm btn-success col-1" onclick="abrirModalAtualizarNota()">Nova nota</button>';
+      }
+      $retorno .= '</div>';
+    } else {
+      $retornoNotasAnteriores .= '
+        <div class="responsavel card border rounded p-2 bg-light mb-3">
+          <div class="row g-2 mb-2">
+            <div class="col-md-12">Notas anteriores
+              <input disabled type="text" class="form-control" value="' . htmlspecialchars($nota_jogador) . '">
+            </div>
+          </div>
+          <div class="row g-2">
+            <div class="col-md-6">Inserido por
+              <input disabled type="text" class="form-control" value="' . htmlspecialchars($nome) . '">
+            </div>
+            <div class="col-md-6">Data de atualização:
+              <input disabled type="text" class="form-control" value="' . htmlspecialchars(formatarDataHora($data_atualizacao)) . '">
+            </div>
+          </div>
+        </div>
+      ';
     }
-    $retorno .= '</div>';
-}
+  } while ($bd->SqlFetchNext());
 
-else {
-    // Acumula as notas anteriores numa string, para mostrar depois
-    $retornoNotasAnteriores .= '
-      <div class="responsavel card border rounded p-2 bg-light mb-3">
-        <div class="row g-2 mb-2">
-          <div class="col-md-12">Notas anteriores
-            <input disabled type="text" class="form-control" value="' . $nota_jogador . '">
-          </div>
-        </div>
-        <div class="row g-2">
-          <div class="col-md-6">Inserido por
-            <input disabled type="text" class="form-control" value="' . $nome . '">
-          </div>
-          <div class="col-md-6">Data de atualização:
-            <input disabled type="text" class="form-control" value="' . formatarDataHora($data_atualizacao) . '">
-          </div>
-        </div>
+  $retorno .= '</div>'; // fecha nota-atual-container
+
+  if ($retornoNotasAnteriores !== '') {
+    $retorno .= '
+      <hr>
+      <label class="form-label">Notas anteriores:</label>
+      <div id="notas-anteriores-container">
+        ' . $retornoNotasAnteriores . '
       </div>
     ';
   }
-} while ($bd->SqlFetchNext());
-
-$retorno .= '</div>'; // fecha nota-atual-container
-
-if ($retornoNotasAnteriores !== '') {
-  $retorno .= '
-    <hr>
-    <label class="form-label">Notas anteriores:</label>
-    <div id="notas-anteriores-container">
-      ' . $retornoNotasAnteriores . '
-    </div>
-  ';
 }
 
 $retorno .= '
     </div>
-          <div class="tab-pane fade" id="notas-treino-' . $idModal . '" role="tabpanel" aria-labelledby="notas-treino-tab-' . $idModal . '">
-            <!-- conteúdo notas de treino -->
-          </div>
+    <!-- Notas de Treino -->
+    <div class="tab-pane fade" id="notas-treino-' . $idModal . '" role="tabpanel" aria-labelledby="notas-treino-tab-' . $idModal . '">';
+
+$graus = [
+    2 => 'Anotações compartilhadas pelas turmas',
+    3 => 'Anotações públicas'
+];
+
+foreach ($graus as $grau => $titulo) {
+    $retorno .= '<h3 class="mt-4 mb-3">' . $titulo . '</h3>';
+
+    $query = "
+SELECT  
+    b.cod_treino,
+    d.desc_esporte,
+    c.desc_notaTreino,
+    c.minuto_nota,
+    b.nomeTreino,
+    b.dataTreino,
+    e.nome AS nome_jogador
+FROM staff a
+INNER JOIN treino b ON a.cod_staff = b.cod_staff
+INNER JOIN notatreino_jogador c ON c.cod_treino = b.cod_treino
+INNER JOIN esporte d ON d.cod_esporte = b.cod_esporte
+INNER JOIN cadastro_identificacao e ON e.cod_usuario = c.cod_jogador
+WHERE c.cod_jogador = $cod_jogador AND c.cod_grau_privacidade = $grau
+ORDER BY b.dataTreino DESC, b.cod_treino";
+
+    $bdTreino = conecta();
+
+    if ($bdTreino->SqlExecuteQuery($query)) {
+        if ($bdTreino->SqlNumRows() > 0) {
+            $cod_treinoAtual = null;
+            $primeiroTreino = true;
+
+            do {
+                $cod_treino      = $bdTreino->SqlQueryShow('cod_treino');
+                $desc_esporte    = $bdTreino->SqlQueryShow('desc_esporte');
+                $desc_notaTreino = $bdTreino->SqlQueryShow('desc_notaTreino');
+                $minuto_nota     = $bdTreino->SqlQueryShow('minuto_nota');
+                $nomeTreino      = $bdTreino->SqlQueryShow('nomeTreino');
+                $dataTreino      = $bdTreino->SqlQueryShow('dataTreino');
+                $nome_jogador    = $bdTreino->SqlQueryShow('nome_jogador');
+
+                if ($cod_treino != $cod_treinoAtual) {
+                    if (!$primeiroTreino) {
+                        $retorno .= '</div></div>'; // Fecha card-body e card
+                    }
+
+                    $retorno .= '
+<div class="card border rounded mb-3">
+    <div class="card-header bg-light fw-bold d-flex justify-content-between align-items-center">
+        <span>' . htmlspecialchars($nomeTreino) . ' | ' . htmlspecialchars(formatarData($dataTreino)) . ' | ' . htmlspecialchars($desc_esporte) . '</span>
+    </div>
+    <div class="card-body">';
+
+                    $cod_treinoAtual = $cod_treino;
+                    $primeiroTreino = false;
+                }
+
+                $retorno .= '
+<div class="row g-2 mb-3 border-bottom pb-2">
+    <div class="col-md-8">
+        <label class="form-label">Descrição:</label>
+        <textarea disabled class="form-control" rows="2" style="resize: none">' . htmlspecialchars($desc_notaTreino) . '</textarea>
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">Minuto:</label>
+        <input disabled type="text" class="form-control" value="' . htmlspecialchars($minuto_nota) . '">
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">Jogador:</label>
+        <input disabled type="text" class="form-control" value="' . htmlspecialchars($nome_jogador) . '">
+    </div>
+</div>';
+
+            } while ($bdTreino->SqlFetchNext());
+
+            // Fecha o último card se houver dados
+            if (!$primeiroTreino) {
+                $retorno .= '</div></div>';
+            }
+        } else {
+            // Exibe card informativo quando não há anotações
+            $retorno .= '
+<div class="card border-secondary text-muted mb-4">
+    <div class="card-header bg-light fw-bold">Nenhuma anotação disponível</div>
+    <div class="card-body text-center py-4">
+        <i class="bi bi-journal-text fs-1 text-secondary"></i>
+        <p class="mt-2 mb-0">Não foram encontradas anotações deste tipo</p>
+    </div>
+</div>';
+        }
+    } else {
+        // Caso ocorra erro na query
+        $retorno .= '
+<div class="alert alert-warning">
+    <i class="bi bi-exclamation-triangle-fill"></i> Ocorreu um erro ao carregar as anotações
+</div>';
+    }
+}
+
+$retorno .= '</div>'; // Fecha tab-pane de Notas de Treino
+$retorno .= '
         </div>
-        <div class="modal-footer">
-  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-</div>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
       </div>
     </div>
   </div>
 </div>';
 
+// Modal para atualização de nota
 $retorno .= '
-  <style>
-    .modal-backdrop.show:nth-of-type(2) {
-      z-index: 1055;
-    }
+<style>
+  .modal-backdrop.show:nth-of-type(2) {
+    z-index: 1055;
+  }
+  #modal2 {
+    z-index: 1060;
+  }
+</style>
 
-    #modal2 {
-      z-index: 1060;
-    }
-  </style>
-
-  <div class="modal fade" id="modal2" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-
+<div class="modal fade" id="modal2" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
       <div class="modal-header">
-          <h5 class="modal-title">Atualização de nota</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-        </div>
-
-        <div class="modal-body">
-          <p>Este é o local para atualizar a tela para os jogadores. <br>
-          As notas são de 0 até 100. Quando um usuário é cadastrado, ele tem sua nota padrão de 60.</p>
-
-          <div class="row">
+        <h5 class="modal-title">Atualização de nota</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <p>Este é o local para atualizar a tela para os jogadores. <br>
+        As notas são de 0 até 100. Quando um usuário é cadastrado, ele tem sua nota padrão de 60.</p>
+        <div class="row">
           <div class="mb-3 col-12">
             <label class="form-label">Nova nota:</label>
             <input type="text" max id="novaNota" onkeypress="return somenteNumeros(event)" maxlength="3" class="form-control">
           </div>
-
-          </div>
-          <button type="button" class="btn btn-sm btn-success mt-3" onclick="adicionarNota(' . $cod_jogador . ')">
-            Atualizar nota
-          </button>
         </div>
+        <button type="button" class="btn btn-sm btn-success mt-3" onclick="adicionarNota(' . $cod_jogador . ')">
+          Atualizar nota
+        </button>
       </div>
     </div>
   </div>
-';
+</div>';
 
 echo $retorno;
 ?>

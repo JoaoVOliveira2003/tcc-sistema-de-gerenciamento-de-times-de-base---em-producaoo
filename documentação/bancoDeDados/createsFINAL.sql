@@ -736,9 +736,12 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 
 -- STAFF (cod_tipo_role = 5)
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+(3, 14, 5),
 (3, 15, 5),
 (4, 16, 5),
-(5, 17, 5);
+(5, 17, 5)
+
+;
 
 -- JOGADOR (cod_tipo_role = 6)
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
@@ -958,8 +961,8 @@ INSERT INTO staff(cod_staff) VALUES (16);
 INSERT INTO subInstituticao_staff (cod_staff, cod_SubInstituicao)
 VALUES (16, 1);
 
-INSERT INTO login_usuario (email_usuario, cod_usuario)
-VALUES ('staff16@ifpr.edu.br', 16);
+INSERT INTO login_usuario (email_usuario, cod_usuario,senha)
+VALUES ('staff16@ifpr.edu.br', 16,'staff16');
 
 -- Staff 14 vinculado às turmas 1 e 2
 INSERT INTO staff_turma (cod_staff, cod_turma) VALUES (14, 1);

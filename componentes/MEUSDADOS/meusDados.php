@@ -118,8 +118,8 @@ function navTI($idModal)
 
 function conteudoTI($idModal, $cod_usuario): string
 {
-   
-   $query = "SELECT a.nome,a.cpf,b.email_usuario,b.senha FROM cadastro_identificacao a 
+
+    $query = "SELECT a.nome,a.cpf,b.email_usuario,b.senha FROM cadastro_identificacao a 
 inner join login_usuario b on a.cod_usuario = b.cod_usuario
 where a.cod_usuario =  $cod_usuario";
 
@@ -238,9 +238,7 @@ function conteudoDadosPessoais($idModal, $cod_tipoRole, $cod_usuario)
                 </div>
             </div>
         </div>';
-    }
-
-    else if ($cod_tipoRole == 6) {
+    } else if ($cod_tipoRole == 6) {
         $query = "
         SELECT inst.desc_instituicao, si.desc_subInstituicao, t.desc_turma,
                ci.cod_usuario, ci.nome, ci.cpf,
@@ -491,7 +489,7 @@ function conteudoFichaMedica($idModal, $cod_usuario, $ativa = false)
                 <button type="button" onclick="modalAtualizarLesoes(' . $cod_usuario . ')" class="btn btn-sm btn-success">Atualizar ficha</button>
             </div>
         </div>
-    </div>'; 
+    </div>';
 
     return $retorno;
 }
@@ -663,6 +661,8 @@ function navNotasTreinoADMS($idModal)
 
 function conteudoNotasTreinoAdms($idModal, $cod_usuario)
 {
+    $bd = conecta();
+
     $retorno = '';
 
     $retorno .= '<div class="tab-pane fade" id="notas-treino-' . $idModal . '" role="tabpanel" aria-labelledby="notas-treino-tab-' . $idModal . '">';
@@ -679,24 +679,76 @@ function conteudoNotasTreinoAdms($idModal, $cod_usuario)
             $retorno .= '<h3>' . $titulo . '</h3>';
         }
 
-        $query = '
-            SELECT  
-                b.cod_treino,
-                d.desc_esporte,
-                c.desc_notaTreino,
-                c.minuto_nota,
-                b.nomeTreino,
-                b.dataTreino,
-                e.nome AS nome_jogador
-            FROM staff a
-            INNER JOIN treino b ON a.cod_staff = b.cod_staff
-            INNER JOIN notatreino_jogador c ON c.cod_treino = b.cod_treino
-            INNER JOIN esporte d ON d.cod_esporte = b.cod_esporte
-            INNER JOIN cadastro_identificacao e ON e.cod_usuario = c.cod_jogador
-            WHERE cod_grau_privacidade = ' . (int)$grau . ' 
-              AND a.cod_staff = ' . (int)$cod_usuario;
+        if ($grau == 1) {
+            $query = "
+        SELECT  
+            b.cod_treino,
+            d.desc_esporte,
+            c.desc_notaTreino,
+            c.minuto_nota,
+            b.nomeTreino,
+            b.dataTreino,
+            e.nome AS nome_jogador
+        FROM staff a
+        INNER JOIN treino b ON a.cod_staff = b.cod_staff
+        INNER JOIN notatreino_jogador c ON c.cod_treino = b.cod_treino
+        INNER JOIN esporte d ON d.cod_esporte = b.cod_esporte
+        INNER JOIN cadastro_identificacao e ON e.cod_usuario = c.cod_jogador
+        WHERE cod_grau_privacidade = " . $grau . " 
+          AND a.cod_staff = " . $cod_usuario;
+        } else if ($grau == 2 || $grau == 3) {
+   
+   
+            $query2 = "
+    SELECT 
+   g.cod_turma
+    FROM cadastro_identificacao a
+    inner JOIN staff sta on sta.cod_staff = a.cod_usuario
+    inner JOIN staff_turma f on f.cod_staff = sta.cod_staff
+    inner join turma g on f.cod_turma = g.cod_turma
+    WHERE a.cod_usuario = $cod_usuario
+    ";
 
-        $bd = conecta();
+            if (!$bd->SqlExecuteQuery($query2) || $bd->SqlNumRows() <= 0) {
+                return '';
+            }
+
+            $turmasArray = [];
+
+            do {
+                $cod_turma = $bd->SqlQueryShow('cod_turma');
+                $turmasArray[] = $cod_turma;
+            } while ($bd->SqlFetchNext());
+
+            $cod_turmas = is_array($turmasArray) ? implode(',', $turmasArray) : $turmasArray;
+
+$query = "
+    SELECT  
+        b.cod_treino,
+        d.desc_esporte,
+        c.desc_notaTreino,
+        c.minuto_nota,
+        b.nomeTreino,
+        b.dataTreino,
+        e.nome AS nome_jogador,
+        g.desc_turma
+    FROM staff a
+    INNER JOIN treino b ON a.cod_staff = b.cod_staff
+    INNER JOIN notatreino_jogador c ON c.cod_treino = b.cod_treino
+    INNER JOIN esporte d ON d.cod_esporte = b.cod_esporte
+    INNER JOIN cadastro_identificacao e ON e.cod_usuario = c.cod_jogador
+    INNER JOIN turma_jogador f ON f.cod_jogador = e.cod_usuario
+    INNER JOIN turma g ON g.cod_turma = f.cod_turma
+    WHERE cod_grau_privacidade = $grau
+      AND g.cod_turma IN ($cod_turmas)
+";
+
+        echo $query;
+
+        }
+
+
+
 
         if ($bd->SqlExecuteQuery($query) && $bd->SqlNumRows() > 0) {
             $cod_treinoAtual = null;
@@ -733,7 +785,7 @@ function conteudoNotasTreinoAdms($idModal, $cod_usuario)
                             <input disabled type="text" class="form-control" value="' . htmlspecialchars($desc_notaTreino) . '">
                         </div>
                         <div class="col-md-2">
-                            <label class="form-label">Minuto que ela foi tirada:</label>
+                            <label class="form-label">Minuto nota:</label>
                             <input disabled type="text" class="form-control" value="' . htmlspecialchars($minuto_nota) . '">
                         </div>
                         <div class="col-md-6">
@@ -800,7 +852,7 @@ function conteudoNotasTreino($idModal, $cod_usuario, $cod_tipoRole)
 
         if ($bd->SqlExecuteQuery($query) && $bd->SqlNumRows() > 0) {
 
-        $retorno .= '<div class="tab-pane fade" id="notas-treino-' . $idModal . '" role="tabpanel" aria-labelledby="notas-treino-tab-' . $idModal . '">';
+            $retorno .= '<div class="tab-pane fade" id="notas-treino-' . $idModal . '" role="tabpanel" aria-labelledby="notas-treino-tab-' . $idModal . '">';
             $cod_treinoAtual = null;
 
             do {
@@ -843,7 +895,6 @@ function conteudoNotasTreino($idModal, $cod_usuario, $cod_tipoRole)
                         </div>
                     </div>
                 ';
-
             } while ($bd->SqlFetchNext());
 
             // Fecha último card
@@ -947,7 +998,6 @@ function conteudoADMI($idModal, $cod_usuario): string
 
 
     </div>';
-
 }
 
 function navAdmsStaff($idModal)
@@ -958,12 +1008,12 @@ function navAdmsStaff($idModal)
     </li>';
 }
 
-function conteudoAdmsTodosTipos($idModal, $cod_usuario,$cod_tipoRole)
+function conteudoAdmsTodosTipos($idModal, $cod_usuario, $cod_tipoRole)
 {
     $bd = conecta();
 
-    if($cod_tipoRole == 4){
-    $query = "
+    if ($cod_tipoRole == 4) {
+        $query = "
     SELECT 
     a.cod_usuario ,a.nome, a.cpf, b.email_usuario, b.senha,e.desc_instituicao,d.desc_subInstituicao
     FROM cadastro_identificacao a
@@ -975,18 +1025,18 @@ function conteudoAdmsTodosTipos($idModal, $cod_usuario,$cod_tipoRole)
     ";
 
 
-    if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
-        return '';
-    }
+        if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
+            return '';
+        }
 
-    $desc_subInstituicao = $bd->SqlQueryShow('desc_subInstituicao');
-    $desc_instituicao = $bd->SqlQueryShow('desc_instituicao');
-    $nome = $bd->SqlQueryShow('nome');
-    $cpf = $bd->SqlQueryShow('cpf');
-    $email_usuario = $bd->SqlQueryShow('email_usuario');
-    $senha = $bd->SqlQueryShow('senha');
+        $desc_subInstituicao = $bd->SqlQueryShow('desc_subInstituicao');
+        $desc_instituicao = $bd->SqlQueryShow('desc_instituicao');
+        $nome = $bd->SqlQueryShow('nome');
+        $cpf = $bd->SqlQueryShow('cpf');
+        $email_usuario = $bd->SqlQueryShow('email_usuario');
+        $senha = $bd->SqlQueryShow('senha');
 
-    $query2="
+        $query2 = "
     SELECT 
     g.desc_turma
     FROM cadastro_identificacao a
@@ -996,20 +1046,20 @@ function conteudoAdmsTodosTipos($idModal, $cod_usuario,$cod_tipoRole)
     WHERE a.cod_usuario = $cod_usuario
     ";
 
-    if (!$bd->SqlExecuteQuery($query2) || $bd->SqlNumRows() <= 0) {
-        return '';
-    }
+        if (!$bd->SqlExecuteQuery($query2) || $bd->SqlNumRows() <= 0) {
+            return '';
+        }
 
-    $turmasArray = [];
+        $turmasArray = [];
 
-    do {
-        $desc_turma = $bd->SqlQueryShow('desc_turma');
-        $turmasArray[] = $desc_turma;
-    }while($bd->SqlFetchNext());
+        do {
+            $desc_turma = $bd->SqlQueryShow('desc_turma');
+            $turmasArray[] = $desc_turma;
+        } while ($bd->SqlFetchNext());
 
-    $turmasString = is_array($turmasArray) ? implode(' | ', $turmasArray) : $turmasArray;
+        $turmasString = is_array($turmasArray) ? implode(' | ', $turmasArray) : $turmasArray;
 
-    return '
+        return '
     <div class="tab-pane fade show active" id="dados-dmsStaff-' . $idModal . '" role="tabpanel" aria-labelledby="dados-dmsStaff-tab-' . $idModal . '">
         <div class="mb-">
             <div class="row g-3 align-items-center">
@@ -1062,8 +1112,7 @@ function conteudoAdmsTodosTipos($idModal, $cod_usuario,$cod_tipoRole)
          </div>
         </div> 
     </div>';
-    }
-    else if ($cod_tipoRole == 5){
+    } else if ($cod_tipoRole == 5) {
 
         $query = "
 select 
@@ -1077,19 +1126,19 @@ inner join login_usuario e on e.cod_usuario = a.cod_usuario
     ";
 
 
-    if (!$bd->SqlExecuteQuery($query) ) {
-        return '';
-    }
+        if (!$bd->SqlExecuteQuery($query)) {
+            return '';
+        }
 
-    $desc_subInstituicao = $bd->SqlQueryShow('desc_subInstituicao');
-    $desc_instituicao = $bd->SqlQueryShow('desc_instituicao');
-    $nome = $bd->SqlQueryShow('nome');
-    $cpf = $bd->SqlQueryShow('cpf');
-    $email_usuario = $bd->SqlQueryShow('email_usuario');
-    $senha = $bd->SqlQueryShow('senha');
+        $desc_subInstituicao = $bd->SqlQueryShow('desc_subInstituicao');
+        $desc_instituicao = $bd->SqlQueryShow('desc_instituicao');
+        $nome = $bd->SqlQueryShow('nome');
+        $cpf = $bd->SqlQueryShow('cpf');
+        $email_usuario = $bd->SqlQueryShow('email_usuario');
+        $senha = $bd->SqlQueryShow('senha');
 
 
-    $query2="
+        $query2 = "
     SELECT 
     g.desc_turma
     FROM cadastro_identificacao a
@@ -1099,20 +1148,20 @@ inner join login_usuario e on e.cod_usuario = a.cod_usuario
     WHERE a.cod_usuario = $cod_usuario
     ";
 
-    if (!$bd->SqlExecuteQuery($query2) || $bd->SqlNumRows() <= 0) {
-        return '';
-    }
+        if (!$bd->SqlExecuteQuery($query2) || $bd->SqlNumRows() <= 0) {
+            return '';
+        }
 
-    $turmasArray = [];
+        $turmasArray = [];
 
-    do {
-        $desc_turma = $bd->SqlQueryShow('desc_turma');
-        $turmasArray[] = $desc_turma;
-    }while($bd->SqlFetchNext());
+        do {
+            $desc_turma = $bd->SqlQueryShow('desc_turma');
+            $turmasArray[] = $desc_turma;
+        } while ($bd->SqlFetchNext());
 
-    $turmasString = is_array($turmasArray) ? implode(' | ', $turmasArray) : $turmasArray;
+        $turmasString = is_array($turmasArray) ? implode(' | ', $turmasArray) : $turmasArray;
 
-    return '
+        return '
     <div class="tab-pane fade show active" id="dados-dmsStaff-' . $idModal . '" role="tabpanel" aria-labelledby="dados-dmsStaff-tab-' . $idModal . '">
         <div class="mb-">
             <div class="row g-3 align-items-center">
@@ -1166,7 +1215,6 @@ inner join login_usuario e on e.cod_usuario = a.cod_usuario
         </div> 
     </div>';
     }
-
 }
 
 $retorno .= '<ul class="nav nav-tabs" id="abas" role="tablist">';
@@ -1174,19 +1222,16 @@ $retorno .= '<ul class="nav nav-tabs" id="abas" role="tablist">';
 // Navegação por tipo de usuário
 if ($cod_tipoRole == 1) { // TI
     $retorno .= navTI($idModal);
-
 } elseif ($cod_tipoRole == 2) { // ADMI
     $retorno .= navADMI($idModal);
-
 } elseif ($cod_tipoRole == 3) { // ADMS
     $retorno .= navADMS($idModal);
-
 } elseif ($cod_tipoRole == 4 || $cod_tipoRole == 5) { // ADMS e STAFF
     $retorno .= navAdmsStaff($idModal);
     $retorno .= navNotasTreinoADMS($idModal);
-    
 
-// Jogador
+
+    // Jogador
 } elseif ($cod_tipoRole == 6) {
     $retorno .= navDadosPessoais($idModal);
     $retorno .= navFichaMedica($idModal);
@@ -1194,7 +1239,7 @@ if ($cod_tipoRole == 1) { // TI
     $retorno .= navMinhaNota($idModal);
     $retorno .= navNotasTreino($idModal);
 
-// Tipo inválido
+    // Tipo inválido
 } else {
     $retorno .= '<li class="nav-item"><span class="text-danger">Tipo de usuário inválido</span></li>';
 }
@@ -1211,18 +1256,15 @@ if ($cod_tipoRole == 1) {
 } elseif ($cod_tipoRole == 3) {
     $retorno .= conteudoadms($idModal, $cod_usuario);
     $retorno .= conteudoNotasTreinoAdms($idModal, $cod_usuario);
-
- 
 } elseif ($cod_tipoRole == 4 || $cod_tipoRole == 5) {
-    $retorno .= conteudoAdmsTodosTipos($idModal, $cod_usuario,$cod_tipoRole);
+    $retorno .= conteudoAdmsTodosTipos($idModal, $cod_usuario, $cod_tipoRole);
     $retorno .= conteudoNotasTreinoAdms($idModal, $cod_usuario);
-} 
-elseif ($cod_tipoRole == 6) {
-    $retorno .= conteudoDadosResponsaveis($idModal,$cod_usuario);
-    $retorno .= conteudoMinhaNota($idModal,$cod_usuario);
-    $retorno .= conteudoNotasTreino($idModal, $cod_usuario,$cod_tipoRole);
+} elseif ($cod_tipoRole == 6) {
+    $retorno .= conteudoDadosResponsaveis($idModal, $cod_usuario);
+    $retorno .= conteudoMinhaNota($idModal, $cod_usuario);
+    $retorno .= conteudoNotasTreino($idModal, $cod_usuario, $cod_tipoRole);
     $retorno .= conteudoDadosPessoais($idModal, $cod_tipoRole, $cod_usuario);
-    $retorno .= conteudoFichaMedica($idModal,$cod_usuario);
+    $retorno .= conteudoFichaMedica($idModal, $cod_usuario);
 }
 
 $bd->SqlDisconnect();

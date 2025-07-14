@@ -1,6 +1,7 @@
 <?php
 require('../../../include/conecta.php');
 $retorno = '';
+date_default_timezone_set('America/Sao_Paulo');
 $dataAtual = date('Y-m-d H:i:s');
 
 $cod_jogador = getPost('cod_jogador');
