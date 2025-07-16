@@ -673,6 +673,7 @@ INSERT INTO itemMenu_tipoRole (cod_item_menu, cod_tipo_role) VALUES
 
 -- TI (cod_tipo_role = 1)
 INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role) VALUES
+(2, 13, 1),
 (1, 1, 1),
 (1, 2, 1),
 (1, 3, 1),
