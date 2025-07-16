@@ -654,7 +654,7 @@ function navNotasTreinoADMS($idModal)
     return '
     <li class="nav-item" role="presentation">
         <button class="nav-link" id="notas-treino-tab-' . $idModal . '" data-bs-toggle="tab" data-bs-target="#notas-treino-' . $idModal . '" type="button" role="tab" aria-controls="notas-treino-' . $idModal . '" aria-selected="false">
-            Notas treino
+            Dados de treino.
         </button>
     </li>';
 }
@@ -821,6 +821,11 @@ function conteudoNotasTreinoAdms($idModal, $cod_usuario)
     }
 
     $retorno .= '</div>'; // Fecha tab-pane
+
+    $retorno .= '<br><hr>'; 
+    $retorno .= '<center><h3>Midias de treino</h3></center>'; 
+
+
     return $retorno;
 }
 

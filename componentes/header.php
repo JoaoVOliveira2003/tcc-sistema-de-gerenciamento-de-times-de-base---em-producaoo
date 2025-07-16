@@ -6,7 +6,7 @@ $retorno = '';
 $cod_tipo_role = $usuario['cod_tipoRole'];
 // $retorno .= 'codigo tipo tole ->'.$cod_tipo_role;
 
-//$retorno .=  'codigo tipo tole ->'.print_r($usuario);
+$retorno .=  'codigo tipo tole ->'.print_r($usuario);
 
 /*
 mostra tudo - 0
