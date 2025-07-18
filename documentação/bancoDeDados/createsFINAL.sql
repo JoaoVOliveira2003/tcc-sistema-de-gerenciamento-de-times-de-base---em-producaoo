@@ -688,7 +688,7 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (2, 12, 1),
 (3, 15, 1),
 (4, 16, 1)
--- (5, 17, 1) ---
+-- (5, 17, 1)
 ;
 
 -- ADMI (cod_tipo_role = 2)
@@ -698,7 +698,7 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (1, 4, 2),
 (1, 5, 2),
 (1, 6, 2),
-(2, 8, 2),
+-- (2, 8, 2),
 (2, 9, 2),
 (2, 13, 2),
 (3, 15, 2),
@@ -727,6 +727,7 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (1, 4, 4),
 (1, 5, 4),
 (1, 6, 4),
+(1, 7, 4),
 (1, 13, 4),
 -- (2, 9, 4),
 (3, 14, 4),
@@ -1046,7 +1047,7 @@ INSERT INTO contato_responsavel (cod_contatoResponsavel, nomeResponsavel, tipoFi
 INSERT INTO jogador_contatoResponsavel (cod_jogador, cod_contatoResponsavel) VALUES (21, 4);
 INSERT INTO historicoLesoes (cod_historicoLesoes, cod_tipoLesao, desc_lesao, data_lesao, tempoFora_lesao) VALUES (4, 4, 'Fratura no braço esquerdo', '2024-05-18', '60 dias');
 INSERT INTO fichaMedica_historicoLesoes (cod_jogador, cod_historicoLesoes) VALUES (21, 4);
-INSERT INTO login_usuario (email_usuario, cod_usuario) VALUES ('ana.souza@gmail.com', 21);
+INSERT INTO login_usuario (email_usuario, cod_usuario,senha) VALUES ('ana.souza@gmail.com', 21,'ana');
 INSERT INTO nota_jogador (cod_jogador, cod_staff, nota_jogador, ativo, data_atualizacao) VALUES (21, 1, '7.0', 's', NOW());
 
 -- Jogador 5
