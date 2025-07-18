@@ -688,7 +688,7 @@ INSERT INTO itemMenu_subitemMenu (cod_item_menu, cod_subitem_menu, cod_tipo_role
 (2, 12, 1),
 (3, 15, 1),
 (4, 16, 1)
--- (5, 17, 1)
+-- (5, 17, 1) ---
 ;
 
 -- ADMI (cod_tipo_role = 2)
