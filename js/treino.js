@@ -145,7 +145,7 @@ function gravarMidiaTreino(cod_treino) {
   }
 
   $.ajax({
-    url: "/tcc/componentes/TREINO/gravarMidiaTreinos.php", // <-- caminho OK
+    url: "/tcc/componentes/TREINO/gravarMidiaTreinos.php", 
     type: "POST",
     data: formData,
     processData: false,
@@ -153,7 +153,7 @@ function gravarMidiaTreino(cod_treino) {
     success: function (data) {
       if (data.trim() === "ok") {
         alert("Mídias gravadas com sucesso!");
-        input.value = ""; // Limpa o input
+        input.value = ""; 
       } else {
         console.error("Erro:", data);
         alert(data);

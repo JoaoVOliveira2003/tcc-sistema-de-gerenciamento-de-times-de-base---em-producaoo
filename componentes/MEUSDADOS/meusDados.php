@@ -662,9 +662,9 @@ function navNotasTreinoADMS($idModal)
 function conteudoNotasTreinoAdms($idModal, $cod_usuario)
 {
     $bd = conecta();
-
     $retorno = '';
 
+    // Abre div da aba
     $retorno .= '<div class="tab-pane fade" id="notas-treino-' . $idModal . '" role="tabpanel" aria-labelledby="notas-treino-tab-' . $idModal . '">';
     $retorno .= '<h3>Anotações particulares.</h3>';
 
@@ -681,71 +681,62 @@ function conteudoNotasTreinoAdms($idModal, $cod_usuario)
 
         if ($grau == 1) {
             $query = "
-        SELECT  
-            b.cod_treino,
-            d.desc_esporte,
-            c.desc_notaTreino,
-            c.minuto_nota,
-            b.nomeTreino,
-            b.dataTreino,
-            e.nome AS nome_jogador
-        FROM staff a
-        INNER JOIN treino b ON a.cod_staff = b.cod_staff
-        INNER JOIN notatreino_jogador c ON c.cod_treino = b.cod_treino
-        INNER JOIN esporte d ON d.cod_esporte = b.cod_esporte
-        INNER JOIN cadastro_identificacao e ON e.cod_usuario = c.cod_jogador
-        WHERE cod_grau_privacidade = " . $grau . " 
-          AND a.cod_staff = " . $cod_usuario;
-        } else if ($grau == 2 || $grau == 3) {
-
-
+            SELECT  
+                b.cod_treino,
+                d.desc_esporte,
+                c.desc_notaTreino,
+                c.minuto_nota,
+                b.nomeTreino,
+                b.dataTreino,
+                e.nome AS nome_jogador
+            FROM staff a
+            INNER JOIN treino b ON a.cod_staff = b.cod_staff
+            INNER JOIN notatreino_jogador c ON c.cod_treino = b.cod_treino
+            INNER JOIN esporte d ON d.cod_esporte = b.cod_esporte
+            INNER JOIN cadastro_identificacao e ON e.cod_usuario = c.cod_jogador
+            WHERE cod_grau_privacidade = " . $grau . " 
+              AND a.cod_staff = " . $cod_usuario;
+        } else {
             $query2 = "
-    SELECT 
-   g.cod_turma
-    FROM cadastro_identificacao a
-    inner JOIN staff sta on sta.cod_staff = a.cod_usuario
-    inner JOIN staff_turma f on f.cod_staff = sta.cod_staff
-    inner join turma g on f.cod_turma = g.cod_turma
-    WHERE a.cod_usuario = $cod_usuario
-    ";
+            SELECT g.cod_turma
+            FROM cadastro_identificacao a
+            INNER JOIN staff sta ON sta.cod_staff = a.cod_usuario
+            INNER JOIN staff_turma f ON f.cod_staff = sta.cod_staff
+            INNER JOIN turma g ON f.cod_turma = g.cod_turma
+            WHERE a.cod_usuario = $cod_usuario
+            ";
 
             if (!$bd->SqlExecuteQuery($query2) || $bd->SqlNumRows() <= 0) {
                 return '';
             }
 
             $turmasArray = [];
-
             do {
-                $cod_turma = $bd->SqlQueryShow('cod_turma');
-                $turmasArray[] = $cod_turma;
+                $turmasArray[] = $bd->SqlQueryShow('cod_turma');
             } while ($bd->SqlFetchNext());
 
-            $cod_turmas = is_array($turmasArray) ? implode(',', $turmasArray) : $turmasArray;
+            $cod_turmas = implode(',', $turmasArray);
 
             $query = "
-    SELECT  
-        b.cod_treino,
-        d.desc_esporte,
-        c.desc_notaTreino,
-        c.minuto_nota,
-        b.nomeTreino,
-        b.dataTreino,
-        e.nome AS nome_jogador,
-        g.desc_turma
-    FROM staff a
-    INNER JOIN treino b ON a.cod_staff = b.cod_staff
-    INNER JOIN notatreino_jogador c ON c.cod_treino = b.cod_treino
-    INNER JOIN esporte d ON d.cod_esporte = b.cod_esporte
-    INNER JOIN cadastro_identificacao e ON e.cod_usuario = c.cod_jogador
-    INNER JOIN turma_jogador f ON f.cod_jogador = e.cod_usuario
-    INNER JOIN turma g ON g.cod_turma = f.cod_turma
-    WHERE cod_grau_privacidade = $grau
-      AND g.cod_turma IN ($cod_turmas)
-";
+            SELECT  
+                b.cod_treino,
+                d.desc_esporte,
+                c.desc_notaTreino,
+                c.minuto_nota,
+                b.nomeTreino,
+                b.dataTreino,
+                e.nome AS nome_jogador,
+                g.desc_turma
+            FROM staff a
+            INNER JOIN treino b ON a.cod_staff = b.cod_staff
+            INNER JOIN notatreino_jogador c ON c.cod_treino = b.cod_treino
+            INNER JOIN esporte d ON d.cod_esporte = b.cod_esporte
+            INNER JOIN cadastro_identificacao e ON e.cod_usuario = c.cod_jogador
+            INNER JOIN turma_jogador f ON f.cod_jogador = e.cod_usuario
+            INNER JOIN turma g ON g.cod_turma = f.cod_turma
+            WHERE cod_grau_privacidade = $grau
+              AND g.cod_turma IN ($cod_turmas)";
         }
-
-
-
 
         if ($bd->SqlExecuteQuery($query) && $bd->SqlNumRows() > 0) {
             $cod_treinoAtual = null;
@@ -797,7 +788,6 @@ function conteudoNotasTreinoAdms($idModal, $cod_usuario)
                 $retorno .= '</div></div>';
             }
         } else {
-            // Exibe card cinza mesmo sem anotações
             $retorno .= '
                 <div class="card border border-secondary text-muted mb-3">
                     <div class="card-header bg-light fw-bold">
@@ -820,14 +810,81 @@ function conteudoNotasTreinoAdms($idModal, $cod_usuario)
         }
     }
 
-    $retorno .= '</div>'; // Fecha tab-pane
+    // Agora o carrossel fica DENTRO da mesma div da aba
+    $retorno .= '<br><hr><center><h3>Mídias de treino</h3></center>'; 
 
-    $retorno .= '<br><hr>'; 
-    $retorno .= '<center><h3>Midias de treino</h3></center>'; 
+    $retorno .= '
+    <style>
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        filter: invert(1); /* setas pretas */
+    }
+    .btn-close.btn-close-black {
+        filter: invert(1); /* X preto */
+    }
+    </style>
 
+    <!-- Galeria Carousel -->
+    <div class="container my-4" style="max-width: 600px;">
+      <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="/tcc/img/treino/2-campoFutebol.jpg" class="d-block w-100 img-thumbnail" alt="Imagem 1" data-bs-toggle="modal" data-bs-target="#modalImagem1">
+          </div>
+          <div class="carousel-item">
+            <img src="/tcc/img/treino/2-campoFutebol.jpg" class="d-block w-100 img-thumbnail" alt="Imagem 2" data-bs-toggle="modal" data-bs-target="#modalImagem2">
+          </div>
+          <div class="carousel-item">
+            <img src="/tcc/img/treino/2-campoFutebol.jpg" class="d-block w-100 img-thumbnail" alt="Imagem 3" data-bs-toggle="modal" data-bs-target="#modalImagem3">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Próximo</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Modais para ampliar imagem -->
+    <div class="modal fade" id="modalImagem1" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-white">
+          <button type="button" class="btn-close btn-close-black ms-auto m-2" data-bs-dismiss="modal" aria-label="Fechar"></button>
+          <img src="/tcc/img/treino/2-campoFutebol.jpg" class="w-100">
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalImagem2" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-white">
+          <button type="button" class="btn-close btn-close-black ms-auto m-2" data-bs-dismiss="modal" aria-label="Fechar"></button>
+          <img src="/tcc/img/treino/2-campoFutebol.jpg" class="w-100">
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modalImagem3" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content bg-white">
+          <button type="button" class="btn-close btn-close-black ms-auto m-2" data-bs-dismiss="modal" aria-label="Fechar"></button>
+          <img src="/tcc/img/treino/2-campoFutebol.jpg" class="w-100">
+        </div>
+      </div>
+    </div>
+    ';
+
+    // Fecha div da aba
+    $retorno .= '</div>';
 
     return $retorno;
 }
+
+
 
 
 
@@ -1016,16 +1073,15 @@ function conteudoAdmsTodosTipos($idModal, $cod_usuario, $cod_tipoRole)
 
     if ($cod_tipoRole == 4) {
         $query = "
-    SELECT 
-    a.cod_usuario ,a.nome, a.cpf, b.email_usuario, b.senha,e.desc_instituicao,d.desc_subInstituicao
-    FROM cadastro_identificacao a
-	INNER JOIN login_usuario b ON a.cod_usuario = b.cod_usuario 
-	INNER JOIN administrador_subinstituicao c ON a.cod_usuario = c.cod_administrador
-    inner join subinstituicao d on d.cod_subInstituicao = c.cod_subInstituicao
-    inner join instituicao e on e.cod_instituicao = d.cod_instituicao
-    WHERE a.cod_usuario = $cod_usuario
-    ";
-
+        SELECT 
+            a.cod_usuario, a.nome, a.cpf, b.email_usuario, b.senha, e.desc_instituicao, d.desc_subInstituicao
+        FROM cadastro_identificacao a
+        INNER JOIN login_usuario b ON a.cod_usuario = b.cod_usuario 
+        INNER JOIN administrador_subinstituicao c ON a.cod_usuario = c.cod_administrador
+        INNER JOIN subinstituicao d ON d.cod_subInstituicao = c.cod_subInstituicao
+        INNER JOIN instituicao e ON e.cod_instituicao = d.cod_instituicao
+        WHERE a.cod_usuario = $cod_usuario
+        ";
 
         if (!$bd->SqlExecuteQuery($query) || $bd->SqlNumRows() <= 0) {
             return '';
@@ -1039,94 +1095,88 @@ function conteudoAdmsTodosTipos($idModal, $cod_usuario, $cod_tipoRole)
         $senha = $bd->SqlQueryShow('senha');
 
         $query2 = "
-    SELECT 
-    g.desc_turma
-    FROM cadastro_identificacao a
-    inner JOIN staff sta on sta.cod_staff = a.cod_usuario
-    inner JOIN staff_turma f on f.cod_staff = sta.cod_staff
-    inner join turma g on f.cod_turma = g.cod_turma
-    WHERE a.cod_usuario = $cod_usuario
-    ";
+        SELECT g.desc_turma
+        FROM cadastro_identificacao a
+        INNER JOIN staff sta ON sta.cod_staff = a.cod_usuario
+        INNER JOIN staff_turma f ON f.cod_staff = sta.cod_staff
+        INNER JOIN turma g ON f.cod_turma = g.cod_turma
+        WHERE a.cod_usuario = $cod_usuario
+        ";
 
         if (!$bd->SqlExecuteQuery($query2) || $bd->SqlNumRows() <= 0) {
             return '';
         }
 
         $turmasArray = [];
-
         do {
             $desc_turma = $bd->SqlQueryShow('desc_turma');
             $turmasArray[] = $desc_turma;
         } while ($bd->SqlFetchNext());
 
-        $turmasString = is_array($turmasArray) ? implode(' | ', $turmasArray) : $turmasArray;
+        $turmasString = implode(' | ', $turmasArray);
 
         return '
-    <div class="tab-pane fade show active" id="dados-dmsStaff-' . $idModal . '" role="tabpanel" aria-labelledby="dados-dmsStaff-tab-' . $idModal . '">
-        <div class="mb-">
-            <div class="row g-3 align-items-center">
-                <div class="col-md-8">
-                    <label for="nome-' . $idModal . '" class="form-label fw-semibold">Nome</label>
-                    <input type="text" id="nome-' . $idModal . '" class="form-control" value="' . htmlspecialchars($nome) . '" disabled>
-                </div>
-                <div class="col-md-4">
-                    <label for="cpf-' . $idModal . '" class="form-label fw-semibold">CPF</label>
-                    <input type="text" id="cpf-' . $idModal . '" class="form-control" value="' . formatarCPF($cpf) . '" disabled>
-                </div>
-                <div class="col-md-6">
-                    <label for="nome-' . $idModal . '" class="form-label fw-semibold">Pertence a instituição:</label>
-                    <input type="text" id="nome-' . $idModal . '" class="form-control" value="' . htmlspecialchars($desc_instituicao) . '" disabled>
-                </div>
-                <div class="col-md-6">
-                    <label for="nome-' . $idModal . '" class="form-label fw-semibold">Sub-Instituição:</label>
-                    <input type="text" id="nome-' . $idModal . '" class="form-control" value="' . htmlspecialchars($desc_subInstituicao) . '" disabled>
-                </div>
-                <div class="col-md-12">
-                    <label for="nome-' . $idModal . '" class="form-label fw-semibold">Turmas:</label>
-                    <input type="text" id="nome-' . $idModal . '" class="form-control" value="' . $turmasString . '" disabled>
+        <div class="tab-pane fade show active" id="dados-dmsStaff-' . $idModal . '" role="tabpanel" aria-labelledby="dados-dmsStaff-tab-' . $idModal . '">
+            <div class="mb-3">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-8">
+                        <label class="form-label fw-semibold">Nome</label>
+                        <input type="text" class="form-control" value="' . htmlspecialchars($nome) . '" disabled>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">CPF</label>
+                        <input type="text" class="form-control" value="' . formatarCPF($cpf) . '" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Pertence à instituição:</label>
+                        <input type="text" class="form-control" value="' . htmlspecialchars($desc_instituicao) . '" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Sub-Instituição:</label>
+                        <input type="text" class="form-control" value="' . htmlspecialchars($desc_subInstituicao) . '" disabled>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label fw-semibold">Turmas:</label>
+                        <input type="text" class="form-control" value="' . $turmasString . '" disabled>
+                    </div>
                 </div>
             </div>
-        </div>
-        <hr>
-<h5>Dados de Login </h5>  
-<p>Para atualizar a senha do seu login, digite a nova senha no campo da senha atual, clique no botão para prosseguir e confirme a alteração.</p>
-<div class="mb-3">
-    <div class="row g-3 align-items-center">
-        <div class="col-md-6">
-            <label  class="form-label fw-semibold">Email Cadastrado</label>
-            <input type="text"  class="form-control" value="' . $email_usuario . '" disabled>
-        </div>
-
-        <div class="col-md-6">
-            <label for="senha" class="form-label fw-semibold">Senha</label>
-            <div class="input-group">
-                <input type="password" class="form-control" value="' . $senha . '" id="senha" name="senha">
-                <button class="btn btn-outline-secondary" type="button" onclick="toggleSenha()">
-                    <img src="../../img/icone/olho.png" width="15" height="15" alt="Mostrar senha">
-                </button>
+            <hr>
+            <h5>Dados de Login</h5>  
+            <p>Para atualizar a senha do seu login, digite a nova senha no campo da senha atual, clique no botão para prosseguir e confirme a alteração.</p>
+            <div class="mb-3">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Email Cadastrado</label>
+                        <input type="text" class="form-control" value="' . $email_usuario . '" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Senha</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" value="' . $senha . '" id="senha" name="senha">
+                            <button class="btn btn-outline-secondary" type="button" onclick="toggleSenha()">
+                                <img src="../../img/icone/olho.png" width="15" height="15" alt="Mostrar senha">
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-                <div class="col-md-2">
+            <div class="mb-3">
                 <button type="button" onclick="modalMudarSenha(' . $cod_usuario . ')" class="btn btn-primary btn-sm">Modificar senha</button>
-                </div>
-         </div>
-        </div> 
-    </div>';
+            </div>
+        </div>';
     } else if ($cod_tipoRole == 5) {
 
         $query = "
-select 
-a.cod_usuario ,a.nome, a.cpf, e.email_usuario, e.senha,d.desc_instituicao,c.desc_subInstituicao
-from cadastro_identificacao a
-inner join  subinstituticao_staff b on a.cod_usuario = b.cod_staff
-inner join  subinstituicao c on c.cod_SubInstituicao = b.cod_SubInstituicao
-inner join  instituicao d on d.cod_instituicao = c.cod_instituicao
-inner join login_usuario e on e.cod_usuario = a.cod_usuario
-    WHERE a.cod_usuario = $cod_usuario
-    ";
-
+        SELECT 
+            a.cod_usuario, a.nome, a.cpf, e.email_usuario, e.senha, d.desc_instituicao, c.desc_subInstituicao
+        FROM cadastro_identificacao a
+        INNER JOIN subinstituticao_staff b ON a.cod_usuario = b.cod_staff
+        INNER JOIN subinstituicao c ON c.cod_subInstituicao = b.cod_subInstituicao
+        INNER JOIN instituicao d ON d.cod_instituicao = c.cod_instituicao
+        INNER JOIN login_usuario e ON e.cod_usuario = a.cod_usuario
+        WHERE a.cod_usuario = $cod_usuario
+        ";
 
         if (!$bd->SqlExecuteQuery($query)) {
             return '';
@@ -1139,83 +1189,77 @@ inner join login_usuario e on e.cod_usuario = a.cod_usuario
         $email_usuario = $bd->SqlQueryShow('email_usuario');
         $senha = $bd->SqlQueryShow('senha');
 
-
         $query2 = "
-    SELECT 
-    g.desc_turma
-    FROM cadastro_identificacao a
-    inner JOIN staff sta on sta.cod_staff = a.cod_usuario
-    inner JOIN staff_turma f on f.cod_staff = sta.cod_staff
-    inner join turma g on f.cod_turma = g.cod_turma
-    WHERE a.cod_usuario = $cod_usuario
-    ";
+        SELECT g.desc_turma
+        FROM cadastro_identificacao a
+        INNER JOIN staff sta ON sta.cod_staff = a.cod_usuario
+        INNER JOIN staff_turma f ON f.cod_staff = sta.cod_staff
+        INNER JOIN turma g ON f.cod_turma = g.cod_turma
+        WHERE a.cod_usuario = $cod_usuario
+        ";
 
         if (!$bd->SqlExecuteQuery($query2) || $bd->SqlNumRows() <= 0) {
             return '';
         }
 
         $turmasArray = [];
-
         do {
             $desc_turma = $bd->SqlQueryShow('desc_turma');
             $turmasArray[] = $desc_turma;
         } while ($bd->SqlFetchNext());
 
-        $turmasString = is_array($turmasArray) ? implode(' | ', $turmasArray) : $turmasArray;
+        $turmasString = implode(' | ', $turmasArray);
 
         return '
-    <div class="tab-pane fade show active" id="dados-dmsStaff-' . $idModal . '" role="tabpanel" aria-labelledby="dados-dmsStaff-tab-' . $idModal . '">
-        <div class="mb-">
-            <div class="row g-3 align-items-center">
-                <div class="col-md-8">
-                    <label for="nome-' . $idModal . '" class="form-label fw-semibold">Nome</label>
-                    <input type="text" id="nome-' . $idModal . '" class="form-control" value="' . htmlspecialchars($nome) . '" disabled>
-                </div>
-                <div class="col-md-4">
-                    <label for="cpf-' . $idModal . '" class="form-label fw-semibold">CPF</label>
-                    <input type="text" id="cpf-' . $idModal . '" class="form-control" value="' . formatarCPF($cpf) . '" disabled>
-                </div>
-                <div class="col-md-6">
-                    <label for="nome-' . $idModal . '" class="form-label fw-semibold">Pertence a instituição:</label>
-                    <input type="text" id="nome-' . $idModal . '" class="form-control" value="' . htmlspecialchars($desc_instituicao) . '" disabled>
-                </div>
-                <div class="col-md-6">
-                    <label for="nome-' . $idModal . '" class="form-label fw-semibold">Sub-Instituição:</label>
-                    <input type="text" id="nome-' . $idModal . '" class="form-control" value="' . htmlspecialchars($desc_subInstituicao) . '" disabled>
-                </div>
-                <div class="col-md-12">
-                    <label for="nome-' . $idModal . '" class="form-label fw-semibold">Turmas:</label>
-                    <input type="text" id="nome-' . $idModal . '" class="form-control" value="' . $turmasString . '" disabled>
+        <div class="tab-pane fade show active" id="dados-dmsStaff-' . $idModal . '" role="tabpanel" aria-labelledby="dados-dmsStaff-tab-' . $idModal . '">
+            <div class="mb-3">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-8">
+                        <label class="form-label fw-semibold">Nome</label>
+                        <input type="text" class="form-control" value="' . htmlspecialchars($nome) . '" disabled>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">CPF</label>
+                        <input type="text" class="form-control" value="' . formatarCPF($cpf) . '" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Pertence à instituição:</label>
+                        <input type="text" class="form-control" value="' . htmlspecialchars($desc_instituicao) . '" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Sub-Instituição:</label>
+                        <input type="text" class="form-control" value="' . htmlspecialchars($desc_subInstituicao) . '" disabled>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label fw-semibold">Turmas:</label>
+                        <input type="text" class="form-control" value="' . $turmasString . '" disabled>
+                    </div>
                 </div>
             </div>
-        </div>
-        <hr>
-<h5>Dados de Login </h5>  
-<p>Para atualizar a senha do seu login, digite a nova senha no campo da senha atual, clique no botão para prosseguir e confirme a alteração.</p>
-<div class="mb-3">
-    <div class="row g-3 align-items-center">
-        <div class="col-md-6">
-            <label  class="form-label fw-semibold">Email Cadastrado</label>
-            <input type="text"  class="form-control" value="' . $email_usuario . '" disabled>
-        </div>
-
-        <div class="col-md-6">
-            <label for="senha" class="form-label fw-semibold">Senha</label>
-            <div class="input-group">
-                <input type="password" class="form-control" value="' . $senha . '" id="senha" name="senha">
-                <button class="btn btn-outline-secondary" type="button" onclick="toggleSenha()">
-                    <img src="../../img/icone/olho.png" width="15" height="15" alt="Mostrar senha">
-                </button>
+            <hr>
+            <h5>Dados de Login</h5>  
+            <p>Para atualizar a senha do seu login, digite a nova senha no campo da senha atual, clique no botão para prosseguir e confirme a alteração.</p>
+            <div class="mb-3">
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Email Cadastrado</label>
+                        <input type="text" class="form-control" value="' . $email_usuario . '" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Senha</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" value="' . $senha . '" id="senha" name="senha">
+                            <button class="btn btn-outline-secondary" type="button" onclick="toggleSenha()">
+                                <img src="../../img/icone/olho.png" width="15" height="15" alt="Mostrar senha">
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-                <div class="col-md-2">
+            <div class="mb-3">
                 <button type="button" onclick="modalMudarSenha(' . $cod_usuario . ')" class="btn btn-primary btn-sm">Modificar senha</button>
-                </div>
-         </div>
-        </div> 
-    </div>';
+            </div>
+        </div>';
     }
 }
 
