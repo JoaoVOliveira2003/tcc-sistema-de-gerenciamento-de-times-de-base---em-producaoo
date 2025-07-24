@@ -7,12 +7,11 @@ $cod_usuario = getPost('cod_usuario');
 
 $retorno = "";
 
-// Evita SQL IN vazio
+
 function safeTurmasInClause($turmas) {
     return empty($turmas) ? "0" : $turmas;
 }
 
-// Fecha a tabela HTML se necessário
 function fecharTabela(&$retorno, $tem_jogador_na_turma) {
     if (!$tem_jogador_na_turma) {
         $retorno .= "<tr><td colspan='4' class='text-center'>Nenhum jogador cadastrado</td></tr>";
@@ -20,7 +19,6 @@ function fecharTabela(&$retorno, $tem_jogador_na_turma) {
     $retorno .= "</tbody></table>";
 }
 
-// Escolhe a consulta SQL com base na role
 if ($cod_role == 1) {
     $query = "
         SELECT 

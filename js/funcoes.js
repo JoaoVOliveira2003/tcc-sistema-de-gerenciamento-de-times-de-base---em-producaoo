@@ -1,7 +1,20 @@
-function selectInstituicoes() {
+async function selectInstituicoes(codUsuario = null, $codTipoRole = null) {
   var pagina = "/tcc/componentes/selectBasico.php";
 
-  var query = "SELECT cod_instituicao,desc_instituicao FROM instituicao;";
+  if ($codTipoRole == 1 || $codTipoRole == "" || $codTipoRole == null) {
+    var query = "SELECT cod_instituicao,desc_instituicao FROM instituicao;";
+  } else {
+    var query =
+      "select cod_instituicao from administrador_instituicao where cod_administrador = " +
+      codUsuario;
+    var valorProcurado = "cod_instituicao";
+    var select = await acharPai(query, valorProcurado);
+
+    var query =
+      "SELECT cod_instituicao,desc_instituicao FROM instituicao where cod_instituicao =" +
+      select;
+  }
+
   var codSelect = "cod_instituicao";
   var descSelect = "desc_instituicao";
   var label = "Pertence instituição:";
@@ -33,11 +46,31 @@ function selectInstituicoes() {
   });
 }
 
-function selectSubInstituicoes() {
+async function selectSubInstituicoes(codUsuario = null, $codTipoRole = null) {
   var pagina = "/tcc/componentes/selectBasico.php";
 
-  var query =
-    "SELECT Cod_SubInstituicao,desc_subInstituicao FROM subInstituicao;";
+  if ($codTipoRole == 1 || $codTipoRole == "" || $codTipoRole == null) {
+    var query = "SELECT Cod_SubInstituicao,desc_subInstituicao FROM subInstituicao;";
+  }  
+  else if ($codTipoRole == 2){
+    //achar as subinstituiões desse admi
+
+    var query = "select cod_instituicao from administrador_instituicao where cod_administrador = " + codUsuario;
+    var valorProcurado = "cod_instituicao";
+    var CodinstituicaoDoCara = await acharPai(query, valorProcurado);
+
+    var query = "SELECT Cod_SubInstituicao,desc_subInstituicao FROM subInstituicao where Cod_Instituicao =" + CodinstituicaoDoCara;
+  }
+  else if ($codTipoRole == 3 || $codTipoRole == 4){
+    //achar a subinstituiões desse adms
+    var query = "SELECT cod_SubInstituicao FROM administrador_subInstituicao where cod_administrador = " + codUsuario;
+    var valorProcurado = "cod_SubInstituicao";
+    var CodsubinstituicaoDoCara = await acharPai(query, valorProcurado);
+
+    var query = "SELECT Cod_SubInstituicao,desc_subInstituicao FROM subInstituicao where Cod_SubInstituicao =" + CodsubinstituicaoDoCara;
+  }
+
+
   var codSelect = "Cod_SubInstituicao";
   var descSelect = "desc_subInstituicao";
   var label = "Pertence Sub-instituição:";
@@ -178,13 +211,12 @@ function selectNacoes(cadastro) {
       $("#selectNacao").html(data);
     },
   });
-
-
 }
 
 function selectEstados(cod_nacao, cadastro) {
   var pagina = "/tcc/componentes/selectBasico.php";
-  var query  = "SELECT cod_estado, desc_estado FROM estado WHERE cod_nacao = " + cod_nacao;
+  var query =
+    "SELECT cod_estado, desc_estado FROM estado WHERE cod_nacao = " + cod_nacao;
   var codSelect = "cod_estado";
   var descSelect = "desc_estado";
   var onclick = "";
@@ -500,21 +532,18 @@ function escodendoModalCarregamento() {
   $("#modalCarregando").modal("hide");
 }
 
-function teste(){
+function teste() {
   console.log("teste");
 }
 
-function confirmarCadastro(cod,tipo_role){
-
-  console.log('aaa - '+ tipo_role);
-
+function confirmarCadastro(cod, tipo_role) {
   var pagina = "/tcc/componentes/confirmarCadastro.php";
 
   var senha = document.getElementById("senha_usuario").value;
   var email = document.getElementById("email_usuario").value;
 
   let camposObrigatorios = {
-    senha:senha
+    senha: senha,
   };
 
   let mensagemCamposObrigatorios = {
@@ -528,14 +557,12 @@ function confirmarCadastro(cod,tipo_role){
   $.ajax({
     type: "POST",
     url: pagina,
-    data: {email:email,cod:cod,senha:senha,tipo_role:tipo_role},
-    success: function (data) 
-   
-    {
+    data: { email: email, cod: cod, senha: senha, tipo_role: tipo_role },
+    success: function (data) {
       console.log(data);
       if (data == "ok") {
         alert(
-          "Dados atualizado, agora você podera realizar cadastro ! <br> ao clicar no botão 'fechar' ele ira ser enviado a tela do login.",
+          "Dados confirmados, agora você podera realizar cadastro ! <br> ao clicar no botão 'fechar' sera ira ser enviado a redirecionado para a tela de login.",
           "Atenção",
           "50%",
           function () {
@@ -563,7 +590,7 @@ function selectEsporte() {
   var codSelect = "cod_esporte";
   var descSelect = "desc_esporte";
   var onclick = "";
-  var label = "Esporte:"; 
+  var label = "Esporte:";
 
   var onchange = "selectPosicao(this.value)";
 
@@ -595,18 +622,18 @@ function selectEsporte() {
       $("#selectEsporte").html(data);
     },
   });
-
-
 }
 
 function selectPosicao(cod_esporte) {
   var pagina = "/tcc/componentes/selectBasico.php";
-  var query  = "SELECT cod_posicao,desc_posicao FROM posicao where cod_esporte = " + cod_esporte;
+  var query =
+    "SELECT cod_posicao,desc_posicao FROM posicao where cod_esporte = " +
+    cod_esporte;
   var codSelect = "cod_posicao";
   var descSelect = "desc_posicao";
   var onclick = "";
 
-  var label = "Posição favorita:"; 
+  var label = "Posição favorita:";
 
   var classLabel = "mt-1 form-label";
   var classSelect = "form-control mb-2";
@@ -643,7 +670,8 @@ function selectPosicao(cod_esporte) {
 function selectSubInstituicoesTurma() {
   var pagina = "/tcc/componentes/selectBasico.php";
 
-  var query ="SELECT Cod_SubInstituicao,desc_subInstituicao FROM subInstituicao;";
+  var query =
+    "SELECT Cod_SubInstituicao,desc_subInstituicao FROM subInstituicao;";
   var codSelect = "Cod_SubInstituicao";
   var descSelect = "desc_subInstituicao";
   var label = "Pertence Sub-instituição:";
@@ -673,7 +701,6 @@ function selectSubInstituicoesTurma() {
       primeiroOption: primeiroOption,
     },
     success: function (data) {
-
       $("#selectSubInstituicoesTurma").html(data);
     },
   });
@@ -681,13 +708,15 @@ function selectSubInstituicoesTurma() {
 
 function selectTurma(cod) {
   var pagina = "/tcc/componentes/selectBasico.php";
-  var query  = "select cod_turma,desc_turma from turma where ativo='s' and cod_subInstituicao=  " + cod;
+  var query =
+    "select cod_turma,desc_turma from turma where ativo='s' and cod_subInstituicao=  " +
+    cod;
 
   var codSelect = "cod_turma";
   var descSelect = "desc_turma";
   var onclick = "";
 
-  var label = "Pertence a turma:"; 
+  var label = "Pertence a turma:";
 
   var classLabel = "mt-1 form-label";
   var classSelect = "form-control mb-2";
@@ -729,11 +758,10 @@ function somenteNumeros(e) {
 }
 
 function fecharModalCorretamente() {
-  // Remover backdrops pendentes
-  document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+  document.querySelectorAll(".modal-backdrop").forEach((el) => el.remove());
 }
 
-    function toggleSenha() {
-      const campoSenha = document.getElementById("senha");
-      campoSenha.type = campoSenha.type === "password" ? "text" : "password";
-    }
+function toggleSenha() {
+  const campoSenha = document.getElementById("senha");
+  campoSenha.type = campoSenha.type === "password" ? "text" : "password";
+}

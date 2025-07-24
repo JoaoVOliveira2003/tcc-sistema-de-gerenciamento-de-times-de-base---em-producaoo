@@ -15,16 +15,16 @@ $cod_role      = 4;
 $bd = conecta();
 
 $emailBase = 'ojoao953@gmail.com';
+$emailBase2 = 'OJOAO953@GMAIL.COM';
 $query = "SELECT COUNT(*) FROM login_usuario WHERE email_usuario = '$email'";
 if ($bd->SqlExecuteQuery($query)) {
     $count = $bd->SqlQueryShow("COUNT(*)");
-    if ($count > 0 && $email != $emailBase) {
+    if ($count > 0 && $email != $emailBase && $email != $emailBase2){
         $retorno = 'emailJaCadastrado';
         $bd->SqlDisconnect();
         exit($retorno);
     }
 }
-
 $query = "INSERT INTO cadastro_identificacao (nome, cpf, cod_municipio, ativo) VALUES ('$nome', '$cpf', '$municipio', 'n')";
 
 if ($bd->SqlExecuteQuery($query)) {

@@ -188,14 +188,6 @@ function gravarNotaTreino(cod_jogador) {
   if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) {
     return;
   }
-
-  // console.log(cod_jogador);
-  // console.log(grauPrivacidade);
-  // console.log(descNotaTreino);
-  // console.log(relogio);
-  // console.log(cod_treino);
-  // console.log(cod_staff);
-
   $.ajax({
     type: "POST",
     url: pagina,

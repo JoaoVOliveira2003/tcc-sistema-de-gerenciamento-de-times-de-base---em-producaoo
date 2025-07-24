@@ -26,12 +26,12 @@
         
         <div class="mb-3">
           <label for="email" class="form-label">E-mail do usuário</label>
-          <input type="email" class="form-control" id="email" name="email" value="ojoao953@gmail.com" autocomplete="email">
+          <input type="email" class="form-control" id="email" name="email" autocomplete="email">
         </div>
 
         <button onclick="atualizarSenha()" class="btn btn-primary">Atualizar senha.</button>
 
-                    <div class="modal fade" id="modalCarregando" tabindex="-1" aria-labelledby="modalCarregandoLabel"
+              <div class="modal fade" id="modalCarregando" tabindex="-1" aria-labelledby="modalCarregandoLabel"
                 aria-hidden="true">
                 <div class="modal-dialog d-flex justify-content-center align-items-center">
                     <div class="modal-content">

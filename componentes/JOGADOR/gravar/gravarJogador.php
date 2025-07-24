@@ -23,11 +23,11 @@ $lesoes             = json_decode(getPost('lesoes'), true);
 $cod_turma          = getPost('turma');
 
 $emailBase = 'ojoao953@gmail.com';
+$emailBase2 = 'OJOAO953@GMAIL.COM';
 $query = "SELECT COUNT(*) FROM login_usuario WHERE email_usuario = '$email'";
-error_log('query email check: ' . $query);
 if ($bd->SqlExecuteQuery($query)) {
     $count = $bd->SqlQueryShow("COUNT(*)");
-    if ($count > 0 && $email != $emailBase) {
+    if ($count > 0 && $email != $emailBase && $email != $emailBase2){
         $retorno = 'emailJaCadastrado';
         $bd->SqlDisconnect();
         exit($retorno);

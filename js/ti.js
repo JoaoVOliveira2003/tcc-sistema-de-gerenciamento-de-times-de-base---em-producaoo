@@ -174,7 +174,7 @@ function gravarTI() {
   };
 
   let mensagens = {
-    municipio: "Município pertencente",
+    municipio: "Município de nascimento (Selecione primeiro 'Nacionalidade' e 'Natural de') <br>",
   };
 
   if (!verificarCampoId(campos, mensagens)) {
@@ -196,10 +196,10 @@ function gravarTI() {
   };
 
   let mensagemCamposObrigatorios = {
-    municipio: "municipio de origem do usuario",
-    nome: "nome do usuario",
-    email: "Email do usuario",
-    cpf: "Cpf do usuario",
+    municipio: "Municipio de origem do usuário",
+    nome: "Nome do usuário",
+    email: "Email do usuário",
+    cpf: "Cpf do usuário",
   };
 
   if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) {
@@ -213,7 +213,8 @@ function gravarTI() {
     url: pagina,
     data: { municipio: municipio, nome: nome, email: email, cpf: cpf},
     success: function (data) {
- 
+      console.log(data);
+
       if(data =='emailJaCadastrado'){
             escodendoModalCarregamento();
 
@@ -686,7 +687,7 @@ function deletarCadastroTI(cod) {
     data: {cod:cod},
     success: function (data) {
       if (data == "ok") {
-        alert("Dados deletados!", 'Atenção', '80%', function () {
+        alert("Dados deletados!", 'Atenção', '50%', function () {
           window.location.href = "https://www.google.com";
         });
 
@@ -1360,5 +1361,3 @@ function verificarCadastroTI(codPessoa, emailPessoa) {
     }
   });
 }
-
-

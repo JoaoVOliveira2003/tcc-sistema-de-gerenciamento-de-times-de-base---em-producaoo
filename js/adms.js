@@ -1,5 +1,3 @@
-$(document).ready(function () {});
-
 function gravarTurma() {
   var pagina = "/tcc/componentes/ADMS/gravar/gravarTurma.php";
 
@@ -42,14 +40,17 @@ function gravarTurma() {
 function tabelaDeleteUpdateTurma() {
   var pagina = "/tcc/componentes/tabelaDeleteUpdate.php";
 
-  if(cod_tipoRole == 2){
-  var query ="SELECT tur.cod_turma, tur.desc_turma, tur.ativo, sub.desc_subInstituicao FROM turma tur INNER JOIN subinstituicao sub ON sub.cod_subInstituicao = tur.cod_subInstituicao INNER JOIN instituicao c ON sub.cod_instituicao = c.cod_instituicao inner join administrador_instituicao d on d.cod_instituicao = c.cod_instituicao where d.cod_administrador="+cod_tipoUsuario + " ORDER BY sub.desc_subInstituicao";
-  }
-  else{
-  var query ="SELECT tur.cod_turma, tur.desc_turma, tur.ativo, sub.desc_subInstituicao FROM turma tur INNER JOIN subinstituicao sub ON sub.cod_subInstituicao = tur.cod_subInstituicao ORDER BY sub.desc_subInstituicao;";
+  if (cod_tipoRole == 2) {
+    var query =
+      "SELECT tur.cod_turma, tur.desc_turma, tur.ativo, sub.desc_subInstituicao FROM turma tur INNER JOIN subinstituicao sub ON sub.cod_subInstituicao = tur.cod_subInstituicao INNER JOIN instituicao c ON sub.cod_instituicao = c.cod_instituicao inner join administrador_instituicao d on d.cod_instituicao = c.cod_instituicao where d.cod_administrador=" +
+      cod_tipoUsuario +
+      " ORDER BY sub.desc_subInstituicao";
+  } else {
+    var query =
+      "SELECT tur.cod_turma, tur.desc_turma, tur.ativo, sub.desc_subInstituicao FROM turma tur INNER JOIN subinstituicao sub ON sub.cod_subInstituicao = tur.cod_subInstituicao ORDER BY sub.desc_subInstituicao;";
   }
 
-console.log(query);
+  console.log(query);
 
   let titulosTh = {
     valor1: "Cod. turma",
@@ -307,9 +308,7 @@ function atualizarTurma(cod) {
   });
 }
 
-
 // ----------------------------------------------------------------------------------------------------
-
 
 function gravarADMS() {
   var pagina = "/tcc/componentes/ADMS/gravar/gravarADMS.php";
@@ -343,11 +342,11 @@ function gravarADMS() {
   };
 
   let mensagemCamposObrigatorios = {
-    municipio: "municipio de origem do usuario",
-    nome: "nome do usuario",
-    email: "Email do usuario",
-    cpf: "Cpf do usuario",
-    subinstitucao: "Instituição",
+    municipio: "Municipio de origem do usuário",
+    nome: "Nome do usuário",
+    email: "Email do usuário",
+    cpf: "Cpf do usuário",
+    subinstitucao: "Sub-Instituição",
   };
 
   if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) {
@@ -369,20 +368,13 @@ function gravarADMS() {
     success: function (data) {
       escodendoModalCarregamento();
 
-      if(data =='emailJaCadastrado'){
-            escodendoModalCarregamento();
+      if (data == "emailJaCadastrado") {
+        escodendoModalCarregamento();
 
-        alert(
-          "Email já cadastrado.",
-          "Atenção",
-          "50%",
-            function () {
-                escodendoModalCarregamento();
-
-          }
-        );
+        alert("Email já cadastrado.", "Atenção", "50%", function () {
+          escodendoModalCarregamento();
+        });
       }
-
 
       if (data == "ok") {
         alert(
@@ -407,7 +399,6 @@ function gravarADMS() {
 }
 
 function verificarCadastroADMS(codPessoa, emailPessoa) {
-
   var pagina = "/tcc/componentes/Email/verificarCadastroADMS.php";
 
   $.ajax({
@@ -415,21 +406,20 @@ function verificarCadastroADMS(codPessoa, emailPessoa) {
     url: pagina,
     data: { codPessoa: codPessoa, emailPessoa: emailPessoa },
     dataType: "json",
-    success: function (data) {      
+    success: function (data) {
       if (data.status === "nok1") {
-        alert("Erro ao executar a consulta!", "Atenção", "80%", function () {
+        alert("Erro ao executar a consulta!", "Atenção", "50%", function () {
           window.location.href = "https://www.google.com";
         });
       } else if (data.status === "nok2") {
-        alert("Pessoa não existe no sistema!", "Atenção", "80%", function () {
+        alert("Pessoa não existe no sistema!", "Atenção", "50%", function () {
           window.location.href = "https://www.google.com";
         });
       } else if (data.status === "nok3") {
-        alert("Cadastro já confirmado!", "Atenção", "80%", function () {
+        alert("Cadastro já confirmado!", "Atenção", "50%", function () {
           window.location.href = "https://www.google.com";
         });
       } else if (data.status === "ok") {
-
         $("#nome").val(data.nome).prop("disabled", true);
         function formatarCPF(cpf) {
           return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
@@ -507,7 +497,7 @@ function deletarCadastroADMS(cod) {
     data: { cod: cod },
     success: function (data) {
       if (data == "ok") {
-        alert("Dados deletados!", "Atenção", "80%", function () {
+        alert("Dados deletados!", "Atenção", "50%", function () {
           window.location.href = "https://www.google.com";
         });
       } else if (data == "nok") {

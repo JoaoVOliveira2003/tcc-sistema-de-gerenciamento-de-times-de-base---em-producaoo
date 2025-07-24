@@ -14,9 +14,14 @@ $usuario = verificarLogin();
     <script src="../../js/admi.js"></script>
     <script>
         $(document).ready(function () {
-            selectNacoes(cadastro = 's');
-            selectInstituicoes();
-        });
+            
+        const codUsuario = <?= json_encode($usuario['cod_usuario']) ?>;
+        const codTipoRole = <?= json_encode($usuario['cod_tipoRole']) ?>;
+        selectInstituicoes(codUsuario, codTipoRole); 
+
+        selectNacoes(cadastro = 's');
+
+    });
     </script>
 </head>
 <?php include('../../componentes/header.php'); ?>

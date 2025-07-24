@@ -217,7 +217,7 @@ function gravarJogador() {
         alert(
           "Dados de jogadores foram gravados. Para que o usuário possa se inscrever, ele deve confirmar seus dados pelo e-mail enviado.",
           "Atenção",
-          "50%",
+          "50%"
           // function () {
           //   location.reload();
           // }
@@ -240,16 +240,16 @@ function verificarCadastroJogador(codPessoa, emailPessoa) {
     dataType: "json",
     success: function (data) {
       if (data.status === "nok1") {
-        alert("Erro ao executar a consulta!", "Atenção", "80%", function () {
-          // window.location.href = "https://www.google.com";
+        alert("Erro ao executar a consulta!", "Atenção", "50%", function () {
+          window.location.href = "https://www.google.com";
         });
       } else if (data.status === "nok2") {
-        alert("Pessoa não existe no sistema!", "Atenção", "80%", function () {
-          // window.location.href = "https://www.google.com";
+        alert("Pessoa não existe no sistema!", "Atenção", "50%", function () {
+          window.location.href = "https://www.google.com";
         });
       } else if (data.status === "nok3") {
-        alert("Cadastro já confirmado!", "Atenção", "80%", function () {
-          // window.location.href = "https://www.google.com";
+        alert("Cadastro já confirmado!", "Atenção", "50%", function () {
+          window.location.href = "https://www.google.com";
         });
       } else if (data.status === "ok") {
         $("#nome").val(data.nome).prop("disabled", true);
@@ -344,7 +344,7 @@ function deletarCadastroJOGADOR(cod) {
     data: { cod: cod },
     success: function (data) {
       if (data == "ok") {
-        alert("Dados deletados!", "Atenção", "80%", function () {
+        alert("Dados deletados!", "Atenção", "50%", function () {
           window.location.href = "https://www.google.com";
         });
       } else if (data == "nok") {
@@ -377,23 +377,20 @@ function listaTodosJogadores(cod_role, cod_usuario) {
   });
 }
 
-
-
- function vizualizarDadosJogador(cod_jogador) {
+function vizualizarDadosJogador(cod_jogador) {
   var pagina = "/tcc/componentes/JOGADOR/modalDadosJogador.php";
   var idModal = "modalDadosJOGADOR";
-  var cod_role = document.getElementById('cod_role').value;
+  var cod_role = document.getElementById("cod_role").value;
 
   $.ajax({
     type: "POST",
     url: pagina,
     data: {
       cod_jogador: cod_jogador,
-      idModal:idModal,
-      cod_role:cod_role
+      idModal: idModal,
+      cod_role: cod_role,
     },
     success: function (data) {
-
       $("#modalContainer").html(data);
 
       // Usa a variável idModal definida no PHP via script
@@ -414,19 +411,18 @@ function listaTodosJogadores(cod_role, cod_usuario) {
       // Fecha o carregando mesmo em caso de erro
       $("#modalCarregando").modal("hide");
       alert("Erro ao carregar os dados do jogador.");
-    }
+    },
   });
 }
 
-
-function abrirModalAtualizarNota(){
-      const modal2 = new bootstrap.Modal(document.getElementById('modal2'));
-      modal2.show();
+function abrirModalAtualizarNota() {
+  const modal2 = new bootstrap.Modal(document.getElementById("modal2"));
+  modal2.show();
 }
 
 function adicionarNota(cod_jogador) {
-  var novaNota = document.getElementById('novaNota').value;
-  var usuarioCodStaff = document.getElementById('usuarioCodStaff').value;
+  var novaNota = document.getElementById("novaNota").value;
+  var usuarioCodStaff = document.getElementById("usuarioCodStaff").value;
 
   var pagina = "/tcc/componentes/JOGADOR/atualizar/atualizarNotaJogador.php";
 
@@ -436,31 +432,27 @@ function adicionarNota(cod_jogador) {
     data: {
       cod_jogador: cod_jogador,
       novaNota: novaNota,
-      usuarioCodStaff: usuarioCodStaff
+      usuarioCodStaff: usuarioCodStaff,
     },
     success: function (data) {
-      if (data.trim() === 'ok') {
-        var modalEl = document.getElementById('modalDadosJOGADOR');
-        var modal2 =document.getElementById('modal2');
+      if (data.trim() === "ok") {
+        var modalEl = document.getElementById("modalDadosJOGADOR");
+        var modal2 = document.getElementById("modal2");
         var modalInstance = bootstrap.Modal.getInstance(modalEl);
         var modalInstance2 = bootstrap.Modal.getInstance(modal2);
 
-
         if (modalInstance) {
-          modalInstance.hide(); 
-          
+          modalInstance.hide();
         }
 
-        modalEl.addEventListener('hidden.bs.modal', function handler() {
-        var novaInstancia = new bootstrap.Modal(modalEl);       
-        vizualizarDadosJogador(cod_jogador)
-        document.getElementById('nota-jogador-tab-modalDadosJOGADOR').click();
-
+        modalEl.addEventListener("hidden.bs.modal", function handler() {
+          var novaInstancia = new bootstrap.Modal(modalEl);
+          vizualizarDadosJogador(cod_jogador);
+          document.getElementById("nota-jogador-tab-modalDadosJOGADOR").click();
         });
-
       } else {
-        alert('Erro ao salvar a nota: ' + data);
+        alert("Erro ao salvar a nota: " + data);
       }
-    }
+    },
   });
 }

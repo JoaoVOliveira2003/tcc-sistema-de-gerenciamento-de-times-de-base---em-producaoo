@@ -1,0 +1,13 @@
+alert
+verificarCampos
+verificarCampoId
+acharPai
+validarCPF
+aplicarMascaraCPF
+validarDataNascimento
+modalCarregamento
+escodendoModalCarregamento
+confirmarCadastro
+somenteNumeros
+fecharModalCorretamente
+toggleSenha

@@ -19,7 +19,7 @@ $emailBase2 = 'OJOAO953@GMAIL.COM';
 $query = "SELECT COUNT(*) FROM login_usuario WHERE email_usuario = '$email'";
 if ($bd->SqlExecuteQuery($query)) {
     $count = $bd->SqlQueryShow("COUNT(*)");
-    if ($count > 0 && $email == $emailBase && $email != $emailBase2){
+    if ($count > 0 && $email != $emailBase && $email != $emailBase2){
         $retorno = 'emailJaCadastrado';
         $bd->SqlDisconnect();
         exit($retorno);

@@ -1390,7 +1390,7 @@ if ($cod_tipoRole == 1) { // TI
     $retorno .= navADMI($idModal);
 } elseif ($cod_tipoRole == 3) { // ADMS
     $retorno .= navADMS($idModal);
-} elseif ($cod_tipoRole == 4 || $cod_tipoRole == 5) { // ADMS e STAFF
+} elseif ($cod_tipoRole == 4 || $cod_tipoRole == 5) { // ADMS e AdmsSTAFF
     $retorno .= navAdmsStaff($idModal);
     $retorno .= navNotasTreinoADMS($idModal);
 

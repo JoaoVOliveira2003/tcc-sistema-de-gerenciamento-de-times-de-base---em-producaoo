@@ -54,8 +54,6 @@ function gravarSubInstituicao() {
   });
 }
 
-
-
 function tabelaDeleteUpdateSubInstituicao() {
   var pagina = "/tcc/componentes/tabelaDeleteUpdate.php";
 
@@ -393,10 +391,10 @@ function gravarADMI() {
   };
 
   let mensagemCamposObrigatorios = {
-    municipio: "municipio de origem do usuario",
-    nome: "nome do usuario",
-    email: "Email do usuario",
-    cpf: "Cpf do usuario",
+    municipio: "municipio de origem do usuário",
+    nome: "Nome do usuário",
+    email: "Email do usuário",
+    cpf: "Cpf do usuário",
     institucao: "Instituição",
   };
 
@@ -419,18 +417,12 @@ function gravarADMI() {
     success: function (data) {
       escodendoModalCarregamento();
 
-      if(data =='emailJaCadastrado'){
-            escodendoModalCarregamento();
+      if (data == "emailJaCadastrado") {
+        escodendoModalCarregamento();
 
-        alert(
-          "Email já cadastrado.",
-          "Atenção",
-          "50%",
-            function () {
-                escodendoModalCarregamento();
-
-          }
-        );
+        alert("Email já cadastrado.", "Atenção", "50%", function () {
+          escodendoModalCarregamento();
+        });
       }
 
       if (data == "ok") {
@@ -465,15 +457,15 @@ function verificarCadastroADMI(codPessoa, emailPessoa) {
     dataType: "json",
     success: function (data) {
       if (data.status === "nok1") {
-        alert("Erro ao executar a consulta!", "Atenção", "80%", function () {
+        alert("Erro ao executar a consulta!", "Atenção", "50%", function () {
           window.location.href = "https://www.google.com";
         });
       } else if (data.status === "nok2") {
-        alert("Pessoa não existe no sistema!", "Atenção", "80%", function () {
+        alert("Pessoa não existe no sistema!", "Atenção", "50%", function () {
           window.location.href = "https://www.google.com";
         });
       } else if (data.status === "nok3") {
-        alert("Cadastro já confirmado!", "Atenção", "80%", function () {
+        alert("Cadastro já confirmado!", "Atenção", "50%", function () {
           window.location.href = "https://www.google.com";
         });
       } else if (data.status === "ok") {
@@ -556,7 +548,7 @@ function deletarCadastroADMI(cod) {
     data: { cod: cod },
     success: function (data) {
       if (data == "ok") {
-        alert("Dados deletados!", "Atenção", "80%", function () {
+        alert("Dados deletados!", "Atenção", "50%", function () {
           window.location.href = "https://www.google.com";
         });
       } else if (data == "nok") {
