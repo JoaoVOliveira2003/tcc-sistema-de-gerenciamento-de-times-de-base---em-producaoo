@@ -48,12 +48,12 @@ $cod_pessoa = isset($_GET['cod_pessoa']) ? $_GET['cod_pessoa'] : '';
             <label class="form-label" for="municipio">Município de nascimento:</label>
             <input type="text" class="form-control mb-2" id="municipio" value="">
 
-            <label class="form-label" for="instituicao">Pertence instituição:</label>
+            <label class="form-label" for="instituicao">Pertence a Sub-Instituição:</label>
             <input type="text" class="form-control mb-2" id="instituicao" value="">
 
             <div class="row">
                 <div class="col-md-6 mb-2">
-                    <label for="nome" class="form-label">Nome do administrador:</label>
+                    <label for="nome" class="form-label">Nome :</label>
                     <input type="text" class="form-control" id="nome" placeholder="Digite o nome..." value="">
                 </div>
 
@@ -65,11 +65,11 @@ $cod_pessoa = isset($_GET['cod_pessoa']) ? $_GET['cod_pessoa'] : '';
 
             <div class="row">
                 <div class="col-md-6 mb-2">
-                    <label for="email_usuario" class="form-label">Email do administrador:</label>
+                    <label for="email_usuario" class="form-label">Email :</label>
                     <input type="text" class="form-control" id="email_usuario" value="">
                 </div>
                 <div class="col-md-6 mb-2">
-                    <label for="senha_usuario" class="form-label">Senha do administrador:</label>
+                    <label for="senha_usuario" class="form-label">Senha :</label>
                     <input type="text" class="form-control" id="senha_usuario" value="">
                 </div>
             </div>

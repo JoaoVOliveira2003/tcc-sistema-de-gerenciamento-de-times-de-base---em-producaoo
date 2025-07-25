@@ -11,3 +11,14 @@ confirmarCadastro
 somenteNumeros
 fecharModalCorretamente
 toggleSenha
+meusDados
+gravarTI
+recusarCadastroTI
+deletarCadastroTI
+verificarCadastroTI
+navTI
+conteudoTI
+conteudoNotasTreinoAdms - é usada em duas classes diferentes
+
+
+usada por varias classes diferentes

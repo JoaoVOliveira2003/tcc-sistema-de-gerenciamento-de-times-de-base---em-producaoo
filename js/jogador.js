@@ -122,7 +122,12 @@ function gravarJogador() {
   }
 
   // Captura dos demais campos
-  const data_nascimento = document.getElementById("data_nascimento").value;
+  const data_nascimentoOriginal = document.getElementById("data_nascimento").value;
+
+  const [dia, mes, ano] = data_nascimentoOriginal.split("/");
+  data_nascimento = `${ano}-${mes}-${dia}`;
+
+
   const municipio = document.getElementById("municipio")?.value || "";
   const nome = document.getElementById("nome").value;
   const email = document.getElementById("email_usuario").value;
@@ -133,28 +138,27 @@ function gravarJogador() {
   const altura = document.getElementById("altura").value;
   const peso = document.getElementById("peso").value;
   const tipo_sanguineo = document.getElementById("tipo_sanguineo").value;
-  const restricoes_medicas =
-    document.getElementById("restricoes_medicas").value;
+  const restricoes_medicas = document.getElementById("restricoes_medicas").value;
   const alergias = document.getElementById("alergias").value;
   const turma = document.getElementById("turma").value;
 
-  const camposObrigatorios = {
-    municipio,
-    nome,
-    email,
-    cpf,
-    posicao,
-    data_nascimento,
-    imagemJogador,
-    esporte,
-    posicao,
-    turma,
-    altura,
-    peso,
-    tipo_sanguineo,
-    restricoes_medicas,
-    alergias,
-  };
+const camposObrigatorios = {
+  municipio: municipio,
+  nome: nome,
+  email: email,
+  cpf: cpf,
+  posicao: posicao,
+  data_nascimento: data_nascimento,
+  imagemJogador: imagemJogador,
+  esporte: esporte,
+  turma: turma,
+  altura: altura,
+  peso: peso,
+  tipo_sanguineo: tipo_sanguineo,
+  restricoes_medicas: restricoes_medicas,
+  alergias: alergias,
+};
+
 
   const mensagemCamposObrigatorios = {
     municipio: "Município de origem do usuário",
@@ -251,8 +255,9 @@ function verificarCadastroJogador(codPessoa, emailPessoa) {
         alert("Cadastro já confirmado!", "Atenção", "50%", function () {
           window.location.href = "https://www.google.com";
         });
-      } else if (data.status === "ok") {
-        $("#nome").val(data.nome).prop("disabled", true);
+      } 
+      else if (data.status === "ok") {
+
         function formatarCPF(cpf) {
           return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
         }
@@ -268,21 +273,16 @@ function verificarCadastroJogador(codPessoa, emailPessoa) {
         $("#nacao").val(data.nacao).prop("disabled", true);
         $("#peso").val(data.peso).prop("disabled", true);
         $("#posicao").val(data.posicao).prop("disabled", true);
-        $("#restricoes_medicas")
-          .val(data.restricoes_medicas)
-          .prop("disabled", true);
+        $("#restricoes_medicas") .val(data.restricoes_medicas).prop("disabled", true);
         $("#subinstituicao").val(data.instituicao).prop("disabled", true);
         $("#tipo_sanguineo").val(data.tipo_sanguineo).prop("disabled", true);
         $("#turma").val(data.turma).prop("disabled", true);
-        $("#nome_jogador").val("nome").prop("disabled", true);
         $("#email_jogador").val(data.emailPessoa).prop("disabled", true);
-
         $("#localImagem").attr("src", data.localImagem);
-
         $("#dadosResponsaveis").html(data.dadosResponsaveis);
         $("#dadosLesoes").html(data.dadosLesoes);
-
         $("input#email_usuario").val(data.emailPessoa).prop("disabled", true);
+        $("#nome_jogador").val(data.nome).prop("disabled", true);
       }
     },
     error: function (xhr, status, error) {

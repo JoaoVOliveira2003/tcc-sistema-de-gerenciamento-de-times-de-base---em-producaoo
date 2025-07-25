@@ -95,6 +95,20 @@ if ($bd->SqlExecuteQuery($query)) {
                         $emailResponsavel = $bd->SqlQueryShow('emailResponsavel');
                         $telefoneResponsavel = $bd->SqlQueryShow('telefoneResponsavel');
 
+                        if (!empty($telefoneResponsavel) && preg_match('/^\d{10,11}$/', $telefoneResponsavel)) {
+                            $ddd = substr($telefoneResponsavel, 0, 2);
+                            if (strlen($telefoneResponsavel) === 11) {
+                                // Celular: (XX) 9XXXX-XXXX
+                                $parte1 = substr($telefoneResponsavel, 2, 5);
+                                $parte2 = substr($telefoneResponsavel, 7, 4);
+                            } else {
+                                // Fixo: (XX) XXXX-XXXX
+                                $parte1 = substr($telefoneResponsavel, 2, 4);
+                                $parte2 = substr($telefoneResponsavel, 6, 4);
+                            }
+                            $telefoneResponsavel = "($ddd) $parte1-$parte2";
+                        }
+
                         $dadosResponsaveis .= "
                                             <div class='responsavel card mb-3 border rounded p-3 bg-light'>
                                             <div class='mb-2 pb-2'><strong>Responsável</strong></div>

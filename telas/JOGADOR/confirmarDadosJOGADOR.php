@@ -34,9 +34,7 @@
 
       <div class="row">
         <div class="col-md-6 mb-3">
-          <label for="nome_jogador" class="form-label">Nome do jogador:</label>
-          <input type="text" class="form-control" id="nome_jogador" name="nome_jogador" placeholder="Digite o nome..."
-            value="adms">
+          <label for="nome_jogador" class="form-label">Nome do jogador:</label> <input type="text" class="form-control" id="nome_jogador" name="nome_jogador" placeholder="Digite o nome..."            >
         </div>
         <div class="col-md-6 mb-3">
           <label for="email_usuario" class="form-label">Email do jogador:</label>

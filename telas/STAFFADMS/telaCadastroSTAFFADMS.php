@@ -15,7 +15,12 @@ $usuario = verificarLogin();
     <script>
         $(document).ready(function () {
             selectNacoes(cadastro = 's');
-            selectSubInstituicoes();
+
+        //selectSubInstituicoes();
+        const codUsuario = <?= json_encode($usuario['cod_usuario']) ?>;
+        const codTipoRole = <?= json_encode($usuario['cod_tipoRole']) ?>;
+        selectSubInstituicoes(codUsuario, codTipoRole); 
+       
         });
     </script>
 </head>
@@ -41,11 +46,11 @@ $usuario = verificarLogin();
 
             <div class="row">
                 <div class="col-md-6 mb-2">
-                    <label for="nome" class="form-label">Nome do integrante da equipe:</label>
+                    <label for="nome" class="form-label">Nome: </label>
                     <input type="text" class="form-control" id="nome" placeholder="Digite o nome...">
                 </div>
                 <div class="col-md-6 mb-2">
-                    <label for="email_usuario" class="form-label">E-mail do supervisor:</label>
+                    <label for="email_usuario" class="form-label">E-mail do usuário: </label>
                     <input type="text" class="form-control" id="email_usuario" 
                         placeholder="Digite o email...">
                 </div>

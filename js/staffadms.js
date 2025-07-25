@@ -31,11 +31,11 @@ function gravarStaffadms() {
   };
 
   let mensagemCamposObrigatorios = {
-    municipio: "municipio de origem do usuario",
-    nome: "nome do usuario",
-    email: "Email do usuario",
-    cpf: "Cpf do usuario",
-    subinstitucao: "Instituição",
+    municipio: "Municipio de origem do usuário",
+    nome: "Nome do usuário",
+    email: "Email do usuário",
+    cpf: "Cpf do usuário",
+    subinstitucao: "Sub-Instituição",
   };
 
   if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) {

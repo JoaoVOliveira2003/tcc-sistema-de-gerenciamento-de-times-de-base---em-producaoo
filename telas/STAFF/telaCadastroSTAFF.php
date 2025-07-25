@@ -15,7 +15,10 @@ $usuario = verificarLogin();
     <script>
         $(document).ready(function () {
             selectNacoes(cadastro = 's');
-            selectSubInstituicoes();
+            // selectSubInstituicoes();
+        const codUsuario = <?= json_encode($usuario['cod_usuario']) ?>;
+        const codTipoRole = <?= json_encode($usuario['cod_tipoRole']) ?>;
+        selectSubInstituicoes(codUsuario, codTipoRole); 
         });
     </script>
 </head>

@@ -235,24 +235,18 @@ function atualizarSubInstituicao(cod) {
 
 //modais de deletar
 async function modalAtualizarSubInstituicao(cod) {
-  var pagina =
-    "/tcc/componentes/admi/modalAtualizar/modalAtualizarSubInstituicao.php";
+  var pagina = "/tcc/componentes/admi/modalAtualizar/modalAtualizarSubInstituicao.php";
 
   var idModal = "modalAtualizarInstituicao";
   var tituloModal = "Confirmar Atualizacao";
   var funcaoModal = "atualizarSubInstituicao";
   var textoBotao = "Atualizar";
 
-  var query =
-    "select cod_instituicao from subinstituicao where cod_subinstituicao = " +
-    cod;
+  var query ="select cod_instituicao from subinstituicao where cod_subinstituicao = " +    cod;
   var valorProcurado = "cod_instituicao";
   var select = await acharPai(query, valorProcurado);
 
-  var query2 =
-    "select cod_municipio from subinstituicao where cod_subinstituicao = " +
-    cod;
-  var valorProcurado = "cod_municipio";
+  var query2 =    "select cod_municipio from subinstituicao where cod_subinstituicao = " +    cod;  var valorProcurado = "cod_municipio";
   var select2 = await acharPai(query2, valorProcurado);
 
   $.ajax({

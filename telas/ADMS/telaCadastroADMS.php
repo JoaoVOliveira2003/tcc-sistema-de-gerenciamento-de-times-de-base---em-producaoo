@@ -20,7 +20,6 @@ $usuario = verificarLogin();
         const codTipoRole = <?= json_encode($usuario['cod_tipoRole']) ?>;
         selectSubInstituicoes(codUsuario, codTipoRole); 
 
-        // selectSubInstituicoes();
         });
     </script>
 </head>
