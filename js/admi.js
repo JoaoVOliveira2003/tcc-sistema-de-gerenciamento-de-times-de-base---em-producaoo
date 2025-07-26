@@ -114,12 +114,10 @@ function modalDeletarSubInstituicao(cod) {
 
   var idModal = "modalSubInstituicao";
   var textoBotao = "Excluir";
-  var tituloModal = "Confirmar Exclusão";
+  var tituloModal = "Confirmar exclusão";
   var funcaoModal = "deletarSubInstituicao";
   var textoModal =
-    "Você tem certeza que deseja excluir a SubInstituicao com código = " +
-    cod +
-    "?";
+    "Você tem certeza que deseja excluir a Sub-instituição com <br> código = " +cod +" ?";
   var textoBotao = "Deletar";
 
   $.ajax({
@@ -167,7 +165,7 @@ function deletarSubInstituicao(cod) {
         });
       } else if (data == "nok") {
         alert(
-          "Remoção incompleta,caso estado tenha alguma turma, negada a remoção.",
+          "Remoção incompleta, caso sub-instituição tenha alguma turma, negada a remoção.",
           "Atenção",
           "50%",
           function () {
@@ -238,7 +236,7 @@ async function modalAtualizarSubInstituicao(cod) {
   var pagina = "/tcc/componentes/admi/modalAtualizar/modalAtualizarSubInstituicao.php";
 
   var idModal = "modalAtualizarInstituicao";
-  var tituloModal = "Confirmar Atualizacao";
+  var tituloModal = "Confirmar atualização";
   var funcaoModal = "atualizarSubInstituicao";
   var textoBotao = "Atualizar";
 
@@ -495,7 +493,7 @@ function recusarCadastroADMI(cod) {
 
   var idModal = "modalRecusarCadastroADMI";
   var textoBotao = "Excluir";
-  var tituloModal = "Confirmar Exclusão";
+  var tituloModal = "Confirmar exclusão";
   var funcaoModal = "deletarCadastroADMI";
   var textoModal = "Você tem certeza que deseja negar o cadastro ?";
   var textoBotao = "Recusar";

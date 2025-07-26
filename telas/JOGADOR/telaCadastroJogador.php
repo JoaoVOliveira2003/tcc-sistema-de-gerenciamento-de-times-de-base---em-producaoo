@@ -204,7 +204,7 @@ $usuario = verificarLogin();
                 <div class="col-md-6 mb-3">
                     <label for="restricoes_medicas" class="form-label">Restrições Médicas:</label>
                     <input type="text" class="form-control" id="restricoes_medicas"
-                        placeholder="Descreva as restrições, se houver">
+                        placeholder="Descreva as restrições, se não tiver nenhuma escreva 'nenhuma'.">
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="alergias" class="form-label">Alergias:</label>

@@ -99,8 +99,8 @@ function gravarInstituicao() {
   };
 
   let mensagemCamposObrigatorios = {
-    tipoInstituicao: "Tipo de instituicao ",
-    desc_instituicao: "Nome da instituicao",
+    tipoInstituicao: "Tipo de Instituição ",
+    desc_instituicao: "Nome da instituição",
   };
 
   if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) {
@@ -459,7 +459,7 @@ function modalDeletarEstado(cod) {
 
   var idModal = "modalDeletarEstado";
   var textoBotao = "Excluir";
-  var tituloModal = "Confirmar Exclusão";
+  var tituloModal = "Confirmar exclusão";
   var funcaoModal = "deletarEstado";
   var textoModal =
     "Você tem certeza que deseja excluir o estado com código = " + cod + "?";
@@ -503,7 +503,7 @@ function modalDeletarNacao(cod) {
 
   var idModal = "modalDeletarEstado";
   var textoBotao = "Excluir";
-  var tituloModal = "Confirmar Exclusão";
+  var tituloModal = "Confirmar exclusão";
   var funcaoModal = "deletarNacao";
   var textoModal =
     "Você tem certeza que deseja excluir a nacão com código = " + cod + "?";
@@ -547,7 +547,7 @@ function modalDeletarInstituicao(cod) {
 
   var idModal = "modalDeletarInstituicao";
   var textoBotao = "Excluir";
-  var tituloModal = "Confirmar Exclusão";
+  var tituloModal = "Confirmar exclusão";
   var funcaoModal = "deletarInstituicao";
   var textoModal =
     "Você tem certeza que deseja excluir a Instituicao com código = " +
@@ -593,10 +593,10 @@ function modalDeletarMunicipio(cod) {
 
   var idModal = "modalDeletarMunicipio";
   var textoBotao = "Excluir";
-  var tituloModal = "Confirmar Exclusão";
+  var tituloModal = "Confirmar exclusão";
   var funcaoModal = "deletarMunicipio";
   var textoModal =
-    "Você tem certeza que deseja excluir o municipio do código = " + cod + "?";
+    "Você tem certeza que deseja excluir o município do código = " + cod + "?";
   var textoBotao = "Deletar";
 
   $.ajax({
@@ -637,7 +637,7 @@ function recusarCadastroTI(cod) {
 
   var idModal = "modalRecusarCadastroTI";
   var textoBotao = "Excluir";
-  var tituloModal = "Confirmar Exclusão";
+  var tituloModal = "Confirmar exclusão";
   var funcaoModal = "deletarCadastroTI";
   var textoModal =
     "Você tem certeza que deseja negar o cadastro ?";
@@ -722,7 +722,7 @@ function deletarEstado(cod_estado) {
         });
       } else if (data == "nok") {
         alert(
-          "Remoção incompleta,caso estado tenha algum muinicipio,negada a remoção.",
+          "Remoção incompleta, caso estado tenha algum município, negada a remoção.",
           "Atenção",
           "50%",
           function () {
@@ -751,7 +751,7 @@ function deletarMunicipio(cod) {
         });
       } else if (data == "nok") {
         alert(
-          "Remoção incompleta,caso estado tenha algum muinicipio,negada a remoção.",
+          "Remoção incompleta,caso algo tenha cadastrado com esse município, negada a remoção.",
           "Atenção",
           "50%",
           function () {
@@ -780,7 +780,7 @@ function deletarNacao(cod) {
         });
       } else if (data == "nok") {
         alert(
-          "Remoção incompleta,caso nacão tenha algum estado,negada a remoção.",
+          "Remoção incompleta, caso nacão tenha algum estado, negada a remoção.",
           "Atenção",
           "50%",
           function () {
@@ -809,7 +809,7 @@ function deletarInstituicao(cod) {
         });
       } else if (data == "nok") {
         alert(
-          "Remoção incompleta,caso Instituicao tenha algum Sub-Instituicao, negada a remoção.",
+          "Remoção incompleta, caso instituição tenha algum sub-instituicão, negada a remoção.",
           "Atenção",
           "50%",
           function () {
@@ -1030,7 +1030,7 @@ async function modalAtualizarEstado(cod_estado) {
   var select = await acharPai(query, valorProcurado);
 
   var idModal = "modalAtualizacaoEstado";
-  var tituloModal = "Confirmar Atualizacao";
+  var tituloModal = "Confirmar atualização";
   var funcaoModal = "atualizarEstado";
   var textoBotao = "Atualizar";
 
@@ -1071,7 +1071,7 @@ async function modalAtualizarNacao(cod) {
   var pagina = "/tcc/componentes/TI/modalAtualizar/modalAtualizarNacao.php";
 
   var idModal = "modalAtualizacaoNacao";
-  var tituloModal = "Confirmar Atualizacao";
+  var tituloModal = "Confirmar atualização";
   var funcaoModal = "atualizarNacao";
   var textoBotao = "Atualizar";
 
@@ -1110,7 +1110,7 @@ async function modalAtualizarMunicipio(cod) {
   var pagina = "/tcc/componentes/TI/modalAtualizar/modalAtualizarMunicipio.php";
 
   var idModal = "modalAtualizacaoMunicipio";
-  var tituloModal = "Confirmar Atualizacao";
+  var tituloModal = "Confirmar atualização";
   var funcaoModal = "atualizarMunicipio";
   var textoBotao = "Atualizar";
 
@@ -1156,7 +1156,7 @@ async function modalAtualizarInstituicao(cod) {
     "/tcc/componentes/TI/modalAtualizar/modalAtualizarInstituicao.php";
 
   var idModal = "modalAtualizarInstituicao";
-  var tituloModal = "Confirmar Atualizacao";
+  var tituloModal = "Confirmar atualização";
   var funcaoModal = "atualizarInstituicao";
   var textoBotao = "Atualizar";
 

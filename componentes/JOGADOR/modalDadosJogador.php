@@ -220,7 +220,7 @@ INNER JOIN historicoLesoes hi ON fihi.cod_historicoLesoes = hi.cod_historicoLeso
 INNER JOIN tipo_lesao ti ON ti.cod_tipoLesao = hi.cod_tipoLesao
 WHERE fihi.cod_jogador = $cod_jogador;";
 
-if ($bd->SqlExecuteQuery($query) && $bd->SqlNumRows() > 0) {
+if ($bd->SqlExecuteQuery($queryLesoes) && $bd->SqlNumRows() > 0) {
   if ($bd->SqlNumRows() > 0) {
     $retorno .= '<div id="lesoes-container">';
     $firstLesao = true;
@@ -263,6 +263,8 @@ if ($bd->SqlExecuteQuery($query) && $bd->SqlNumRows() > 0) {
     
     $retorno .= '</div>'; // Fecha lesoes-container
   }
+
+
 }
 
 
@@ -410,6 +412,8 @@ $retorno .= '
     <!-- Notas de Treino -->
     <div class="tab-pane fade" id="notas-treino-' . $idModal . '" role="tabpanel" aria-labelledby="notas-treino-tab-' . $idModal . '">';
 
+
+
 $graus = [
     2 => 'Anotações compartilhadas pelas turmas',
     3 => 'Anotações públicas'
@@ -467,21 +471,20 @@ ORDER BY b.dataTreino DESC, b.cod_treino";
                     $primeiroTreino = false;
                 }
 
-                $retorno .= '
-<div class="row g-2 mb-3 border-bottom pb-2">
-    <div class="col-md-8">
-        <label class="form-label">Descrição:</label>
-        <textarea disabled class="form-control" rows="2" style="resize: none">' . htmlspecialchars($desc_notaTreino) . '</textarea>
-    </div>
-    <div class="col-md-2">
-        <label class="form-label">Minuto:</label>
-        <input disabled type="text" class="form-control" value="' . htmlspecialchars($minuto_nota) . '">
-    </div>
-    <div class="col-md-2">
-        <label class="form-label">Jogador:</label>
-        <input disabled type="text" class="form-control" value="' . htmlspecialchars($nome_jogador) . '">
-    </div>
-</div>';
+        $retorno .= '
+        <div class="row g-2 mb-3 border-bottom pb-2">
+
+            <div class="col-md-10">
+                <label class="form-label">Descrição:</label>
+                <input disabled type="text" class="form-control" name="desc_notaTreino" value="' . htmlspecialchars($desc_notaTreino) . '">
+            </div>
+
+            <div class="col-md-2">
+                <label class="form-label">Minuto:</label>
+                <input disabled type="text" class="form-control" value="' . htmlspecialchars($minuto_nota) . '">
+            </div>
+        </div>';
+
 
             } while ($bdTreino->SqlFetchNext());
 

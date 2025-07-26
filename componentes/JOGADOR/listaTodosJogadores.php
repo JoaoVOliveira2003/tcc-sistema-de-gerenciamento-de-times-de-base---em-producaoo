@@ -96,7 +96,7 @@ if ($bd->SqlExecuteQuery($query)) {
     $instituicaoAtual = $subinstituicaoAtual = $turmaAtual = null;
     $tem_jogador_na_turma = false;
 
-    while ($bd->SqlFetchNext()) {
+    do {
         $instituicao = $bd->SqlQueryShow('desc_instituicao') ?? 'Instituição não informada';
         $subinstituicao = $bd->SqlQueryShow('desc_subInstituicao') ?? 'Subinstituição não informada';
         $turma = $bd->SqlQueryShow('desc_turma') ?? 'Turma não informada';
@@ -157,7 +157,7 @@ if ($bd->SqlExecuteQuery($query)) {
             $retorno .= "<td><button type='button' class='btn btn-secondary btn-sm' onclick='vizualizarDadosJogador($cod_usuario)'>Dados completo.</button></td>";
             $retorno .= "</tr>";
         }
-    }
+    } while ($bd->SqlFetchNext()); // <- Aqui estava faltando o ponto e vírgula
 
     // Fecha última tabela se aberta
     if ($turmaAtual !== null) {

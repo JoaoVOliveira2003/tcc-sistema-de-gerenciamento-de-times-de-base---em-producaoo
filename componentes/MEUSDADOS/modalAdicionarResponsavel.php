@@ -51,7 +51,7 @@ $retorno = '
             <input type="email" name="responsavel_email[]" id="responsavel_email" class="form-control" placeholder="Email do Responsável" required>
           </div>
 
-          <div class="col-md-5">
+          <div class="col-md-6">
             <label class="form-label">Telefone do Responsável:</label>
             <input type="text" id="responsavel_telefone" name="responsavel_telefone[]"
                   class="form-control telefone-mask"

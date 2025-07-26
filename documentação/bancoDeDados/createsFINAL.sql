@@ -1288,3 +1288,31 @@ INSERT INTO evento (cod_staff, titulo_evento, data, horario, local, desc_evento,
 -- cod_evento = 11 a 15
 INSERT INTO turma_evento (cod_evento, cod_turma) VALUES
 (11, 3), (12, 3), (13, 3), (14, 3), (15, 3);
+
+update cadastro_identificacao set nome='AdmsStaff Dutch' where cod_usuario = 17;
+update cadastro_identificacao set nome='Staff Micah Bell' where cod_usuario = 16;
+update cadastro_identificacao set nome='Staff John Marston' where cod_usuario = 15;
+update cadastro_identificacao set nome='Staff Arthur Morgan' where cod_usuario = 14;
+
+update cadastro_identificacao set nome='Tiago de Sousa Marques' where cod_usuario = 24;
+update cadastro_identificacao set nome='gabriel kayky Matos' where cod_usuario = 23;
+update cadastro_identificacao set nome='Nathália Silva' where cod_usuario = 26;
+update cadastro_identificacao set nome='Mayra Pinheiro' where cod_usuario = 25;
+update cadastro_identificacao set nome='João Expedito' where cod_usuario = 21;
+update cadastro_identificacao set nome='Manu biesdorf' where cod_usuario = 20;
+update cadastro_identificacao set nome='Kayo Maringa' where cod_usuario = 18;
+update cadastro_identificacao set nome='Gabriel Jacksson' where cod_usuario = 19;
+update cadastro_identificacao set nome='Ines Portugal' where cod_usuario = 22;
+update cadastro_identificacao set nome='Daniels Sportining' where cod_usuario = 31;
+update cadastro_identificacao set nome='Pyro' where cod_usuario = 32;
+update cadastro_identificacao set nome='Cauã Barbosa' where cod_usuario = 28;
+update cadastro_identificacao set nome='Felipe Alt' where cod_usuario = 30;
+update cadastro_identificacao set nome='Willy Wagner' where cod_usuario = 29;
+
+UPDATE nota_jogador SET nota_jogador = '60' where id_nota>0;
+
+update midia_jogador set local_midia ='expeto.png' where cod_jogador = 21;
+
+update midia_jogador set local_midia ='manu.png' where cod_jogador = 20;
+update midia_jogador set local_midia ='nati' where cod_jogador = 26;
+update midia_jogador set local_midia ='may.png' where cod_jogador = 25;

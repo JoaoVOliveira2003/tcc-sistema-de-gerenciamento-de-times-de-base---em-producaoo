@@ -297,7 +297,7 @@ function recusarCadastroJOGADOR(cod) {
 
   var idModal = "modalRecusarCadastroJOGADOR";
   var textoBotao = "Excluir";
-  var tituloModal = "Confirmar Exclusão";
+  var tituloModal = "Confirmar exclusão";
   var funcaoModal = "deletarCadastroJOGADOR";
   var textoModal = "Você tem certeza que deseja negar o cadastro ?";
   var textoBotao = "Recusar";

@@ -39,7 +39,7 @@ function mudarSenha(cod_usuario){
     success: function (data) {
       
       if (data == "ok") {
-        alert("Senha atualizados.", "Atenção", "50%", function () {
+        alert("Senha atualizada.", "Atenção", "50%", function () {
           location.reload();
         });
       }
@@ -208,7 +208,7 @@ async function modalAtualizarLesoes(cod) {
   var pagina = "/tcc/componentes/MEUSDADOS/modalAtualizarLesoes.php";
 
   var idModal = "modalAtualizarLesoes";
-  var tituloModal = "Confirmar Atualizacao";
+  var tituloModal = "Confirmar atualização";
   var funcaoModal = "atualizarLesao";
   var textoBotao = "Atualizar";
 
@@ -296,7 +296,7 @@ async function modalAdicionarResponsavel(cod) {
   var pagina = "/tcc/componentes/MEUSDADOS/modalAdicionarResponsavel.php";
 
   var idModal = "modalAdicionarResponsavel";
-  var tituloModal = "Confirmar Atualizacao";
+  var tituloModal = "Confirmar atualização";
   var funcaoModal = "adicionarResponsavel";
   var textoBotao = "Atualizar";
 

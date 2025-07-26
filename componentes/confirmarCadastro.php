@@ -23,7 +23,7 @@ if ($bd->SqlExecuteQuery($query)) {
         if ($tipo_role == 6) {
             date_default_timezone_set('America/Sao_Paulo');
             $dataAtual = date('Y-m-d H:i:s');
-            $query = "INSERT into nota_jogador(cod_jogador,cod_staff,nota_jogador,ativo, data_atualizacao) values ($cod,1,'6.0','s','$dataAtual')";
+            $query = "INSERT into nota_jogador(cod_jogador,cod_staff,nota_jogador,ativo, data_atualizacao) values ($cod,1,'60','s','$dataAtual')";
 
             if ($bd->SqlExecuteQuery($query)) {
                 $retorno = 'ok';

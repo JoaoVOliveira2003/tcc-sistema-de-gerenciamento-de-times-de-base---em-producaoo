@@ -11,11 +11,6 @@ function gravarEvento() {
 
   const regexHorario = /^([01]\d|2[0-3]):([0-5]\d)$/;
 
-  if (!regexHorario.test(horario_evento)) {
-    alert("Dado horário incorreto");
-    return false;
-  }
-
   const camposObrigatorios = {
     titulo,
     local,
@@ -35,6 +30,12 @@ function gravarEvento() {
   };
 
   if (!verificarCampos(camposObrigatorios, mensagemCamposObrigatorios)) return;
+
+  if (!regexHorario.test(horario_evento)) {
+    alert("Dado horário incorreto");
+    return false;
+  }
+
 
   $.ajax({
     url: "/tcc/componentes/Evento/gravar/gravarEvento.php",

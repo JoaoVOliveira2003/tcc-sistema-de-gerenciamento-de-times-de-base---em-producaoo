@@ -46,11 +46,8 @@ function tabelaDeleteUpdateTurma() {
       cod_tipoUsuario +
       " ORDER BY sub.desc_subInstituicao";
   } else {
-    var query =
-      "SELECT tur.cod_turma, tur.desc_turma, tur.ativo, sub.desc_subInstituicao FROM turma tur INNER JOIN subinstituicao sub ON sub.cod_subInstituicao = tur.cod_subInstituicao ORDER BY sub.desc_subInstituicao;";
+    var query =      "SELECT tur.cod_turma, tur.desc_turma, tur.ativo, sub.desc_subInstituicao FROM turma tur INNER JOIN subinstituicao sub ON sub.cod_subInstituicao = tur.cod_subInstituicao ORDER BY sub.desc_subInstituicao;";
   }
-
-  console.log(query);
 
   let titulosTh = {
     valor1: "Cod. turma",
@@ -104,7 +101,7 @@ function modalDeletarTurma(cod) {
 
   var idModal = "modalTurma";
   var textoBotao = "Excluir";
-  var tituloModal = "Confirmar Exclusão";
+  var tituloModal = "Confirmar exclusão";
   var funcaoModal = "deletarTurma";
   var textoModal =
     "Você tem certeza que deseja excluir a Turma com código = " + cod + "?";
@@ -152,13 +149,14 @@ function deletarTurma(cod) {
     url: pagina,
     data: { cod: cod },
     success: function (data) {
+      console.log(data);
       if (data == "ok") {
         alert("Dados deletados.", "Atenção", "50%", function () {
           location.reload();
         });
       } else if (data == "nok") {
         alert(
-          "Remoção incompleta,caso estado tenha alguma turma, negada a remoção.",
+          "Remoção incompleta, caso tenha algum jogador cadastrado na turma, negada a remoção.",
           "Atenção",
           "50%",
           function () {
@@ -177,7 +175,7 @@ async function modalAtualizarTurma(cod) {
   var pagina = "/tcc/componentes/adms/modalAtualizar/modalAtualizarTurma.php";
 
   var idModal = "modalAtualizarTurma";
-  var tituloModal = "Confirmar Atualizacao";
+  var tituloModal = "Confirmar atualização";
   var funcaoModal = "atualizarTurma";
   var textoBotao = "Atualizar";
 
@@ -450,7 +448,7 @@ function recusarCadastroADMS(cod) {
 
   var idModal = "modalRecusarCadastroADMS";
   var textoBotao = "Excluir";
-  var tituloModal = "Confirmar Exclusão";
+  var tituloModal = "Confirmar exclusão";
   var funcaoModal = "deletarCadastroADMS";
   var textoModal = "Você tem certeza que deseja negar o cadastro ?";
   var textoBotao = "Recusar";

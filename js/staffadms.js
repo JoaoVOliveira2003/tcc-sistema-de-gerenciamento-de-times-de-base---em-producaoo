@@ -92,7 +92,7 @@ function recusarCadastroStaffAdms(cod) {
 
   var idModal = "modalRecusarCadastroStaffAdms";
   var textoBotao = "Excluir";
-  var tituloModal = "Confirmar Exclusão";
+  var tituloModal = "Confirmar exclusão";
   var funcaoModal = "deletarCadastroStaffAdms";
   var textoModal = "Você tem certeza que deseja negar o cadastro ?";
   var textoBotao = "Recusar";

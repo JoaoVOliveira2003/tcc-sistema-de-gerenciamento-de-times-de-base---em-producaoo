@@ -26,7 +26,7 @@ $usuario = verificarLogin();
   <div class=" mt-4">
     <h2 class="mb-4">Gerenciamento de <b>Instituicão </b></h2>
     
-    <h4 class="text-success mb-3">Inserir novo Instituicão</h4>
+    <h4 class="text-success mb-3">Inserir nova Instituicão</h4>
 
     <div class="row">
       <div class="col-md-6 mb-3">
