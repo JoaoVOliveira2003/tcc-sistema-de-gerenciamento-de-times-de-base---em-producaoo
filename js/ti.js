@@ -550,7 +550,7 @@ function modalDeletarInstituicao(cod) {
   var tituloModal = "Confirmar exclusão";
   var funcaoModal = "deletarInstituicao";
   var textoModal =
-    "Você tem certeza que deseja excluir a Instituicao com código = " +
+    "Você tem certeza que deseja excluir a Instituição com código = " +
     cod +
     "?";
   var textoBotao = "Deletar";
@@ -1242,7 +1242,7 @@ function selectEstadoAtualizarMunicipio(select) {
   var query = "SELECT cod_estado, desc_estado FROM estado";
   var codSelect = "cod_estado";
   var descSelect = "desc_estado";
-  var label = "Pertencente a:";
+  var label = "Fica na cidade de:";
   var classLabel = "form-label";
   var forLabel = "atualilizacaoEstado";
   var classSelect = "form-control";

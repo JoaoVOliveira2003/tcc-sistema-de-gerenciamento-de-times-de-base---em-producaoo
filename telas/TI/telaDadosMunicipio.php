@@ -24,7 +24,7 @@ $usuario = verificarLogin();
 <?php include('../../componentes/header.php'); ?>
 <div class="container">
   <div class=" mt-4">
-    <h2 class="mb-4">Gerenciamento de <b>municipios </b></h2>
+    <h2 class="mb-4">Gerenciamento de <b>municípios </b></h2>
     
     <h4 class="text-success mb-3">Inserir novo municipio</h4>
 

@@ -28,7 +28,7 @@ $usuario = verificarLogin();
 <body>
     <div class="container">
         <div class="mt-1">
-            <h2 class="mb-3">Cadastro de <b>STAFF e Sub-insitituição (ADMS)</b></h2>
+            <h2 class="mb-3">Cadastro de <b>STAFF|ADMS</b></h2>
             <h5 class="mb-4">
                 Olá! Lembre-se de que, para que o cadastro seja totalmente validado, a pessoa cadastrada receberá um
                 e-mail de confirmação. <br> Nesse e-mail, ela deverá aceitar ou recusar o cadastro, além de inserir a
