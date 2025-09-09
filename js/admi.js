@@ -321,7 +321,7 @@ function selectInstituicaoAtualizarMunicipio(select) {
   var query = "SELECT cod_municipio, desc_municipio FROM municipio";
   var codSelect = "cod_municipio";
   var descSelect = "desc_municipio";
-  var label = "Fica na cidade::";
+  var label = "Fica na cidade:";
   var classLabel = "form-label";
   var forLabel = "atualilizacaoMunicipio";
   var classSelect = "form-control";

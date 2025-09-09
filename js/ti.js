@@ -1242,7 +1242,7 @@ function selectEstadoAtualizarMunicipio(select) {
   var query = "SELECT cod_estado, desc_estado FROM estado";
   var codSelect = "cod_estado";
   var descSelect = "desc_estado";
-  var label = "Fica na cidade de:";
+  var label = "Pertencente a:";
   var classLabel = "form-label";
   var forLabel = "atualilizacaoEstado";
   var classSelect = "form-control";
